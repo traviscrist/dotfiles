@@ -12,6 +12,7 @@ mas 'Simplenote', id: 692867256
 mas 'Stay', id: 435410196
 mas 'flycut-clipboard-manager', id: 442160987
 mas 'soulver-2', id: 413965349
+mas 'spark-email-app-by-readdle', id: 1176895641
 
 # Cask macOS apps
 cask 'iterm2'
