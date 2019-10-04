@@ -1,0 +1,66 @@
+# Based on:
+# https://www.taniarascia.com/setting-up-a-brand-new-mac-for-development/
+# https://danielmiessler.com/blog/first-10-things-new-mac/
+# https://hackercodex.com/guide/python-development-environment-on-mac-osx/
+# See homebrew-bundle:
+# https://github.com/Homebrew/homebrew-bundle
+
+# Command-Line Mac App Store
+# 'brew install mas && mas signin <email>'
+mas 'Slack', id: 803453959
+mas 'Simplenote', id: 692867256
+mas 'Stay', id: 435410196
+mas 'flycut-clipboard-manager', id: 442160987
+
+# Cask macOS apps
+cask 'iterm2'
+cask 'google-chrome'
+cask 'firefox'
+
+# Zsh
+brew 'zsh'
+tap 'caskroom/fonts'
+cask 'font-hack-nerd-font'
+cask 'font-source-code-pro'
+cask 'font-awesome-terminal-fonts'
+
+# Dev
+brew 'git'
+brew 'jq'
+brew 'nvm'
+brew 'hub'
+
+# Dev/Cloud
+cask 'google-cloud-sdk'
+brew 'terraform'
+
+# Dev/Apps
+cask 'sublime-text'
+brew 'neovim'
+brew 'fzf'
+brew 'ripgrep'
+
+# Window Management
+cask 'spectacle'
+
+# Dev/Containers
+brew 'kubectl'
+brew 'kubernetes-helm'
+brew 'docker'
+brew 'docker-compose'
+
+# Dev/Python
+# a) virtualenv way:
+# PIP_REQUIRE_VIRTUALENV="false" pip install virtualenv
+# PIP_REQUIRE_VIRTUALENV="false" pip3 install virtualenv
+# virtualenv -p python <name> # or:
+# virtualenv -p python3 <name>
+# b) pyenv way:
+# pyenv install <python version>
+# pyenv virtualenv <python version> <name>
+brew 'python@2' # 2.7
+brew 'python' # 3
+brew 'pyenv'
+brew 'pyenv-virtualenv'
+
+# Misc

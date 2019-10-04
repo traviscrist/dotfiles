@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+
+SYSTEM_TYPE=$(uname -s)
+SSH_REPO_URL="git@github.com:traviscrist/dotfiles.git"
+
+#-----------------------------------------
+# * Install Homebrew
+# * Install brew packages
+#   https://yadm.io/docs/bootstrap
+#-----------------------------------------
+
+if [ "$SYSTEM_TYPE" = "Darwin" ]; then
+
+  # install homebrew if it's missing
+  if ! command -v brew >/dev/null 2>&1; then
+    echo ">>> Installing homebrew.."
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  fi
+
+  brew install mas
+  # Not supported right now
+  # mas signin trav07al@gmail.com
+  
+  if [ -f "$HOME/.Brewfile" ]; then
+    echo ">>> Installing brew packages.."
+    brew bundle --global
+  fi
+
+fi
+
+
+#-----------------------------------------
+# * Configure iTerm2 (to use ~/.iterm2/)
+#   https://yadm.io/docs/bootstrap
+#-----------------------------------------
+
+if [ "$SYSTEM_TYPE" = "Darwin" ]; then
+
+  if [ -d "$HOME/.iterm2" ]; then
+    echo ">>> Setting iTerm prefs directory.."
+    defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.iterm2"
+    defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+  fi
+
+fi
+
+#-----------------------------------------
+# * Set yadm origin url to ssh
+#-----------------------------------------
+
+#echo ">>> Updating the yadm origin to ssh.."
+yadm remote set-url origin "$SSH_REPO_URL"
+
+# Add Prezto
+#https://github.com/sorin-ionescu/prezto
+
+# Update neovim plugins
+
+#if command -v nvim >/dev/null 2>&1; then
+#  echo "Bootstraping Neovim"
+#  vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+#fi
+
+echo "Done!"
