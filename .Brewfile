@@ -11,6 +11,7 @@ mas 'Slack', id: 803453959
 mas 'Simplenote', id: 692867256
 mas 'Stay', id: 435410196
 mas 'flycut-clipboard-manager', id: 442160987
+mas 'soulver-2', id: 413965349
 
 # Cask macOS apps
 cask 'iterm2'
@@ -20,15 +21,14 @@ cask 'firefox'
 # Zsh
 brew 'zsh'
 tap 'caskroom/fonts'
-cask 'font-hack-nerd-font'
-cask 'font-source-code-pro'
-cask 'font-awesome-terminal-fonts'
+#cask 'font-source-code-pro'
 
 # Dev
 brew 'git'
 brew 'jq'
 brew 'nvm'
 brew 'hub'
+brew 'tree'
 
 # Dev/Cloud
 cask 'google-cloud-sdk'
