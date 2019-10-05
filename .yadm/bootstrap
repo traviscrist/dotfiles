@@ -9,6 +9,13 @@ SSH_REPO_URL="git@github.com:traviscrist/dotfiles.git"
 #   https://yadm.io/docs/bootstrap
 #-----------------------------------------
 
+# Because Git submodule commands cannot operate without a work tree, they must
+# be run from within $HOME (assuming this is the root of your dotfiles)
+cd "$HOME"
+
+echo "Init submodules"
+yadm submodule update --recursive --init
+
 if [ "$SYSTEM_TYPE" = "Darwin" ]; then
 
   # install homebrew if it's missing
@@ -25,7 +32,7 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
     echo ">>> Installing brew packages.."
     brew bundle --global
   fi
-
+  chsh -s /bin/zsh
 fi
 
 
