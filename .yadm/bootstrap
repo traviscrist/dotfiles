@@ -35,7 +35,7 @@ fi
 #-----------------------------------------
 
 if [ "$SYSTEM_TYPE" = "Darwin" ]; then
-
+  mkdir ~/.iterm2
   if [ -d "$HOME/.iterm2" ]; then
     echo ">>> Setting iTerm prefs directory.."
     defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.iterm2"
