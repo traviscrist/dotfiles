@@ -22,7 +22,7 @@ cask 'firefox'
 # Zsh
 brew 'zsh'
 tap 'caskroom/fonts'
-cask 'brew-cask-completion'
+brew 'brew-cask-completion'
 cask 'font-source-code-pro'
 
 # Dev
