@@ -58,9 +58,6 @@ fi
 #echo ">>> Updating the yadm origin to ssh.."
 yadm remote set-url origin "$SSH_REPO_URL"
 
-# Add Prezto
-#https://github.com/sorin-ionescu/prezto
-
 # Update neovim plugins
 
 #if command -v nvim >/dev/null 2>&1; then
