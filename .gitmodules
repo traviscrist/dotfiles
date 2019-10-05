@@ -1,0 +1,3 @@
+[submodule "/Users/travis/.zprezto"]
+	path = /Users/travis/.zprezto
+	url = git@github.com:traviscrist/prezto.git
