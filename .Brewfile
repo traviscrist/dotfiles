@@ -28,9 +28,12 @@ cask 'font-source-code-pro'
 # Dev
 brew 'git'
 brew 'jq'
-brew 'nvm'
 brew 'hub'
 brew 'tree'
+
+# NodeJS
+brew 'yarn'
+brew 'nvm'
 
 # Dev/Cloud
 cask 'google-cloud-sdk'
