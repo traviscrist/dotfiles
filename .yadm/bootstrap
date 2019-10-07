@@ -22,9 +22,13 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   if ! command -v brew >/dev/null 2>&1; then
     echo ">>> Installing homebrew.."
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    chsh -s /bin/zsh
   fi
 
-  brew install mas
+  if ! command -v mas >/dev/null 2>&1; then
+    echo ">>> Installing homebrew.."
+    brew install mas
+  fi
   # Not supported right now
   # mas signin trav07al@gmail.com
   
@@ -32,7 +36,6 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
     echo ">>> Installing brew packages.."
     brew bundle --global
   fi
-  chsh -s /bin/zsh
 fi
 
 
@@ -60,9 +63,9 @@ yadm remote set-url origin "$SSH_REPO_URL"
 
 # Update neovim plugins
 
-#if command -v nvim >/dev/null 2>&1; then
-#  echo "Bootstraping Neovim"
-#  vim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-#fi
+if command -v nvim >/dev/null 2>&1; then
+  echo "Bootstraping Neovim"
+  nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
+fi
 
 echo "Done!"
