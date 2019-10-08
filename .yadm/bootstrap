@@ -112,6 +112,9 @@ sudo pmset -a standbydelay 86400
 echo "Disable the sound effects on boot"
 sudo nvram SystemAudioVolume=" "
 
+echo "double click maximize"
+defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"
+
 echo "Increase window resize speed for Cocoa applications"
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
@@ -293,6 +296,9 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 echo "Set the icon size of Dock items to 36 pixels"
 defaults write com.apple.dock tilesize -int 36
 
+echo "Set dock to left side of screen"
+defaults write com.apple.dock orientation -string "left"
+
 # echo "Change minimize/maximize window effect to scale"
 # defaults write com.apple.dock mineffect -string "scale"
 
@@ -376,7 +382,7 @@ defaults write com.apple.appstore ShowDebugMenu -bool true
 
 # Travis Custom
 echo "Set Mode to Dark"
-deaults write NSGlobalDomain AppleInterfaceStyle -string "Dark" 
+defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark" 
 
 #-----------------------------------------
 # * Set yadm origin url to ssh
