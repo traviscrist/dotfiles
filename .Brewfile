@@ -18,6 +18,7 @@ mas 'spark-email-app-by-readdle', id: 1176895641
 cask 'iterm2'
 cask 'google-chrome'
 cask 'firefox'
+cask 'paw'
 
 # Zsh
 brew 'zsh'
