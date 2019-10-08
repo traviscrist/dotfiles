@@ -182,7 +182,8 @@ echo "Disable press-and-hold for keys in favor of key repeat"
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 echo "Set a blazingly fast keyboard repeat rate"
-defaults write NSGlobalDomain KeyRepeat -int 1;
+defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 echo "Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
@@ -373,7 +374,9 @@ defaults write com.apple.appstore WebKitDeveloperExtras -bool true
 echo "Enable Debug Menu in the Mac App Store"
 defaults write com.apple.appstore ShowDebugMenu -bool true
 
-
+# Travis Custom
+echo "Set Mode to Dark"
+deaults write NSGlobalDomain AppleInterfaceStyle -string "Dark" 
 
 #-----------------------------------------
 # * Set yadm origin url to ssh
