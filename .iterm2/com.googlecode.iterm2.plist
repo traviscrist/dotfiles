@@ -367,13 +367,13 @@
 	<key>Hotkey</key>
 	<true/>
 	<key>HotkeyChar</key>
-	<integer>13</integer>
+	<integer>32</integer>
 	<key>HotkeyCode</key>
-	<integer>36</integer>
+	<integer>49</integer>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>HotkeyModifiers</key>
-	<integer>1048840</integer>
+	<integer>524576</integer>
 	<key>IRMemory</key>
 	<integer>4</integer>
 	<key>LoadPrefsFromCustomFolder</key>
@@ -426,7 +426,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 363 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>721 23 717 854 0 0 1440 877 </string>
+	<string>721 0 717 877 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1177,7 +1177,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>A3E3FF96-983D-4208-88AB-DA6492397549</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>12</integer>
+	<integer>13</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>592277303.56101096</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
