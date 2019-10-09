@@ -58,23 +58,6 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
 
 fi
 
-#-----------------------------------------
-# * Max OSX Settings 
-#-----------------------------------------
-# Wallpaper
-MD5_NEWWP=$(md5 ~/.wallpapers/current.jpg | awk '{print $4}')
-MD5_OLDWP=$(md5 /System/Library/CoreServices/DefaultDesktop.jpg | awk '{print $4}')
-if [[ "$MD5_NEWWP" != "$MD5_OLDWP" ]]; then
-    echo "Set a custom wallpaper image"
-    # `DefaultDesktop.jpg` is already a symlink, and
-    # all wallpapers are in `/Library/Desktop Pictures/`. The default is `Wave.jpg`.
-    rm -rf ~/Library/Application Support/Dock/desktoppicture.db
-    sudo rm -f /System/Library/CoreServices/DefaultDesktop.jpg > /dev/null 2>&1
-    sudo rm -f /Library/Desktop\ Pictures/El\ Capitan.jpg
-    sudo cp ~/.wallpapers/current.jpg /System/Library/CoreServices/DefaultDesktop.jpg;
-    sudo cp ~/.wallpapers/current.jpg /Library/Desktop\ Pictures/El\ Capitan.jpg
-fi
-
 
 # SSD-specific tweaks                                                         #
 ###############################################################################

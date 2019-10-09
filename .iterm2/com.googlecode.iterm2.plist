@@ -369,7 +369,7 @@
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>HotkeyModifiers</key>
-	<integer>524288</integer>
+	<integer>1048840</integer>
 	<key>IRMemory</key>
 	<integer>4</integer>
 	<key>LoadPrefsFromCustomFolder</key>
@@ -422,7 +422,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 363 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>721 451 570 427 0 0 1440 878 </string>
+	<string>721 23 717 854 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1151,6 +1151,7 @@
 	<key>NoSyncAllAppVersions</key>
 	<array>
 		<string>3.3.4</string>
+		<string>3.3.5</string>
 	</array>
 	<key>NoSyncBFPFavorites</key>
 	<array>
@@ -1172,7 +1173,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>A3E3FF96-983D-4208-88AB-DA6492397549</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>9</integer>
+	<integer>12</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>592277303.56101096</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -1674,6 +1675,22 @@
 			</dict>
 			<dict>
 				<key>isTerminal</key>
+				<false/>
+				<key>name</key>
+				<string>title</string>
+				<key>nonterminalContext</key>
+				<integer>1</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>title</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
 				<string>tmuxWindowTitle</string>
@@ -1906,6 +1923,10 @@
 	</dict>
 	<key>PrefsCustomFolder</key>
 	<string>/Users/travis/.iterm2</string>
+	<key>PromptOnQuit</key>
+	<false/>
+	<key>QuitWhenAllWindowsClosed</key>
+	<true/>
 	<key>SUEnableAutomaticChecks</key>
 	<true/>
 	<key>SUFeedAlternateAppNameKey</key>
@@ -1918,6 +1939,8 @@
 	<date>2019-10-09T03:17:01Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
+	<key>SUUpdateRelaunchingMarker</key>
+	<false/>
 	<key>SmartPlacement</key>
 	<false/>
 	<key>SoundForEsc</key>
@@ -1929,6 +1952,6 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.3.4</string>
+	<string>3.3.5</string>
 </dict>
 </plist>
