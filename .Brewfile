@@ -19,6 +19,8 @@ cask 'iterm2'
 cask 'google-chrome'
 cask 'firefox'
 cask 'paw'
+cask 'contexts'
+cask 'dash'
 
 # Zsh
 brew 'zsh'
