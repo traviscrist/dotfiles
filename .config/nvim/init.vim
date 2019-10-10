@@ -86,7 +86,6 @@ set hidden                     " Possibility to have more than one
 " Swap Files and Backups
 set backupdir=~/.temp/backup//
 set directory=~/.temp/swp//
-set undodir=~/.temp/undo//
 
 set ruler                      " Shows the current line number at the bottom.
                                " right of the screen.
