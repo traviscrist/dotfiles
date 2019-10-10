@@ -161,6 +161,9 @@ defaults write NSGlobalDomain CGDisableCursorLocationMagnification -int 1
 # echo "Disable 'natural' (Lion-style) scrolling"
 # defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
 
+echo "Disable menu sounds"
+defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -bool false
+
 echo "Increase sound quality for Bluetooth headphones/headsets"
 defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
