@@ -98,6 +98,9 @@ sudo nvram SystemAudioVolume=" "
 echo "double click maximize"
 defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"
 
+echo "hide menu bar"
+defaults write NSGlobalDomain _HIHideMenuBar -bool true
+
 echo "Increase window resize speed for Cocoa applications"
 defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
 
