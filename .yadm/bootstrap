@@ -143,6 +143,12 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 # defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 # defaults write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 
+echo "Super Fast Mouse Speed"
+defaults write NSGlobalDomain com.apple.mouse.scaling -int 3
+
+echo "Disable shaking to locate"
+defaults write NSGlobalDomain CGDisableCursorLocationMagnification -int 1
+
 # echo "Trackpad: map bottom right corner to right-click"
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadCornerSecondaryClick -int 2
 # defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadRightClick -bool true
