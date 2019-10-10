@@ -34,6 +34,7 @@ brew 'git'
 brew 'jq'
 brew 'hub'
 brew 'tree'
+brew 'watch'
 
 # NodeJS
 brew 'yarn'
