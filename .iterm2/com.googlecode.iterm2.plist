@@ -1178,7 +1178,7 @@
 		<key>screenFrame</key>
 		<string>{{0, 0}, {3840, 1600}}</string>
 		<key>topLeft</key>
-		<string>{2210, 932}</string>
+		<string>{1513, 1064}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>A3E3FF96-983D-4208-88AB-DA6492397549</string>
@@ -1946,10 +1946,12 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-10-09T03:17:01Z</date>
+	<date>2019-10-10T18:21:38Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
+	<false/>
+	<key>ShowFullScreenTabBar</key>
 	<false/>
 	<key>SmartPlacement</key>
 	<false/>
