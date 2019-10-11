@@ -36,6 +36,9 @@ brew 'hub'
 brew 'tree'
 brew 'watch'
 
+# Design
+cask 'figma'
+
 # NodeJS
 brew 'yarn'
 brew 'nvm'
