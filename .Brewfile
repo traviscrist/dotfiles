@@ -35,6 +35,7 @@ brew 'jq'
 brew 'hub'
 brew 'tree'
 brew 'watch'
+brew 'sops'
 
 # Design
 cask 'figma'
