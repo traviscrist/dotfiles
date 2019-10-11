@@ -61,6 +61,7 @@ brew 'kubectl'
 brew 'kubernetes-helm'
 brew 'docker'
 brew 'docker-compose'
+brew 'docker-machine'
 
 # Dev/Python
 # a) virtualenv way:
