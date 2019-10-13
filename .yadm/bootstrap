@@ -29,9 +29,8 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
     defaults write com.apple.dock persistent-apps -array ""
     echo ">>> Installing mas.."
     brew install mas
-    # Not needed after new OSX
-    echo ">>> Set zsh as default shell.."
-    chsh -s /bin/zsh
+    # echo ">>> Set zsh as default shell.."
+    # chsh -s /bin/zsh
   fi
   # Not supported right now
   # mas signin trav07al@gmail.com

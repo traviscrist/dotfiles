@@ -22,8 +22,11 @@ cask 'paw'
 cask 'contexts'
 cask 'dash'
 
-# Zsh
+# Shells
 brew 'zsh'
+brew 'fish'
+
+# Fonts
 tap 'caskroom/fonts'
 brew 'brew-cask-completion'
 cask 'font-source-code-pro'
