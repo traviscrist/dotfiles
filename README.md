@@ -27,7 +27,10 @@ diff a b
 `chsh -s /bin/zsh`
 
 ## Fish Shell
-`chsh -s /usr/local/bin/fish`
+```
+echo "/usr/local/bin/fish" | sudo tee -a /etc/shells
+chsh -s /usr/local/bin/fish
+```
 
 # Install Apps Manually
 * pandabar
