@@ -38,6 +38,10 @@ chsh -s /usr/local/bin/fish
 * quickres on your own
 * docker app from https://www.docker.com/products/docker-desktop
 
+# Chome Extensions
+* ZenHub
+* Refined Github
+
 # Make commits to submodules
 1. submodule commit there and push
 1. then commit in yadm then push

@@ -24,7 +24,6 @@ cask 'dash'
 
 # Shells
 brew 'zsh'
-brew 'fish'
 
 # Fonts
 tap 'caskroom/fonts'
