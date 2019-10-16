@@ -52,6 +52,9 @@ gcloud config set project PROJECT_ID
 gcloud container clusters get-credentials primary
 ```
 
+# Misc Dev Resources: 
+https://webhook.site/ - Webhook testing
+
 # Cool Apps to look into
 * https://www.hammerspoon.org/go/
 
