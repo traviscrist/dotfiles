@@ -21,6 +21,7 @@ cask 'firefox'
 cask 'paw'
 cask 'contexts'
 cask 'dash'
+cask 'insomnia'
 
 # Shells
 brew 'zsh'

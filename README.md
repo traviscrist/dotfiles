@@ -51,3 +51,18 @@ gcloud auth configure-docker
 gcloud config set project PROJECT_ID
 gcloud container clusters get-credentials primary
 ```
+
+# Cool Apps to look into
+* https://www.hammerspoon.org/go/
+
+
+# Inspired from
+* https://github.com/ada-lovecraft/dotbot
+* https://github.com/pndurette/mac-setup
+* https://github.com/jaywcjlove/awesome-mac
+* https://github.com/donnemartin/dev-setup
+* https://github.com/ptb/mac-setup
+* https://github.com/mathiasbynens/dotfiles/issues/5#issuecomment-4117712
+* https://github.com/mathiasbynens/dotfiles
+* https://github.com/mathiasbynens/dotfiles/blob/master/.macos
+* https://github.com/paulirish/dotfiles
