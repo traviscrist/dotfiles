@@ -39,6 +39,7 @@ brew 'hub'
 brew 'tree'
 brew 'watch'
 brew 'sops'
+cask 'mysql-shell'
 
 # Design
 cask 'figma'
