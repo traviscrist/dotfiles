@@ -41,10 +41,12 @@ brew 'watch'
 brew 'sops'
 cask 'mysql-shell'
 
-# iOS Dev
+# Mobile Dev
 brew 'cocoapods'
 tap 'MiderWong/flutter'
 brew 'flutter'
+tap 'dart-lang/dart'
+brew 'dart'
 
 # Design
 cask 'figma'

@@ -22,6 +22,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 Plug 'airblade/vim-gitgutter'
+" Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
