@@ -43,7 +43,8 @@ cask 'mysql-shell'
 
 # iOS Dev
 brew 'cocoapods'
-
+tap 'MiderWong/flutter'
+brew 'flutter'
 
 # Design
 cask 'figma'
