@@ -41,6 +41,10 @@ brew 'watch'
 brew 'sops'
 cask 'mysql-shell'
 
+# iOS Dev
+brew 'cocoapods'
+
+
 # Design
 cask 'figma'
 
