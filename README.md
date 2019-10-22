@@ -83,6 +83,7 @@ brew info terraform
 
 # Misc Dev Resources: 
 https://webhook.site/ - Webhook testing
+https://toolbox.googleapps.com/apps/dig/ - Domain Lookup
 
 # Cool Apps to look into
 * https://www.hammerspoon.org/go/
