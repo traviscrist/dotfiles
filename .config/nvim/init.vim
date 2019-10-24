@@ -22,7 +22,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 Plug 'airblade/vim-gitgutter'
-" Plug 'sheerun/vim-polyglot'
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
@@ -55,6 +54,7 @@ nnoremap <leader>t <ESC>:NERDTreeToggle<CR>
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>m :History<CR>
 nnoremap <leader>e <ESC>:GFiles<CR>
+nnoremap <leader>s <ESC>:GFiles?<CR>
 nnoremap <leader>g <ESC>:F<CR>
 vnoremap // y/<C-R>"<CR>
 
@@ -66,9 +66,6 @@ nnoremap <C-H> <C-W><C-H>
 
 " `gf` opens file under cursor in a new vertical split
 nnoremap gf :vertical wincmd f<CR>
-
-" YouCompleteMe
-let g:ycm_autoclose_preview_window_after_insertion = 1
 
 " NerdTree
 let NERDTreeQuitOnOpen = 1
