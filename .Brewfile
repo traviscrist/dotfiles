@@ -67,6 +67,7 @@ brew 'neovim'
 brew 'fzf'
 brew 'ripgrep'
 brew 'bat'
+brew 'highlight'
 
 # Window Management
 cask 'spectacle'
