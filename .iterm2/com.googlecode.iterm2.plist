@@ -408,7 +408,7 @@
 	dWxs0g0ODxJaTlMub2JqZWN0c1YkY2xhc3OiEBGAAoAKgA3TFA0OFRkdV05TLmtleXOj
 	FhcYgAOABIAFoxobHIAGgAeACIAJWklkZW50aWZpZXJVV2lkdGhWSGlkZGVuUTAjQGjA
 	AAAAAAAI0iUmJyhaJGNsYXNzbmFtZVgkY2xhc3Nlc1xOU0RpY3Rpb25hcnmiJylYTlNP
-	YmplY3TTFA0OKy8doxYXGIADgASABaMwMRyAC4AMgAiACVExI0BzsZ2yLQ5W0iUmNzhe
+	YmplY3TTFA0OKy8doxYXGIADgASABaMwMRyAC4AMgAiACVExI0B0oZ2yLQ5W0iUmNzhe
 	TlNNdXRhYmxlQXJyYXmjNzkpV05TQXJyYXkACAARABoAJAApADIANwBJAEwAUgBUAGMA
 	aQBuAHkAgACDAIUAhwCJAJAAmACcAJ4AoACiAKYAqACqAKwArgC5AL8AxgDIANEA0gDX
 	AOIA6wD4APsBBAELAQ8BEQETARUBGQEbAR0BHwEhASMBLAExAUABRAAAAAAAAAIBAAAA
@@ -430,9 +430,9 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>410 363 620 392 0 0 1440 877 </string>
+	<string>650 606 620 392 0 0 1920 1200 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>912 -29 1677 1024 0 0 3840 1577 </string>
+	<string>955 -78 1914 1595 0 0 3840 1600 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1098,6 +1098,8 @@
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
 			<integer>0</integer>
+			<key>Scrollback in Alternate Screen</key>
+			<false/>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -1162,6 +1164,7 @@
 	<array>
 		<string>3.3.4</string>
 		<string>3.3.5</string>
+		<string>3.3.6</string>
 	</array>
 	<key>NoSyncBFPFavorites</key>
 	<array>
@@ -1178,12 +1181,12 @@
 		<key>screenFrame</key>
 		<string>{{0, 0}, {3840, 1600}}</string>
 		<key>topLeft</key>
-		<string>{1513, 1064}</string>
+		<string>{330, 1024}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>A3E3FF96-983D-4208-88AB-DA6492397549</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>14</integer>
+	<integer>20</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>592277303.56101096</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -1896,6 +1899,10 @@
 			</dict>
 		</array>
 	</dict>
+	<key>NoSyncSearchHistory2</key>
+	<array>
+		<string>4000</string>
+	</array>
 	<key>NoSyncTipOfTheDayEligibilityBeganTime</key>
 	<real>591935195.01991403</real>
 	<key>PointerActions</key>
@@ -1946,7 +1953,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-10-10T18:21:38Z</date>
+	<date>2019-10-22T22:42:20Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
@@ -1967,7 +1974,9 @@
 	<true/>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
+	<key>findMode_iTerm</key>
+	<integer>0</integer>
 	<key>iTerm Version</key>
-	<string>3.3.5</string>
+	<string>3.3.6</string>
 </dict>
 </plist>
