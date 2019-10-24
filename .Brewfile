@@ -61,9 +61,12 @@ brew 'terraform'
 
 # Dev/Apps
 cask 'sublime-text'
+
+# Neovim
 brew 'neovim'
 brew 'fzf'
 brew 'ripgrep'
+brew 'bat'
 
 # Window Management
 cask 'spectacle'

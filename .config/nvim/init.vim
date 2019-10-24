@@ -55,7 +55,8 @@ nmap <Leader>b :Buffers<CR>
 nmap <Leader>m :History<CR>
 nnoremap <leader>e <ESC>:GFiles<CR>
 nnoremap <leader>s <ESC>:GFiles?<CR>
-nnoremap <leader>g <ESC>:F<CR>
+" nnoremap <leader>g <ESC>:F<CR>
+nnoremap <leader>g <ESC>:Rg<CR>
 vnoremap // y/<C-R>"<CR>
 
 " Window Splitting
@@ -119,12 +120,25 @@ set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
 set wildignore+=*.pdf,*.psd
 set wildignore+=node_modules/*,bower_components/*
 
-" fzf + ripgrep
-let g:rg_command = '
-  \ rg --column --line-number --no-heading --fixed-strings --smart-case --follow --color "always"
-  \ --glob "!.git/*" '
 
-command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
+" fzf + rg + preview
+" Likewise, Files command with preview window
+command! -bang -nargs=? -complete=dir GFiles
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+let $BAT_THEME = 'TwoDark'
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep('rg --column --line-number --no-heading --smart-case --color=always '.shellescape(<q-args>),
+  \ 1,
+  \ fzf#vim#with_preview(),
+  \ <bang>0)
+
+" fzf + ripgrep
+" let g:rg_command = '
+"   \ rg --column --line-number --no-heading --fixed-strings --smart-case --follow --color "always"
+"   \ --glob "!.git/*" '
+
+" command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
