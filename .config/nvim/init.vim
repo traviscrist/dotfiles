@@ -124,10 +124,12 @@ set wildignore+=node_modules/*,bower_components/*
 
 " fzf + rg + preview
 " Likewise, Files command with preview window
+let $FZF_PREVIEW_COMMAND='bat --color=always {}'
+let $FZF_DEFAULT_OPTS='--layout=reverse'
+" let $BAT_THEME = 'TwoDark'
 command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': '--prompt ""'}, 'right:70%'), <bang>0)
 
-let $BAT_THEME = 'TwoDark'
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep('rg --column --line-number --no-heading --smart-case --color=always '.shellescape(<q-args>),
   \ 1,
@@ -141,9 +143,8 @@ command! -bang -nargs=* Rg
 
 " command! -bang -nargs=* F call fzf#vim#grep(g:rg_command .shellescape(<q-args>), 1, <bang>0)
 
-let $FZF_DEFAULT_OPTS='--layout=reverse'
+" fzf floating window
 let g:fzf_layout = { 'window': 'call FloatingFZF()' }
-
 
 function! FloatingFZF()
   let buf = nvim_create_buf(v:false, v:true)
