@@ -126,7 +126,7 @@ set wildignore+=node_modules/*,bower_components/*
 " Likewise, Files command with preview window
 let $FZF_PREVIEW_COMMAND='bat --color=always {}'
 let $FZF_DEFAULT_OPTS='--layout=reverse'
-" let $BAT_THEME = 'TwoDark'
+let $BAT_THEME='OneHalfDark'
 command! -bang -nargs=? -complete=dir GFiles
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': '--prompt ""'}, 'right:70%'), <bang>0)
 
