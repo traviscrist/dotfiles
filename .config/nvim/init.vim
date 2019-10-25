@@ -33,6 +33,7 @@ Plug 'tpope/vim-commentary'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
+Plug 'airblade/vim-rooter'
 
 " Devicons Must be last
 Plug 'ryanoasis/vim-devicons'
@@ -124,7 +125,7 @@ set wildignore+=node_modules/*,bower_components/*
 " fzf + rg + preview
 " Likewise, Files command with preview window
 command! -bang -nargs=? -complete=dir GFiles
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': '--prompt ""'}, 'right:70%'), <bang>0)
 
 let $BAT_THEME = 'TwoDark'
 command! -bang -nargs=* Rg
@@ -147,16 +148,17 @@ let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 function! FloatingFZF()
   let buf = nvim_create_buf(v:false, v:true)
   call setbufvar(buf, '&signcolumn', 'no')
+  let vertical = 1
   let height = &lines - 3
   let width = float2nr(&columns - (&columns * 2 / 10))
   let col = float2nr((&columns - width) / 2)
-
   let opts = {
         \ 'relative': 'editor',
-        \ 'row': 1,
+        \ 'row': vertical,
         \ 'col': col,
         \ 'width': width,
-        \ 'height': height
+        \ 'height': height,
+        \ 'style': 'minimal'
         \ }
 
   let win = nvim_open_win(buf, v:true, opts)
