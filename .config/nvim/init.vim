@@ -33,7 +33,6 @@ Plug 'tpope/vim-commentary'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
-Plug 'airblade/vim-rooter'
 
 " Devicons Must be last
 Plug 'ryanoasis/vim-devicons'
@@ -54,10 +53,9 @@ nnoremap <leader>t <ESC>:NERDTreeToggle<CR>
 
 nmap <Leader>b :Buffers<CR>
 nmap <Leader>m :History<CR>
-nnoremap <leader>e <ESC>:GFiles<CR>
-nnoremap <leader>s <ESC>:GFiles?<CR>
+nnoremap <leader>e <ESC>:ProjectGFiles<CR>
 " nnoremap <leader>g <ESC>:F<CR>
-nnoremap <leader>g <ESC>:Rg<CR>
+nnoremap <leader>g <ESC>:PRg<CR>
 vnoremap // y/<C-R>"<CR>
 
 " Window Splitting
@@ -123,6 +121,22 @@ set wildignore+=node_modules/*,bower_components/*
 
 
 " fzf + rg + preview
+" Project Root
+" Files
+function! s:find_git_root()
+  return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+
+command! ProjectGFiles execute 'GFiles' s:find_git_root()
+
+" Rip Grep
+command! -bang -nargs=* PRg
+  \ call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>),
+  \ 1,
+  \ {'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]},
+  \ fzf#vim#with_preview(),
+  \ <bang>0)
+
 " Likewise, Files command with preview window
 let $FZF_PREVIEW_COMMAND='bat --color=always {}'
 let $FZF_DEFAULT_OPTS='--layout=reverse'
