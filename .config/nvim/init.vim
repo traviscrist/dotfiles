@@ -116,11 +116,19 @@ set splitright
 
 " Don't offer to open certain files/directories
 set wildignore+=*.bmp,*.gif,*.ico,*.jpg,*.png,*.ico
-set wildignore+=*.pdf,*.psd
+set wildignore+=*.pdf,*.psd,*.lock
 set wildignore+=node_modules/*,bower_components/*
 
 
 " fzf + rg + preview
+" Likewise, Files command with preview window
+let $FZF_PREVIEW_COMMAND='bat --color=always {}'
+let $FZF_DEFAULT_OPTS='--layout=reverse'
+let $BAT_THEME='Sublime Snazzy'
+
+command! -bang -nargs=? -complete=dir GFiles
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': '--prompt ""'}, 'right:70%'), <bang>0)
+
 " Project Root
 " Files
 function! s:find_git_root()
@@ -136,12 +144,6 @@ command! -bang -nargs=* PRg
   \ fzf#vim#with_preview({'dir': system('git rev-parse --show-toplevel 2> /dev/null')[:-2]}),
   \ <bang>0)
 
-" Likewise, Files command with preview window
-let $FZF_PREVIEW_COMMAND='bat --color=always {}'
-let $FZF_DEFAULT_OPTS='--layout=reverse'
-let $BAT_THEME='Sublime Snazzy'
-command! -bang -nargs=? -complete=dir GFiles
-  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': '--prompt ""'}, 'right:70%'), <bang>0)
 
 command! -bang -nargs=* Rg
   \ call fzf#vim#grep('rg --column --line-number --no-heading --smart-case --color=always '.shellescape(<q-args>),
