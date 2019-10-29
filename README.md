@@ -82,9 +82,9 @@ brew info terraform
 ```
 
 # Misc Dev Resources: 
-https://webhook.site/ - Webhook testing
-https://toolbox.googleapps.com/apps/dig/ - Domain Lookup
-https://github.com/lirantal/is-website-vulnerable
+* https://webhook.site/ - Webhook testing
+* https://toolbox.googleapps.com/apps/dig/ - Domain Lookup
+* https://github.com/lirantal/is-website-vulnerable - Check if website has security vulnerabilities cmd line
 
 # Cool Apps to look into
 * https://www.hammerspoon.org/go/
