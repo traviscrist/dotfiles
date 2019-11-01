@@ -40,6 +40,7 @@ brew 'tree'
 brew 'watch'
 brew 'sops'
 cask 'mysql-shell'
+brew 'httpie'
 
 # Mobile Dev
 brew 'cocoapods'
@@ -61,13 +62,14 @@ brew 'terraform'
 
 # Dev/Apps
 cask 'sublime-text'
+tap 'heroku/brew'
+brew 'heroku'
 
 # Neovim
 brew 'neovim'
 brew 'fzf'
 brew 'ripgrep'
 brew 'bat'
-brew 'highlight'
 
 # Window Management
 cask 'spectacle'
