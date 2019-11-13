@@ -2,7 +2,7 @@
 	email = 4206970+traviscrist@users.noreply.github.com
 	name = Travis Crist
 [core]
-	excludesfile = /home/travis/.gitignore
+	excludesfile = /Users/travis/.gitignore
 	editor = nvim
 [branch]
 	autosetuprebase = always

@@ -6,3 +6,7 @@ README.md.temp
 tempfile
 *.key
 *.crt
+#Mac OSX generated files #
+######################
+*.DS_Store
+*.DS_Store?
