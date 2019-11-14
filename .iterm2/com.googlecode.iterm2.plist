@@ -432,7 +432,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>650 606 620 392 0 0 1920 1200 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>955 -78 1914 1595 0 0 3840 1600 </string>
+	<string>1923 0 1914 1600 0 0 3840 1600 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1181,12 +1181,16 @@
 		<key>screenFrame</key>
 		<string>{{0, 0}, {3840, 1600}}</string>
 		<key>topLeft</key>
-		<string>{330, 1024}</string>
+		<string>{1590, 1089}</string>
 	</dict>
 	<key>NoSyncInstallationId</key>
 	<string>A3E3FF96-983D-4208-88AB-DA6492397549</string>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>20</integer>
+	<integer>23</integer>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
+	<true/>
+	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
+	<integer>0</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>592277303.56101096</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -1901,6 +1905,11 @@
 	</dict>
 	<key>NoSyncSearchHistory2</key>
 	<array>
+		<string>coil-api</string>
+		<string>sharedSecret</string>
+		<string>shared_</string>
+		<string>shared_)</string>
+		<string>secret</string>
 		<string>4000</string>
 	</array>
 	<key>NoSyncTipOfTheDayEligibilityBeganTime</key>
@@ -1953,13 +1962,13 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-10-22T22:42:20Z</date>
+	<date>2019-11-14T00:34:42Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateRelaunchingMarker</key>
 	<false/>
 	<key>ShowFullScreenTabBar</key>
-	<false/>
+	<true/>
 	<key>SmartPlacement</key>
 	<false/>
 	<key>SoundForEsc</key>
