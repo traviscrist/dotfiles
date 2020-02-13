@@ -41,6 +41,7 @@ brew 'watch'
 brew 'sops'
 cask 'mysql-shell'
 brew 'httpie'
+brew 'github/gh/gh'
 
 # Mobile Dev
 brew 'cocoapods'
