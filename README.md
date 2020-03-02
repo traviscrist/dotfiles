@@ -60,6 +60,11 @@ cloud_sql_proxy -instances=INSTANCE_HERE:prisma=tcp:3306
 mysqlsh -u proxyuser --host 127.0.0.1
 ```
 
+# Helm
+```sh
+curl -L https://git.io/get_helm.sh | bash -s -- --version v2.14.1
+```
+
 # Homebrew
 ## Pin Terraform Version
 From: https://blog.gruntwork.io/installing-multiple-versions-of-terraform-with-homebrew-899f6d124ff9
