@@ -64,6 +64,12 @@ mysqlsh -u proxyuser --host 127.0.0.1
 ```sh
 curl -L https://git.io/get_helm.sh | bash -s -- --version v2.14.1
 ```
+Using Brew
+```sh
+git clone https://github.com/Homebrew/homebrew-core.git
+git log master -- Formula/kubernetes-helm.rb
+brew install https://github.com/Homebrew/homebrew-core/raw/a55a387ba0/Formula/kubernetes-helm.rb
+```
 
 # Homebrew
 ## Pin Terraform Version
