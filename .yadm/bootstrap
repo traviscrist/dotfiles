@@ -129,7 +129,7 @@ sudo systemsetup -setcomputersleep Off > /dev/null
 echo "Enable AAC and APTx"
 sudo defaults write bluetoothaudiod "Enable AptX codec" -bool true
 sudo defaults write bluetoothaudiod "Enable AAC codec" -bool true
-
+sudo defaults write bluetoothaudiod "AAC Bitrate" 320
 # echo "Disable Notification Center and remove the menu bar icon"
 # launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist > /dev/null 2>&1
 
