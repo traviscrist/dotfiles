@@ -122,7 +122,7 @@ set wildignore+=node_modules/*,bower_components/*
 
 " fzf + rg + preview
 " Likewise, Files command with preview window
-let $FZF_PREVIEW_COMMAND='bat --color=always {}'
+let $FZF_PREVIEW_COMMAND='bat --color=always {} --style=numbers'
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 let $BAT_THEME='Sublime Snazzy'
 
