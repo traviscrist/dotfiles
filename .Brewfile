@@ -66,6 +66,9 @@ cask 'sublime-text'
 tap 'heroku/brew'
 brew 'heroku'
 
+# Keyboard
+cask 'karabiner-elements'
+
 # Neovim
 brew 'neovim'
 brew 'fzf'
