@@ -234,6 +234,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 augroup END
 
 "Ale Settings
+" Don't show the underlines
+let g:ale_set_highlights = 0
 " let g:ale_fixers = {
 " \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 " \   'javascript': ['prettier-standard'],
