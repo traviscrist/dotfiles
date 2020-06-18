@@ -29,7 +29,6 @@ diff a b
 # Install Apps Manually
 * pandabar
 * bettertouchtools
-* quickres on your own
 * docker app from https://www.docker.com/products/docker-desktop
 * contexts
 
