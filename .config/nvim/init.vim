@@ -33,6 +33,7 @@ Plug 'tpope/vim-commentary'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
+Plug 'wincent/ferret'
 
 " Devicons Must be last
 Plug 'ryanoasis/vim-devicons'
