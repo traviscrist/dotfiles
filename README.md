@@ -98,7 +98,7 @@ brew info terraform
 
 # Cool Apps to look into
 * https://www.hammerspoon.org/go/
-
+* https://github.com/XVimProject/XVim2
 
 # Inspired from
 * https://github.com/ada-lovecraft/dotbot
