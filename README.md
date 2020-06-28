@@ -7,11 +7,11 @@ GitHub: [https://github.com/TheLocehiliosan/yadm](https://github.com/TheLocehili
 
 1. Install [Homebrew](https://brew.sh/)
 1. `brew install yadm`
+1. Add your [git ssh key](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 1. `yadm clone` <url> <- This repository
 1. `yadm status`
 1. Login to App Store
 1. `yadm bootstrap` 
-1. Add your [git ssh key](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
 1. Manually set caps lock to be escape
 1. Manually set the dark mode
 
