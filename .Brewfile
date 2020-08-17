@@ -57,6 +57,9 @@ cask 'figma'
 brew 'yarn'
 brew 'nvm'
 
+# Stripe
+brew 'stripe/stripe-cli/stripe'
+
 # Dev/Cloud
 cask 'google-cloud-sdk'
 brew 'terraform'
