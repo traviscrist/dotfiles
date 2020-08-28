@@ -59,6 +59,13 @@ cloud_sql_proxy -instances=INSTANCE_HERE:prisma=tcp:3306
 mysqlsh -u proxyuser --host 127.0.0.1
 ```
 
+# Ambassador Edgectl
+```sh
+sudo curl -fL https://metriton.datawire.io/downloads/darwin/edgectl -o /usr/local/bin/edgectl && sudo chmod a+x /usr/local/bin/edgectl
+
+edgectl install
+```
+
 # Helm
 ```sh
 curl -L https://git.io/get_helm.sh | bash -s -- --version v2.14.1
