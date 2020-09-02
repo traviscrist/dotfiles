@@ -62,8 +62,6 @@ mysqlsh -u proxyuser --host 127.0.0.1
 # Ambassador Edgectl
 ```sh
 sudo curl -fL https://metriton.datawire.io/downloads/darwin/edgectl -o /usr/local/bin/edgectl && sudo chmod a+x /usr/local/bin/edgectl
-
-edgectl install
 ```
 
 # Helm
