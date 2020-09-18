@@ -42,6 +42,7 @@ brew 'sops'
 cask 'mysql-shell'
 brew 'httpie'
 brew 'github/gh/gh'
+brew 'pwgen'
 
 # Mobile Dev
 brew 'cocoapods'
