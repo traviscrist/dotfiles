@@ -5,6 +5,8 @@ GitHub: [https://github.com/TheLocehiliosan/yadm](https://github.com/TheLocehili
 
 # Setup
 
+1. Enable Filevault Under Security and Privacy
+1. Enable Firmware password by booting into recovery mode with CMD + R and enabling it
 1. Install [Homebrew](https://brew.sh/)
 1. `brew install yadm`
 1. Add your [git ssh key](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent)
