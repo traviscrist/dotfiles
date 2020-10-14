@@ -61,7 +61,7 @@ brew 'stripe/stripe-cli/stripe'
 # Dev/Cloud
 cask 'google-cloud-sdk'
 brew 'terraform'
-brew 'gdrive'
+brew 'google-backup-and-sync'
 
 # Dev/Apps
 cask 'sublime-text'
