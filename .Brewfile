@@ -42,6 +42,8 @@ cask 'mysql-shell'
 brew 'httpie'
 brew 'gh'
 brew 'pwgen'
+cask 'linear-linear'
+cask 'front'
 
 # Mobile Dev
 brew 'cocoapods'
@@ -59,6 +61,7 @@ brew 'stripe/stripe-cli/stripe'
 # Dev/Cloud
 cask 'google-cloud-sdk'
 brew 'terraform'
+brew 'gdrive'
 
 # Dev/Apps
 cask 'sublime-text'
