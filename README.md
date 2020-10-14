@@ -43,6 +43,7 @@ diff a b
 
 # Google Cloud
 ```sh
+gcloud auth login
 gcloud auth application-default login
 gcloud auth configure-docker
 ```
@@ -50,7 +51,7 @@ gcloud auth configure-docker
 ## For each project:
 ```sh
 gcloud config set project PROJECT_ID
-gcloud container clusters get-credentials primary
+gcloud container clusters get-credentials --zone=[ZONE] primary
 ```
 
 ## Mysql
