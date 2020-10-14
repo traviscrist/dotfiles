@@ -44,7 +44,7 @@ brew 'gh'
 brew 'pwgen'
 cask 'linear-linear'
 cask 'front'
-
+cask 'discord'
 # Mobile Dev
 brew 'cocoapods'
 
