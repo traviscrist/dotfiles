@@ -32,6 +32,7 @@ diff a b
 * pandabar
 * bettertouchtools
 * docker app from https://www.docker.com/products/docker-desktop
+* Linear
 
 # Chome Extensions
 * ZenHub
