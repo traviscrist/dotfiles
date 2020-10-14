@@ -27,7 +27,7 @@ cask 'insomnia'
 brew 'zsh'
 
 # Fonts
-tap 'caskroom/fonts'
+tap 'homebrew/cask-fonts'
 brew 'brew-cask-completion'
 cask 'font-source-code-pro'
 cask 'font-sourcecodepro-nerd-font'
@@ -41,15 +41,11 @@ brew 'watch'
 brew 'sops'
 cask 'mysql-shell'
 brew 'httpie'
-brew 'github/gh/gh'
+brew 'gh'
 brew 'pwgen'
 
 # Mobile Dev
 brew 'cocoapods'
-tap 'MiderWong/flutter'
-brew 'flutter'
-tap 'dart-lang/dart'
-brew 'dart'
 
 # Design
 cask 'figma'
@@ -98,7 +94,6 @@ brew 'kubernetes-helm'
 # b) pyenv way:
 # pyenv install <python version>
 # pyenv virtualenv <python version> <name>
-brew 'python@2' # 2.7
 brew 'python' # 3
 brew 'pyenv'
 brew 'pyenv-virtualenv'
