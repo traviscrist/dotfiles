@@ -30,7 +30,6 @@ brew 'zsh'
 tap 'homebrew/cask-fonts'
 brew 'brew-cask-completion'
 cask 'font-source-code-pro'
-cask 'font-sourcecodepro-nerd-font'
 
 # Dev
 brew 'git'
