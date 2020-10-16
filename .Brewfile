@@ -13,6 +13,7 @@ mas 'Stay', id: 435410196
 mas 'flycut-clipboard-manager', id: 442160987
 mas 'soulver-2', id: 413965349
 mas 'spark-email-app-by-readdle', id: 1176895641
+mas 'things-3', id: 904280696
 
 # Cask macOS apps
 cask 'iterm2'
