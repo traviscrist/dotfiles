@@ -26,6 +26,7 @@ cask 'insomnia'
 
 # Shells
 brew 'zsh'
+brew 'zsh-completion'
 
 # Fonts
 tap 'homebrew/cask-fonts'
