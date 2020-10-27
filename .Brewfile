@@ -48,6 +48,8 @@ brew 'pwgen'
 cask 'linear-linear'
 cask 'front'
 cask 'discord'
+brew 'zoxide'
+
 # Mobile Dev
 brew 'cocoapods'
 
