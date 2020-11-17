@@ -26,7 +26,6 @@ cask 'insomnia'
 
 # Shells
 brew 'zsh'
-brew 'zsh-completion'
 
 # Fonts
 tap 'homebrew/cask-fonts'
@@ -49,7 +48,8 @@ cask 'linear-linear'
 cask 'front'
 cask 'discord'
 brew 'zoxide'
-
+tap 'tilt-dev/tap'
+brew 'tilt-dev/tap/tilt'
 # Mobile Dev
 brew 'cocoapods'
 
