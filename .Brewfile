@@ -50,7 +50,10 @@ cask 'discord'
 brew 'zoxide'
 tap 'tilt-dev/tap'
 brew 'tilt-dev/tap/tilt'
+brew 'tilt-dev/tap/ctlptl'
 brew 'java'
+brew 'kind'
+
 # Mobile Dev
 brew 'cocoapods'
 
