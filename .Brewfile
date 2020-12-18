@@ -54,7 +54,6 @@ brew 'tilt-dev/tap/ctlptl'
 brew 'java'
 brew 'kind'
 brew 'kubectx'
-brew 'k3d'
 
 # Mobile Dev
 brew 'cocoapods'
