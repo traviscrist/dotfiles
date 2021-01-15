@@ -36,7 +36,6 @@ cask 'font-sauce-code-pro-nerd-font'
 # Dev
 brew 'git'
 brew 'jq'
-brew 'hub'
 brew 'tree'
 brew 'watch'
 brew 'sops'
