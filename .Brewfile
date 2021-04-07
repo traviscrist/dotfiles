@@ -23,6 +23,7 @@ cask 'paw'
 cask 'contexts'
 cask 'dash'
 cask 'insomnia'
+cask 'ballast'
 
 # Shells
 brew 'zsh'
