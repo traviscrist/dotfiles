@@ -55,6 +55,7 @@ brew 'java'
 brew 'kind'
 brew 'kubectx'
 brew 'watchman'
+brew 'libpq'
 
 # Mobile Dev
 brew 'cocoapods'
