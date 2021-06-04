@@ -56,6 +56,7 @@ brew 'kind'
 brew 'kubectx'
 brew 'watchman'
 brew 'libpq'
+brew 'tfenv'
 
 # Mobile Dev
 brew 'cocoapods'
