@@ -73,7 +73,6 @@ brew 'stripe/stripe-cli/stripe'
 
 # Dev/Cloud
 cask 'google-cloud-sdk'
-brew 'terraform'
 brew 'google-backup-and-sync'
 
 # Dev/Apps
