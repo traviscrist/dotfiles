@@ -95,7 +95,6 @@ cask 'spectacle'
 # Dev/Containers
 brew 'kubectl'
 brew 'kubernetes-helm'
-brew 'mutagen-io/mutagen/mutagen-beta'
 # brew 'docker'
 # brew 'docker-compose'
 # brew 'docker-machine'
