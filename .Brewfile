@@ -108,8 +108,8 @@ brew 'kubernetes-helm'
 # b) pyenv way:
 # pyenv install <python version>
 # pyenv virtualenv <python version> <name>
-brew 'python' # 3
+# brew 'python' # 3
 brew 'pyenv'
-brew 'pyenv-virtualenv'
+# brew 'pyenv-virtualenv'
 
 # Misc
