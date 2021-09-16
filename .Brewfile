@@ -57,6 +57,7 @@ brew 'kubectx'
 brew 'watchman'
 brew 'libpq'
 brew 'tfenv'
+brew 'grpcurl'
 
 # Mobile Dev
 brew 'cocoapods'
