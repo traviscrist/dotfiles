@@ -78,25 +78,10 @@ git log master -- Formula/kubernetes-helm.rb
 brew install https://github.com/Homebrew/homebrew-core/raw/a55a387ba0/Formula/kubernetes-helm.rb
 ```
 
-# Homebrew
-## Pin Terraform Version
-From: https://blog.gruntwork.io/installing-multiple-versions-of-terraform-with-homebrew-899f6d124ff9
+# Switch Terraform Version
 ```sh
-git clone git@github.com:Homebrew/homebrew-core.git
-cd homebrew-core
-git log master -- Formula/terraform.rb
-git checkout 3507fce2ba1f36cc371fe888fd093bf5aa79981d
-cd Formula
-brew unpin terraform
-brew unlink terraform
-brew install terraform.rb
-
-# Switching
-brew switch terraform 0.11.13
-
-# Pinnig
-brew pin terraform
-brew info terraform
+tfenv install 0.11.15
+tfenv use 0.11.15
 ```
 
 # Misc Dev Resources: 
