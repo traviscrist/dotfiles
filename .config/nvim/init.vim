@@ -34,6 +34,7 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'wincent/ferret'
+Plug 'keith/swift.vim' " syntax highlighting
 
 " Devicons Must be last
 Plug 'ryanoasis/vim-devicons'
