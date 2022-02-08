@@ -28,7 +28,6 @@ diff a b
 * pandabar
 * bettertouchtools
 * docker app from https://www.docker.com/products/docker-desktop
-* https://www.raycast.com/
 
 # Chome Extensions
 * ZenHub

@@ -24,6 +24,7 @@ cask 'contexts'
 cask 'dash'
 cask 'insomnia'
 cask 'ballast'
+cask 'raycast'
 
 # Shells
 brew 'zsh'
