@@ -60,6 +60,7 @@ brew 'watchman'
 brew 'libpq'
 brew 'tfenv'
 brew 'grpcurl'
+brew 'firebase'
 
 # Mobile Dev
 brew 'cocoapods'
