@@ -35,6 +35,9 @@ Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'wincent/ferret'
 Plug 'keith/swift.vim' " syntax highlighting
+#Flutter
+Plug 'nvim-lua/plenary.nvim'
+Plug 'akinsho/flutter-tools.nvim'
 
 " Devicons Must be last
 Plug 'ryanoasis/vim-devicons'
