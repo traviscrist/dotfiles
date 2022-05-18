@@ -35,7 +35,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'wincent/ferret'
 Plug 'keith/swift.vim' " syntax highlighting
-#Flutter
+" Flutter
 Plug 'nvim-lua/plenary.nvim'
 Plug 'akinsho/flutter-tools.nvim'
 
@@ -46,6 +46,11 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 " initialize plugin system
 call plug#end()
+
+" Flutter Setup
+lua << EOF
+  require("flutter-tools").setup{} -- use defaults
+EOF
 
 " Key Bindings
 
