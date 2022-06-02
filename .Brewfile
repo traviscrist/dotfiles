@@ -61,7 +61,6 @@ brew 'libpq'
 brew 'tfenv'
 brew 'grpcurl'
 brew 'firebase-cli'
-cask 'dbeaver-community'
 
 # Mobile Dev
 brew 'cocoapods'
