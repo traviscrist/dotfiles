@@ -42,6 +42,7 @@ diff a b
 gcloud auth login
 gcloud auth application-default login
 gcloud auth configure-docker
+gcloud components install gke-gcloud-auth-plugin
 ```
 
 ## For each project:
