@@ -62,6 +62,7 @@ brew 'tfenv'
 brew 'grpcurl'
 brew 'firebase-cli'
 cask 'dbeaver-community'
+brew 'postman'
 
 # Mobile Dev
 brew 'cocoapods'
