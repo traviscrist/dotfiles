@@ -63,6 +63,7 @@ brew 'grpcurl'
 brew 'firebase-cli'
 cask 'dbeaver-community'
 brew 'postman'
+brew 'tableplus'
 
 # Mobile Dev
 brew 'cocoapods'
