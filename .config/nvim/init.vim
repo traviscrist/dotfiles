@@ -34,7 +34,9 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'wincent/ferret'
-Plug 'keith/swift.vim' " syntax highlighting
+"" syntax highlighting
+Plug 'keith/swift.vim'
+Plug 'hashivim/vim-terraform'
 " Flutter
 Plug 'nvim-lua/plenary.nvim'
 Plug 'akinsho/flutter-tools.nvim'
