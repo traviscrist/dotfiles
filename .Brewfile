@@ -61,8 +61,9 @@ brew 'firebase-cli'
 cask 'dbeaver-community'
 brew 'postman'
 brew 'tableplus'
-tap 'supabase/tap'
-brew 'supabase'
+# tap 'supabase/tap'
+# brew 'supabase'
+brew 'jless'
 
 # Mobile Dev
 brew 'cocoapods'
