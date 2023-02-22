@@ -248,12 +248,12 @@ augroup END
 "Ale Settings
 " Don't show the underlines
 let g:ale_set_highlights = 0
-" let g:ale_fixers = {
-" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-" \   'javascript': ['prettier-standard'],
-" \}
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['prettier', 'eslint'],
+\}
 " Set this variable to 1 to fix files when you save them.
-" let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 1
 " Set this. Airline will handle the rest.
 let g:airline#extensions#ale#enabled = 1
 
