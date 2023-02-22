@@ -70,9 +70,7 @@ tfenv use 0.11.15
 
 # Cool Apps to look into
 * https://www.hammerspoon.org/go/
-* https://github.com/romgrk/kui.nvim
 * https://github.com/lapce/lapce
-* https://github.com/folke/lazy.nvim
 
 # Inspired from
 * https://github.com/ada-lovecraft/dotbot
