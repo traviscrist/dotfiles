@@ -34,25 +34,17 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'wincent/ferret'
-"" syntax highlighting
+
+" syntax highlighting
 Plug 'keith/swift.vim'
 Plug 'hashivim/vim-terraform'
-" Flutter
-Plug 'nvim-lua/plenary.nvim'
-Plug 'akinsho/flutter-tools.nvim'
 
 " Devicons Must be last
 Plug 'ryanoasis/vim-devicons'
-" Plug 'zxqfl/tabnine-vim'
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
 
 " initialize plugin system
 call plug#end()
-
-" Flutter Setup
-lua << EOF
-  require("flutter-tools").setup{} -- use defaults
-EOF
 
 " Key Bindings
 

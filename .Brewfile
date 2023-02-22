@@ -9,22 +9,20 @@
 # 'brew install mas && mas signin <email>'
 mas 'Slack', id: 803453959
 mas 'Simplenote', id: 692867256
-mas 'Stay', id: 435410196
 mas 'flycut-clipboard-manager', id: 442160987
 mas 'soulver-2', id: 413965349
-mas 'spark-email-app-by-readdle', id: 1176895641
-mas 'things-3', id: 904280696
 
 # Cask macOS apps
-cask 'iterm2'
 cask 'google-chrome'
 cask 'firefox'
 cask 'paw'
-cask 'contexts'
-cask 'dash'
-cask 'insomnia'
+# Audio Sound Balance Fixer
 cask 'ballast'
+# App Switchers
+cask 'contexts'
 cask 'raycast'
+# Email
+cask 'mimestream'
 
 # Shells
 brew 'zsh'
@@ -47,23 +45,15 @@ brew 'httpie'
 brew 'gh'
 brew 'pwgen'
 cask 'linear-linear'
-cask 'front'
-cask 'discord'
 brew 'zoxide'
 brew 'java'
 brew 'kind'
 brew 'kubectx'
-brew 'watchman'
 brew 'libpq'
 brew 'tfenv'
 brew 'grpcurl'
 brew 'firebase-cli'
-cask 'dbeaver-community'
-brew 'postman'
 brew 'tableplus'
-# tap 'supabase/tap'
-# brew 'supabase'
-brew 'jless'
 
 # Mobile Dev
 brew 'cocoapods'
@@ -102,21 +92,4 @@ cask 'spectacle'
 # Dev/Containers
 brew 'kubectl'
 brew 'kubernetes-helm'
-# brew 'docker'
-# brew 'docker-compose'
-# brew 'docker-machine'
-
-# Dev/Python
-# a) virtualenv way:
-# PIP_REQUIRE_VIRTUALENV="false" pip install virtualenv
-# PIP_REQUIRE_VIRTUALENV="false" pip3 install virtualenv
-# virtualenv -p python <name> # or:
-# virtualenv -p python3 <name>
-# b) pyenv way:
-# pyenv install <python version>
-# pyenv virtualenv <python version> <name>
-# brew 'python' # 3
 brew 'pyenv'
-# brew 'pyenv-virtualenv'
-
-# Misc
