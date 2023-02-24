@@ -63,6 +63,7 @@ cask 'figma'
 
 # NodeJS
 brew 'yarn'
+brew 'pnpm'
 brew 'nvm'
 
 # Stripe
