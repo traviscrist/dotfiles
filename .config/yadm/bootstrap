@@ -42,22 +42,6 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
 fi
 
 
-#-----------------------------------------
-# * Configure iTerm2 (to use ~/.iterm2/)
-#   https://yadm.io/docs/bootstrap
-#-----------------------------------------
-
-if [ "$SYSTEM_TYPE" = "Darwin" ]; then
-  mkdir ~/.iterm2
-  if [ -d "$HOME/.iterm2" ]; then
-    echo ">>> Setting iTerm prefs directory.."
-    defaults write com.googlecode.iterm2 PrefsCustomFolder "$HOME/.iterm2"
-    defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-  fi
-
-fi
-
-
 # SSD-specific tweaks                                                         #
 ###############################################################################
 
@@ -66,14 +50,6 @@ sudo tmutil disable local
 
 echo "Disable hibernation (speeds up entering sleep mode)"
 sudo pmset -a hibernatemode 0
-
-## COULD NOT APPLY
-# echo "Remove the sleep image file to save disk space"
-# sudo rm -rf /Private/var/vm/sleepimage
-# echo "Create a zero-byte file instead"
-# sudo touch /Private/var/vm/sleepimage
-# echo "…and make sure it can’t be rewritten"
-# sudo chflags uchg /Private/var/vm/sleepimage
 
 echo "Disable the sudden motion sensor as it’s not useful for SSDs"
 sudo pmset -a sms 0
@@ -305,6 +281,9 @@ defaults write com.apple.dock minimize-to-application -bool true
 
 # echo "Enable spring loading for all Dock items"
 # defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
+
+echo "Don't show recents in the doc"
+defaults write com.apple.dock show-recents -bool false
 
 echo "Show indicator lights for open applications in the Dock"
 defaults write com.apple.dock show-process-indicators -bool true
