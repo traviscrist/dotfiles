@@ -2,11 +2,12 @@
 
 
 -- Setup Tasks
-require("core.setup")
+require('core.setup')
 -- Plugin management via lazy
-require("core.lazy")
+require('core.lazy')
 -- Settings
-require("core.options")
-
+require('core.options')
+-- Key Mappings
+require('core.mappings')
 
 
