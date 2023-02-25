@@ -86,6 +86,8 @@ brew 'neovim'
 brew 'fzf'
 brew 'ripgrep'
 brew 'bat'
+brew 'fd'
+brew 'delta'
 
 # Window Management
 cask 'spectacle'
