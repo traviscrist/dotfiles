@@ -13,7 +13,6 @@ local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
  vim.g.mapleader = "," -- make sure to set `mapleader` before lazy so your mappings are correct
 
-
  require("lazy").setup("core.plugins", {
   -- defaults = { lazy = true },
   install = {

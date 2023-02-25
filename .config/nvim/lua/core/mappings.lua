@@ -6,4 +6,11 @@ map('n', '<C-K>', '<C-W><C-K>')
 map('n', '<C-L>', '<C-W><C-L>')
 map('n', '<C-H>', '<C-W><C-H>')
 
-map('n', '<leader>w', '<cmd>write<cr>'
+map('n', '<leader>w', '<cmd>write<cr>')
+
+-- FZF Lua Settings
+map('n', '<leader>b', ':FzfLua buffers<cr>')
+map('n', '<leader>m', ':FzfLua oldfiles<cr>')
+map('n', '<leader>e', ':FzfLua git_files<cr>')
+map('n', '<leader>g', ':FzfLua live_grep<cr>')
+

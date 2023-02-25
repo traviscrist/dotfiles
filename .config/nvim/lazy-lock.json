@@ -1,4 +1,6 @@
 {
+  "fzf-lua": { "branch": "main", "commit": "15e9b1f1494dc1facaffe9543281d015c43b9eba" },
   "lazy.nvim": { "branch": "main", "commit": "8077428e63feb0f3bf795d53b23ba1695b28ab0e" },
-  "oceanic-next": { "branch": "master", "commit": "5ef31a34204f84714885ae9036f66a626036c3dc" }
+  "nightfox.nvim": { "branch": "main", "commit": "be5e53df21c8f41790d25c56cd16cda90137dc63" },
+  "nvim-web-devicons": { "branch": "master", "commit": "4709a504d2cd2680fb511675e64ef2790d491d36" }
 }
