@@ -1,0 +1,4 @@
+{
+  "lazy.nvim": { "branch": "main", "commit": "8077428e63feb0f3bf795d53b23ba1695b28ab0e" },
+  "oceanic-next": { "branch": "master", "commit": "5ef31a34204f84714885ae9036f66a626036c3dc" }
+}
