@@ -34,7 +34,7 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   fi
   # Not supported right now
   # mas signin trav07al@gmail.com
-  
+
   if [ -f "$HOME/.Brewfile" ]; then
     echo ">>> Installing brew packages.."
     brew bundle --global
@@ -359,7 +359,7 @@ defaults write com.apple.appstore ShowDebugMenu -bool true
 
 # Travis Custom
 echo "Set Mode to Dark"
-defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark" 
+defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
 
 #-----------------------------------------
 # * Set yadm origin url to ssh
@@ -367,11 +367,5 @@ defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
 
 #echo ">>> Updating the yadm origin to ssh.."
 yadm remote set-url origin "$SSH_REPO_URL"
-
-# Update neovim plugins
-if command -v nvim >/dev/null 2>&1; then
-  echo "Bootstraping Neovim"
-  nvim '+PlugUpdate' '+PlugClean!' '+PlugUpdate' '+qall'
-fi
 
 echo "Done!"
