@@ -24,6 +24,9 @@ cask 'raycast'
 # Email
 cask 'mimestream'
 
+# Monitors
+cask 'monitorcontrol'
+
 # Shells
 brew 'zsh'
 

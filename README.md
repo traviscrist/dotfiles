@@ -30,7 +30,6 @@ diff a b
 # Install Apps Manually
 * pandabar
 * docker app from https://www.docker.com/products/docker-desktop
-* [https://github.com/MonitorControl/MonitorControl](MonitorControl)
 
 # Make commits to submodules
 1. submodule commit there and push
