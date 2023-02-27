@@ -8,6 +8,7 @@ M.langs = {
   "css",
   "dockerfile",
   "gitignore",
+  "graphql",
   "html",
   "java",
   "javascript",
@@ -24,6 +25,7 @@ M.langs = {
   "terraform",
   "typescript",
   "toml",
+  "vim",
   "yaml",
 }
 
