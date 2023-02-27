@@ -12,7 +12,7 @@ local M = {
   config = function()
     local settings = require("core.settings")
     require("nvim-treesitter.configs").setup({
-      ensure_installed = settings.treesitter_ensure_installed,
+      ensure_installed = settings.langs,
       ignore_install = {}, -- List of parsers to ignore installing
       highlight = {
         enable = true, -- false will disable the whole extension
