@@ -8,5 +8,5 @@ require('core.lazy')
 require('core.options')
 -- Key Mappings
 require('core.mappings')
-
-
+-- Autocmd
+require('core.autocmd')
