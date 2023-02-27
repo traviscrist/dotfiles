@@ -1,4 +1,5 @@
-local settings = require("core.settings")
+local settings = require('core.settings')
+local utils = require("core.utils")
 
 local M = {
   "hrsh7th/nvim-cmp",
@@ -40,7 +41,7 @@ local M = {
         documentation = cmp.config.window.bordered(),
       },
       mapping = {
-        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-b>'] = cmp.mapping.scroll_docs( -4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
@@ -61,10 +62,10 @@ local M = {
       sources = {
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
-        { name = "buffer", keyword_length = 5 },
+        { name = "buffer",                 keyword_length = 5 },
         { name = "luasnip" },
         { name = "path" },
-        { name = "rg", keyword_length = 5 },
+        { name = "rg",                     keyword_length = 5 },
       },
     })
 
@@ -91,14 +92,17 @@ local M = {
     -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-        virtual_text = true,
-        signs = true,
-        underline = true,
-        update_in_insert = true,
+      virtual_text = true,
+      signs = true,
+      underline = true,
+      update_in_insert = true,
     })
 
     for _, lsp in pairs(settings.lang_servers) do
       require('lspconfig')[lsp].setup {
+        on_attach = function(client, bufnr)
+          utils.custom_lsp_attach(client, bufnr)
+        end,
         capabilities = capabilities
       }
     end
