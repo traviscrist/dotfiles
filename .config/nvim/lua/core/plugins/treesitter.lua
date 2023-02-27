@@ -32,7 +32,6 @@ local M = {
         enable = true,
       },
       indent = { enable = true },
-      autopairs = { enable = true },
       textobjects = {
         select = {
           enable = true,

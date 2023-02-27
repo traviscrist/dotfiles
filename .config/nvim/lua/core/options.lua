@@ -1,8 +1,4 @@
-local settings = require('core.settings')
-
 local o = vim.opt
-local fn = vim.fn
-
 
 o.autochdir = true -- change working director based on last opened file
 o.autoindent = true -- copy indent from current line when starting a new line`
@@ -58,4 +54,3 @@ o.wildignore = [[
 */tmp/*,*.so,*.swp,*.zip,**/node_modules/**,**/target/**,**.terraform/**'
 ]]
 o.writebackup = false -- disable backups
-

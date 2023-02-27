@@ -14,3 +14,5 @@ map('n', '<leader>m', ':FzfLua oldfiles<cr>')
 map('n', '<leader>e', ':FzfLua git_files<cr>')
 map('n', '<leader>g', ':FzfLua live_grep<cr>')
 
+-- NeoTree Settings
+map('n', '<leader>t', ':NeoTreeFocusToggle<CR>')
