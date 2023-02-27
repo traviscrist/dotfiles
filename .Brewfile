@@ -51,6 +51,8 @@ brew 'kubectx'
 brew 'tfenv'
 brew 'grpcurl'
 brew 'tableplus'
+tap 'oven-sh/bun'
+brew 'bun'
 
 # Mobile Dev
 brew 'cocoapods'

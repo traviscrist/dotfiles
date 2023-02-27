@@ -1,6 +1,5 @@
 -- References to ./lua/
 
-
 -- Setup Tasks
 require('core.setup')
 -- Plugin management via lazy
