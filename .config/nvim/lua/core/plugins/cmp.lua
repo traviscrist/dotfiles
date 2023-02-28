@@ -23,12 +23,13 @@ local M = {
           with_text = false,
           maxwidth = 50,
           mode = "symbol",
-          menu = {
-            buffer = "BUF",
-            rg = "RG",
-            nvim_lsp = "LSP",
-            path = "PATH",
-          },
+          -- Shows source of information in auto complete
+          -- menu = {
+          --   buffer = "BUF",
+          --   rg = "RG",
+          --   nvim_lsp = "LSP",
+          --   path = "PATH",
+          -- },
         }),
       },
       snippet = {
