@@ -7,6 +7,7 @@ map('n', '<C-L>', '<C-W><C-L>')
 map('n', '<C-H>', '<C-W><C-H>')
 
 map('n', '<leader>w', '<cmd>write<cr>')
+map('n', '<leader>q', '<cmd>wq<cr>')
 map('n', '<leader>qq', '<cmd>quit<cr>')
 
 -- FZF Lua Settings
