@@ -62,6 +62,9 @@ tfenv install 0.11.15
 tfenv use 0.11.15
 ```
 
+# Dev Frameworks to Try:
+* https://fresh.deno.dev/
+
 # Misc Dev Resources:
 * https://webhook.site/ - Webhook testing
 * https://toolbox.googleapps.com/apps/dig/ - Domain Lookup
