@@ -40,6 +40,7 @@ M.lang_servers = {
   "html",
   "jsonls",
   "jdtls",
+  "kotlin_language_server",
   "lua_ls",
   "marksman",
   "pyright",
