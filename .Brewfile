@@ -72,6 +72,7 @@ brew 'java'
 
 # Kotlin
 brew 'kotlin'
+brew 'gradle'
 
 # Stripe
 brew 'stripe/stripe-cli/stripe'
