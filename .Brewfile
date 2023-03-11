@@ -48,7 +48,6 @@ brew 'httpie'
 brew 'gh'
 brew 'pwgen'
 cask 'linear-linear'
-brew 'java'
 brew 'kind'
 brew 'kubectx'
 brew 'tfenv'
@@ -67,6 +66,9 @@ cask 'figma'
 brew 'yarn'
 brew 'pnpm'
 brew 'nvm'
+
+# Java
+brew 'java'
 
 # Kotlin
 brew 'kotlin'
