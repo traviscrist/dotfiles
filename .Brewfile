@@ -68,6 +68,9 @@ brew 'yarn'
 brew 'pnpm'
 brew 'nvm'
 
+# Kotlin
+brew 'kotlin'
+
 # Stripe
 brew 'stripe/stripe-cli/stripe'
 
