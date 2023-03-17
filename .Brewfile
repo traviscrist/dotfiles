@@ -96,6 +96,7 @@ brew 'ripgrep'
 brew 'bat'
 brew 'fd'
 brew 'delta'
+brew 'viu'
 
 # Window Management
 cask 'spectacle'
