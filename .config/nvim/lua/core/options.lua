@@ -1,4 +1,5 @@
 local o = vim.opt
+local g = vim.g
 
 o.autochdir = true -- change working director based on last opened file
 o.autoindent = true -- copy indent from current line when starting a new line`
@@ -15,6 +16,8 @@ o.hidden = true -- Enable modified buffers in background
 o.history = 500 -- Number of search patterns remembered
 o.ignorecase = true -- ignore case in search patterns
 o.inccommand = 'nosplit' -- preview incremental substitute
+g.loaded_netrw = true -- disable netrw
+g.loaded_netrwPlugin = true -- disable netrw
 o.mouse = 'nv' -- only allow mouse in normal and visual mode
 o.pumblend = 10 -- Popup transparency 0 - 30 most useful
 o.pumheight = 10 -- Maximum number of entries in a popup
