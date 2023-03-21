@@ -53,8 +53,7 @@ brew 'kubectx'
 brew 'tfenv'
 brew 'grpcurl'
 brew 'tableplus'
-tap 'oven-sh/bun'
-brew 'bun'
+cask 'gitkraken'
 
 # Mobile Dev
 brew 'cocoapods'
