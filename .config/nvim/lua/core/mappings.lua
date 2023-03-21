@@ -14,7 +14,8 @@ map('n', '<leader>qq', '<cmd>quit<cr>')
 map('n', '<leader>b', ':FzfLua buffers<cr>')
 map('n', '<leader>m', ':FzfLua oldfiles<cr>')
 map('n', '<leader>e', ':FzfLua git_files<cr>')
-map('n', '<leader>g', ':FzfLua live_grep<cr>')
+map('n', '<leader>g', ':FzfLua grep_project<cr>')
+map('n', '<leader>v', ':FzfLua grep_cword<cr>')
 
 -- NeoTree Settings
 map('n', '<leader>t', ':NeoTreeFocusToggle<CR>')
