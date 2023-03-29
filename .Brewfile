@@ -55,6 +55,9 @@ brew 'grpcurl'
 brew 'tableplus'
 cask 'gitkraken'
 
+# Encryption
+brew 'gnupg'
+
 # Mobile Dev
 brew 'cocoapods'
 
