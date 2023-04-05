@@ -130,3 +130,17 @@ unset key
 # Java
 export PATH="$PATH:/usr/local/opt/openjdk/bin"
 
+#
+# Editors
+#
+
+export EDITOR='nvim'
+export VISUAL='nvim'
+
+#
+# Language
+#
+
+if [[ -z "$LANG" ]]; then
+  export LANG='en_US.UTF-8'
+fi
