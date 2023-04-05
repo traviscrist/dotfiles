@@ -23,38 +23,9 @@ defaults read > b
 diff a b
 ```
 
-# Set Shell Default
-## Zsh Shell
-`chsh -s /bin/zsh`
-
 # Install Apps Manually
 * pandabar
 * docker app from https://www.docker.com/products/docker-desktop
-
-# Make commits to submodules
-1. submodule commit there and push
-1. then commit in yadm then push
-
-# Google Cloud
-```sh
-gcloud auth login
-gcloud auth application-default login
-gcloud auth configure-docker
-gcloud components install gke-gcloud-auth-plugin
-```
-
-## For each project:
-```sh
-gcloud config set project PROJECT_ID
-gcloud container clusters get-credentials --zone=[ZONE] primary
-```
-
-## Mysql
-```sh
-gcloud components install cloud_sql_proxy
-cloud_sql_proxy -instances=INSTANCE_HERE:prisma=tcp:3306
-mysqlsh -u proxyuser --host 127.0.0.1
-```
 
 # Switch Terraform Version
 ```sh
