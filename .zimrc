@@ -20,8 +20,6 @@ zmodule termtitle
 zmodule utility
 # Magic Enter
 zmodule magic-enter
-# Fzf
-zmodule fzf
 
 #
 # Prompt

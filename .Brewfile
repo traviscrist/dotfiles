@@ -15,12 +15,12 @@ mas 'soulver-2', id: 413965349
 # Cask macOS apps
 cask 'google-chrome'
 cask 'firefox'
-cask 'paw'
+# cask 'paw'
 # Audio Sound Balance Fixer
 cask 'ballast'
 # App Switchers
 cask 'contexts'
-cask 'raycast'
+# cask 'raycast'
 # Email
 cask 'mimestream'
 
@@ -46,9 +46,8 @@ brew 'sops'
 cask 'mysql-shell'
 brew 'httpie'
 brew 'gh'
-brew 'pwgen'
-cask 'linear-linear'
-brew 'kind'
+# brew 'pwgen'
+# cask 'linear-linear'
 brew 'kubectx'
 brew 'tfenv'
 brew 'grpcurl'
@@ -56,10 +55,10 @@ brew 'tableplus'
 cask 'gitkraken'
 
 # Encryption
-brew 'gnupg'
+# brew 'gnupg'
 
 # Mobile Dev
-brew 'cocoapods'
+# brew 'cocoapods'
 
 # Design
 cask 'figma'
@@ -70,14 +69,17 @@ brew 'pnpm'
 brew 'nvm'
 
 # Java
-brew 'java'
+# brew 'java'
 
 # Kotlin
-brew 'kotlin'
-brew 'gradle'
+# brew 'kotlin'
+# brew 'gradle'
+
+# Python
+brew 'pyenv'
 
 # Stripe
-brew 'stripe/stripe-cli/stripe'
+# brew 'stripe/stripe-cli/stripe'
 
 # Google Cloud
 # cask 'google-cloud-sdk'
@@ -105,4 +107,4 @@ cask 'spectacle'
 # Dev/Containers
 # brew 'kubectl'
 # brew 'kubernetes-helm'
-brew 'pyenv'
+
