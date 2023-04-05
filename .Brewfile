@@ -79,12 +79,12 @@ brew 'gradle'
 # Stripe
 brew 'stripe/stripe-cli/stripe'
 
-# Dev/Cloud
-cask 'google-cloud-sdk'
-brew 'google-backup-and-sync'
+# Google Cloud
+# cask 'google-cloud-sdk'
+# brew 'google-backup-and-sync'
 
 # Dev/Apps
-cask 'sublime-text'
+# cask 'sublime-text'
 tap 'heroku/brew'
 brew 'heroku'
 
@@ -103,6 +103,6 @@ brew 'delta'
 cask 'spectacle'
 
 # Dev/Containers
-brew 'kubectl'
-brew 'kubernetes-helm'
+# brew 'kubectl'
+# brew 'kubernetes-helm'
 brew 'pyenv'
