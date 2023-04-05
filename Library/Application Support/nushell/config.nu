@@ -1,0 +1,1 @@
+/Users/travis/.config/nushell/config.nu
