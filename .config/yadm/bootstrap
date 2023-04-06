@@ -305,10 +305,6 @@ defaults write com.apple.appstore WebKitDeveloperExtras -bool true
 echo "Enable Debug Menu in the Mac App Store"
 defaults write com.apple.appstore ShowDebugMenu -bool true
 
-# Travis Custom
-echo "Set Mode to Dark"
-defaults write NSGlobalDomain AppleInterfaceStyle -string "Dark"
-
 #-----------------------------------------
 # * Set yadm origin url to ssh
 #-----------------------------------------
