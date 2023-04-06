@@ -64,9 +64,6 @@ sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist > /d
 echo "Set standby delay to 24 hours (default is 1 hour)"
 sudo pmset -a standbydelay 86400
 
-echo "Disable the sound effects on boot"
-sudo nvram SystemAudioVolume=" "
-
 echo "double click maximize"
 defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"
 
@@ -109,6 +106,7 @@ defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
 echo "Disable smart dashes as they’re annoying when typing code"
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+
 echo "Super Fast Mouse Speed"
 defaults write NSGlobalDomain com.apple.mouse.scaling -int 3
 
@@ -214,27 +212,15 @@ defaults write com.apple.finder EmptyTrashSecurely -bool true
 echo "Show the ~/Library folder"
 chflags nohidden ~/Library
 
-echo "Expand the following File Info panes: “General”, “Open with”, and “Sharing & Permissions”"
-defaults write com.apple.finder FXInfoPanesExpanded -dict \
-  General -bool true \
-  OpenWith -bool true \
-  Privileges -bool true
-
 # Dock and Dashboard
-echo "Set the icon size of Dock items to 23 pixels"
-defaults write com.apple.dock tilesize -int 23
+echo "Set the icon size of Dock items to 25 pixels"
+defaults write com.apple.dock tilesize -int 25
 
 echo "Set dock to left side of screen"
 defaults write com.apple.dock orientation -string "left"
 
-# echo "Change minimize/maximize window effect to scale"
-# defaults write com.apple.dock mineffect -string "scale"
-
 echo "Minimize windows into their application’s icon"
 defaults write com.apple.dock minimize-to-application -bool true
-
-# echo "Enable spring loading for all Dock items"
-# defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
 
 echo "Don't show recents in the doc"
 defaults write com.apple.dock show-recents -bool false
@@ -272,44 +258,7 @@ defaults write com.apple.dock hide-mirror -bool true
 echo "Reset Launchpad, but keep the desktop wallpaper intact"
 find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
 
-echo "Configuring Hot Corners"
-# Possible values:
-#  0: no-op
-#  2: Mission Control
-#  3: Show application windows
-#  4: Desktop
-#  5: Start screen saver
-#  6: Disable screen saver
-#  7: Dashboard
-# 10: Put display to sleep
-# 11: Launchpad
-# 12: Notification Center
-
-# echo "Top left screen corner → Mission Control"
-# defaults write com.apple.dock wvous-tl-corner -int 2
-# defaults write com.apple.dock wvous-tl-modifier -int 0
-# echo "Top right screen corner → NotificationCenter"
-# defaults write com.apple.dock wvous-tr-corner -int 12
-# defaults write com.apple.dock wvous-tr-modifier -int 0
-# echo "Bottom left screen corner → Desktop"
-# defaults write com.apple.dock wvous-bl-corner -int 4
-# defaults write com.apple.dock wvous-bl-modifier -int 0
-# echo "Bottom right screen corner → Start screen saver"
-# defaults write com.apple.dock wvous-br-corner -int 5
-# defaults write com.apple.dock wvous-br-modifier -int 0
-
 # App Store
 echo "Enable the WebKit Developer Tools in the Mac App Store"
 defaults write com.apple.appstore WebKitDeveloperExtras -bool true
 
-echo "Enable Debug Menu in the Mac App Store"
-defaults write com.apple.appstore ShowDebugMenu -bool true
-
-#-----------------------------------------
-# * Set yadm origin url to ssh
-#-----------------------------------------
-
-#echo ">>> Updating the yadm origin to ssh.."
-yadm remote set-url origin "$SSH_REPO_URL"
-
-echo "Done!"
