@@ -38,7 +38,7 @@ cask 'font-source-code-pro'
 cask 'font-sauce-code-pro-nerd-font'
 
 # Dev
-brew 'kitty'
+cask 'kitty'
 brew 'git'
 brew 'jq'
 brew 'tree'
