@@ -221,8 +221,8 @@ echo "Show the ~/Library folder"
 chflags nohidden ~/Library
 
 # Dock and Dashboard
-echo "Set the icon size of Dock items to 25 pixels"
-defaults write com.apple.dock tilesize -int 25
+echo "Set the icon size of Dock items to 35 pixels"
+defaults write com.apple.dock tilesize -int 35
 
 echo "Set dock to left side of screen"
 defaults write com.apple.dock orientation -string "left"
