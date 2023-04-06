@@ -18,6 +18,7 @@ M.langs = {
   "lua",
   "markdown",
   "markdown_inline",
+  "nu",
   "python",
   "regex",
   "sql",

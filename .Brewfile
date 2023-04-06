@@ -27,8 +27,9 @@ cask 'mimestream'
 # Monitors
 cask 'monitorcontrol'
 
-# ZSH Prompts
-brew 'pure'
+# Shell
+brew 'nushell'
+brew 'starship'
 
 # Fonts
 tap 'homebrew/cask-fonts'
