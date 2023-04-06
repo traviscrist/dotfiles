@@ -52,7 +52,7 @@ brew 'gh'
 brew 'kubectx'
 brew 'tfenv'
 brew 'grpcurl'
-brew 'tableplus'
+cask 'tableplus'
 cask 'gitkraken'
 
 # Encryption
