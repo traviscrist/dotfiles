@@ -39,6 +39,14 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   fi
 fi
 
+# Install Node JS
+echo "Node JS Install"
+fnm install --lts
+
+# Setup Java
+echo "Setting up JDK Symlink"
+sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
+
 # SSD-specific tweaks                                                         #
 ###############################################################################
 

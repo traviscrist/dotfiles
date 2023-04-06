@@ -1,2 +1,6 @@
+[character]
+success_symbol = ''
+error_symbol = '[✗](bold red)'
+
 [gcloud]
 disabled = true

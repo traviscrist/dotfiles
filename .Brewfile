@@ -56,7 +56,7 @@ cask 'tableplus'
 cask 'gitkraken'
 
 # Encryption
-# brew 'gnupg'
+brew 'gnupg'
 
 # Mobile Dev
 # brew 'cocoapods'
@@ -67,17 +67,20 @@ cask 'figma'
 # NodeJS
 brew 'yarn'
 brew 'pnpm'
-brew 'nvm'
+brew 'fnm'
 
 # Java
-# brew 'java'
+brew 'java'
 
 # Kotlin
-# brew 'kotlin'
-# brew 'gradle'
+brew 'kotlin'
+brew 'gradle'
 
 # Python
 brew 'pyenv'
+
+# Go
+brew 'go'
 
 # Stripe
 # brew 'stripe/stripe-cli/stripe'

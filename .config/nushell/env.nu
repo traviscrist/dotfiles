@@ -117,3 +117,12 @@ let-env NU_PLUGIN_DIRS = [
 
 # Personal Paths
 let-env PATH = ($env.PATH | append "/usr/local/bin")
+
+# Nodejs
+#
+# FNM
+# load env variables
+fnm env --json | from json | load-env
+
+# add dynamic fnm path
+let-env PATH = ($env.PATH | split row (char esep) | prepend ([$env.FNM_MULTISHELL_PATH "bin"] | path join))

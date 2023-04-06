@@ -1,6 +1,7 @@
 local M = {
   'LhKipp/nvim-nu',
   -- optional for icon support
+  cmd = 'TSInstall nu',
   config = function()
     require('nu').setup({
       use_lsp_features = true, -- requires https://github.com/jose-elias-alvarez/null-ls.nvim
