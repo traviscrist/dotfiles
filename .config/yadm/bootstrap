@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SYSTEM_TYPE=$(uname -s)
-SSH_REPO_URL="git@github.com:traviscrist/dotfiles.git"
+COMPUTER_NAME="tinypolarbear"
 
 #-----------------------------------------
 # * Install Homebrew
@@ -59,9 +59,9 @@ sudo pmset -a hibernatemode 0
 echo "Disable the sudden motion sensor as it’s not useful for SSDs"
 sudo pmset -a sms 0
 
-sudo scutil --set ComputerName "tinypolarbear"
-sudo scutil --set HostName "tinypolarbear"
-sudo scutil --set LocalHostName "tinypolarbear"
+sudo scutil --set ComputerName "$COMPUTER_NAME"
+sudo scutil --set HostName "$COMPUTER_NAME"
+sudo scutil --set LocalHostName "$COMPUTER_NAME"
 
 echo "Disable the Launchpad gesture (pinch with thumb and three fingers)"
 defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
@@ -98,12 +98,6 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 echo "Disable the crash reporter"
 defaults write com.apple.CrashReporter DialogType -string "none"
 
-echo "Restart automatically if the computer freezes"
-sudo systemsetup -setrestartfreeze on
-
-echo "Never go into computer sleep mode"
-sudo systemsetup -setcomputersleep Off > /dev/null
-
 echo "Enable AAC and APTx"
 sudo defaults write bluetoothaudiod "Enable AptX codec" -bool true
 sudo defaults write bluetoothaudiod "Enable AAC codec" -bool true
@@ -122,7 +116,7 @@ echo "Super Fast Trackpad Speed"
 defaults write NSGlobalDomain com.apple.trackpad.scaling -int 3
 
 echo "Disable shaking to locate"
-defaults write NSGlobalDomain CGDisableCursorLocationMagnification -int 1
+defaults write NSGlobalDomain CGDisableCursorLocationMagnification -bool true
 
 echo "Disable menu sounds"
 defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -bool false
@@ -137,7 +131,7 @@ echo "Disable press-and-hold for keys in favor of key repeat"
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
 echo "Set a blazingly fast keyboard repeat rate"
-defaults write NSGlobalDomain KeyRepeat -int 2 # 60 defaultt, 1 was too fast
+defaults write NSGlobalDomain KeyRepeat -int 2 # 60 default, 1 was too fast
 defaults write NSGlobalDomain InitialKeyRepeat -int 35 # 68 default, 10 was too fast
 
 echo "Disable auto-correct"
