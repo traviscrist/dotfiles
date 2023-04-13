@@ -118,6 +118,9 @@ defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 echo "Super Fast Mouse Speed"
 defaults write NSGlobalDomain com.apple.mouse.scaling -int 3
 
+echo "Super Fast Trackpad Speed"
+defaults write NSGlobalDomain com.apple.trackpad.scaling -int 3
+
 echo "Disable shaking to locate"
 defaults write NSGlobalDomain CGDisableCursorLocationMagnification -int 1
 
