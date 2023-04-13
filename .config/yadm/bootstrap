@@ -47,68 +47,26 @@ fnm install --lts
 echo "Setting up JDK Symlink"
 sudo ln -sfn /usr/local/opt/openjdk/libexec/openjdk.jdk /Library/Java/JavaVirtualMachines/openjdk.jdk
 
-# SSD-specific tweaks                                                         #
-###############################################################################
+# Name Computer
+sudo scutil --set ComputerName "$COMPUTER_NAME"
+sudo scutil --set HostName "$COMPUTER_NAME"
+sudo scutil --set LocalHostName "$COMPUTER_NAME"
 
+# SSD
 echo "Disable local Time Machine snapshots"
 sudo tmutil disable local
 
+# PMSET
 echo "Disable hibernation (speeds up entering sleep mode)"
 sudo pmset -a hibernatemode 0
 
 echo "Disable the sudden motion sensor as it’s not useful for SSDs"
 sudo pmset -a sms 0
 
-sudo scutil --set ComputerName "$COMPUTER_NAME"
-sudo scutil --set HostName "$COMPUTER_NAME"
-sudo scutil --set LocalHostName "$COMPUTER_NAME"
-
-echo "Disable the Launchpad gesture (pinch with thumb and three fingers)"
-defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
-
-echo "allow 'locate' command"
-sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist > /dev/null 2>&1
-
 echo "Set standby delay to 24 hours (default is 1 hour)"
 sudo pmset -a standbydelay 86400
 
-echo "double click maximize"
-defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"
-
-echo "hide menu bar"
-defaults write NSGlobalDomain _HIHideMenuBar -bool true
-
-echo "Increase window resize speed for Cocoa applications"
-defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
-
-echo "Expand save panel by default"
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
-defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
-
-echo "Expand print panel by default"
-defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
-defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
-
-echo "Automatically quit printer app once the print jobs complete"
-defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
-
-echo "Disable the Are you sure you want to open this application dialog"
-defaults write com.apple.LaunchServices LSQuarantine -bool false
-
-echo "Disable the crash reporter"
-defaults write com.apple.CrashReporter DialogType -string "none"
-
-echo "Enable AAC and APTx"
-sudo defaults write bluetoothaudiod "Enable AptX codec" -bool true
-sudo defaults write bluetoothaudiod "Enable AAC codec" -bool true
-sudo defaults write bluetoothaudiod "AAC Bitrate" 320
-
-echo "Disable smart quotes as they’re annoying when typing code"
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
-
-echo "Disable smart dashes as they’re annoying when typing code"
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
-
+# Mouse
 echo "Super Fast Mouse Speed"
 defaults write NSGlobalDomain com.apple.mouse.scaling -int 3
 
@@ -118,12 +76,14 @@ defaults write NSGlobalDomain com.apple.trackpad.scaling -int 3
 echo "Disable shaking to locate"
 defaults write NSGlobalDomain CGDisableCursorLocationMagnification -bool true
 
-echo "Disable menu sounds"
-defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -bool false
+echo "Disable the Launchpad gesture (pinch with thumb and three fingers)"
+defaults write com.apple.dock showLaunchpadGestureEnabled -int 0
 
-echo "Increase sound quality for Bluetooth headphones/headsets"
-defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+# UI
+echo "Show menu bar"
+defaults write NSGlobalDomain _HIHideMenuBar -bool false
 
+# Keyboard
 echo "Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)"
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
@@ -137,8 +97,14 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 35 # 68 default, 10 was too 
 echo "Disable auto-correct"
 defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
-# Screen
+# Dock and Dashboard
+echo "Set the icon size of Dock items to 35 pixels"
+defaults write com.apple.dock tilesize -int 35
 
+echo "Set dock to left side of screen"
+defaults write com.apple.dock orientation -string "left"
+
+# Screen
 echo "Require password immediately after sleep or screen saver begins"
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
@@ -149,32 +115,27 @@ defaults write com.apple.screencapture type -string "png"
 echo "Disable shadow in screenshots"
 defaults write com.apple.screencapture disable-shadow -bool true
 
-echo "Enable subpixel font rendering on non-Apple LCDs"
-defaults write NSGlobalDomain AppleFontSmoothing -int 2
+# Bluetooth
+echo "Enable AAC and APTx"
+sudo defaults write bluetoothaudiod "Enable AptX codec" -bool true
+sudo defaults write bluetoothaudiod "Enable AAC codec" -bool true
+sudo defaults write bluetoothaudiod "AAC Bitrate" 320
 
-# echo "Enable HiDPI display modes (requires restart)"
-# sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
-
-echo "Allow quitting via ⌘ + Q;"
-defaults write com.apple.finder QuitMenuItem -bool true
-
+# Finder
 echo "Hide all desktop icons"
 defaults write com.apple.finder CreateDesktop false
 
-echo "Disable window animations and Get Info animations"
-defaults write com.apple.finder DisableAllAnimations -bool true
-
-echo "Show hidden files by default"
-defaults write com.apple.finder AppleShowAllFiles -bool true
-
-echo "Show all filename extensions"
-defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-
-echo "Show status bar"
-defaults write com.apple.finder ShowStatusBar -bool true
-
-echo "Show path bar"
-defaults write com.apple.finder ShowPathbar -bool true
+# echo "Show hidden files by default"
+# defaults write com.apple.finder AppleShowAllFiles -bool true
+#
+# echo "Show all filename extensions"
+# defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+#
+# echo "Show status bar"
+# defaults write com.apple.finder ShowStatusBar -bool true
+#
+# echo "Show path bar"
+# defaults write com.apple.finder ShowPathbar -bool true
 
 echo "Allow text selection in Quick Look"
 defaults write com.apple.finder QLEnableTextSelection -bool true
@@ -197,16 +158,6 @@ defaults write NSGlobalDomain com.apple.springing.delay -float 0
 echo "Avoid creating .DS_Store files on network volumes"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
-echo "Disable disk image verification"
-defaults write com.apple.frameworks.diskimages skip-verify -bool true
-defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
-defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
-
-echo "Automatically open a new Finder window when a volume is mounted"
-defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
-defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
-defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
-
 echo "Use list view in all Finder windows by default"
 # Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
@@ -220,53 +171,100 @@ defaults write com.apple.finder EmptyTrashSecurely -bool true
 echo "Show the ~/Library folder"
 chflags nohidden ~/Library
 
-# Dock and Dashboard
-echo "Set the icon size of Dock items to 35 pixels"
-defaults write com.apple.dock tilesize -int 35
+# Dock
+# echo "Minimize windows into their application’s icon"
+# defaults write com.apple.dock minimize-to-application -bool true
+#
+# echo "Don't show recents in the doc"
+# defaults write com.apple.dock show-recents -bool false
+#
+# echo "Show indicator lights for open applications in the Dock"
+# defaults write com.apple.dock show-process-indicators -bool true
+#
+# echo "Don’t animate opening applications from the Dock"
+# defaults write com.apple.dock launchanim -bool false
+#
+# echo "Speed up Mission Control animations"
+# defaults write com.apple.dock expose-animation-duration -float 0.1
+#
+# echo "Disable Dashboard"
+# defaults write com.apple.dashboard mcx-disabled -bool true
+#
+# echo "Don’t show Dashboard as a Space"
+# defaults write com.apple.dock dashboard-in-overlay -bool true
+#
+# echo "Remove the auto-hiding Dock delay"
+# defaults write com.apple.dock autohide-delay -float 0
+#
+# echo "Remove the animation when hiding/showing the Dock"
+# defaults write com.apple.dock autohide-time-modifier -float 0
+#
+# echo "Automatically hide and show the Dock"
+# defaults write com.apple.dock autohide -bool true
+#
+# echo "Make Dock icons of hidden applications translucent"
+# defaults write com.apple.dock showhidden -bool true
+#
+# echo "Make Dock more transparent"
+# defaults write com.apple.dock hide-mirror -bool true
 
-echo "Set dock to left side of screen"
-defaults write com.apple.dock orientation -string "left"
+if ask "Reset Dock" Y; then
+  find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+fi
 
-echo "Minimize windows into their application’s icon"
-defaults write com.apple.dock minimize-to-application -bool true
 
-echo "Don't show recents in the doc"
-defaults write com.apple.dock show-recents -bool false
+# TODO Not sure if we need these??
+# echo "double click maximize"
+# defaults write NSGlobalDomain AppleActionOnDoubleClick -string "Maximize"
+#
+# echo "Increase window resize speed for Cocoa applications"
+# defaults write NSGlobalDomain NSWindowResizeTime -float 0.001
+#
+# echo "Expand save panel by default"
+# defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+# defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+#
+# echo "Expand print panel by default"
+# defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+# defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+#
+# echo "Automatically quit printer app once the print jobs complete"
+# defaults write com.apple.print.PrintingPrefs "Quit When Finished" -bool true
+#
+# echo "Disable the Are you sure you want to open this application dialog"
+# defaults write com.apple.LaunchServices LSQuarantine -bool false
+#
+# echo "Disable the crash reporter"
+# defaults write com.apple.CrashReporter DialogType -string "none"
+#
+# echo "Disable smart quotes as they’re annoying when typing code"
+# defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+#
+# echo "Disable smart dashes as they’re annoying when typing code"
+# defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
-echo "Show indicator lights for open applications in the Dock"
-defaults write com.apple.dock show-process-indicators -bool true
+# echo "Disable menu sounds"
+# defaults write NSGlobalDomain com.apple.sound.uiaudio.enabled -bool false
 
-echo "Don’t animate opening applications from the Dock"
-defaults write com.apple.dock launchanim -bool false
+# Screen
+# echo "Enable subpixel font rendering on non-Apple LCDs"
+# defaults write NSGlobalDomain AppleFontSmoothing -int 2
+#
+# echo "Enable HiDPI display modes (requires restart)"
+# sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
-echo "Speed up Mission Control animations"
-defaults write com.apple.dock expose-animation-duration -float 0.1
+# echo "Allow quitting via ⌘ + Q;"
+# defaults write com.apple.finder QuitMenuItem -bool true
 
-echo "Disable Dashboard"
-defaults write com.apple.dashboard mcx-disabled -bool true
+# echo "Disable window animations and Get Info animations"
+# defaults write com.apple.finder DisableAllAnimations -bool true
 
-echo "Don’t show Dashboard as a Space"
-defaults write com.apple.dock dashboard-in-overlay -bool true
+# echo "Disable disk image verification"
+# defaults write com.apple.frameworks.diskimages skip-verify -bool true
+# defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
+# defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
-echo "Remove the auto-hiding Dock delay"
-defaults write com.apple.dock autohide-delay -float 0
-
-echo "Remove the animation when hiding/showing the Dock"
-defaults write com.apple.dock autohide-time-modifier -float 0
-
-echo "Automatically hide and show the Dock"
-defaults write com.apple.dock autohide -bool true
-
-echo "Make Dock icons of hidden applications translucent"
-defaults write com.apple.dock showhidden -bool true
-
-echo "Make Dock more transparent"
-defaults write com.apple.dock hide-mirror -bool true
-
-echo "Reset Launchpad, but keep the desktop wallpaper intact"
-find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
-
-# App Store
-echo "Enable the WebKit Developer Tools in the Mac App Store"
-defaults write com.apple.appstore WebKitDeveloperExtras -bool true
-
+# echo "Automatically open a new Finder window when a volume is mounted"
+# defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
+# defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
+# defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
