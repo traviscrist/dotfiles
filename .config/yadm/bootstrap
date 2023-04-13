@@ -158,8 +158,11 @@ defaults write NSGlobalDomain AppleFontSmoothing -int 2
 # echo "Enable HiDPI display modes (requires restart)"
 # sudo defaults write /Library/Preferences/com.apple.windowserver DisplayResolutionEnabled -bool true
 
-echo "Allow quitting via ⌘ + Q; doing so will also hide desktop icons"
+echo "Allow quitting via ⌘ + Q;"
 defaults write com.apple.finder QuitMenuItem -bool true
+
+echo "Hide all desktop icons"
+defaults write com.apple.finder CreateDesktop false
 
 echo "Disable window animations and Get Info animations"
 defaults write com.apple.finder DisableAllAnimations -bool true
