@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 SYSTEM_TYPE=$(uname -s)
-COMPUTER_NAME="tinypolarbear"
+COMPUTER_NAME="truevaultpolarbear"
 
 #-----------------------------------------
 # * Install Homebrew
@@ -21,6 +21,9 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
   if ! command -v mas >/dev/null 2>&1; then
     echo ">>> Wipe all default doc icons.."
     defaults write com.apple.dock persistent-apps -array ""
+
+    find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+
     echo ">>> Installing mas.."
     brew install mas
   fi
