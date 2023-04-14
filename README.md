@@ -15,6 +15,8 @@ GitHub: [https://github.com/TheLocehiliosan/yadm](https://github.com/TheLocehili
 1. `yadm bootstrap`
 1. Manually set caps lock to be escape
 1. Manually set the dark mode
+1. Setup Contexts
+1. Install password manager
 
 # How do get defaults
 ```
