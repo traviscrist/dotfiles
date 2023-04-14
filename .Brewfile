@@ -21,8 +21,12 @@ cask 'ballast'
 # App Switchers
 cask 'contexts'
 # cask 'raycast'
+
 # Email
 cask 'mimestream'
+
+# Calendar
+cask 'cron'
 
 # Monitors
 cask 'monitorcontrol'
