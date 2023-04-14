@@ -127,8 +127,6 @@ unset key
 # }}} End configuration added by Zim install
 
 # Paths
-# Java
-export PATH="$PATH:/usr/local/opt/openjdk/bin"
 
 #
 # Editors
