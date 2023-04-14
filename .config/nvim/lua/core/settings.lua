@@ -44,7 +44,7 @@ M.lang_servers = {
   "lua_ls",
   "marksman",
   "pyright",
-  "sqls",
+  "sqlls",
   "taplo",
   "terraformls",
   "tsserver", -- Alternative vtsls

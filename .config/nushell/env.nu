@@ -4,7 +4,7 @@
 
 let-env STARSHIP_SHELL = "nu"
 let-env STARSHIP_SESSION_KEY = (random chars -l 16)
-let-env PROMPT_MULTILINE_INDICATOR = (^/usr/local/bin/starship prompt --continuation)
+let-env PROMPT_MULTILINE_INDICATOR = (^/opt/homebrew/bin/starship prompt --continuation)
 let-env STARSHIP_CONFIG = ([
                             ($env.HOME)
                             ('/.config/starship/starship.toml')
@@ -117,6 +117,7 @@ let-env NU_PLUGIN_DIRS = [
 
 # Personal Paths
 let-env PATH = ($env.PATH | append "/usr/local/bin")
+let-env PATH = ($env.PATH | append "/opt/homebrew/bin")
 
 # Nodejs
 #
