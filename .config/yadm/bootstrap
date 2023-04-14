@@ -48,16 +48,6 @@ sudo scutil --set LocalHostName "$COMPUTER_NAME"
 echo "Disable local Time Machine snapshots"
 sudo tmutil disable local
 
-# PMSET
-echo "Disable hibernation (speeds up entering sleep mode)"
-sudo pmset -a hibernatemode 0
-
-echo "Disable the sudden motion sensor as it’s not useful for SSDs"
-sudo pmset -a sms 0
-
-echo "Set standby delay to 24 hours (default is 1 hour)"
-sudo pmset -a standbydelay 86400
-
 # Mouse
 echo "Super Fast Mouse Speed"
 defaults write NSGlobalDomain com.apple.mouse.scaling -int 3
