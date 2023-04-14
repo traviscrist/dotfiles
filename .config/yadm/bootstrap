@@ -162,6 +162,10 @@ echo "Use list view in all Finder windows by default"
 # Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
+if ask "Reset Dock" Y; then
+  find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
+fi
+
 echo "Disable the warning before emptying the Trash"
 defaults write com.apple.finder WarnOnEmptyTrash -bool false
 
@@ -207,10 +211,6 @@ chflags nohidden ~/Library
 #
 # echo "Make Dock more transparent"
 # defaults write com.apple.dock hide-mirror -bool true
-
-if ask "Reset Dock" Y; then
-  find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
-fi
 
 
 # TODO Not sure if we need these??
