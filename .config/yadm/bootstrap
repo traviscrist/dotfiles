@@ -140,14 +140,14 @@ defaults write com.apple.finder CreateDesktop false
 echo "Allow text selection in Quick Look"
 defaults write com.apple.finder QLEnableTextSelection -bool true
 
-echo "Display full POSIX path as Finder window title"
-defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
-
-echo "When performing a search, search the current folder by default"
-defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
-
-echo "Disable the warning when changing a file extension"
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+# echo "Display full POSIX path as Finder window title"
+# defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+#
+# echo "When performing a search, search the current folder by default"
+# defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
+#
+# echo "Disable the warning when changing a file extension"
+# defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 echo "Enable spring loading for directories"
 defaults write NSGlobalDomain com.apple.springing.enabled -bool true
@@ -158,9 +158,9 @@ defaults write NSGlobalDomain com.apple.springing.delay -float 0
 echo "Avoid creating .DS_Store files on network volumes"
 defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 
-echo "Use list view in all Finder windows by default"
+# echo "Use list view in all Finder windows by default"
 # Four-letter codes for the other view modes: `icnv`, `clmv`, `Flwv`
-defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+# defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 if ask "Reset Dock" Y; then
   find "${HOME}/Library/Application Support/Dock" -name "*-*.db" -maxdepth 1 -delete
