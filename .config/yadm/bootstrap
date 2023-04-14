@@ -27,7 +27,7 @@ if [ "$SYSTEM_TYPE" = "Darwin" ]; then
 
   if [ -f "$HOME/.Brewfile" ]; then
     echo ">>> Installing brew packages.."
-    brew bundle --global
+    brew bundle --global -v
   fi
 fi
 
