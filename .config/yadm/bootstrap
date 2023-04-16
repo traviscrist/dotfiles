@@ -151,8 +151,8 @@ echo "Show the ~/Library folder"
 chflags nohidden ~/Library
 
 # Dock
-# echo "Minimize windows into their application’s icon"
-# defaults write com.apple.dock minimize-to-application -bool true
+echo "Minimize windows into their application’s icon"
+defaults write com.apple.dock minimize-to-application -bool true
 #
 # echo "Don't show recents in the doc"
 # defaults write com.apple.dock show-recents -bool false
