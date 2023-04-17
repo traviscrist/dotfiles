@@ -31,6 +31,9 @@ cask 'cron'
 # Monitors
 cask 'monitorcontrol'
 
+# Google Drive
+cask 'google-drive'
+
 # Shell
 brew 'nushell'
 brew 'starship'
