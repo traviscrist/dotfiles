@@ -57,6 +57,7 @@ M.mason_tools = {
   "stylua",
   -- Linter
   "eslint_d",
+  "ktlint",
   "shellcheck",
   "tflint",
   "vale",

@@ -99,6 +99,10 @@ local M = {
       update_in_insert = true,
     })
 
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      border = "rounded",
+    })
+
     for _, lsp in pairs(settings.lang_servers) do
       require('lspconfig')[lsp].setup {
         on_attach = function(client, bufnr)
