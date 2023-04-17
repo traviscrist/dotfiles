@@ -61,6 +61,7 @@ brew 'tfenv'
 brew 'grpcurl'
 cask 'tableplus'
 cask 'gitkraken'
+brew 'docker'
 
 # Encryption
 brew 'gnupg'
