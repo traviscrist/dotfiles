@@ -101,6 +101,9 @@ brew 'heroku'
 # Keyboard
 cask 'karabiner-elements'
 
+# Helix
+brew 'helix'
+
 # Neovim
 brew 'neovim'
 brew 'fzf'
