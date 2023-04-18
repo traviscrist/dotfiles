@@ -104,6 +104,9 @@ brew 'heroku'
 # Keyboard
 cask 'karabiner-elements'
 
+# IntelliJ Community
+cask 'intellij-idea-ce'
+
 # Helix
 brew 'helix'
 
