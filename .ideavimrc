@@ -16,12 +16,17 @@ map <leader>g <Action>(SearchEverywhere)
 map <leader>e <Action>()
 map <leader>b <Action>(RecentFiles)
 
+map <leader>d <Action>(ToggleDistractionFreeMode)
+
 map gi <Action>(GotoImplementation)
 map <leader>v <Action>(FindUsages)
 map <leader>F <Action>(HighlightUsagesInFile)
 map <leader>r <Action>(FindInPath)
-map <leader>s <Action>(FileStructure)
 
 map <C-o> <Action>(Back)
 map <C-i> <Action>(Forward)
 
+map <C-J> <C-W><C-J>
+map <C-K> <C-W><C-K>
+map <C-L> <C-W><C-L>
+map <C-H> <C-W><C-H>
