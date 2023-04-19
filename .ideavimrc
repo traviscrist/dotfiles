@@ -1,0 +1,27 @@
+let mapleader=","
+
+""" Plugins
+set surround
+set commentary
+
+""" Common settings
+set relativenumber
+set scrolloff=3
+
+""" Idea settings
+set ideajoin
+
+""" Mappings
+map <leader>g <Action>(SearchEverywhere)
+map <leader>e <Action>()
+map <leader>b <Action>(RecentFiles)
+
+map gi <Action>(GotoImplementation)
+map <leader>v <Action>(FindUsages)
+map <leader>F <Action>(HighlightUsagesInFile)
+map <leader>r <Action>(FindInPath)
+map <leader>s <Action>(FileStructure)
+
+map <C-o> <Action>(Back)
+map <C-i> <Action>(Forward)
+
