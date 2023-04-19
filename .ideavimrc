@@ -12,9 +12,9 @@ set scrolloff=3
 set ideajoin
 
 """ Mappings
-map <leader>g <Action>(SearchEverywhere)
-map <leader>e <Action>()
+map <leader>e <Action>(SearchEverywhere)
 map <leader>m <Action>(RecentFiles)
+map <leader>g <Action>(FindInPath)
 
 map <leader>d <Action>(ToggleDistractionFreeMode)
 
