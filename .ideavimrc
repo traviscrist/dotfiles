@@ -14,7 +14,7 @@ set ideajoin
 """ Mappings
 map <leader>g <Action>(SearchEverywhere)
 map <leader>e <Action>()
-map <leader>b <Action>(RecentFiles)
+map <leader>m <Action>(RecentFiles)
 
 map <leader>d <Action>(ToggleDistractionFreeMode)
 
