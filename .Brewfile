@@ -82,6 +82,7 @@ brew 'java'
 # Kotlin
 brew 'kotlin'
 brew 'gradle'
+brew 'maven'
 
 # Python
 brew 'pyenv'
