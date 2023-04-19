@@ -76,14 +76,6 @@ brew 'yarn'
 brew 'pnpm'
 brew 'fnm'
 
-# Java
-brew 'java'
-
-# Kotlin
-brew 'kotlin'
-brew 'gradle'
-brew 'maven'
-
 # Python
 brew 'pyenv'
 
