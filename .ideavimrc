@@ -23,6 +23,8 @@ map <leader>v <Action>(FindUsages)
 map <leader>F <Action>(HighlightUsagesInFile)
 map <leader>r <Action>(FindInPath)
 
+map <leader>w <Action>(SaveAll)
+
 map <C-o> <Action>(Back)
 map <C-i> <Action>(Forward)
 
