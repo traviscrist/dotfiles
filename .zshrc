@@ -14,7 +14,6 @@
 # Remove older command from the history if a duplicate is to be added.
 setopt HIST_IGNORE_ALL_DUPS
 
-#
 # Input/output
 #
 
@@ -142,3 +141,8 @@ export VISUAL='nvim'
 if [[ -z "$LANG" ]]; then
   export LANG='en_US.UTF-8'
 fi
+
+#
+# NodeJS
+#
+eval "$(fnm env --use-on-cd)"
