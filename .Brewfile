@@ -28,6 +28,10 @@ cask 'mimestream'
 # Calendar
 cask 'cron'
 
+# Task Management
+cask 'sunsama'
+cask 'asana'
+
 # Monitors
 cask 'monitorcontrol'
 
@@ -58,6 +62,7 @@ brew 'gh'
 # cask 'linear-linear'
 brew 'kubectx'
 brew 'tfenv'
+brew 'tgenv'
 brew 'grpcurl'
 cask 'tableplus'
 cask 'gitkraken'
