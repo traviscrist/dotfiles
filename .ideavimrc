@@ -18,6 +18,7 @@ set ideajoin
 map <leader>e <Action>(SearchEverywhere)
 map <leader>m <Action>(RecentFiles)
 map <leader>g <Action>(FindInPath)
+map <leader>p <Action>(RecentProjectListGroup)
 
 map <leader>d <Action>(ToggleDistractionFreeMode)
 

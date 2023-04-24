@@ -89,6 +89,9 @@ brew 'go'
 # cask 'google-cloud-sdk'
 # brew 'google-backup-and-sync'
 
+# AWS
+brew 'awscli'
+
 # Dev/Apps
 # cask 'sublime-text'
 tap 'heroku/brew'
