@@ -108,6 +108,9 @@ cask 'karabiner-elements'
 # IntelliJ Community
 cask 'intellij-idea-ce'
 
+# VS Code
+cask 'visual-studio-code'
+
 # Helix
 brew 'helix'
 
