@@ -19,3 +19,6 @@ map('n', '<leader>v', ':FzfLua grep_cword<cr>')
 
 -- NeoTree Settings
 map('n', '<leader>t', ':NeoTreeFocusToggle<CR>')
+
+-- Search
+map('v', '//', 'y<C-R>')
