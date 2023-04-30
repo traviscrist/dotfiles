@@ -58,6 +58,18 @@ defaults write NSGlobalDomain com.apple.mouse.scaling -int 3
 echo "Super Fast Trackpad Speed"
 defaults write NSGlobalDomain com.apple.trackpad.scaling -int 3
 
+echo "Tap to click"
+defaults write com.apple.AppleMultitouchTrackpad Clicking -int 1
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -int 1
+
+echo "3 Finger Drag"
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerDrag -int 1
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerHorizSwipeGesture -int 0
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeFingerVertSwipeGesture -int 0
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerDrag -int 1
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerHorizSwipeGesture -int 0
+defaults write com.apple.AppleMultitouchTrackpad TrackpadThreeFingerVertSwipeGesture -int 0
+
 echo "Disable shaking to locate"
 defaults write NSGlobalDomain CGDisableCursorLocationMagnification -bool true
 
