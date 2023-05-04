@@ -24,8 +24,8 @@ map <leader>d <Action>(ToggleDistractionFreeMode)
 
 map gi <Action>(GotoImplementation)
 map <leader>v <Action>(FindUsages)
-map <leader>F <Action>(HighlightUsagesInFile)
-map <leader>r <Action>(FindInPath)
+map <leader>f <Action>(HighlightUsagesInFile)
+" map <leader>r <Action>(FindInPath)
 
 map <leader>w <Action>(SaveAll)
 
