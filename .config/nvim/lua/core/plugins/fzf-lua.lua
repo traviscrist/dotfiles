@@ -5,7 +5,13 @@ local M = {
     'nvim-tree/nvim-web-devicons'
   },
   config = function()
-    require('fzf-lua').setup({})
+    require('fzf-lua').setup({
+      lsp = {
+        symbols = {
+          symbol_style = 2
+        },
+      }
+    })
   end
 }
 

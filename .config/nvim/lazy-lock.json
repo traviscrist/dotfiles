@@ -34,5 +34,6 @@
   "playground": { "branch": "master", "commit": "934cb4c4adc2e7f4f351846a63c9532018c996ed" },
   "plenary.nvim": { "branch": "master", "commit": "9ac3e9541bbabd9d73663d757e4fe48a675bb054" },
   "pretty_hover": { "branch": "master", "commit": "f136f5ddf7df3893817d90e4866e0250c378eace" },
-  "vim-kitty-navigator": { "branch": "master", "commit": "949ab618060ebcfcfb055c759f3ef9b8a2c6f184" }
+  "vim-kitty-navigator": { "branch": "master", "commit": "949ab618060ebcfcfb055c759f3ef9b8a2c6f184" },
+  "which-key.nvim": { "branch": "main", "commit": "af8f26bfbb61b5f722c9fbc72b296dc9db0bcfdc" }
 }
