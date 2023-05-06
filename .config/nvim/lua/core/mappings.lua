@@ -24,20 +24,31 @@ map('n', '<leader>s', ':FzfLua grep_project<cr>', default_options)
 -- NeoTree Settings
 map('n', '<leader>t', ':NeoTreeFocusToggle<CR>', default_options)
 
+-- Surround Tip
+-- "ys": You surround
+-- "ds": Delete surrounding
+-- "cs": Change surrounding
+--
+-- Then stuff like "ysiw(" becomes "you surround in word [with] parentheses".
+-- Another example would be "csq'", which would be "change the surrounding quotes
+-- for the apostrophe character". I think if you have a good grasp on the text
+-- objects that involve i and a, e.g. ib, aB, etc., you should be fine with most
+-- of the functionality for this plugin
+
 local wk = require('which-key')
 
 -- Register Leader Key Mappings
 wk.register({
-  b = { "<cmd>FzfLua buffers<cr>", "Buffers"},
+  b = { "<cmd>FzfLua buffers<cr>", "Buffers" },
   f = {
     name = 'Find',
     r = { '<cmd>FzfLua oldfiles<cr>', 'Recent Files' },
     f = { '<cmd>FzfLua git_files<cr>', 'Files' },
     w = { '<cmd>FzfLua grep_cword<cr>', 'Word Under Cursor' }
   },
-  s = { '<cmd>FzfLua grep_project<cr>', 'Search Project'},
-  t = { '<cmd>NeoTreeFocusToggle<CR>', 'Toggle Tree'},
-  w = { '<cmd>write<cr>', 'Write'},
-  q = { '<cmd>wq<cr>', 'Write Quit'},
-  qq = { '<cmd>quit<cr>', 'Quit'}
+  s = { '<cmd>FzfLua grep_project<cr>', 'Search Project' },
+  t = { '<cmd>NeoTreeFocusToggle<CR>', 'Toggle Tree' },
+  w = { '<cmd>write<cr>', 'Write' },
+  q = { '<cmd>wq<cr>', 'Write Quit' },
+  qq = { '<cmd>quit<cr>', 'Quit' }
 }, { prefix = '<leader>', mode = 'n', default_options })
