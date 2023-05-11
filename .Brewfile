@@ -66,6 +66,7 @@ brew 'tgenv'
 brew 'grpcurl'
 cask 'tableplus'
 cask 'postman'
+cask 'orbstack'
 
 # Encryption
 brew 'gnupg'
