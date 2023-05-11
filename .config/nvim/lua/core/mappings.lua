@@ -16,9 +16,9 @@ map('n', '<leader>qq', '<cmd>quit<cr>', default_options)
 
 -- FZF Lua Settings
 map('n', '<leader>b', ':FzfLua buffers<cr>', default_options)
-map('n', '<leader>fr', ':FzfLua oldfiles<cr>', default_options)
-map('n', '<leader>ff', ':FzfLua git_files<cr>', default_options)
-map('n', '<leader>fw', ':FzfLua grep_cword<cr>', default_options)
+map('n', '<leader>r', ':FzfLua oldfiles<cr>', default_options)
+map('n', '<leader>e', ':FzfLua git_files<cr>', default_options)
+map('n', '<leader>a', ':FzfLua grep_cword<cr>', default_options)
 map('n', '<leader>s', ':FzfLua grep_project<cr>', default_options)
 
 -- NeoTree Settings
@@ -40,12 +40,9 @@ local wk = require('which-key')
 -- Register Leader Key Mappings
 wk.register({
   b = { "<cmd>FzfLua buffers<cr>", "Buffers" },
-  f = {
-    name = 'Find',
-    r = { '<cmd>FzfLua oldfiles<cr>', 'Recent Files' },
-    f = { '<cmd>FzfLua git_files<cr>', 'Files' },
-    w = { '<cmd>FzfLua grep_cword<cr>', 'Word Under Cursor' }
-  },
+  r = { '<cmd>FzfLua oldfiles<cr>', 'Recent Files' },
+  e = { '<cmd>FzfLua git_files<cr>', 'Files' },
+  a = { '<cmd>FzfLua grep_cword<cr>', 'Word Under Cursor' },
   s = { '<cmd>FzfLua grep_project<cr>', 'Search Project' },
   t = { '<cmd>NeoTreeFocusToggle<CR>', 'Toggle Tree' },
   w = { '<cmd>write<cr>', 'Write' },

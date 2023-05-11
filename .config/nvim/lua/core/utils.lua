@@ -19,9 +19,9 @@ function M.custom_lsp_attach(client, bufnr)
   end, bufopts)
   vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
   vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'fr', function() require('fzf-lua').lsp_references() end, bufopts)
-  vim.keymap.set('n', 'ft', function() require('fzf-lua').lsp_typedefs() end, bufopts)
-  vim.keymap.set('n', 'fs', function() require('fzf-lua').lsp_document_symbols() end, bufopts)
+  vim.keymap.set('n', 'gr', function() require('fzf-lua').lsp_references() end, bufopts)
+  vim.keymap.set('n', 'gt', function() require('fzf-lua').lsp_typedefs() end, bufopts)
+  vim.keymap.set('n', 'gs', function() require('fzf-lua').lsp_document_symbols() end, bufopts)
   vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
   local wk = require('which-key')
@@ -29,9 +29,9 @@ function M.custom_lsp_attach(client, bufnr)
   local default_options = { silent = true }
   wk.register({
     gd = { '<cmd>lua vim.lsp.buf.definition()<cr>', 'Goto Definition'},
-    fr = { '<cmd>Fzflua lsp_references<cr>', 'LSP References'},
-    ft = { '<cmd>Fzflua lsp_typedefs<cr>', 'LSP Type Defs'},
-    fs = { '<cmd>Fzflua lsp_document_symbols<cr>', 'LSP Doc Symbols'}
+    gr = { '<cmd>Fzflua lsp_references<cr>', 'LSP References'},
+    gt = { '<cmd>Fzflua lsp_typedefs<cr>', 'LSP Type Defs'},
+    gs = { '<cmd>Fzflua lsp_document_symbols<cr>', 'LSP Doc Symbols'}
   }, { mode = "n", default_options })
 
 end
