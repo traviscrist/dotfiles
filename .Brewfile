@@ -97,6 +97,7 @@ brew 'go'
 
 # AWS
 brew 'awscli'
+cask 'session-manager-plugin'
 
 # Dev/Apps
 # cask 'sublime-text'
