@@ -9,6 +9,7 @@ M.langs = {
   "dockerfile",
   "gitignore",
   "graphql",
+  "hcl",
   "html",
   "java",
   "javascript",
