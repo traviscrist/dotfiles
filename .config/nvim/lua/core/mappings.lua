@@ -22,7 +22,12 @@ map('n', '<leader>a', ':FzfLua grep_cword<cr>', default_options)
 map('n', '<leader>s', ':FzfLua grep_project<cr>', default_options)
 
 -- NeoTree Settings
-map('n', '<leader>t', ':NeoTreeFocusToggle<CR>', default_options)
+map('n', '<leader>t', ':NeoTreeFocusToggle<cr>', default_options)
+
+-- Escap Highlights
+map('n', '<C-C>', ':nohlsearch<cr>', default_options)
+
+
 
 -- Surround Tip
 -- "ys": You surround
