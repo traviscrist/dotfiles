@@ -22,12 +22,13 @@ function M.custom_lsp_attach(client, bufnr)
   vim.keymap.set('n', 'gr', function() require('fzf-lua').lsp_references() end, bufopts)
   vim.keymap.set('n', 'gt', function() require('fzf-lua').lsp_typedefs() end, bufopts)
   vim.keymap.set('n', 'gs', function() require('fzf-lua').lsp_document_symbols() end, bufopts)
-  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
   local wk = require('which-key')
   -- Don't show on the cmd line
   local default_options = { silent = true }
   wk.register({
+    f  = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format' },
     gd = { '<cmd>lua vim.lsp.buf.definition()<cr>', 'Goto Definition'},
     gr = { '<cmd>Fzflua lsp_references<cr>', 'LSP References'},
     gt = { '<cmd>Fzflua lsp_typedefs<cr>', 'LSP Type Defs'},

@@ -44,6 +44,7 @@ local wk = require('which-key')
 
 -- Register Leader Key Mappings
 wk.register({
+  f  = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format' },
   b = { "<cmd>FzfLua buffers<cr>", "Buffers" },
   r = { '<cmd>FzfLua oldfiles<cr>', 'Recent Files' },
   e = { '<cmd>FzfLua git_files<cr>', 'Files' },
