@@ -50,7 +50,7 @@ wk.register({
   b  = { "<cmd>FzfLua buffers<cr>", "Buffers" },
   e  = { '<cmd>FzfLua git_files<cr>', 'Files' },
   f  = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format' },
-  g  = { '<cmd>FzfLua git_status<cr>', 'Files' },
+  g  = { '<cmd>FzfLua git_status<cr>', 'Git Status' },
   q  = { '<cmd>wq<cr>', 'Write Quit' },
   qq = { '<cmd>quit<cr>', 'Quit' },
   r  = { '<cmd>FzfLua oldfiles<cr>', 'Recent Files' },
