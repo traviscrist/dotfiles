@@ -27,6 +27,8 @@ map('n', '<leader>t', ':NeoTreeFocusToggle<cr>', default_options)
 -- Escap Highlights
 map('n', '<C-C>', ':nohlsearch<cr>', default_options)
 
+-- Git
+map('n', '<leader>g', ':FzfLua git_status<cr>', default_options)
 
 
 -- Surround Tip
@@ -44,14 +46,15 @@ local wk = require('which-key')
 
 -- Register Leader Key Mappings
 wk.register({
+  a  = { '<cmd>FzfLua grep_cword<cr>', 'Word Under Cursor' },
+  b  = { "<cmd>FzfLua buffers<cr>", "Buffers" },
+  e  = { '<cmd>FzfLua git_files<cr>', 'Files' },
   f  = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format' },
-  b = { "<cmd>FzfLua buffers<cr>", "Buffers" },
-  r = { '<cmd>FzfLua oldfiles<cr>', 'Recent Files' },
-  e = { '<cmd>FzfLua git_files<cr>', 'Files' },
-  a = { '<cmd>FzfLua grep_cword<cr>', 'Word Under Cursor' },
-  s = { '<cmd>FzfLua grep_project<cr>', 'Search Project' },
-  t = { '<cmd>NeoTreeFocusToggle<CR>', 'Toggle Tree' },
-  w = { '<cmd>write<cr>', 'Write' },
-  q = { '<cmd>wq<cr>', 'Write Quit' },
-  qq = { '<cmd>quit<cr>', 'Quit' }
+  g  = { '<cmd>FzfLua git_status<cr>', 'Files' },
+  q  = { '<cmd>wq<cr>', 'Write Quit' },
+  qq = { '<cmd>quit<cr>', 'Quit' },
+  r  = { '<cmd>FzfLua oldfiles<cr>', 'Recent Files' },
+  s  = { '<cmd>FzfLua grep_project<cr>', 'Search Project' },
+  t  = { '<cmd>NeoTreeFocusToggle<CR>', 'Toggle Tree' },
+  w  = { '<cmd>write<cr>', 'Write' },
 }, { prefix = '<leader>', mode = 'n', default_options })
