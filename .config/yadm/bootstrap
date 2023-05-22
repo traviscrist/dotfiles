@@ -102,7 +102,7 @@ echo "Set the icon size of Dock items to 35 pixels"
 defaults write com.apple.dock tilesize -int 35
 
 echo "Set dock to left side of screen"
-defaults write com.apple.dock orientation -string "right"
+defaults write com.apple.dock orientation -string "left"
 
 # Screen
 echo "Require password immediately after sleep or screen saver begins"
