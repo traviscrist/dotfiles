@@ -1,4 +1,4 @@
-# Based on:
+#AWS_ACCESS_KEY_ID Based on:
 # https://www.taniarascia.com/setting-up-a-brand-new-mac-for-development/
 # https://danielmiessler.com/blog/first-10-things-new-mac/
 # https://hackercodex.com/guide/python-development-environment-on-mac-osx/
@@ -67,6 +67,7 @@ brew 'grpcurl'
 cask 'tableplus'
 cask 'postman'
 cask 'orbstack'
+brew 'postgresql@14'
 
 # Encryption
 brew 'gnupg'
