@@ -3,6 +3,8 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # Added by OrbStack: command-line tools and integration
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
+alias flush-dns="sudo killall -HUP mDNSResponder"
+
 aws-ssh() {
   aws ssm start-session --target $1 --profile $2
 }
