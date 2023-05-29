@@ -22,19 +22,24 @@ function M.custom_lsp_attach(client, bufnr)
   vim.keymap.set('n', 'gr', function() require('fzf-lua').lsp_references() end, bufopts)
   vim.keymap.set('n', 'gt', function() require('fzf-lua').lsp_typedefs() end, bufopts)
   vim.keymap.set('n', 'gs', function() require('fzf-lua').lsp_document_symbols() end, bufopts)
-  vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 
   local wk = require('which-key')
   -- Don't show on the cmd line
   local default_options = { silent = true }
+  -- Register Normal Mappings
   wk.register({
-    f  = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format' },
-    gd = { '<cmd>lua vim.lsp.buf.definition()<cr>', 'Goto Definition'},
-    gr = { '<cmd>Fzflua lsp_references<cr>', 'LSP References'},
-    gt = { '<cmd>Fzflua lsp_typedefs<cr>', 'LSP Type Defs'},
-    gs = { '<cmd>Fzflua lsp_document_symbols<cr>', 'LSP Doc Symbols'}
+    gd = { '<cmd>lua vim.lsp.buf.definition()<cr>', 'Goto Definition' },
+    gr = { '<cmd>Fzflua lsp_references<cr>', 'LSP References' },
+    gt = { '<cmd>Fzflua lsp_typedefs<cr>', 'LSP Type Defs' },
+    gs = { '<cmd>Fzflua lsp_document_symbols<cr>', 'LSP Doc Symbols' },
   }, { mode = "n", default_options })
-
+  -- Register Space Key Mappings
+  wk.register({
+    ca = { '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code Action' },
+    f  = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format' },
+    rn = { '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename' },
+  }, { prefix = '<space>', mode = 'n', default_options })
 end
 
 return M
