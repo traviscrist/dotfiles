@@ -28,7 +28,7 @@ local M = {
       enable_git_status = true,
       enable_diagnostics = true,
       sort_case_insensitive = false, -- used when sorting files and directories in the tree
-      sort_function = nil, -- use a custom function for sorting files and directories in the tree
+      sort_function = nil,           -- use a custom function for sorting files and directories in the tree
       -- sort_function = function (a,b)
       --       if a.type == b.type then
       --           return a.path > b.path
@@ -57,11 +57,8 @@ local M = {
         icon = {
           folder_closed = "",
           folder_open = "",
-          folder_empty = "ﰊ",
-          -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
-          -- then these will never be used.
-          default = "*",
-          highlight = "NeoTreeFileIcon"
+          folder_empty = "󰜌",
+          folder_empty_open = "󰜌",
         },
         modified = {
           symbol = "[+]",
@@ -75,14 +72,14 @@ local M = {
         git_status = {
           symbols = {
             -- Change type
-            added     = "", -- or "✚", but this is redundant info if you use git_status_colors on the name
-            modified  = "", -- or "", but this is redundant info if you use git_status_colors on the name
+            added     = "",  -- or "✚", but this is redundant info if you use git_status_colors on the name
+            modified  = "",  -- or "", but this is redundant info if you use git_status_colors on the name
             deleted   = "✖", -- this can only be used in the git_status source
-            renamed   = "", -- this can only be used in the git_status source
+            renamed   = "󰁕",
             -- Status type
             untracked = "",
             ignored   = "",
-            unstaged  = "",
+            unstaged  = "󰄱",
             staged    = "",
             conflict  = "",
           }
@@ -174,7 +171,7 @@ local M = {
         },
         follow_current_file = false, -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
-        group_empty_dirs = false, -- when true, empty folders will be grouped together
+        group_empty_dirs = false,    -- when true, empty folders will be grouped together
         hijack_netrw_behavior = "open_current",
         -- "open_default" -- netrw disabled, opening a directory opens neo-tree
         -- in whatever position is specified in window.position
@@ -202,7 +199,7 @@ local M = {
       buffers = {
         follow_current_file = true, -- This will find and focus the file in the active buffer every
         -- time the current file is changed while the tree is open.
-        group_empty_dirs = true, -- when true, empty folders will be grouped together
+        group_empty_dirs = true,    -- when true, empty folders will be grouped together
         show_unloaded = true,
         window = {
           mappings = {
@@ -227,14 +224,14 @@ local M = {
         }
       },
       event_handlers = {
-          {
-            event = "file_opened",
-            handler = function(file_path)
-              --auto close
-              require("neo-tree").close_all()
-            end
-          },
-        }
+        {
+          event = "file_opened",
+          handler = function(file_path)
+            --auto close
+            require("neo-tree").close_all()
+          end
+        },
+      }
     })
 
     vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
