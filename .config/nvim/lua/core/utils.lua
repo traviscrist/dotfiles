@@ -37,7 +37,7 @@ function M.custom_lsp_attach(client, bufnr)
   }, { mode = "n", default_options })
   -- Register Space Key Mappings
   wk.register({
-    ca = { '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code Action' },
+    ca = { '<cmd>Fzflus lsp_code_actions<cr>', 'Code Action' },
     f  = { '<cmd>lua vim.lsp.buf.format()<cr>', 'Format' },
     rn = { '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename' },
   }, { prefix = '<space>', mode = 'n', default_options })
