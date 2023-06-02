@@ -9,8 +9,8 @@ local M = {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-nvim-lsp-signature-help",
-    "L3MON4D3/LuaSnip",
-    "saadparwaiz1/cmp_luasnip",
+    "dcampos/nvim-snippy",
+    "dcampos/cmp-snippy",
 
   },
   config = function()
@@ -34,7 +34,7 @@ local M = {
       },
       snippet = {
         expand = function(args)
-          require("luasnip").lsp_expand(args.body)
+          require('snippy').expand_snippet(args.body) -- For `snippy` users.
         end,
       },
       window = {
@@ -42,7 +42,7 @@ local M = {
         documentation = cmp.config.window.bordered(),
       },
       mapping = {
-        ['<C-b>'] = cmp.mapping.scroll_docs( -4),
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
@@ -64,18 +64,18 @@ local M = {
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "buffer",                 keyword_length = 5 },
-        { name = "luasnip" },
+        { name = "snippy" },
         { name = "path" },
         { name = "rg",                     keyword_length = 5 },
       },
     })
 
-    -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-    cmp.setup.cmdline("/", {
+    -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+    cmp.setup.cmdline({ '/', '?' }, {
       mapping = cmp.mapping.preset.cmdline(),
       sources = {
-        { name = "buffer" },
-      },
+        { name = 'buffer' }
+      }
     })
 
     -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
