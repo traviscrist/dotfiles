@@ -67,6 +67,7 @@ brew 'grpcurl'
 cask 'tableplus'
 cask 'postman'
 cask 'orbstack'
+brew 'postgresql@11'
 
 # Encryption
 brew 'gnupg'

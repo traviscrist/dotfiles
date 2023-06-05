@@ -128,6 +128,12 @@ unset key
 # Paths
 
 #
+# DB Tools
+#
+
+export PATH="/opt/homebrew/opt/postgresql@11/bin:$PATH"
+
+#
 # Editors
 #
 
