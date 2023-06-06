@@ -14,3 +14,20 @@ autocmd('BufWritePre', {
   end,
   buffer = 0
 })
+
+autocmd("CursorHold", {
+  callback = function()
+    local opts = {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = 'rounded',
+      source = 'always',
+      prefix = ' ',
+      scope = 'line',
+      max_width = 70,
+      pad_top = 0,
+      pad_bottom = 0,
+    }
+    vim.diagnostic.open_float(nil, opts)
+  end
+})
