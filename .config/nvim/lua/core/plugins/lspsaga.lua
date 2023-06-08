@@ -18,7 +18,9 @@ local M = {
       request_timeout = 2000,
 
       -- See Customizing Lspsaga's Appearance
-      ui = {},
+      ui = {
+        code_action = "󰌶",
+      },
 
       -- For default options for each command, see below
       finder = {},
