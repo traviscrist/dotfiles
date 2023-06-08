@@ -29,7 +29,6 @@ cask 'mimestream'
 cask 'cron'
 
 # Task Management
-cask 'sunsama'
 cask 'asana'
 
 # Monitors
