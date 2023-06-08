@@ -15,6 +15,7 @@ autocmd('BufWritePre', {
   buffer = 0
 })
 
+-- Show lsp issue in a windowo
 autocmd("CursorHold", {
   callback = function()
     local opts = {

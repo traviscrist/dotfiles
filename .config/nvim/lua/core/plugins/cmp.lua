@@ -1,5 +1,4 @@
 local settings = require('core.settings')
-local utils = require("core.utils")
 
 local M = {
   "hrsh7th/nvim-cmp",
@@ -93,7 +92,7 @@ local M = {
     -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 
     vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-      virtual_text = true,
+      virtual_text = false,
       signs = true,
       underline = true,
       update_in_insert = true,
@@ -106,7 +105,8 @@ local M = {
     for _, lsp in pairs(settings.lang_servers) do
       require('lspconfig')[lsp].setup {
         on_attach = function(client, bufnr)
-          utils.custom_lsp_attach(client, bufnr)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
         end,
         capabilities = capabilities
       }
