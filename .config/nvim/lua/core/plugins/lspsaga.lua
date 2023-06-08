@@ -22,8 +22,21 @@ local M = {
 
       -- For default options for each command, see below
       finder = {},
-      code_action = {}
-      -- etc.
+      code_action = {
+        quit = { 'q', '<ESC>' },
+      },
+      definition = {
+        edit = 'o',
+        vsplit = 's',
+        split = 'i',
+        tabe = 't',
+        quit = { 'q', '<ESC>' },
+      },
+      diagnostic = {
+        keys = {
+          quit = { 'q', '<ESC>' },
+        }
+      }
     })
   end
 }
