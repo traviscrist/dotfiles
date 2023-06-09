@@ -14,6 +14,7 @@ map('n', '<leader>w', '<cmd>write<cr>', default_options)
 map('n', '<leader>q', '<cmd>wq<cr>', default_options)
 map('n', '<leader>qq', '<cmd>quit<cr>', default_options)
 map('n', '<leader>n', '<cmd>set relativenumber! number!<cr>', default_options)
+map('n', '<leader>nn', '<cmd>set number!<cr>', default_options)
 
 -- FZF Lua Settings
 map('n', '<leader>b', ':FzfLua buffers<cr>', default_options)

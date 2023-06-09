@@ -9,6 +9,7 @@ o.backspace = 'indent,eol,start'        -- proper backspace behavior
 o.clipboard = 'unnamedplus'             -- copy from vim
 o.completeopt = 'menu,menuone,noselect' -- A comma separated list of options for Insert mode completion
 o.cursorline = false                    -- highlight the current line
+o.cursorcolumn = false                  -- highlight the current cusor column
 o.encoding = 'UTF-8'                    -- sets utf encoding for devicons
 o.expandtab = true                      -- use spaces instead of tabs
 o.grepprg = 'rg --hidden --vimgrep --smart-case --'
