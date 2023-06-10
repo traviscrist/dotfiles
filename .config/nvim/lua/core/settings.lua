@@ -1,6 +1,6 @@
 local M = {}
 
-M.theme = "mariana"
+M.theme = "everforest"
 -- treesitter parsers to be installed
 -- one of "all", "maintained" (parsers with maintainers), or a list of languages
 M.treessitter_langs = {

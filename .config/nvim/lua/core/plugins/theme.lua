@@ -28,5 +28,12 @@ elseif settings.theme == "oceanicnext" then
       require("core.plugins.themes.oceanicnext")
     end,
   }
+elseif settings.theme == "everforest" then
+  return {
+    "sainnhe/everforest",
+    config = function()
+      require("core.plugins.themes.everforest")
+    end,
+  }
 end
 
