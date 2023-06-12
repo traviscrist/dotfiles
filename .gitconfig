@@ -1,14 +1,14 @@
 [user]
-	email = 4206970+traviscrist@users.noreply.github.com
-	name = Travis Crist
+  email = 4206970+traviscrist@users.noreply.github.com
+  name = Travis Crist
 [core]
-	excludesfile = /Users/travis/.gitignore
-	editor = nvim
+  excludesfile = /Users/travis/.gitignore
+  editor = nvim
 [branch]
-	autosetuprebase = always
+  autosetuprebase = always
 [url "git@github.com:"]
   insteadOf = https://github.com/
 [push]
-	autoSetupRemote = true
+  autoSetupRemote = true
 [merge]
   conflictstyle = diff3
