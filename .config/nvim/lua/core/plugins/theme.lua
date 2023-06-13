@@ -30,7 +30,7 @@ elseif settings.theme == "oceanicnext" then
   }
 elseif settings.theme == "everforest" then
   return {
-    "sainnhe/everforest",
+    "neanias/everforest-nvim",
     config = function()
       require("core.plugins.themes.everforest")
     end,
