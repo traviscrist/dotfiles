@@ -13,6 +13,7 @@ map('n', '<C-H>', '<C-W><C-H>', default_options)
 map('n', '<leader>w', '<cmd>write<cr>', default_options)
 map('n', '<leader>q', '<cmd>wq<cr>', default_options)
 map('n', '<leader>qq', '<cmd>quit<cr>', default_options)
+map('n', '<leader>qqa', '<cmd>qall!<cr>', default_options)
 map('n', '<leader>n', '<cmd>set relativenumber! number!<cr>', default_options)
 map('n', '<leader>nn', '<cmd>set number!<cr>', default_options)
 
