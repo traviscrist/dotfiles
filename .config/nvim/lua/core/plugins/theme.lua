@@ -30,9 +30,16 @@ elseif settings.theme == "oceanicnext" then
   }
 elseif settings.theme == "everforest" then
   return {
-    "neanias/everforest-nvim",
+    "sainnhe/everforest",
     config = function()
       require("core.plugins.themes.everforest")
+    end,
+  }
+elseif settings.theme == "everforest-lua" then
+  return {
+    "neanias/everforest-nvim",
+    config = function()
+      require("core.plugins.themes.everforest-lua")
     end,
   }
 end
