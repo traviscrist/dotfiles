@@ -16,12 +16,19 @@ local M = {
     local cmp = require("cmp")
     local lspkind = require("lspkind")
 
+    -- Copilot
+    local has_words_before = function()
+      if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
+      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      return col ~= 0 and vim.api.nvim_buf_get_text(0, line - 1, 0, line - 1, col, {})[1]:match("^%s*$") == nil
+    end
+
     cmp.setup({
       formatting = {
         format = lspkind.cmp_format({
-          with_text = false,
           maxwidth = 50,
           mode = "symbol",
+          symbol_map = { Copilot = "" }
           -- Shows source of information in auto complete
           -- menu = {
           --   buffer = "BUF",
@@ -47,8 +54,8 @@ local M = {
         ["<C-e>"] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         ["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
+          if cmp.visible() and has_words_before() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
           else
             fallback()
           end
@@ -60,12 +67,33 @@ local M = {
         end, { "i", "s" }),
       },
       sources = {
+        -- Copilot Source
+        { name = "copilot" },
+        -- Other Sources
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
         { name = "buffer",                 keyword_length = 5 },
         { name = "snippy" },
         { name = "path" },
         { name = "rg",                     keyword_length = 5 },
+      },
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+          require("copilot_cmp.comparators").prioritize,
+
+          -- Below is the default comparitor list and order for nvim-cmp
+          cmp.config.compare.offset,
+          -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
       },
     })
 
@@ -105,8 +133,8 @@ local M = {
     for _, lsp in pairs(settings.lang_servers) do
       require('lspconfig')[lsp].setup {
         on_attach = function(client, bufnr)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+          -- Enable completion triggered by <c-x><c-o>
+          vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
         end,
         capabilities = capabilities
       }
