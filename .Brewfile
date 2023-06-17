@@ -76,6 +76,7 @@ brew 'gnupg'
 
 # Design
 cask 'figma'
+cask 'pika'
 
 # NodeJS
 brew 'yarn'
