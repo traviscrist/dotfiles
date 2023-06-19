@@ -28,11 +28,11 @@ d-down() {
 }
 
 d-up-logs() {
-  docker-compose up -d && logs web -f $1
+  docker-compose up -d && docker-compose logs web -f $1
 }
 
 d-restart-logs() {
-  docker-compose restart web && logs web -f $1
+  docker-compose restart web && docker-compose logs web -f $1
 }
 
 alias di="describe-instances"
