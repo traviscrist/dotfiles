@@ -31,7 +31,7 @@ d-up-logs() {
   docker-compose up -d && logs web -f $1
 }
 
-d-up-logs() {
+d-restart-logs() {
   docker-compose restart web && logs web -f $1
 }
 
