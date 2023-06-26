@@ -19,6 +19,10 @@ describe-instances(){
   aws ec2 describe-instances --profile $1 --filters 'Name=instance-state-name,Values=running' --query 'Reservations[].Instances[].[PublicIpAddress,PrivateIpAddress,InstanceId,Tags[?Key==`Name`].Value[]||[`--`]]' --output text | sed '$!N;s/\n/ /' | column -t -s $'\t'
 }
 
+d-logs() {
+  docker-compose logs web --tail=100 -f $1
+}
+
 d-up() {
   docker-compose up -d $1
 }
@@ -28,11 +32,11 @@ d-down() {
 }
 
 d-up-logs() {
-  docker-compose up -d && docker-compose logs web -f $1
+  docker-compose up -d && docker-compose logs web --tail=100 -f $1
 }
 
 d-restart-logs() {
-  docker-compose restart web && docker-compose logs web -f $1
+  docker-compose restart web && docker-compose logs web --tail=100 -f $1
 }
 
 alias di="describe-instances"
