@@ -14,9 +14,7 @@ local M = {
   },
   config = function()
     local cmp = require("cmp")
-    local lspkind = require("lspkind")
-
-    -- Copilot
+    local lspkind = require("lspkind") -- Copilot
     local has_words_before = function()
       if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -67,11 +65,11 @@ local M = {
         end, { "i", "s" }),
       },
       sources = {
-        -- Copilot Source
-        { name = "copilot" },
         -- Other Sources
         { name = "nvim_lsp" },
         { name = "nvim_lsp_signature_help" },
+        -- Copilot Source
+        { name = "copilot" },
         { name = "buffer",                 keyword_length = 5 },
         { name = "snippy" },
         { name = "path" },
