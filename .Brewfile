@@ -68,6 +68,8 @@ cask 'postman'
 cask 'orbstack'
 brew 'postgresql@11'
 brew 'act'
+tap 'twilio/brew'
+brew 'twilio'
 
 # Encryption
 brew 'gnupg'

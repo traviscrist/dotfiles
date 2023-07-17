@@ -14,6 +14,8 @@ map('n', '<leader>w', '<cmd>write<cr>', default_options)
 map('n', '<leader>q', '<cmd>wq<cr>', default_options)
 map('n', '<leader>qq', '<cmd>quit<cr>', default_options)
 map('n', '<leader>qqa', '<cmd>qall!<cr>', default_options)
+
+-- Number Lines
 map('n', '<leader>n', '<cmd>set relativenumber! number!<cr>', default_options)
 map('n', '<leader>nn', '<cmd>set number!<cr>', default_options)
 
@@ -32,6 +34,9 @@ map('n', '<C-C>', ':nohlsearch<cr>', default_options)
 
 -- Git
 map('n', '<leader>g', ':FzfLua git_status<cr>', default_options)
+
+-- Git Signs
+map('n', 'gb', ':Gitsigns toggle_current_line_blame', default_options)
 
 -- LSP
 vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
