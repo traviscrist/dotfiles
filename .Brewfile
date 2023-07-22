@@ -119,6 +119,8 @@ cask 'visual-studio-code'
 
 # Helix
 brew 'helix'
+# Lang Servers
+# brew 'kotlin-language-server'
 
 # Neovim
 brew 'neovim'
