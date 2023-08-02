@@ -36,7 +36,11 @@ map('n', '<C-C>', ':nohlsearch<cr>', default_options)
 map('n', '<leader>g', ':FzfLua git_status<cr>', default_options)
 
 -- Git Signs
-map('n', 'tt', ':Gitsigns toggle_current_line_blame', default_options)
+map('n', 'tt', ':Gitsigns toggle_current_line_blame<cr>', default_options)
+
+-- Git DiffView
+map('n', '<leader>d', ':DiffviewOpen<cr>', default_options)
+map('n', '<leader>dd', ':DiffviewClose<cr>', default_options)
 
 -- LSP
 vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
