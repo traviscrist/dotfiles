@@ -70,6 +70,7 @@ brew 'postgresql@11'
 brew 'act'
 tap 'twilio/brew'
 brew 'twilio'
+cask 'github'
 
 # Encryption
 brew 'gnupg'
