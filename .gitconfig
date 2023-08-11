@@ -12,3 +12,8 @@
   autoSetupRemote = true
 [merge]
   conflictstyle = diff3
+[alias]
+  st = status
+  ci = commit
+  cob = checkout -b
+  co = checkout
