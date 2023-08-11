@@ -17,3 +17,5 @@
   ci = commit
   cob = checkout -b
   co = checkout
+  p = pull
+  com = checkout main
