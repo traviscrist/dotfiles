@@ -13,11 +13,11 @@
 [merge]
   conflictstyle = diff3
 [alias]
-  st = status
+  s = status
   ci = commit
   cob = checkout -b
   co = checkout
   p = pull
   com = checkout main
-  grm = rebase -i main
-  gaa = add --all
+  rbm = rebase -i main
+  aa = add --all
