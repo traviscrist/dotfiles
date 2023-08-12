@@ -17,7 +17,8 @@
   ci = commit -m
   cob = checkout -b
   co = checkout
-  p = pull
+  pu = pull
+  p = push
   com = checkout main
   rbm = rebase -i main
   aa = add --all
