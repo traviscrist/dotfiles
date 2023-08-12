@@ -14,7 +14,7 @@
   conflictstyle = diff3
 [alias]
   s = status
-  ci = commit
+  ci = commit -m
   cob = checkout -b
   co = checkout
   p = pull
