@@ -40,3 +40,4 @@ d-restart-logs() {
 }
 
 alias di="describe-instances"
+alias pp="pnpm"
