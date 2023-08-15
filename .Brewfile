@@ -71,6 +71,7 @@ brew 'act'
 tap 'twilio/brew'
 brew 'twilio'
 cask 'github'
+brew 'deno'
 
 # Encryption
 brew 'gnupg'
