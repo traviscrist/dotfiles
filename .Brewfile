@@ -72,7 +72,6 @@ tap 'twilio/brew'
 brew 'twilio'
 cask 'github'
 brew 'deno'
-brew 'corepack'
 
 # Encryption
 brew 'gnupg'
