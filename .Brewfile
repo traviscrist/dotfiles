@@ -71,7 +71,6 @@ brew 'act'
 tap 'twilio/brew'
 brew 'twilio'
 cask 'github'
-brew 'deno'
 cask 'fleet'
 
 # Encryption
@@ -84,6 +83,11 @@ brew 'gnupg'
 cask 'figma'
 cask 'pika'
 
+# Languages
+
+# Deno
+brew 'deno'
+
 # NodeJS
 brew 'yarn'
 brew 'pnpm'
@@ -94,6 +98,9 @@ brew 'pyenv'
 
 # Go
 brew 'go'
+
+# Rust
+brew 'rust'
 
 # Stripe
 # brew 'stripe/stripe-cli/stripe'
