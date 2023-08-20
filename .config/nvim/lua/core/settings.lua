@@ -47,7 +47,6 @@ M.lang_servers = {
   "lua_ls",
   "marksman",
   "pyright",
-  "rust-analyzer",
   "sqlls",
   "taplo",
   "terraformls",
