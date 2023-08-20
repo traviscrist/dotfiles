@@ -1,5 +1,60 @@
 {
   "keymap": [
-
+    {
+      "key": "ctrl-o",
+      "trigger": "-show-reveal-in-panel"
+    },
+    {
+      "key": "cmd-leftbracket",
+      "trigger": "-back"
+    },
+    {
+      "key": "ctrl-o",
+      "trigger": "back"
+    },
+    {
+      "key": "cmd-rightbracket",
+      "trigger": "-forward"
+    },
+    {
+      "key": "ctrl-i",
+      "trigger": "forward"
+    },
+    {
+      "key": "cmd-z",
+      "trigger": "-undo"
+    },
+    {
+      "key": "u",
+      "trigger": "undo"
+    },
+    {
+      "key": "ctrl-r",
+      "trigger": "-rename"
+    },
+    {
+      "key": "ctrl-r",
+      "trigger": "-workspace-tree/rename-file"
+    },
+    {
+      "key": "cmd-shift-z",
+      "trigger": "-redo"
+    },
+    {
+      "key": "ctrl-r",
+      "trigger": "redo"
+    },
+    {
+      "key": "ctrl-r",
+      "trigger": "-debug/edit-watch"
+    },
+    {
+      "key": "ctrl-cmd-r",
+      "trigger": "rename"
+    },
+    {
+      "key": "ctrl-cmd-r",
+      "trigger": "workspace-tree/rename-file"
+    }
   ]
 }

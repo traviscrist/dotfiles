@@ -4,5 +4,6 @@
     "theme": "nord",
     "git.revert.confirm": false,
     "editor.distractionFreeMode": false,
-    "fus.sendAllowed": false
+    "fus.sendAllowed": false,
+    "keymap": "macos"
 }
