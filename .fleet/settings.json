@@ -1,0 +1,8 @@
+{
+    "terminal.clearTerminalOnCmdK": true,
+    "vimEmulationEnabled": true,
+    "theme": "nord",
+    "git.revert.confirm": false,
+    "editor.distractionFreeMode": false,
+    "fus.sendAllowed": false
+}
