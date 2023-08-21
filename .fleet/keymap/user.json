@@ -25,7 +25,7 @@
       "trigger": "-undo"
     },
     {
-      "key": "u",
+      "key": "cmd-z",
       "trigger": "undo"
     },
     {
@@ -41,7 +41,7 @@
       "trigger": "-redo"
     },
     {
-      "key": "ctrl-r",
+      "key": "shift-cmd-z",
       "trigger": "redo"
     },
     {

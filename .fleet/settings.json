@@ -1,9 +1,10 @@
 {
     "terminal.clearTerminalOnCmdK": true,
     "vimEmulationEnabled": true,
-    "theme": "nord",
+    "theme": "dark",
     "git.revert.confirm": false,
     "editor.distractionFreeMode": false,
     "fus.sendAllowed": false,
-    "keymap": "macos"
+    "keymap": "macos",
+    "editor.showCodeVision": false
 }
