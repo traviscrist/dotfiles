@@ -43,14 +43,14 @@ map('n', '<leader>d', ':DiffviewOpen<cr>', default_options)
 map('n', '<leader>dd', ':DiffviewClose<cr>', default_options)
 
 -- LSP
-vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
+vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, default_options)
 
 -- LSP Saga
 -- LSP finder - Find the symbol's definition
 -- If there is no definition, it will instead be hidden
 -- When you use an action in finder like "open vsplit",
 -- you can use <C-t> to jump back
-map("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
+map("n", "gh", "<cmd>Lspsaga finder<CR>")
 
 -- Code action
 map({ "n", "v" }, "<space>ca", "<cmd>Lspsaga code_action<CR>")
