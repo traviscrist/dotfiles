@@ -1,11 +1,7 @@
 local M = {
   'lukas-reineke/lsp-format.nvim',
   config = function()
-    require('lsp-format').setup({
-      kt = {
-        exclude = { 'kotlin_language_server' }
-      }
-    })
+    require('lsp-format').setup({})
   end
 }
 
