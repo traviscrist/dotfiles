@@ -23,7 +23,9 @@ local M = {
       },
 
       -- For default options for each command, see below
-      finder = {},
+      finder = {
+        default = 'ref+impl+def',
+      },
       code_action = {
         quit = { 'q', '<ESC>' },
       },
