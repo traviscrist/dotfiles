@@ -8,14 +8,7 @@ autocmd("BufWritePre", {
   group = TrimWhiteSpaceGrp,
 })
 
-autocmd('BufWritePre', {
-  callback = function()
-    vim.lsp.buf.format()
-  end,
-  buffer = 0
-})
-
--- Show lsp issue in a windowo
+-- Show lsp issue in a window
 autocmd("CursorHold", {
   callback = function()
     local opts = {

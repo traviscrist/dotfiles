@@ -128,6 +128,7 @@ local M = {
       require('lspconfig')[lsp].setup {
         on_attach = function(client, bufnr)
           -- Enable completion triggered by <c-x><c-o>
+          require('lsp-format').on_attach(client, bufrn)
           vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
         end,
         capabilities = capabilities
