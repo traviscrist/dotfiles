@@ -38,6 +38,9 @@ elseif settings.theme == "everforest" then
 elseif settings.theme == "everforest-lua" then
   return {
     "neanias/everforest-nvim",
+    version = false,
+    lazy = false,
+    priority = 1000,
     config = function()
       require("core.plugins.themes.everforest-lua")
     end,
