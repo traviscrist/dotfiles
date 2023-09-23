@@ -111,6 +111,7 @@ brew 'rust'
 
 # AWS
 brew 'awscli'
+brew 'aws-sam-cli'
 cask 'session-manager-plugin'
 
 # Dev/Apps
