@@ -114,6 +114,9 @@ brew 'awscli'
 brew 'aws-sam-cli'
 cask 'session-manager-plugin'
 
+# Cert Bot
+brew 'certbot'
+
 # Dev/Apps
 # cask 'sublime-text'
 tap 'heroku/brew'
