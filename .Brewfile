@@ -72,6 +72,8 @@ tap 'twilio/brew'
 brew 'twilio'
 cask 'github'
 cask 'fleet'
+brew 'mkcert'
+brew 'http-server'
 
 # Encryption
 brew 'gnupg'
