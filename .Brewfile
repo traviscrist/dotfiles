@@ -74,6 +74,7 @@ cask 'github'
 cask 'fleet'
 brew 'mkcert'
 brew 'http-server'
+brew 'httpstat'
 
 # Encryption
 brew 'gnupg'
