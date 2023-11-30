@@ -40,5 +40,9 @@ d-restart-logs() {
   docker-compose restart web && docker-compose logs web --tail=100 -f $1
 }
 
+dc() {
+  docker-compose
+}
+
 alias di="describe-instances"
 alias pp="pnpm"
