@@ -33,5 +33,5 @@ for ((batch_number = 1; batch_number <= total_batches; batch_number++)); do
     --queue-url <your-queue-url> \
     --entries file://"batch_$batch_number.json"
 
-  sleep 10
+  sleep 60
 done
