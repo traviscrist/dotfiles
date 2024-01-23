@@ -18,6 +18,14 @@ for ((i = 0; i < 1000; i+=1)); do
   for id in $deployment_ids; do
       url="/repos/$OWNER/$REPO/deployments/$id"
       echo $url
+
+      gh api \
+        --method POST \
+        -H "Accept: application/vnd.github+json" \
+        -H "X-GitHub-Api-Version: 2022-11-28" \
+        "$url/statuses" \
+      -f state='inactive' \
+
       gh api \
         --method DELETE \
         -H "Accept: application/vnd.github+json" \
