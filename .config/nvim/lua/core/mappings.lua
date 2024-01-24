@@ -4,10 +4,15 @@ local map = vim.keymap.set
 local default_options = { silent = true }
 
 -- Window Splitting
-map('n', '<C-J>', '<C-W><C-J>', default_options)
-map('n', '<C-K>', '<C-W><C-K>', default_options)
-map('n', '<C-L>', '<C-W><C-L>', default_options)
-map('n', '<C-H>', '<C-W><C-H>', default_options)
+-- map('n', '<C-J>', '<C-W><C-J>', default_options)
+-- map('n', '<C-K>', '<C-W><C-K>', default_options)
+-- map('n', '<C-L>', '<C-W><C-L>', default_options)
+-- map('n', '<C-H>', '<C-W><C-H>', default_options)
+-- Kitty Navigate Splits
+map('n', '<C-J>', ':KittyNavigateDown <CR>', default_options)
+map('n', '<C-K>', ':KittyNavigateUp <CR>', default_options)
+map('n', '<C-L>', ':KittyNavigateRight <CR>', default_options)
+map('n', '<C-H>', ':KittyNavigateLeft <CR>', default_options)
 
 -- File Writing
 map('n', '<leader>w', '<cmd>write<cr>', default_options)
