@@ -75,6 +75,7 @@ cask 'fleet'
 brew 'mkcert'
 brew 'http-server'
 brew 'httpstat'
+brew 'vegeta'
 
 # Encryption
 brew 'gnupg'
