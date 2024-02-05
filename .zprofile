@@ -46,3 +46,4 @@ dc() {
 
 alias di="describe-instances"
 alias pp="pnpm"
+alias kgp='kubectl get po -o custom-columns="Name:metadata.name,CPU-limit:spec.containers[*].resources.limits.cpu, CPU-request:spec.containers[*].resources.requests.cpu, memory-limits:spec.containers[*].resources.limits.memory, memory-request:spec.containers[*].resources.requests.memory"'
