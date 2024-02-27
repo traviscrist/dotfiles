@@ -117,6 +117,7 @@ brew 'rust'
 brew 'awscli'
 brew 'aws-sam-cli'
 cask 'session-manager-plugin'
+brew 'localstack'
 
 # Cert Bot
 brew 'certbot'
