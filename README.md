@@ -42,6 +42,7 @@ tfenv use 0.11.15
 * https://webhook.site/ - Webhook testing
 * https://toolbox.googleapps.com/apps/dig/ - Domain Lookup
 * https://github.com/lirantal/is-website-vulnerable - Check if website has security vulnerabilities cmd line
+* https://metatags.io/ - Check how meta tags look
 
 # Cool Apps to look into
 * https://www.hammerspoon.org/go/
