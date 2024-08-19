@@ -140,6 +140,9 @@ brew 'helix'
 # Lang Servers
 # brew 'kotlin-language-server'
 
+# Zed
+cask 'zed'
+
 # Neovim
 brew 'neovim'
 brew 'fzf'
