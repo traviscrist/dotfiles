@@ -22,6 +22,9 @@ cask 'ballast'
 cask 'contexts'
 # cask 'raycast'
 
+# AI
+cask 'chatgpt'
+
 # Email
 cask 'mimestream'
 
