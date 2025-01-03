@@ -161,3 +161,6 @@ cask 'spectacle'
 # brew 'kubectl'
 # brew 'kubernetes-helm'
 
+# Raspberry PI
+brew 'libusb'
+brew 'pkg-config'
