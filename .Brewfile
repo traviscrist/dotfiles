@@ -125,6 +125,7 @@ cask 'session-manager-plugin'
 brew 'certbot'
 
 # Dev/Apps
+
 # cask 'sublime-text'
 tap 'heroku/brew'
 brew 'heroku'
@@ -132,21 +133,23 @@ brew 'heroku'
 # Keyboard
 cask 'karabiner-elements'
 
-# IntelliJ Community
+# IDEs
+## IntelliJ Community
 cask 'intellij-idea-ce'
 
-# VS Code
+## VS Code
 cask 'visual-studio-code'
 
-# Helix
-brew 'helix'
-# Lang Servers
-# brew 'kotlin-language-server'
+## Cursor
+brew 'cursor'
 
-# Zed
+## Helix
+brew 'helix'
+
+## Zed
 cask 'zed'
 
-# Neovim
+## Neovim
 brew 'neovim'
 brew 'fzf'
 brew 'ripgrep'
