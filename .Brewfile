@@ -157,6 +157,10 @@ brew 'bat'
 brew 'fd'
 brew 'delta'
 
+# AI Tooling
+# Claude AI
+cask 'claude'
+
 # Window Management
 cask 'spectacle'
 
