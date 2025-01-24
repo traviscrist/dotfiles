@@ -50,7 +50,7 @@ M.lang_servers = {
   "sqlls",
   "taplo",
   "terraformls",
-  "tsserver", -- Alternative vtsls
+  "vtsls",
 }
 
 M.mason_tools = {
