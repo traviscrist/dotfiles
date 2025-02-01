@@ -10,7 +10,7 @@ local M = {
     "nvim-treesitter/playground",
   },
   config = function()
-    local settings = require("core.settings")
+    local settings = require("config.settings")
     require("nvim-treesitter.configs").setup({
       ensure_installed = settings.treessitter_langs,
       ignore_install = {}, -- List of parsers to ignore installing

@@ -1,4 +1,4 @@
-local settings = require("core.settings")
+local settings = require("config.settings")
 
 local M = {
   "williamboman/mason.nvim",
