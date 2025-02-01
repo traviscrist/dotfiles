@@ -6,7 +6,13 @@ o.autoindent = true                     -- copy indent from current line when st
 o.autoread = true                       -- Read changes to files from outside of vim
 o.backup = false                        -- disable backups
 o.backspace = 'indent,eol,start'        -- proper backspace behavior
-o.clipboard = 'unnamedplus'             -- copy from vim
+-- Sync clipboard between OS and Neovim.
+--  Schedule the setting after `UiEnter` because it can increase startup-time.
+--  Remove this option if you want your OS clipboard to remain independent.
+--  See `:help 'clipboard'`
+vim.schedule(function()
+  o.clipboard = 'unnamedplus'
+end)
 o.completeopt = 'menu,menuone,noselect' -- A comma separated list of options for Insert mode completion
 o.cursorline = false                    -- highlight the current line
 o.cursorcolumn = false                  -- highlight the current cusor column
@@ -39,10 +45,15 @@ o.splitbelow = true                     -- force all horizontal splits to go bel
 o.splitright = true                     -- force all vertical splits to go to the right of current window
 o.tabstop = 2                           -- how many columns a tab counts for
 o.termguicolors = true                  -- set term gui true colors (most terminals support this)
-o.timeoutlen = 400                      -- time to wait for a mapped sequence to complete (in milliseconds)
+o.timeoutlen = 300                      -- time to wait for a mapped sequence to complete (in milliseconds)
 o.ttimeoutlen = 0                       -- Time in milliseconds to wait for a key code sequence to complete
 o.undolevels = 1000
-o.updatetime = 300                      -- faster completion
+o.updatetime = 250                      -- faster completion
+-- Sets how neovim will display certain whitespace characters in the editor.
+--  See `:help 'list'`
+--  and `:help 'listchars'`
+o.list = true
+o.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 o.wildignorecase = true                 -- When set case is ignored when completing file names and directories
 o.wildmode = 'longest:full,full'        -- Command-line completion mode
 o.winminwidth = 5                       -- minimum window width
