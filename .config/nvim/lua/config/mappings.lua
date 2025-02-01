@@ -128,16 +128,11 @@ map("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
 map("n", "<space>ci", "<cmd>Lspsaga incoming_calls<CR>")
 map("n", "<space>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
--- Surround Tip
--- "ys": You surround
--- "ds": Delete surrounding
--- "cs": Change surrounding
---
--- Then stuff like "ysiw(" becomes "you surround in word [with] parentheses".
--- Another example would be "csq'", which would be "change the surrounding quotes
--- for the apostrophe character". I think if you have a good grasp on the text
--- objects that involve i and a, e.g. ib, aB, etc., you should be fine with most
--- of the functionality for this plugin
+local write_as_cwd = function()
+  local session_name = vim.fn.getcwd():gsub('/', '-')
+  MiniSessions.write(session_name)
+end
+map("n", '<Leader>ws', write_as_cwd)
 
 local wk = require('which-key')
 
