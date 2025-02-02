@@ -24,15 +24,7 @@ local M = {
       formatting = {
         format = lspkind.cmp_format({
           maxwidth = 50,
-          mode = "symbol",
-          symbol_map = { Copilot = "" }
-          -- Shows source of information in auto complete
-          -- menu = {
-          --   buffer = "BUF",
-          --   rg = "RG",
-          --   nvim_lsp = "LSP",
-          --   path = "PATH",
-          -- },
+          mode = "symbol"
         }),
       },
       snippet = {
