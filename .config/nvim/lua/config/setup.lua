@@ -21,6 +21,5 @@ local function setup_swap_file_dir()
     vim.opt.directory = swapdir
 end
 
-
 setup_persistent_undo()
 setup_swap_file_dir()
