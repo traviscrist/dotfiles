@@ -1,12 +1,13 @@
 local settings = require('config.settings')
 
 local M = {
-  "hrsh7th/nvim-cmp",
+  "iguanacucumber/magazine.nvim",
+  name = "nvim-cmp",
   dependencies = {
-    "hrsh7th/cmp-nvim-lsp",
-    "hrsh7th/cmp-buffer",
-    "hrsh7th/cmp-path",
-    "hrsh7th/cmp-cmdline",
+    { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
+    { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
+    { "iguanacucumber/mag-buffer",   name = "cmp-buffer" },
+    { "iguanacucumber/mag-cmdline",  name = "cmp-cmdline" },
     "hrsh7th/cmp-nvim-lsp-signature-help",
   },
   config = function()
