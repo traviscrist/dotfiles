@@ -8,9 +8,6 @@ local M = {
     "hrsh7th/cmp-path",
     "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-nvim-lsp-signature-help",
-    "dcampos/nvim-snippy",
-    "dcampos/cmp-snippy",
-
   },
   config = function()
     local cmp = require("cmp")
@@ -29,7 +26,7 @@ local M = {
       },
       snippet = {
         expand = function(args)
-          require('snippy').expand_snippet(args.body) -- For `snippy` users.
+          -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
         end,
       },
       window = {
@@ -62,7 +59,6 @@ local M = {
         -- Copilot Source
         -- { name = "copilot", priority = 3 },
         { name = "buffer",                  keyword_length = 5 },
-        { name = "snippy" },
         { name = "path" },
         { name = "rg",                      keyword_length = 5 },
       },
