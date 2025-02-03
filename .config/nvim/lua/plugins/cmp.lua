@@ -58,9 +58,9 @@ local M = {
         { name = "nvim_lsp_signature_help", priority = 2 },
         -- Copilot Source
         -- { name = "copilot", priority = 3 },
-        { name = "buffer",                  keyword_length = 5 },
-        { name = "path" },
-        { name = "rg",                      keyword_length = 5 },
+        -- { name = "buffer",                  keyword_length = 5 },
+        -- { name = "path" },
+        -- { name = "rg",                      keyword_length = 5 },
       },
       sorting = {
         priority_weight = 2,
