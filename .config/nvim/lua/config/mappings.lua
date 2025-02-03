@@ -25,11 +25,11 @@ map('n', '<leader>n', '<cmd>set relativenumber! number!<cr>', default_options)
 map('n', '<leader>nn', '<cmd>set number!<cr>', default_options)
 
 -- FZF Lua Settings
-map('n', '<leader>b', ':FzfLua buffers<cr>', default_options)
-map('n', '<leader>r', ':FzfLua oldfiles<cr>', default_options)
-map('n', '<leader>e', ':FzfLua git_files<cr>', default_options)
-map('n', '<leader>a', ':FzfLua grep_cword<cr>', default_options)
-map('n', '<leader>s', ':FzfLua grep_project<cr>', default_options)
+-- map('n', '<leader>b', ':FzfLua buffers<cr>', default_options)
+-- map('n', '<leader>r', ':FzfLua oldfiles<cr>', default_options)
+-- map('n', '<leader>e', ':FzfLua git_files<cr>', default_options)
+-- map('n', '<leader>a', ':FzfLua grep_cword<cr>', default_options)
+-- map('n', '<leader>s', ':FzfLua grep_project<cr>', default_options)
 
 -- NeoTree Settings
 map('n', '<leader>t', ':NeoTreeFocusToggle<cr>', default_options)
