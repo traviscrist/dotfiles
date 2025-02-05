@@ -6,6 +6,6 @@ return {
       autowrite = true,
     })
     require('mini.starter').setup({})
-    require('mini.pairs').setup({})
+    require('mini.surround').setup({})
   end
 }
