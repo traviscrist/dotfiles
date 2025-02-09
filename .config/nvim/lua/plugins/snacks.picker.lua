@@ -3,6 +3,9 @@ local M = {
   opts = {
     notifier = { enabled = true },
     picker = {
+      layout = {
+        preset = "ivy_split"
+      },
       enabled = true,
     }
   },
@@ -12,10 +15,10 @@ local M = {
     { "<leader>f",  function() Snacks.picker.files() end,     desc = "Find Files" },
     { "<leader>e",  function() Snacks.picker.git_files() end, desc = "Find Git Files" },
     { "<leader>r",  function() Snacks.picker.recent() end,    desc = "Recent" },
-    -- Grep
-    { "<leader>a",  function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     -- Search
-    { "<leader>s", function() Snacks.picker.registers() end, desc = "Registers" },
+    { "<leader>a",  function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
+    { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+    { "<leader>ss", function() Snacks.picker.grep() end, desc = "Grep Project" },
   }
 }
 
