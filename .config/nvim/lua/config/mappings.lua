@@ -130,14 +130,9 @@ map("n", '<Leader>ws', write_as_cwd)
 local wk = require('which-key')
 -- Register Leader Key Mappings
 wk.add({
-  { "<leader>a",  "<cmd>FzfLua grep_cword<cr>",                      desc = "Word Under Cursor" },
-  { "<leader>b",  "<cmd>FzfLua buffers<cr>",                         desc = "Buffers" },
-  { "<leader>e",  "<cmd>FzfLua git_files<cr>",                       desc = "Files" },
   { "<leader>g",  "<cmd>Neotree float git_status git_base=main<cr>", desc = "Git Status" },
   { "<leader>q",  "<cmd>wq<cr>",                                     desc = "Write Quit" },
   { "<leader>qq", "<cmd>quit<cr>",                                   desc = "Quit" },
-  { "<leader>r",  "<cmd>FzfLua oldfiles<cr>",                        desc = "Recent Files" },
-  { "<leader>s",  "<cmd>FzfLua grep_project<cr>",                    desc = "Search Project" },
   { "<leader>t",  "<cmd>NeoTreeFocusToggle<CR>",                     desc = "Toggle Tree" },
   { "<leader>w",  "<cmd>write<cr>",                                  desc = "Write" },
 }, { prefix = '<leader>', mode = 'n', default_options })
