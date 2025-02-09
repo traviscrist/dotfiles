@@ -15,7 +15,7 @@ local M = {
     -- Grep
     { "<leader>a",  function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
     -- Search
-    { '<leader>s"', function() Snacks.picker.registers() end, desc = "Registers" },
+    { "<leader>s", function() Snacks.picker.registers() end, desc = "Registers" },
   }
 }
 
