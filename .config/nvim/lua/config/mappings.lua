@@ -23,6 +23,8 @@ map('n', '<leader>qqa', '<cmd>qall!<cr>', default_options)
 -- Buffers
 map('n', 'bd', '<cmd>bd<cr>', default_options)
 
+-- Disable Recording Mode
+map('n', 'q', '<Nop>', default_options)
 
 -- Number Lines
 map('n', '<leader>n', '<cmd>set relativenumber! number!<cr>', default_options)
