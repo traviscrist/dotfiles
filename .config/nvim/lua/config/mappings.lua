@@ -35,7 +35,7 @@ map('n', '<leader>nn', '<cmd>set number!<cr>', default_options)
 -- NeoTree Settings
 map('n', '<leader>t', ':NeoTreeFocusToggle<cr>', default_options)
 
--- Escap Highlights
+-- Escape Highlights
 map('n', '<C-C>', ':nohlsearch<cr>', default_options)
 
 -- Git Signs
