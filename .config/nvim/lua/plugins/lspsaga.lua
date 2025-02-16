@@ -19,7 +19,7 @@ local M = {
 
       -- See Customizing Lspsaga's Appearance
       ui = {
-        code_action = "󰌶",
+        code_action = "",
       },
 
       -- For default options for each command, see below
