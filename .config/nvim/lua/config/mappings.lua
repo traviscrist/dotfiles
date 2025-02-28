@@ -126,12 +126,6 @@ map("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
 map("n", "<space>ci", "<cmd>Lspsaga incoming_calls<CR>")
 map("n", "<space>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
-local write_as_cwd = function()
-  local session_name = vim.fn.getcwd():gsub('/', '-')
-  MiniSessions.write(session_name)
-end
-map("n", '<Leader>ws', write_as_cwd)
-
 local wk = require('which-key')
 -- Register Leader Key Mappings
 wk.add({

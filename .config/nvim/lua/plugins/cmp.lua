@@ -41,7 +41,7 @@ local M = {
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({  select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),  -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
         ["<Tab>"] = cmp.mapping(function(fallback)
           if cmp.visible() and has_words_before() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
@@ -102,7 +102,6 @@ local M = {
 
     -- Setup lspconfig.
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
 
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
       border = "rounded",
@@ -115,7 +114,7 @@ local M = {
           -- require('lsp-format').on_attach(client, bufrn)
           vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
         end,
-        capabilities = capabilities
+        capabilities = capabilities,
       }
     end
   end,
