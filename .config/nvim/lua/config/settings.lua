@@ -33,23 +33,97 @@ M.treessitter_langs = {
 
 M.lang_servers = {
   -- LSP
-  "bashls",
-  "cssls",
-  "cssmodules_ls",
-  "dockerls",
-  "docker_compose_language_service",
-  "eslint",
-  "html",
-  "jsonls",
-  "jdtls",
-  "kotlin_language_server",
-  "lua_ls",
-  "marksman",
-  "pyright",
-  "sqlls",
-  "taplo",
-  "terraformls",
-  "vtsls",
+  bashls = {
+    settings = {}  -- Server-specific settings
+  },
+  cssls = {
+    settings = {}
+  },
+  cssmodules_ls = {
+    settings = {}
+  },
+  dockerls = {
+    settings = {}
+  },
+  docker_compose_language_service = {
+    settings = {}
+  },
+  eslint = {
+    settings = {}
+  },
+  html = {
+    settings = {}
+  },
+  jsonls = {
+    settings = {
+      json = {
+        schemas = {},
+        validate = { enable = true }
+      }
+    }
+  },
+  jdtls = {
+    settings = {}
+  },
+  kotlin_language_server = {
+    settings = {}
+  },
+  lua_ls = {
+    settings = {
+      Lua = {
+        runtime = {
+          version = 'LuaJIT'
+        },
+        diagnostics = {
+          globals = { 'vim' }
+        },
+        workspace = {
+          library = vim.api.nvim_get_runtime_file("", true),
+          checkThirdParty = false
+        },
+        telemetry = {
+          enable = false
+        }
+      }
+    }
+  },
+  marksman = {
+    settings = {}
+  },
+  pyright = {
+    settings = {
+      python = {
+        analysis = {
+          typeCheckingMode = "basic",
+          autoSearchPaths = true,
+          useLibraryCodeForTypes = true
+        }
+      }
+    }
+  },
+  sqlls = {
+    settings = {}
+  },
+  taplo = {
+    settings = {}
+  },
+  terraformls = {
+    settings = {}
+  },
+  vtsls = {
+    settings = {
+      typescript = {
+        preferences = {
+          importModuleSpecifier = "relative"
+        }
+      },
+      javascript = {
+        preferences = {
+          importModuleSpecifier = "relative"
+        }
+      }
+    }
+  }
 }
 
 M.mason_tools = {
