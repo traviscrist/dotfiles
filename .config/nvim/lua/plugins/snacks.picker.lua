@@ -17,8 +17,8 @@ local M = {
     { "<leader>r",  function() Snacks.picker.recent() end,    desc = "Recent" },
     -- Search
     { "<leader>a",  function() Snacks.picker.grep_word() end, desc = "Visual selection or word", mode = { "n", "x" } },
-    { "<leader>sb", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
-    { "<leader>ss", function() Snacks.picker.grep() end, desc = "Grep Project" },
+    { "<leader>x", function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
+    { "<leader>s", function() Snacks.picker.grep() end, desc = "Grep Project" },
   }
 }
 
