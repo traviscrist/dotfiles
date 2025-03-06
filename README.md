@@ -47,6 +47,9 @@ tfenv use 0.11.15
 # Cool Apps to look into
 * https://www.hammerspoon.org/go/
 * https://github.com/lapce/lapce
+
+# WM To Try
+* https://rectangleapp.com/
 * https://github.com/nikitabobko/AeroSpace
 
 # Inspired from
