@@ -21,9 +21,9 @@ map('n', '<leader>qq', '<cmd>quit<cr>', default_options)
 map('n', '<leader>qqa', '<cmd>qall!<cr>', default_options)
 
 -- Buffers
-map('n', 'bd', '<cmd>bd<cr>', default_options)
+map('n', '<leader>cb', '<cmd>bd<cr>', default_options)
 -- Close all buffers except current one
-map('n', 'bbq', ':%bd|e#<CR>', { silent = true, desc = 'Close all buffers except current' })
+map('n', '<leader>cab', ':%bd|e#<CR>', { silent = true, desc = 'Close all buffers except current' })
 
 -- Disable Recording Mode
 map('n', 'q', '<Nop>', default_options)
