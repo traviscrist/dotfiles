@@ -47,6 +47,7 @@ tfenv use 0.11.15
 # Cool Apps to look into
 * https://www.hammerspoon.org/go/
 * https://github.com/lapce/lapce
+* https://github.com/nikitabobko/AeroSpace
 
 # Inspired from
 * https://github.com/ada-lovecraft/dotbot
