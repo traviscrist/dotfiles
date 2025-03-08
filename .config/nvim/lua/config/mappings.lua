@@ -25,9 +25,6 @@ map('n', '<leader>cb', '<cmd>bd<cr>', default_options)
 -- Close all buffers except current one
 map('n', '<leader>cab', ':%bd|e#<CR>', { silent = true, desc = 'Close all buffers except current' })
 
--- Disable Recording Mode
-map('n', 'q', '<Nop>', default_options)
-
 -- Number Lines
 map('n', '<leader>n', '<cmd>set relativenumber! number!<cr>', default_options)
 map('n', '<leader>nn', '<cmd>set number!<cr>', default_options)
