@@ -109,6 +109,9 @@ map("n", "]E", function()
   require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
 end)
 
+-- Snacks Toggles
+-- Snacks.toggle.line_number():map("<leader>")
+
 -- Toggle outline
 map("n", "<space>o", "<cmd>Lspsaga outline<CR>")
 
