@@ -15,9 +15,6 @@ map('n', '<C-L>', ':KittyNavigateRight <CR>', default_options)
 map('n', '<C-H>', ':KittyNavigateLeft <CR>', default_options)
 
 -- File Writing
-map('n', '<leader>w', '<cmd>write<cr>', default_options)
-map('n', '<leader>q', '<cmd>wq<cr>', default_options)
-map('n', '<leader>qq', '<cmd>quit<cr>', default_options)
 map('n', '<leader>qqa', '<cmd>qall!<cr>', default_options)
 
 -- Buffers
@@ -26,56 +23,58 @@ map('n', '<leader>cb', '<cmd>bd<cr>', default_options)
 map('n', '<leader>cab', ':%bd|e#<CR>', { silent = true, desc = 'Close all buffers except current' })
 
 -- Number Lines
-	Snacks.toggle
-		.new({
-			id = "number",
-			name = " Line Numbers",
-			get = function()
-				return vim.wo.number
-			end,
-			set = function(state)
-				if state then
-					vim.wo.relativenumber = false
-				end
-				vim.wo.number = state
-			end,
-		})
-		:map("<leader>nn")
-	Snacks.toggle
-		.new({
-			id = "relativenumber",
-			name = " Relative Line Numbers",
-			get = function()
-				return vim.wo.relativenumber
-			end,
-			set = function(state)
-				if state then
-					vim.wo.number = false
-				end
-				vim.wo.relativenumber = state
-			end,
-		})
-		:map("<leader>nN")
-
--- NeoTree Settings
 Snacks.toggle
     .new({
-      id = "neotree_focus",
-      name = "NeoTree",
+      id = "number",
+      name = " Line Numbers",
       get = function()
-        return require("neo-tree.command")._command.NeoTreeFocusToggle
+        return vim.wo.number
       end,
       set = function(state)
-        require("neo-tree").focus(state)
+        if state then
+          vim.wo.relativenumber = false
+        end
+        vim.wo.number = state
       end,
     })
-    :map("tt")
+    :map("<leader>nn")
+
+Snacks.toggle
+    .new({
+      id = "relativenumber",
+      name = " Relative Line Numbers",
+      get = function()
+        return vim.wo.relativenumber
+      end,
+      set = function(state)
+        if state then
+          vim.wo.number = false
+        end
+        vim.wo.relativenumber = state
+      end,
+    })
+    :map("<leader>nN")
 
 
 -- Escape Highlights
 map('n', '<C-C>', ':nohlsearch<cr>', default_options)
 
--- Git Signs
+Snacks.toggle
+    .new({
+      id = "snacks_explorer",
+      name = "Snacks Explorer",
+      notify = false,
+      get = function()
+        Snacks.explorer.open()
+        return true
+      end,
+      set = function()
+      end,
+    })
+    :map("<leader>t")
+
+
+-- Git Blame
 Snacks.toggle
     .new({
       id = "git_blame",
@@ -193,11 +192,8 @@ end
 map("n", '<Leader>ws', write_as_cwd)
 
 local wk = require('which-key')
--- Register Leader Key Mappings
 wk.add({
-  { "<leader>g",  "<cmd>Neotree float git_status git_base=main<cr>", desc = "Git Status" },
+  { "<leader>w",  "<cmd>write<cr>",                                  desc = "Write" },
   { "<leader>q",  "<cmd>wq<cr>",                                     desc = "Write Quit" },
   { "<leader>qq", "<cmd>quit<cr>",                                   desc = "Quit" },
-  { "<leader>t",  "<cmd>NeoTreeFocusToggle<CR>",                     desc = "Toggle Tree" },
-  { "<leader>w",  "<cmd>write<cr>",                                  desc = "Write" },
 }, { prefix = '<leader>', mode = 'n', default_options })
