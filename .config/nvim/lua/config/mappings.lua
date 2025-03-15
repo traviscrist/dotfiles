@@ -26,22 +26,80 @@ map('n', '<leader>cb', '<cmd>bd<cr>', default_options)
 map('n', '<leader>cab', ':%bd|e#<CR>', { silent = true, desc = 'Close all buffers except current' })
 
 -- Number Lines
-map('n', '<leader>n', '<cmd>set relativenumber! number!<cr>', default_options)
-map('n', '<leader>nn', '<cmd>set number!<cr>', default_options)
+	Snacks.toggle
+		.new({
+			id = "number",
+			name = " Line Numbers",
+			get = function()
+				return vim.wo.number
+			end,
+			set = function(state)
+				if state then
+					vim.wo.relativenumber = false
+				end
+				vim.wo.number = state
+			end,
+		})
+		:map("<leader>nn")
+	Snacks.toggle
+		.new({
+			id = "relativenumber",
+			name = " Relative Line Numbers",
+			get = function()
+				return vim.wo.relativenumber
+			end,
+			set = function(state)
+				if state then
+					vim.wo.number = false
+				end
+				vim.wo.relativenumber = state
+			end,
+		})
+		:map("<leader>nN")
 
 -- NeoTree Settings
-map('n', '<leader>t', ':NeoTreeFocusToggle<cr>', default_options)
+Snacks.toggle
+    .new({
+      id = "neotree_focus",
+      name = "NeoTree",
+      get = function()
+        return require("neo-tree.command")._command.NeoTreeFocusToggle
+      end,
+      set = function(state)
+        require("neo-tree").focus(state)
+      end,
+    })
+    :map("tt")
+
 
 -- Escape Highlights
 map('n', '<C-C>', ':nohlsearch<cr>', default_options)
 
 -- Git Signs
-map('n', 'tt', ':Gitsigns toggle_current_line_blame<cr>', default_options)
+Snacks.toggle
+    .new({
+      id = "git_blame",
+      name = "Git Blame",
+      get = function()
+        return require("gitsigns.config").config.current_line_blame
+      end,
+      set = function(state)
+        require("gitsigns").toggle_current_line_blame(state)
+      end,
+    })
+    :map("tt")
 
 -- Git DiffView
-map('n', '<leader>do', ':DiffviewOpen<cr>', default_options)
-map('n', '<leader>dc', ':DiffviewClose<cr>', default_options)
-
+Snacks.toggle({
+  id = "diffview_toggle",
+  name = 'Git Diff',
+  get = function()
+    return require("diffview.lib").get_current_view() ~= nil
+  end,
+  set = function(state)
+    vim.cmd("Diffview" .. (state and "Open" or "Close"))
+  end,
+}):map("<leader>d")
 -- LSP
 vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, default_options)
 
@@ -109,11 +167,13 @@ map("n", "]E", function()
   require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
 end)
 
--- Snacks Toggles
--- Snacks.toggle.line_number():map("<leader>")
-
 -- Toggle outline
 map("n", "<space>o", "<cmd>Lspsaga outline<CR>")
+
+-- Git Signs
+
+-- Git Signs
+-- map('n', 'tt', ':Gitsigns toggle_current_line_blame<cr>', default_options)
 
 -- If you want to keep the hover window in the top right hand corner,
 -- you can pass the ++keep argument
