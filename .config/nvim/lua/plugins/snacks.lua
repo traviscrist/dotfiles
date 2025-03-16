@@ -72,6 +72,7 @@ local M = {
     { "<leader>yS",      function() Snacks.picker.git_stash() end,    desc = "Git Stash" },
     { "<leader>yl",      function() Snacks.picker.git_log() end,      desc = "Git Log" },
     { "<leader>yL",      function() Snacks.picker.git_log_line() end, desc = "Git Log Line" },
+    { "<leader>yg",      function() Snacks.lazygit() end,             desc = "Lazygit" },
     -- grep
     { "<leader>x",       function() Snacks.picker.grep_buffers() end, desc = "Grep Open Buffers" },
     { "<leader>s",       function() Snacks.picker.grep() end,         desc = "Grep Project" },
