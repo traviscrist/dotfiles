@@ -17,88 +17,9 @@ map('n', '<C-H>', ':KittyNavigateLeft <CR>', default_options)
 -- File Writing
 map('n', '<leader>qqa', '<cmd>qall!<cr>', default_options)
 
--- Buffers
-map('n', '<leader>cb', '<cmd>bd<cr>', default_options)
--- Close all buffers except current one
-map('n', '<leader>cab', ':%bd|e#<CR>', { silent = true, desc = 'Close all buffers except current' })
-
--- Number Lines
-Snacks.toggle
-    .new({
-      id = "number",
-      name = " Line Numbers",
-      get = function()
-        return vim.wo.number
-      end,
-      set = function(state)
-        if state then
-          vim.wo.relativenumber = false
-        end
-        vim.wo.number = state
-      end,
-    })
-    :map("<leader>nn")
-
-Snacks.toggle
-    .new({
-      id = "relativenumber",
-      name = " Relative Line Numbers",
-      get = function()
-        return vim.wo.relativenumber
-      end,
-      set = function(state)
-        if state then
-          vim.wo.number = false
-        end
-        vim.wo.relativenumber = state
-      end,
-    })
-    :map("<leader>nN")
-
-
 -- Escape Highlights
 map('n', '<C-C>', ':nohlsearch<cr>', default_options)
 
-Snacks.toggle
-    .new({
-      id = "snacks_explorer",
-      name = "Snacks Explorer",
-      notify = false,
-      get = function()
-        Snacks.explorer.open()
-        return true
-      end,
-      set = function()
-      end,
-    })
-    :map("<leader>t")
-
-
--- Git Blame
-Snacks.toggle
-    .new({
-      id = "git_blame",
-      name = "Git Blame",
-      get = function()
-        return require("gitsigns.config").config.current_line_blame
-      end,
-      set = function(state)
-        require("gitsigns").toggle_current_line_blame(state)
-      end,
-    })
-    :map("tt")
-
--- Git DiffView
-Snacks.toggle({
-  id = "diffview_toggle",
-  name = 'Git Diff',
-  get = function()
-    return require("diffview.lib").get_current_view() ~= nil
-  end,
-  set = function(state)
-    vim.cmd("Diffview" .. (state and "Open" or "Close"))
-  end,
-}):map("<leader>d")
 -- LSP
 vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, default_options)
 
@@ -169,11 +90,6 @@ end)
 -- Toggle outline
 map("n", "<space>o", "<cmd>Lspsaga outline<CR>")
 
--- Git Signs
-
--- Git Signs
--- map('n', 'tt', ':Gitsigns toggle_current_line_blame<cr>', default_options)
-
 -- If you want to keep the hover window in the top right hand corner,
 -- you can pass the ++keep argument
 -- Note that if you use hover with ++keep, pressing this key again will
@@ -184,12 +100,6 @@ map("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
 -- Call hierarchy
 map("n", "<space>ci", "<cmd>Lspsaga incoming_calls<CR>")
 map("n", "<space>co", "<cmd>Lspsaga outgoing_calls<CR>")
-
-local write_as_cwd = function()
-  local session_name = vim.fn.getcwd():gsub('/', '-')
-  MiniSessions.write(session_name)
-end
-map("n", '<Leader>ws', write_as_cwd)
 
 local wk = require('which-key')
 wk.add({

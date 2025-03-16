@@ -156,6 +156,9 @@ brew 'ripgrep'
 brew 'bat'
 brew 'fd'
 brew 'delta'
+brew 'lazygit'
+brew 'imagemagick'
+brew 'tectonic'
 
 # AI Tooling
 # Claude AI
