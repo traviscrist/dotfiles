@@ -59,7 +59,6 @@ local M = {
     { "<leader>l",       function() Snacks.picker.qflist() end,       desc = "Quickfix List" },
     -- explorer
     { "<leader>t",       function() Snacks.explorer() end,            desc = "File Explorer" },
-
     -- buffers
     { "<leader>cb",      function() Snacks.bufdelete.delete() end,    desc = "Delete Buffer" },
     { "<leader>cab",     function() Snacks.bufdelete.other() end,     desc = "Delete All Other Bufers" },
