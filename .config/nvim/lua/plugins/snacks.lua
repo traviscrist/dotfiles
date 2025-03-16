@@ -11,12 +11,20 @@ local M = {
     },
     dashboard = {
       enabled = true,
+      formats = {
+        key = function(item)
+          return { { "[", hl = "special" }, { item.key, hl = "key" }, { "]", hl = "special" } }
+        end,
+      },
       sections = {
-        { section = "header" },
-        { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },
-        { icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-        { icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-        { section = "startup" },
+        { icon = " ", title = "Sessions", padding = 1 },
+        { section = "projects", padding = 1 },
+        { icon = " ", title = "MRU", padding = 1 },
+        { section = "recent_files", limit = 8, padding = 1 },
+        { icon = " ", title = "MRU ", file = vim.fn.fnamemodify(".", ":~"), padding = 1 },
+        { section = "recent_files", cwd = true, limit = 8, padding = 1 },
+        { title = "Bookmarks", padding = 1 },
+        { icon = " ", section = "keys" },
       },
     },
     explorer = {
@@ -25,23 +33,7 @@ local M = {
     },
     picker = {
       layout = {
-        preview = "main",
-        layout = {
-          box = "vertical",
-          backdrop = false,
-          width = 0,
-          height = 0.4,
-          position = "bottom",
-          border = "top",
-          title = " {title} {live} {flags}",
-          title_pos = "left",
-          { win = "input", height = 1, border = "bottom" },
-          {
-            box = "horizontal",
-            { win = "list",    border = "none" },
-            { win = "preview", title = "{preview}", width = 0.6, border = "left" },
-          },
-        },
+        preset = "ivy_split"
       },
       sources = {
         explorer = {
