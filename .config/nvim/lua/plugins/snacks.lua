@@ -64,7 +64,7 @@ local M = {
     { "<leader>cab",     function() Snacks.bufdelete.other() end,     desc = "Delete All Other Bufers" },
     -- git
     { "<leader>y",       function() Snacks.git.blame_line() end,      desc = "Open Blame" },
-    { "<leader>yy",      function() Snacks.gitbrowse() end,           desc = "Open Blame" },
+    { "<leader>yy",      function() Snacks.gitbrowse() end,           desc = "Git Browse" },
     { "<leader>yd",      function() Snacks.picker.git_diff() end,     desc = "Git Diff (Hunks)" },
     { "<leader>yb",      function() Snacks.picker.git_branches() end, desc = "Git Branches" },
     { "<leader>ys",      function() Snacks.picker.git_status() end,   desc = "Git Status" },
