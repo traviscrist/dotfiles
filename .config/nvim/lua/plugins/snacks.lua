@@ -5,6 +5,7 @@ local M = {
   opts = {
     bigfile = { enabled = true },
     quickfile = { enabled = true },
+    input = { enabled = true },
     notifier = {
       enabled = true,
       timeout = 3000,
