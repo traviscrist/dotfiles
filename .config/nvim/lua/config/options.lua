@@ -1,11 +1,11 @@
 local o = vim.opt
 local g = vim.g
 
-o.autochdir = false                     -- don't change the working dir or your fzf doesn't work
-o.autoindent = true                     -- copy indent from current line when starting a new line`
-o.autoread = true                       -- Read changes to files from outside of vim
-o.backup = false                        -- disable backups
-o.backspace = 'indent,eol,start'        -- proper backspace behavior
+o.autochdir = false              -- don't change the working dir or your fzf doesn't work
+o.autoindent = true              -- copy indent from current line when starting a new line`
+o.autoread = true                -- Read changes to files from outside of vim
+o.backup = false                 -- disable backups
+o.backspace = 'indent,eol,start' -- proper backspace behavior
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -28,10 +28,10 @@ o.inccommand = 'nosplit'                -- preview incremental substitute
 g.loaded_netrw = true                   -- disable netrw
 g.loaded_netrwPlugin = true             -- disable netrw
 o.mouse = 'nv'                          -- only allow mouse in normal and visual mode
-o.number = false                         -- adds line number when using relative numbers too
+o.number = false                        -- adds line number when using relative numbers too
 o.pumblend = 10                         -- Popup transparency 0 - 30 most useful
 o.pumheight = 10                        -- Maximum number of entries in a popup
-o.relativenumber = false                 -- adds line numbers and relative line numbers
+o.relativenumber = false                -- adds line numbers and relative line numbers
 o.ruler = true                          -- show the current line number at the bottom
 o.scrolloff = 3                         -- Minimal number of screen lines to keep above and below the cursor
 o.shiftround = true                     -- Round shift indent
@@ -54,10 +54,10 @@ o.updatetime = 250                      -- faster completion
 --  and `:help 'listchars'`
 o.list = true
 o.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
-o.wildignorecase = true                 -- When set case is ignored when completing file names and directories
-o.wildmode = 'longest:full,full'        -- Command-line completion mode
-o.winminwidth = 5                       -- minimum window width
-o.wildmenu = true                       -- enables command line completion
+o.wildignorecase = true          -- When set case is ignored when completing file names and directories
+o.wildmode = 'longest:full,full' -- Command-line completion mode
+o.winminwidth = 5                -- minimum window width
+o.wildmenu = true                -- enables command line completion
 o.wildignore = [[
 .git,.hg,.svn
 *.aux,*.out,*.toc
@@ -72,9 +72,3 @@ o.wildignore = [[
 */tmp/*,*.so,*.swp,*.zip,**/node_modules/**,**/target/**,**.terraform/**'
 ]]
 o.writebackup = false -- disable backups
-vim.diagnostic.config({
-  virtual_text = false,
-  signs = true,
-  underline = true,
-  update_in_insert = true,
-})
