@@ -1,20 +1,22 @@
 local settings = require('config.settings')
 
 local M = {
-  "iguanacucumber/magazine.nvim",
+  "hrsh7th/nvim-cmp",
   name = "nvim-cmp",
   dependencies = {
-    { "iguanacucumber/mag-nvim-lsp", name = "cmp-nvim-lsp", opts = {} },
-    { "iguanacucumber/mag-nvim-lua", name = "cmp-nvim-lua" },
-    { "iguanacucumber/mag-buffer",   name = "cmp-buffer" },
-    { "iguanacucumber/mag-cmdline",  name = "cmp-cmdline" },
+    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-buffer",
+    "hrsh7th/cmp-path",
+    "hrsh7th/cmp-cmdline",
     "hrsh7th/cmp-nvim-lsp-signature-help",
     "L3MON4D3/LuaSnip",
     "saadparwaiz1/cmp_luasnip"
   },
   config = function()
     local cmp = require("cmp")
-    local lspkind = require("lspkind") -- Copilot
+    local lspkind = require("lspkind")
+
+    -- Copilot
     local has_words_before = function()
       if vim.api.nvim_buf_get_option(0, "buftype") == "prompt" then return false end
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -24,7 +26,8 @@ local M = {
       formatting = {
         format = lspkind.cmp_format({
           maxwidth = 50,
-          mode = "symbol"
+          mode = "symbol",
+          symbol_map = { Copilot = "" }
         }),
       },
       snippet = {
@@ -39,16 +42,15 @@ local M = {
       mapping = {
         ['<C-b>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),  -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-        ["<Tab>"] = cmp.mapping(function(fallback)
+        ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+        ["<Tab>"] = vim.schedule_wrap(function(fallback)
           if cmp.visible() and has_words_before() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
           else
             fallback()
           end
-        end, { "i", "s" }),
+        end),
         ["<S-Tab>"] = cmp.mapping(function()
           if cmp.visible() then
             cmp.select_prev_item()
@@ -56,11 +58,11 @@ local M = {
         end, { "i", "s" }),
       },
       sources = {
-        -- Other Sources
-        { name = "nvim_lsp",                priority = 2 },
-        { name = "nvim_lsp_signature_help", priority = 2 },
         -- Copilot Source
-        -- { name = "copilot", priority = 3 },
+        { name = "copilot",                 group_index = 2 },
+        -- Other Sources
+        { name = "nvim_lsp",                group_index = 2 },
+        { name = "nvim_lsp_signature_help", group_index = 2 },
         -- { name = "buffer",                  keyword_length = 5 },
         -- { name = "path" },
         -- { name = "rg",                      keyword_length = 5 },
@@ -68,12 +70,14 @@ local M = {
       sorting = {
         priority_weight = 2,
         comparators = {
-          -- require("copilot_cmp.comparators").prioritize,
+          require("copilot_cmp.comparators").prioritize,
           -- Below is the default comparitor list and order for nvim-cmp
           cmp.config.compare.offset,
           -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
           cmp.config.compare.exact,
           cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
           cmp.config.compare.kind,
           cmp.config.compare.sort_text,
           cmp.config.compare.length,

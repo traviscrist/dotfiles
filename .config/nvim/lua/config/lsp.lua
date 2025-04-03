@@ -1,0 +1,9 @@
+vim.lsp.enable({
+	"cssls",
+	"cssmodules",
+	"html",
+  "json",
+	"lua-ls",
+	"tailwindcss",
+	"ts-ls",
+})
