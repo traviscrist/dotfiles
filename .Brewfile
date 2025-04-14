@@ -163,6 +163,7 @@ brew 'tectonic'
 # AI Tooling
 # Claude AI
 cask 'claude'
+brew 'aider'
 
 # Window Management
 cask 'spectacle'

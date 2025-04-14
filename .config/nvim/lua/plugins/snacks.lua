@@ -34,7 +34,7 @@ local M = {
     },
     picker = {
       layout = {
-        preset = "ivy_split"
+        preset = "default"
       },
       sources = {
         explorer = {
