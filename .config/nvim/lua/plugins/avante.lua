@@ -5,9 +5,20 @@ local M = {
   opts = {
     hints = { enabled = false },
     provider = "copilot",
+    cursor_applying_provider = 'copilot',
     behaviour = {
+      auto_suggestions = {
+        enabled = false,
+        delay = 100, -- in milliseconds
+      },
       enable_token_counting = false,
       enable_cursor_planning_mode = true
+    },
+    windows = {
+      ask = {
+        floating = true,  -- Open the 'AvanteAsk' prompt in a floating window
+        start_insert = true, -- Start insert mode when opening the ask window
+      },
     },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
