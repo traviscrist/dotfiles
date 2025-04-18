@@ -19,3 +19,5 @@ alias:
   # Co Pilot Install
   # uv pip install git+https://github.com/siblanco/aider-copilot.git@feat/add_copilot
   # uv pip install git+https://github.com/BerriAI/litellm.git@litellm_dev_03_05_2025_contributor_prs
+  # Run
+  #   uv run aider --watch-files
