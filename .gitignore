@@ -12,3 +12,4 @@ tempfile
 *.DS_Store?
 .idea/*
 kls_database.db
+.aider*

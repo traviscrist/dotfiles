@@ -1,0 +1,17 @@
+dark-mode: true
+auto-commits: true
+vim: true
+editor: nvim
+map-tokens: 2048
+code-theme: nord-darker
+analytics: false
+model: github_copilot/claude-3.5-sonnet
+show-model-warnings: false
+auto-commits: false
+alias:
+  - "fast:github_copilot/gpt-4o"
+  - "code:github_copilot/claude-3.5-sonnet"
+  - "think:github_copilot/claude-3.5-sonnet-thought"
+  # - "fast:github_copilot/gpt-4o"
+  # - "code:github_copilot/claude-3.7-sonnet"
+  # - "think:github_copilot/claude-3.7-sonnet-thought"
