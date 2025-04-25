@@ -13,3 +13,6 @@ tempfile
 .idea/*
 kls_database.db
 .aider*
+.roo/*
+.roomodes
+.project
