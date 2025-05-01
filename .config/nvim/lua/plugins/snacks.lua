@@ -40,7 +40,10 @@ local M = {
         explorer = {
           jump = { close = true },
           layout = {
-            layout = { position = "right" },
+            layout = {
+              position = "right",
+            },
+            preview = "main"
           },
         },
       },
