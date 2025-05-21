@@ -6,6 +6,7 @@ source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 alias flush-dns="sudo killall -HUP mDNSResponder"
 alias tv-aws="export AWS_PROFILE=truevault"
 alias boom="npx npkill"
+alias aider="~/.config/scripts/aider_copilot.sh"
 
 aws-ssh() {
   aws ssm start-session --target $1 --profile $2

@@ -8,23 +8,23 @@ show-model-warnings: false
 auto-commits: false
 cache-prompts: true
 openai-api-base: https://api.githubcopilot.com
-# model: openai/gpt-4o
-# weak-model: openai/gpt-4o-mini
+model: openai/gpt-4o
+weak-model: openai/gpt-4o-mini
 show-model-warnings: false
 max-chat-history-tokens: 8000
 upgrade: false
 auto-accept-architect: false
 alias:
-  # - "fast:openai/gpt-4o"
-  # - "code:openai/claude-3.7-sonnet"
-  # - "think:openai/claude-3.7-sonnet-thought"
-  # - "gemini:openai/gemini-2.0-flash-001"
+  - "fast:openai/gpt-4o"
+  - "code:openai/claude-3.7-sonnet"
+  - "think:openai/claude-3.7-sonnet-thought"
+  - "gemini:openai/gemini-2.5-pro"
 
 ## Only works with Copilot Specific Install
-  - "fast:github_copilot/gpt-4o"
-  - "code:github_copilot/claude-3.7-sonnet"
-  - "think:github_copilot/claude-3.7-sonnet-thought"
-  - "gemini:github_copilot/gemini-2.5-pro"
+  # - "fast:github_copilot/gpt-4o"
+  # - "code:github_copilot/claude-3.7-sonnet"
+  # - "think:github_copilot/claude-3.7-sonnet-thought"
+  # - "gemini:github_copilot/gemini-2.5-pro"
 
   # Co Pilot Install
   # uv pip install git+https://github.com/siblanco/aider-copilot.git@feat/add_copilot
