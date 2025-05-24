@@ -1,0 +1,31 @@
+- name: openai/claude-3.7-sonnet
+  extra_params:
+    extra_headers:
+      Editor-Version: Aider/0.83.1
+      Copilot-Integration-Id: vscode-chat
+    max_tokens: 8192
+
+- name: openai/gpt-4o
+  extra_params:
+    extra_headers:
+      Editor-Version: Aider/0.83.1
+      Copilot-Integration-Id: vscode-chat
+    max_tokens: 8192
+
+- name: openai/gemini-2.5-pro
+  extra_params:
+    extra_headers:
+      Editor-Version: Aider/0.83.1
+      Copilot-Integration-Id: vscode-chat
+    max_tokens: 8192
+
+- name: openai/claude-sonnet-4
+  extra_params:
+    model: openai/claude-sonnet-4
+    api_base: https://api.githubcopilot.com
+    extra_headers:
+      Editor-Version: Aider/0.83.1
+      Copilot-Integration-Id: vscode-chat
+    max_tokens: 64000
+    max_input_tokens: 1048576
+    max_output_tokens: 65536
