@@ -12,11 +12,9 @@ model: openai/gpt-4o
 weak-model: openai/gpt-4o-mini
 show-model-warnings: false
 max-chat-history-tokens: 8000
-upgrade: false
 auto-accept-architect: false
 alias:
   - "fast:openai/gpt-4o"
-  # - "code:openai/claude-3.7-sonnet"
   - "code:openai/claude-sonnet-4"
   - "think:openai/claude-3.7-sonnet-thought"
   - "gemini:openai/gemini-2.5-pro"
