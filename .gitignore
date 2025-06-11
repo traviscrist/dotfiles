@@ -16,3 +16,5 @@ kls_database.db
 .roo/*
 .roomodes
 .project
+/memory-bank
+.claude/*
