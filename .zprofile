@@ -22,7 +22,7 @@ describe-instances(){
 }
 
 d-logs() {
-  docker-compose logs web --tail=100 -f $1
+  docker-compose logs --tail=100 -f $1
 }
 
 d-up() {
