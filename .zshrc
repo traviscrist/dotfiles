@@ -160,3 +160,9 @@ eval "$(pyenv init -)"
 # NodeJS
 #
 eval "$(fnm env --use-on-cd)"
+
+
+#
+# Deno
+#
+export PATH="/Users/travis/.deno/bin:$PATH"
