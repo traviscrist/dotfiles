@@ -43,7 +43,7 @@ local M = {
             layout = {
               position = "right",
             },
-            preview = "main"
+            preview = false
           },
         },
       },
