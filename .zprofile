@@ -41,6 +41,10 @@ d-up-logs() {
   docker-compose up -d && docker-compose logs --tail=100 -f $1
 }
 
+d-up-logs-web() {
+  docker-compose up -d && docker-compose logs web --tail=100 -f $1
+}
+
 d-restart-logs() {
   docker-compose restart web && docker-compose logs --tail=100 -f $1
 }
