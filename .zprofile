@@ -25,6 +25,10 @@ d-logs() {
   docker-compose logs --tail=100 -f $1
 }
 
+d-logs-web() {
+  docker-compose logs web --tail=100 -f $1
+}
+
 d-up() {
   docker-compose up -d $1
 }
