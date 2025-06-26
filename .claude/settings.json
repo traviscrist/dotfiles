@@ -1,0 +1,33 @@
+{
+  "model": "sonnet",
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@executeautomation/playwright-mcp-server"
+      ]
+    }
+  },
+  "mcp-sequentialthinking-tools": {
+    "type": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "mcp-sequentialthinking-tools"
+    ]
+  },
+  "allowedTools": [
+    "Task",
+    "Bash(git log:*)",
+    "Glob",
+    "Grep",
+    "LS",
+    "Read",
+    "Edit",
+    "MultiEdit",
+    "Write",
+    "WebFetch",
+    "WebSearch"
+  ]
+}
