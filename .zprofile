@@ -7,6 +7,8 @@ alias flush-dns="sudo killall -HUP mDNSResponder"
 alias tv-aws="export AWS_PROFILE=truevault"
 alias boom="npx npkill"
 alias aider="~/.config/scripts/aider_copilot.sh"
+alias setupClaudeMcpServers=' claude mcp add playwright npx @playwright/mcp@latest && \
+  claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena-mcp-server --context ide-assistant --project $(pwd)'
 
 aws-ssh() {
   aws ssm start-session --target $1 --profile $2
