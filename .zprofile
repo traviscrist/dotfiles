@@ -9,6 +9,7 @@ alias boom="npx npkill"
 alias aider="~/.config/scripts/aider_copilot.sh"
 alias setupClaudeMcpServers=' claude mcp add playwright npx @playwright/mcp@latest && \
   claude mcp add postgres npx @modelcontextprotocol/server-postgres postgresql://polaris:secure@localhost:5432/polaris \
+  claude-code --mcp-server "npx -y mcp-remote https://mcp.linear.app/sse" \
   claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena-mcp-server --context ide-assistant --project $(pwd)'
 
 aws-ssh() {
