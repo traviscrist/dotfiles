@@ -164,7 +164,7 @@ brew 'tectonic'
 # AI Tooling
 # Claude AI
 cask 'claude'
-brew 'aider'
+brew 'sst/tap/opencode'
 
 # Window Management
 cask 'spectacle'
