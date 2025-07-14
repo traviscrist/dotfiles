@@ -3,5 +3,57 @@
   "theme": "everforest",
   "model": "anthropic/claude-sonnet-4-20250514",
   "autoshare": false,
-  "autoupdate": true
+  "autoupdate": true,
+  "mcp": {
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@playwright/mcp@latest"
+      ],
+      "environment": {}
+    },
+    "postgres_polaris": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@modelcontextprotocol/server-postgres"
+      ],
+      "args": [
+        "postgresql://polaris:secure@localhost:5432/polaris"
+      ],
+      "environment": {}
+    },
+    "postgres_homemgmt": {
+      "type": "local",
+      "command": [
+        "npx",
+        "@modelcontextprotocol/server-postgres"
+      ],
+      "args": [
+        "postgresql://homemgmt:homemgmt_pass@localhost:5433/homemgmt_db"
+      ],
+      "environment": {}
+    },
+    "linear": {
+      "type": "remote",
+      "url": "https://mcp.linear.app/sse"
+    },
+    "serena": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "--from",
+        "git+https://github.com/oraios/serena",
+        "serena-mcp-server"
+      ],
+      "args": [
+        "--context",
+        "ide-assistant",
+        "--project",
+        "$(pwd)"
+      ],
+      "environment": {}
+    }
+  }
 }
