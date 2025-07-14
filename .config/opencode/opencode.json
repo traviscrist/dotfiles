@@ -13,28 +13,6 @@
       ],
       "environment": {}
     },
-    "postgres_polaris": {
-      "type": "local",
-      "command": [
-        "npx",
-        "@modelcontextprotocol/server-postgres"
-      ],
-      "args": [
-        "postgresql://polaris:secure@localhost:5432/polaris"
-      ],
-      "environment": {}
-    },
-    "postgres_homemgmt": {
-      "type": "local",
-      "command": [
-        "npx",
-        "@modelcontextprotocol/server-postgres"
-      ],
-      "args": [
-        "postgresql://homemgmt:homemgmt_pass@localhost:5433/homemgmt_db"
-      ],
-      "environment": {}
-    },
     "linear": {
       "type": "remote",
       "url": "https://mcp.linear.app/sse"
@@ -45,9 +23,7 @@
         "uvx",
         "--from",
         "git+https://github.com/oraios/serena",
-        "serena-mcp-server"
-      ],
-      "args": [
+        "serena-mcp-server",
         "--context",
         "ide-assistant",
         "--project",
