@@ -103,7 +103,8 @@ map("n", "<space>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
 local wk = require('which-key')
 wk.add({
-  { "<leader>w",  "<cmd>write<cr>",                                  desc = "Write" },
-  { "<leader>q",  "<cmd>wq<cr>",                                     desc = "Write Quit" },
-  { "<leader>qq", "<cmd>quit<cr>",                                   desc = "Quit" },
+  { "<leader>dm", "<cmd>DiffviewOpen main<cr>", desc = "Diff Main" },
+  { "<leader>w",  "<cmd>write<cr>",             desc = "Write" },
+  { "<leader>q",  "<cmd>wq<cr>",                desc = "Write Quit" },
+  { "<leader>qq", "<cmd>quit<cr>",              desc = "Quit" },
 }, { prefix = '<leader>', mode = 'n', default_options })

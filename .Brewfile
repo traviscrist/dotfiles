@@ -165,6 +165,7 @@ brew 'tectonic'
 # Claude AI
 cask 'claude'
 brew 'sst/tap/opencode'
+cask 'warp'
 
 # Window Management
 cask 'spectacle'

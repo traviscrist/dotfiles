@@ -30,7 +30,7 @@ local M = {
     },
     explorer = {
       enabled = true,
-      replace_netrw = true,
+      replace_netrw = false,
     },
     picker = {
       layout = {
@@ -66,6 +66,7 @@ local M = {
     -- buffers
     { "<leader>cb",      function() Snacks.bufdelete.delete() end,    desc = "Delete Buffer" },
     { "<leader>cab",     function() Snacks.bufdelete.other() end,     desc = "Delete All Other Bufers" },
+    { "<leader>yt",      function() Snacks.git.blame_line() end,      desc = "Open Blame" },
     -- git
     { "<leader>yt",      function() Snacks.git.blame_line() end,      desc = "Open Blame" },
     { "<leader>yy",      function() Snacks.gitbrowse() end,           desc = "Git Browse" },
