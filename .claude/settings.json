@@ -1,5 +1,5 @@
 {
-  "model": "sonnet",
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
       "Read(*)",
@@ -45,5 +45,9 @@
       "mcp__playwright__browser_generate_playwright_test",
       "mcp__playwright__browser_wait_for"
     ]
+  },
+  "model": "sonnet",
+  "feedbackSurveyState": {
+    "lastShownTime": 1754017711181
   }
 }
