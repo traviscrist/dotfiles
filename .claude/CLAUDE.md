@@ -6,11 +6,10 @@ This file provides global instructions for AI agents (Claude Code, Cursor, etc.)
 
 A structured multi-agent development system with mandatory human oversight:
 
-- **Looper Agent** - Workflow orchestrator with human approval gates
-- **Planner Agent** - Analysis, planning, and shared todo management  
+- **Coordinator Agent** - Strategic planning, workflow orchestration, and shared todo management with human approval gates
 - **Engineer Agent** - Implementation work (when delegated and approved)
 - **Reviewer Agent** - Code quality assurance and review
-- **Shared Todo System** - Markdown-based project tracking managed by planner
+- **Shared Todo System** - Markdown-based project tracking managed by coordinator
 
 ## Human-in-the-Loop Development Process
 
@@ -19,14 +18,14 @@ A structured multi-agent development system with mandatory human oversight:
 ### Required Process for ALL Development Tasks:
 
 1. **Analysis & Planning Phase**
-   - Use planner agent to analyze the request
+   - Use coordinator agent to analyze the request and create comprehensive implementation plan
    - Present findings and proposed approach to the human
    - **STOP and wait for human approval** before proceeding
 
 2. **Implementation Phase** 
    - Only begin implementation after explicit human approval
-   - Use the `looper` agent for structured development cycles
-   - Implement in small, reviewable chunks
+   - Use the `coordinator` agent for structured development cycles
+   - Coordinator delegates to engineer for implementation work
    - Present each significant change to the human for review
    - **STOP and wait for human approval** before continuing to next chunk
 
@@ -67,15 +66,19 @@ Human: "Approved" or "Need changes"
 
 ## Agent Responsibilities & Workflow
 
-### Looper Agent (Workflow Orchestrator)
-**STRICTLY PROHIBITED** from performing any engineering work directly. Role is orchestration only:
+### Coordinator Agent (Planning & Workflow Orchestration)
+**COMBINES** strategic planning with workflow orchestration. **STRICTLY PROHIBITED** from performing any engineering work directly.
 
 **MUST DO:**
+- Analyze requirements and create comprehensive implementation plans
+- Create and manage `.claude/project-todos.md` with structured tasks
+- Present plans and seek human approval at mandatory gates
 - Coordinate workflow between planning, implementation, and review phases
-- Present status updates and seek human approval at each gate
 - Delegate all coding tasks to the engineer agent
-- Manage the development cycle timeline and checkpoints
 - Automatically delegate to reviewer after engineer completes work (no asking required)
+- Update shared todo list after every engineer→reviewer iteration
+- Track progress, dependencies, and priorities throughout project lifecycle
+- Archive completed projects to `.claude/completed-projects/[project-name]-todos.md`
 
 **MUST NOT DO:**
 - Write, edit, or modify any code files
@@ -83,28 +86,22 @@ Human: "Approved" or "Need changes"
 - Run build commands or tests
 - Perform any implementation tasks
 
-**Delegation Pattern:**
+**Workflow Pattern:**
 ```
-Looper: "Based on human approval, I'm now delegating the implementation of [specific task] to the engineer agent."
+Coordinator: "I've analyzed the request and created this implementation plan: [plan]. Should I proceed with implementation?"
+Human: "Yes, proceed"
+Coordinator: "Based on approval, I'm now delegating implementation to the engineer agent."
 Engineer: [Performs the actual implementation work]
-Looper: "Engineer has completed [task]. Automatically delegating to reviewer for quality assurance."
+Coordinator: "Engineer has completed [task]. Automatically delegating to reviewer for quality assurance."
 Reviewer: [Reviews the code]
-Looper: "Presenting results to human for approval before proceeding."
+Coordinator: "Updating todos and presenting results to human for approval before proceeding."
 ```
-
-### Planner Agent (Master Todo Manager)
-- **FORBIDDEN** from any actual implementation work - planning only
-- **CREATE** `.claude/project-todos.md` at project start with structured tasks
-- **UPDATE** shared todo list after every engineer→reviewer iteration
-- **TRACK** progress, dependencies, and priorities throughout project lifecycle
-- **ARCHIVE** completed projects to `.claude/completed-projects/[project-name]-todos.md`
-- **DELEGATE** back to looper for implementation - never directly to other agents
 
 ### Engineer Agent (Implementation)
-- **ONLY** perform implementation when delegated by looper and approved by human
+- **ONLY** perform implementation when delegated by coordinator and approved by human
 - **REFERENCE** shared todo list (`.claude/project-todos.md`) for assigned tasks
-- **FOLLOW** approved plans provided by planner agent
-- **REPORT** progress against specific todo items back to looper
+- **FOLLOW** approved plans provided by coordinator agent
+- **REPORT** progress against specific todo items back to coordinator
 - **IDENTIFY** new todos discovered during implementation
 
 ### Reviewer Agent (Quality Assurance)
@@ -112,7 +109,7 @@ Looper: "Presenting results to human for approval before proceeding."
 - **REVIEW** all code changes before human presentation
 - **MARK** todos as reviewed and approved
 - **IDENTIFY** quality issues requiring new todos
-- **RETURN** results to looper (never directly delegate to other agents)
+- **RETURN** results to coordinator (never directly delegate to other agents)
 
 ## Shared Todo System
 
@@ -143,7 +140,7 @@ Looper: "Presenting results to human for approval before proceeding."
 ```
 
 ### Management Rules:
-- **Planner** is the master todo list manager
+- **Coordinator** is the master todo list manager
 - **Update** after every iteration cycle
 - **Track** dependencies and blockers
 - **Archive** when projects complete
