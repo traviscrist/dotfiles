@@ -1,6 +1,7 @@
 ---
 name: engineer
 description: Use this agent for implementing features across any technology stack. This agent adapts to the project's chosen technologies and follows engineering best practices regardless of the specific frameworks, languages, or platforms being used.
+tools: *
 model: sonnet
 color: orange
 ---
