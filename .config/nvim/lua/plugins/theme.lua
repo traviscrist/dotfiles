@@ -55,8 +55,7 @@ return {
       ---
       ---NB: This is only significant for dark backgrounds as the light palettes
       ---have the same colour for both values in the switch.
-      float_style = "bright",
-      ---Inlay hints are special markers that are displayed inline with the code to
+      float_style = "bright", ---Inlay hints are special markers that are displayed inline with the code to
       ---provide you with additional information. You can use this option to customize
       ---the background color of inlay hints.
       ---

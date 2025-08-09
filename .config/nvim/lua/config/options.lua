@@ -1,7 +1,7 @@
 local o = vim.opt
 local g = vim.g
 
-o.background='light'
+o.background= 'dark'
 
 o.autochdir = false              -- don't change the working dir or your fzf doesn't work
 o.autoindent = true              -- copy indent from current line when starting a new line`
