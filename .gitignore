@@ -17,4 +17,15 @@ kls_database.db
 .roomodes
 .project
 /memory-bank
+
+# AI TOOLING
 .claude/*
+# Allow Claude Agents
+!.claude/agents/
+!.claude/agents/**
+!.claude/.mcp.json
+
+
+# Serena cache files
+.serena/cache/
+
