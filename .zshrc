@@ -131,7 +131,7 @@ unset key
 # DB Tools
 #
 
-export PATH="/opt/homebrew/opt/postgresql@11/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@17/bin:$PATH"
 
 #
 # Editors
