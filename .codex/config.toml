@@ -1,0 +1,23 @@
+model = "gpt-5-codex"
+[projects."/Users/travis/travis/homemgmt-ai"]
+trust_level = "trusted"
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+
+[mcp_servers.linear]
+command = "npx"
+args = ["-y", "mcp-remote", "https://mcp.linear.app/sse"]
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["@playwright/mcp@latest"]
+
+[mcp_servers.postgres]
+command = "npx"
+args = ["@modelcontextprotocol/server-postgres", "postgresql://polaris:secure@localhost:5432/polaris"]
+
+[mcp_servers.serena]
+command = "uvx"
+args = ["--from", "git+https://github.com/oraios/serena", "serena-mcp-server", "--context", "ide-assistant"]
