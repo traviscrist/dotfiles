@@ -2,6 +2,12 @@ model = "gpt-5-codex"
 [projects."/Users/travis/travis/homemgmt-ai"]
 trust_level = "trusted"
 
+[projects."/Users/travis/travis/homemgmt-ai-dragon"]
+trust_level = "trusted"
+
+[projects."/Users/travis/travis/homemgmt-ai-polar"]
+trust_level = "trusted"
+
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
