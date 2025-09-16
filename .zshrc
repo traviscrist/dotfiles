@@ -166,3 +166,9 @@ eval "$(fnm env --use-on-cd)"
 # Deno
 #
 export PATH="/Users/travis/.deno/bin:$PATH"
+
+
+#
+# Rust Cargo
+#
+export PATH="/Users/travis/.cargo/bin:$PATH"
