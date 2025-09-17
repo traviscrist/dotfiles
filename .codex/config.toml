@@ -8,6 +8,18 @@ trust_level = "trusted"
 [projects."/Users/travis/travis/homemgmt-ai-polar"]
 trust_level = "trusted"
 
+[projects."/Users/travis/git/polaris-naga-mono"]
+trust_level = "trusted"
+
+[projects."/Users/travis/git/polaris-naga-polar"]
+trust_level = "trusted"
+
+[projects."/Users/travis/.codex"]
+trust_level = "trusted"
+
+[projects."/Users/travis/git/polaris-naga-bubbles"]
+trust_level = "trusted"
+
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
@@ -26,4 +38,8 @@ args = ["@modelcontextprotocol/server-postgres", "postgresql://polaris:secure@lo
 
 [mcp_servers.serena]
 command = "uvx"
-args = ["--from", "git+https://github.com/oraios/serena", "serena-mcp-server", "--context", "ide-assistant"]
+args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex"]
+
+[mcp_servers.mongodb]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-mongodb", "mongodb://homemgmt:homemgmt_pass@localhost:27017/redcrayon_db?authSource=admin&directConnection=true"]
