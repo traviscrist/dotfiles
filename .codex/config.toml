@@ -39,6 +39,8 @@ args = ["@modelcontextprotocol/server-postgres", "postgresql://polaris:secure@lo
 [mcp_servers.serena]
 command = "uvx"
 args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex"]
+# After codex has started, you need to activate the project, which you can do by saying:
+# Activate the current dir as project using serena
 
 [mcp_servers.mongodb]
 command = "npx"
