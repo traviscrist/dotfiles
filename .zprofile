@@ -26,7 +26,7 @@ describe-instances(){
 }
 
 d-logs() {
-  docker-compose logs --tail=100 -f $1
+  docker-compose logs --tail=100 -f $1 $2 $3 $4
 }
 
 d-up() {
