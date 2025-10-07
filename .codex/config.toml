@@ -1,5 +1,5 @@
 model = "gpt-5-codex"
-model_reasoning_effort = "medium"
+model_reasoning_effort = "high"
 
 [projects."/Users/travis/travis/homemgmt-ai"]
 trust_level = "trusted"
@@ -22,6 +22,9 @@ trust_level = "trusted"
 [projects."/Users/travis/git/polaris-naga-bubbles"]
 trust_level = "trusted"
 
+[projects."/Users/travis/travis/redcrayonwebsite"]
+trust_level = "trusted"
+
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
@@ -40,6 +43,6 @@ args = ["@modelcontextprotocol/server-postgres", "postgresql://polaris:secure@lo
 
 [mcp_servers.serena]
 command = "uvx"
-args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex"]
+args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex", "--enable-web-dashboard", "False"]
 # After codex has started, you need to activate the project, which you can do by saying:
 # Activate the current dir as project using serena
