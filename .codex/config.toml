@@ -25,21 +25,16 @@ trust_level = "trusted"
 [projects."/Users/travis/travis/redcrayonwebsite"]
 trust_level = "trusted"
 
+[projects."/Users/travis/git/taos"]
+trust_level = "trusted"
+
 [mcp_servers.context7]
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
 
-[mcp_servers.linear]
-command = "npx"
-args = ["-y", "mcp-remote", "https://mcp.linear.app/sse"]
-
 [mcp_servers.playwright]
 command = "npx"
 args = ["@playwright/mcp@latest"]
-
-[mcp_servers.postgres]
-command = "npx"
-args = ["@modelcontextprotocol/server-postgres", "postgresql://polaris:secure@localhost:5432/polaris"]
 
 [mcp_servers.serena]
 command = "uvx"
