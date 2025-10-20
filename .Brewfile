@@ -115,7 +115,7 @@ brew 'rust'
 # brew 'stripe/stripe-cli/stripe'
 
 # Google Cloud
-# cask 'google-cloud-sdk'
+cask 'gcloud-cli'
 # brew 'google-backup-and-sync'
 
 # AWS
