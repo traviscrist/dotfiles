@@ -1,5 +1,8 @@
-model = "gpt-5-codex"
-model_reasoning_effort = "high"
+model = "gpt-5.1-codex-max"
+model_reasoning_effort = "xhigh"
+
+[features]
+rmcp_client = true
 
 [projects."/Users/travis/travis/homemgmt-ai"]
 trust_level = "trusted"
@@ -38,6 +41,10 @@ trust_level = "trusted"
 command = "npx"
 args = ["-y", "@upstash/context7-mcp"]
 
+[mcp_servers.figma]
+type = "http"
+url = "https://mcp.figma.com/mcp"
+
 [mcp_servers.playwright]
 command = "npx"
 args = ["@playwright/mcp@latest"]
@@ -45,8 +52,10 @@ args = ["@playwright/mcp@latest"]
 [mcp_servers.serena]
 command = "uvx"
 args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex", "--enable-web-dashboard", "False"]
-
+#
 [notice]
 hide_full_access_warning = true
+hide_gpt5_1_migration_prompt = true
+"hide_gpt-5.1-codex-max_migration_prompt" = true
 # After codex has started, you need to activate the project, which you can do by saying:
 # Activate the current dir as project using serena

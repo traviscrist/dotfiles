@@ -1,0 +1,57 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+      "cmd-k": "command_palette::Toggle",
+      "cmd-shift-a": ["agent::NewExternalAgentThread", { "agent": "codex" }]
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "j k": ["workspace::SendKeystrokes", "escape"]
+    }
+  },
+  {
+    "context": "Editor && VimControl && !VimWaiting && !menu",
+    "bindings": {
+      "space c a": "editor::ToggleCodeActions",
+      "space f": "editor::Format",
+      "space d": "diagnostics::Deploy",
+      ", e": "file_finder::Toggle",
+      "space o": "tab_switcher::Toggle",
+      "space e": "workspace::ToggleRightDock",
+      "space t": "workspace::NewCenterTerminal",
+      "g b": "editor::ToggleComments",
+      ", w": "workspace::Save",
+      ", q": "pane::CloseAllItems",
+      ", s": "workspace::NewSearch",
+      ", t": "workspace::ToggleLeftDock",
+      "space c": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "Dock || Terminal || Editor",
+    "bindings": {
+      "ctrl-h": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-k": "workspace::ActivatePaneUp",
+      "ctrl-j": "workspace::ActivatePaneDown"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
+    "bindings": {
+      "shift-j": "editor::MoveLineDown",
+      "shift-k": "editor::MoveLineUp"
+    }
+  }
+]
