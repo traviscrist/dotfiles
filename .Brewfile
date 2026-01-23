@@ -25,6 +25,7 @@ cask 'contexts'
 # AI
 cask 'chatgpt'
 cask 'codex'
+brew 'jj'
 
 # Email
 cask 'mimestream'
