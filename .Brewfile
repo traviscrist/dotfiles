@@ -26,6 +26,7 @@ cask 'contexts'
 cask 'chatgpt'
 cask 'codex'
 brew 'jj'
+brew 'gemini-cli'
 
 # Email
 cask 'mimestream'
