@@ -22,7 +22,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - CI: `gh run list/view` (rerun/fix til green).
 - Prefer end-to-end verify; if blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
-- Slash cmds: `~/.codex/prompts/`.
+- Slash cmds: `~/.codex/prompts/` (global), `~/.ai/docs/slash-commands/` (local mirror).
 - Web: search early; quote exact errors; prefer 2024–2025 sources; fallback Firecrawl (`pnpm mcp:*`) / `mcporter`.
 - Oracle: run `npx -y @steipete/oracle --help` once/session before first use.
 - Style: telegraph. Drop filler/grammar. Min tokens (global AGENTS + replies).
@@ -150,7 +150,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Examples: `gh issue view <url> --comments -R owner/repo`, `gh pr view <url> --comments --files -R owner/repo`.
 
 ### Slash Commands
-- Global: `~/.codex/prompts/`. Repo-local: `docs/slash-commands/`.
+- Global: `~/.codex/prompts/`. Local mirror: `~/.ai/docs/slash-commands/`. Repo-local override: `docs/slash-commands/` when present.
 - Common: `/handoff`, `/pickup`.
 
 ### tmux
