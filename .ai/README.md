@@ -65,6 +65,25 @@ readlink ~/.codex/prompts
 - Some are guidance-only; others require local setup (API keys, npm installs, or external CLIs).
 - If a skill references scripts under `skills/<name>/scripts`, keep those files alongside the skill.
 
+### Available Now
+- `create-cli`
+- `brave-search`
+- `frontend-design`
+- `markdown-converter`
+- `oracle`
+- `openai-image-gen`
+- `swift-concurrency-expert`
+- `swiftui-liquid-glass`
+- `swiftui-performance-audit`
+- `swiftui-view-refactor`
+- `video-transcript-downloader`
+
+### Parked (Needs Setup)
+- `1password` (install `op` / `1password-cli`)
+- `instruments-profiling` (install/configure Xcode tooling so `xcrun xctrace` works)
+- `nano-banana-pro` (set `GEMINI_API_KEY`)
+- `native-app-performance` (install/configure Xcode tooling so `xcrun xctrace` works)
+
 ## Slash Commands
 - Local mirror lives in `docs/slash-commands/`.
 - Global prompts (if used) live in `~/.codex/prompts/`.
