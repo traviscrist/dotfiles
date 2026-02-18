@@ -109,7 +109,7 @@ brew 'fnm'
 
 # Python
 brew 'pyenv'
-brew 'astral-sh/uv/uv'
+brew 'astral-sh/uv'
 
 # Go
 brew 'go'
