@@ -28,6 +28,10 @@ cask 'codex'
 brew 'jj'
 brew 'gemini-cli'
 
+# AI TOOLS
+tap 'steipete/tap'
+brew 'peekaboo'
+
 # Email
 cask 'mimestream'
 
