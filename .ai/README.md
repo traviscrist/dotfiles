@@ -13,10 +13,24 @@ cd ~/.ai/skills/brave-search && npm ci
 cd ~/.ai/skills/video-transcript-downloader && npm ci
 
 mkdir -p ~/.codex
+if [ -e ~/.codex/AGENTS.md ] && [ ! -L ~/.codex/AGENTS.md ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
+if [ -L ~/.codex/AGENTS.md ] && [ "$(readlink ~/.codex/AGENTS.md)" != "$HOME/.ai/AGENTS.md" ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
+rm -f ~/.codex/AGENTS.md
+ln -s ~/.ai/AGENTS.md ~/.codex/AGENTS.md
+
 if [ -e ~/.codex/prompts ] && [ ! -L ~/.codex/prompts ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
 if [ -L ~/.codex/prompts ] && [ "$(readlink ~/.codex/prompts)" != "$HOME/.ai/docs/slash-commands" ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
 rm -f ~/.codex/prompts
 ln -s ~/.ai/docs/slash-commands ~/.codex/prompts
+
+mkdir -p ~/.codex/skills
+for d in ~/.ai/skills/*; do
+  [ -d "$d" ] || continue
+  n="$(basename "$d")"
+  if [ -e "$HOME/.codex/skills/$n" ] && [ ! -L "$HOME/.codex/skills/$n" ]; then mv "$HOME/.codex/skills/$n" "$HOME/.codex/skills/${n}.backup.$(date +%Y%m%d-%H%M%S)"; fi
+  rm -f "$HOME/.codex/skills/$n"
+  ln -s "$d" "$HOME/.codex/skills/$n"
+done
 ```
 
 Quick verification:
@@ -27,7 +41,9 @@ command -v tsc
 command -v tsx
 command -v yt-dlp
 command -v ffmpeg
+readlink ~/.codex/AGENTS.md
 readlink ~/.codex/prompts
+find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 ```
 
 ## Syncing With Other Repos

@@ -172,3 +172,8 @@ export PATH="/Users/travis/.deno/bin:$PATH"
 # Rust Cargo
 #
 export PATH="/Users/travis/.cargo/bin:$PATH"
+
+#
+# AI Workspace
+#
+export PATH="$HOME/.ai/bin:$PATH"
