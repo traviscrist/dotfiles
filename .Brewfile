@@ -32,6 +32,13 @@ brew 'gemini-cli'
 tap 'steipete/tap'
 brew 'peekaboo'
 brew 'codexbar'
+brew 'oracle'
+brew 'mcporter'
+cask '1password-cli'
+brew 'tmux'
+brew 'yt-dlp'
+brew 'ffmpeg'
+brew 'typescript'
 
 # Email
 cask 'mimestream'
@@ -107,6 +114,8 @@ brew 'deno'
 brew 'yarn'
 brew 'pnpm'
 brew 'fnm'
+tap 'oven-sh/bun'
+brew 'bun'
 
 # Python
 brew 'pyenv'

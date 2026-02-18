@@ -9,7 +9,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - 3rd-party/OSS (non-steipete): clone under `~/Projects/oss`.
 - `~/Projects/manager`: private ops (domains/DNS, redirects/workers, runbooks).
 - “MacBook” / “Mac Studio” => SSH there; find hosts/IPs via `tailscale status`.
-- Files: repo or `~/.ai/agent-scripts`.
+- Files: repo or `~/.ai`.
 - PRs: use `gh pr view/diff` (no URLs).
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
 - No `./runner`. Guardrails: use `trash` for deletes.
