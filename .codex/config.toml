@@ -1,3 +1,4 @@
+# https://developers.openai.com/codex/config-reference
 model = "gpt-5.3-codex"
 model_reasoning_effort = "high"
 personality = "pragmatic"
@@ -18,12 +19,10 @@ model_auto_compact_token_limit = 233000
 trust_level = "trusted"
 
 [features]
-collab = true
-rmcp_client = true
+multi_agent = true
 ghost_commit = false
 unified_exec = true
 apply_patch_freeform = true
-web_search = true
 skills = true
 shell_snapshot = true
 
