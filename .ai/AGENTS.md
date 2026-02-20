@@ -1,15 +1,12 @@
 # AGENTS.MD
 
-Peter owns this. Start: say hi + 1 motivating line.
+Travis owns this. Start: say Hi + 1 motivating line.
 Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Agent Protocol
-- Contact: Peter Steinberger (@steipete, steipete@gmail.com).
-- Workspace: `~/Projects`. Missing steipete repo: clone `https://github.com/steipete/<repo>.git`.
-- 3rd-party/OSS (non-steipete): clone under `~/Projects/oss`.
-- `~/Projects/manager`: private ops (domains/DNS, redirects/workers, runbooks).
-- “MacBook” / “Mac Studio” => SSH there; find hosts/IPs via `tailscale status`.
-- Files: repo or `~/.ai`.
+- Contact: Travis Crist (@traviscrist).
+- Workspace roots: `~/.ai` (agent workspace), `~/git` (work repos/worktrees), `~/travis` (personal repos/worktrees).
+- For missing repos, clone into `~/git` or `~/travis` as appropriate.
 - Repo maintenance/sync policy: see `README.md`.
 - PRs: use `gh pr view/diff` (no URLs).
 - “Make a note” => edit AGENTS.md (shortcut; not a blocker). Ignore `CLAUDE.md`.
@@ -18,13 +15,14 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Bugs: add regression test when it fits.
 - Keep files <~500 LOC; split/refactor as needed.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
+- For this dotfiles/workspace repo, use `yadm` (git wrapper): add files explicitly (`yadm add <path>`), commit, then `yadm push`.
 - Editor: `code <path>`.
 - CI: `gh run list/view` (rerun/fix til green).
 - Prefer end-to-end verify; if blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
 - Slash cmds: `~/.codex/prompts/` (global), `~/.ai/docs/slash-commands/` (local mirror).
-- Web: search early; quote exact errors; prefer 2024–2025 sources; fallback Firecrawl (`pnpm mcp:*`) / `mcporter`.
-- Oracle: run `npx -y @steipete/oracle --help` once/session before first use.
+- Web: search early; quote exact errors; prefer 2024–2025 sources; fallback: `mcporter`.
+- Oracle: run `oracle --help` once/session before first use.
 - Style: telegraph. Drop filler/grammar. Min tokens (global AGENTS + replies).
 
 ## Screenshots (“use a screenshot”)
@@ -35,25 +33,22 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Replace asset; keep dimensions; commit; run gate; verify CI.
 
 ## Important Locations
-- Blog repo: `~/Projects/steipete.me`
-- Notes/Runbooks: `~/Projects/manager/docs/` (e.g. `mac-studio.md`, `mac-vm.md`)
-- OpenAI/Codex limits tracking: `~/Documents/steipete/codex limits.md`
-- Obsidian vault: `$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/steipete-notes`
-- Sparkle keys: `~/Library/CloudStorage/Dropbox/Backup/Sparkle`
+- AI workspace root: `~/.ai`
+- AGENTS source of truth: `~/.ai/AGENTS.md` (linked at `~/.codex/AGENTS.md`)
+- Slash commands: `~/.ai/docs/slash-commands` (linked at `~/.codex/prompts`)
+- Skills source: `~/.ai/skills` (linked at `~/.codex/skills`)
+- Local binaries: `~/.ai/bin`
 
 ## Docs
-- Start: run docs list (`docs:list` script, or `bin/docs-list` here if present; ignore if not installed); open docs before coding.
+- Start: run docs list via `bin/docs-list` (or `tsx scripts/docs-list.ts`), then open relevant docs before coding.
 - Follow links until domain makes sense; honor `Read when` hints.
 - Keep notes short; update docs when behavior/API changes (no ship w/o docs).
 - Add `read_when` hints on cross-cutting docs.
-- Model note (2025-11-23): no `gpt-5.1-pro` / `grok-4.1` on Peter’s keys yet.
-- Model preference: latest only. OK: Anthropic Opus 4.5 / Sonnet 4.5 (Sonnet 3.5 = old; avoid), OpenAI GPT-5.2, xAI Grok-4.1 Fast, Google Gemini 3 Flash.
 
 ## PR Feedback
 - Active PR: `gh pr view --json number,title,url --jq '"PR #\\(.number): \\(.title)\\n\\(.url)"'`.
 - PR comments: `gh pr view …` + `gh api …/comments --paginate`.
 - Replies: cite fix + file/line; resolve threads only after fix lands.
-- When merging a PR: thank the contributor in `CHANGELOG.md`.
 
 ## Flow & Runtime
 - Use repo’s package manager/runtime; no swaps w/o approval.
@@ -63,16 +58,15 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Before handoff: run full gate (lint/typecheck/tests/docs).
 - CI red: `gh run list/view`, rerun, fix, push, repeat til green.
 - Keep it observable (logs, panes, tails, MCP/browser tools).
-- Release: read `docs/RELEASING.md` (or find best checklist if missing).
-- Reminder: check `~/.profile` for missing env keys (e.g. `SPARKLE_PRIVATE_KEY_FILE`); Sparkle keys live in `~/Library/CloudStorage/Dropbox/Backup/Sparkle`.
 
 ## Git
 - Safe by default: `git status/diff/log`. Push only when user asks.
+- In `~/.ai` (dotfiles/workspace repo), use `yadm add <path>` (explicit paths), commit, and `yadm push`.
 - `git checkout` ok for PR review / explicit request.
 - Branch changes require user consent.
 - Destructive ops forbidden unless explicit (`reset --hard`, `clean`, `restore`, `rm`, …).
-- Remotes under `~/Projects`: prefer HTTPS; flip SSH->HTTPS before pull/push.
-- Commit helper on PATH: `committer` (bash). Prefer it; if repo has `./scripts/committer`, use that.
+- Remotes under `~/git` and `~/travis`: prefer HTTPS; flip SSH->HTTPS before pull/push.
+- Commit helper on PATH (`~/.ai/bin`): `committer` (bash). Prefer it; if repo has `./scripts/committer`, use that.
 - Don’t delete/rename unexpected stuff; stop + ask.
 - No repo-wide S/R scripts; keep edits small/reviewable.
 - Avoid manual `git stash`; if Git auto-stashes during pull/rebase, that’s fine (hint, not hard guardrail).
@@ -90,6 +84,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Critical Thinking
 - Fix root cause (not band-aid).
+- No fallbacks: do not add compatibility fallback code/paths; move forward with the primary implementation.
+- If compatibility is needed, do explicit data/config migrations instead of runtime fallbacks.
 - Unsure: read more code; if still stuck, ask w/ short options.
 - Conflicts: call out; pick safer path.
 - Unrecognized changes: assume other agent; keep going; focus your changes. If it causes issues, stop + ask user.
@@ -97,60 +93,47 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Tools
 
-### bird
-- X CLI: `~/Projects/bird/bird`. Cmds: `tweet`, `reply`, `read`, `thread`, `search`, `mentions`, `whoami`.
-- Uses Firefox cookies by default (`--firefox-profile` to switch).
-
-### sonoscli
-- Sonos CLI: `~/Projects/sonoscli/bin/sonos`. Cmds: `discover`, `status`, `play/pause/stop`, `volume set`, `group`.
-- SSDP can fail: use `--ip <speaker-ip>`.
-- Spotify SMAPI: `sonos smapi search --service "Spotify" --category tracks "query"`.
+- Skills inventory/status: see `README.md` (`Available Now` / `Parked (Needs Setup)`).
 
 ### peekaboo
-- Screen tools: `~/Projects/Peekaboo`. Cmds: `capture`, `see`, `click`, `list`, `tools`, `permissions status`.
-- Needs Screen Recording + Accessibility. Docs: `~/Projects/Peekaboo/docs/commands/`.
-
-### sweetistics
-- X analytics app: `~/Projects/sweetistics`.
+- Screen tools via installed `peekaboo` CLI (run `peekaboo --help`). Cmds: `capture`, `see`, `click`, `list`, `tools`, `permissions status`.
+- Needs Screen Recording + Accessibility permissions.
 
 ### committer
-- Commit helper (PATH). Stages only listed paths; required here. Repo may also ship `./scripts/committer`.
+- Commit helper on PATH via `~/.ai/bin/committer`. Stages only listed paths; required here. Repo may also ship `./scripts/committer`.
+
+### nanobanana
+- Image edit helper on PATH via `~/.ai/bin/nanobanana` (script source: `~/.ai/scripts/nanobanana`).
+
+### shazam-song
+- Audio track detection helper on PATH via `~/.ai/bin/shazam-song` (script source: `~/.ai/scripts/shazam-song`).
 
 ### trash
 - Move files to Trash: `trash …` (system command).
 
-### bin/docs-list / scripts/docs-list.ts
+### docs-list (`~/.ai/bin/docs-list`) / scripts/docs-list.ts
 - Optional. Lists `docs/` + enforces front-matter. Ignore if `bin/docs-list` not installed. Rebuild: `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`.
 
-### bin/browser-tools / scripts/browser-tools.ts
+### browser-tools (`~/.ai/bin/browser-tools`) / scripts/browser-tools.ts
 - Chrome DevTools helper. Cmds: `start`, `nav`, `eval`, `screenshot`, `pick`, `cookies`, `inspect`, `kill`.
-- Rebuild: `bun build scripts/browser-tools.ts --compile --target bun --outfile bin/browser-tools`.
-
-### xcp
-- Xcode project/workspace helper for managing targets, groups, files, build settings, and assets; run `xcp --help`.
-
-### xcodegen
-- Generates Xcode projects from YAML specs; run `xcodegen --help`.
+- Rebuild: `NODE_PATH="$(npm root -g)" bun build scripts/browser-tools.ts --compile --target bun --outfile bin/browser-tools`.
 
 ### lldb
 - Use `lldb` inside tmux to debug native apps; attach to the running app to inspect state.
 
-### axe
-- Simulator automation CLI for describing UI (`axe describe-ui --udid …`), tapping (`axe tap --udid … -x … -y …`), typing, and hardware buttons. Use `axe list-simulators` to enumerate devices.
-
 ### oracle
 - Bundle prompt+files for 2nd model. Use when stuck/buggy/review.
-- Run `npx -y @steipete/oracle --help` once/session (before first use).
+- Run `oracle --help` once/session (before first use).
 
 ### mcporter / iterm / firecrawl / XcodeBuildMCP
-- MCP launcher: `npx mcporter <server>` (see `npx mcporter --help`). Common: `iterm`, `firecrawl`, `XcodeBuildMCP`.
+- MCP launcher: `mcporter <server>` (see `mcporter --help`). Common: `iterm`, `firecrawl`, `XcodeBuildMCP`.
 
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
 - Examples: `gh issue view <url> --comments -R owner/repo`, `gh pr view <url> --comments --files -R owner/repo`.
 
 ### Slash Commands
-- Global: `~/.codex/prompts/`. Local mirror: `~/.ai/docs/slash-commands/`. Repo-local override: `docs/slash-commands/` when present.
+- Global prompts: `~/.codex/prompts` (symlinked to `~/.ai/docs/slash-commands`). Repo-local override: `docs/slash-commands/` when present.
 - Common: `/handoff`, `/pickup`.
 
 ### tmux
