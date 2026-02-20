@@ -177,3 +177,9 @@ export PATH="/Users/travis/.cargo/bin:$PATH"
 # AI Workspace
 #
 export PATH="$HOME/.ai/bin:$PATH"
+
+
+#
+# BS Logs
+#
+export PATH="/Users/travis/.bun/bin:$PATH"
