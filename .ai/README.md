@@ -8,6 +8,7 @@ Run this on a new machine (or after pulling updates):
 ```bash
 brew bundle --file ~/.Brewfile
 npm install -g tsx ts-node commander puppeteer-core
+brew install steipete/tap/summarize || bun add -g @steipete/summarize
 bun add -g @steipete/bslog
 
 cd ~/.ai/skills/brave-search && npm ci
@@ -34,6 +35,8 @@ for d in ~/.ai/skills/*; do
 done
 ```
 
+Install preference: `brew` first, `bun` fallback when brew formula is missing.
+
 Path note: when adding new binary paths, append them at the end of `~/.zshrc` after the existing `PATH` examples in this setup section (same pattern/order).
 
 Quick verification:
@@ -44,6 +47,8 @@ command -v tsc
 command -v tsx
 command -v yt-dlp
 command -v ffmpeg
+command -v summarize
+summarize --version
 readlink ~/.codex/AGENTS.md
 readlink ~/.codex/prompts
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l

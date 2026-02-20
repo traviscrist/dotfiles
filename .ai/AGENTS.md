@@ -20,6 +20,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - CI: `gh run list/view` (rerun/fix til green).
 - Prefer end-to-end verify; if blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
+- Installs: prefer `brew`; fallback `bun` when no brew formula.
 - Slash cmds: `~/.codex/prompts/` (global), `~/.ai/docs/slash-commands/` (local mirror).
 - Web: search early; quote exact errors; prefer 2024–2025 sources; fallback: `mcporter`.
 - Oracle: run `oracle --help` once/session before first use.
@@ -121,6 +122,11 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### bslog
 - Better Stack log CLI: `https://github.com/steipete/bslog`.
 - Install/update: `bun add -g @steipete/bslog`.
+
+### summarize
+- URL/file/media summarizer CLI: `https://github.com/steipete/summarize`.
+- Install/update: `brew install steipete/tap/summarize` (fallback: `bun add -g @steipete/summarize`).
+- Extension setup (optional): `summarize daemon install --token <TOKEN>`.
 
 ### lldb
 - Use `lldb` inside tmux to debug native apps; attach to the running app to inspect state.
