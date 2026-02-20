@@ -1,0 +1,16 @@
+{
+  "aiProviders": {
+    "providers": "openai/gpt-5.1",
+    "openaiApiKey": "${OPENAI_API_KEY}"
+  },
+  "defaults": {
+    "savePath": "~/Desktop/Screenshots",
+    "imageFormat": "png",
+    "captureMode": "window",
+    "captureFocus": "auto"
+  },
+  "logging": {
+    "level": "info",
+    "path": "~/.peekaboo/logs/peekaboo.log"
+  }
+}

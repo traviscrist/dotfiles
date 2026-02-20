@@ -50,6 +50,7 @@ command -v yt-dlp
 command -v ffmpeg
 command -v summarize
 summarize --version
+test -f ~/.peekaboo/config.json && echo "peekaboo config ok"
 readlink ~/.codex/AGENTS.md
 readlink ~/.codex/prompts
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l

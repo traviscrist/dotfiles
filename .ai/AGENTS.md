@@ -100,6 +100,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### peekaboo
 - Screen tools via installed `peekaboo` CLI (run `peekaboo --help`). Cmds: `capture`, `see`, `click`, `list`, `tools`, `permissions status`.
 - Needs Screen Recording + Accessibility permissions.
+- Config tracked in dotfiles: `~/.peekaboo/config.json`.
 
 ### committer
 - Commit helper on PATH via `~/.ai/bin/committer`. Stages only listed paths; required here. Repo may also ship `./scripts/committer`.
