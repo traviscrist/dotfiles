@@ -36,6 +36,7 @@ done
 ```
 
 Install preference: `brew` first, `bun` fallback when brew formula is missing.
+After adding new brew formulae/casks, record them in `~/.Brewfile`.
 
 Path note: when adding new binary paths, append them at the end of `~/.zshrc` after the existing `PATH` examples in this setup section (same pattern/order).
 

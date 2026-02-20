@@ -21,6 +21,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Prefer end-to-end verify; if blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
 - Installs: prefer `brew`; fallback `bun` when no brew formula.
+- After new `brew` installs (formula/cask), add them to `~/.Brewfile`.
 - Slash cmds: `~/.codex/prompts/` (global), `~/.ai/docs/slash-commands/` (local mirror).
 - Web: search early; quote exact errors; prefer 2024–2025 sources; fallback: `mcporter`.
 - Oracle: run `oracle --help` once/session before first use.
