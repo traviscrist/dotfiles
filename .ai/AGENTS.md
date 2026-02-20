@@ -118,6 +118,10 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Chrome DevTools helper. Cmds: `start`, `nav`, `eval`, `screenshot`, `pick`, `cookies`, `inspect`, `kill`.
 - Rebuild: `NODE_PATH="$(npm root -g)" bun build scripts/browser-tools.ts --compile --target bun --outfile bin/browser-tools`.
 
+### bslog
+- Better Stack log CLI: `https://github.com/steipete/bslog`.
+- Install/update: `bun add -g @steipete/bslog`.
+
 ### lldb
 - Use `lldb` inside tmux to debug native apps; attach to the running app to inspect state.
 

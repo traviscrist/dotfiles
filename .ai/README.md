@@ -8,6 +8,7 @@ Run this on a new machine (or after pulling updates):
 ```bash
 brew bundle --file ~/.Brewfile
 npm install -g tsx ts-node commander puppeteer-core
+bun add -g @steipete/bslog
 
 cd ~/.ai/skills/brave-search && npm ci
 cd ~/.ai/skills/video-transcript-downloader && npm ci
@@ -32,6 +33,8 @@ for d in ~/.ai/skills/*; do
   ln -s "$d" "$HOME/.codex/skills/$n"
 done
 ```
+
+Path note: when adding new binary paths, append them at the end of `~/.zshrc` after the existing `PATH` examples in this setup section (same pattern/order).
 
 Quick verification:
 
