@@ -19,11 +19,7 @@ kls_database.db
 /memory-bank
 
 # AI TOOLING
-.claude/*
-# Allow Claude Agents
-!.claude/agents/
-!.claude/agents/**
-!.claude/.mcp.json
+sessions
 
 
 # Serena cache files
