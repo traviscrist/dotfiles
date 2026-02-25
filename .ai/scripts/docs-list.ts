@@ -1,12 +1,24 @@
 #!/usr/bin/env tsx
 
-import { readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const docsListFile = fileURLToPath(import.meta.url);
 const docsListDir = dirname(docsListFile);
-const DOCS_DIR = join(docsListDir, '..', 'docs');
+const docsCandidates = [
+  join(docsListDir, '..', 'docs'),
+  join(process.cwd(), 'docs'),
+  join(dirname(process.execPath), '..', 'docs'),
+];
+
+const DOCS_DIR = docsCandidates.find((dir) => existsSync(dir));
+
+if (!DOCS_DIR) {
+  throw new Error(
+    `Could not locate docs directory. Checked: ${docsCandidates.join(', ')}`
+  );
+}
 
 const EXCLUDED_DIRS = new Set(['archive', 'research']);
 
