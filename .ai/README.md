@@ -40,6 +40,7 @@ done
 
 Install preference: `brew` first, `bun` fallback when brew formula is missing.
 After adding new brew formulae/casks, record them in `~/.Brewfile`.
+Coder CLI install source: Homebrew (`coder/coder/coder`).
 
 Path note: when adding new binary paths, append them at the end of `~/.zshrc` after the existing `PATH` examples in this setup section (same pattern/order).
 
@@ -51,6 +52,8 @@ command -v tsc
 command -v tsx
 command -v yt-dlp
 command -v ffmpeg
+command -v coder
+coder version
 command -v gitpod
 gitpod version
 command -v summarize

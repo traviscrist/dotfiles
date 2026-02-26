@@ -30,11 +30,13 @@ brew 'gemini-cli'
 
 # AI TOOLS
 tap 'steipete/tap'
+tap 'coder/coder'
 brew 'peekaboo'
 brew 'codexbar'
 brew 'oracle'
 brew 'mcporter'
 brew 'summarize'
+brew 'coder/coder/coder'
 cask '1password-cli'
 cask 'trimmy'
 brew 'tmux'
