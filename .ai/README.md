@@ -8,6 +8,9 @@ Run this on a new machine (or after pulling updates):
 ```bash
 brew bundle --file ~/.Brewfile
 npm install -g tsx ts-node commander puppeteer-core
+curl -o /tmp/gitpod -fsSL "https://releases.gitpod.io/cli/stable/gitpod-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m | sed 's/x86_64/amd64/;s/\\(arm64\\|aarch64\\)/arm64/')" \
+  && chmod +x /tmp/gitpod \
+  && sudo mv /tmp/gitpod /usr/local/bin/gitpod
 brew install steipete/tap/summarize || bun add -g @steipete/summarize
 bun add -g @steipete/bslog
 
@@ -48,6 +51,8 @@ command -v tsc
 command -v tsx
 command -v yt-dlp
 command -v ffmpeg
+command -v gitpod
+gitpod version
 command -v summarize
 summarize --version
 test -f ~/.peekaboo/config.json && echo "peekaboo config ok"
