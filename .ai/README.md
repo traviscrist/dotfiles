@@ -11,7 +11,6 @@ npm install -g tsx ts-node commander puppeteer-core
 curl -o /tmp/gitpod -fsSL "https://releases.gitpod.io/cli/stable/gitpod-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m | sed 's/x86_64/amd64/;s/\\(arm64\\|aarch64\\)/arm64/')" \
   && chmod +x /tmp/gitpod \
   && sudo mv /tmp/gitpod /usr/local/bin/gitpod
-brew install --cask coder/coder/coder-desktop
 brew install steipete/tap/summarize || bun add -g @steipete/summarize
 bun add -g @steipete/bslog
 
@@ -41,8 +40,6 @@ done
 
 Install preference: `brew` first, `bun` fallback when brew formula is missing.
 After adding new brew formulae/casks, record them in `~/.Brewfile`.
-Coder CLI install source: Homebrew (`coder/coder/coder`).
-Coder Desktop install source: Homebrew cask (`coder/coder/coder-desktop`, admin password required).
 
 Path note: when adding new binary paths, append them at the end of `~/.zshrc` after the existing `PATH` examples in this setup section (same pattern/order).
 
@@ -54,9 +51,6 @@ command -v tsc
 command -v tsx
 command -v yt-dlp
 command -v ffmpeg
-command -v coder
-coder version
-ls -d /Applications/Coder\ Desktop.app
 command -v gitpod
 gitpod version
 command -v summarize
