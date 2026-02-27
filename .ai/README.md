@@ -1,13 +1,13 @@
 # AI Workspace
 
-This folder is your local AI workspace. It carries shared guardrails, scripts, skills, and slash-command docs adapted from `agent-scripts`, with local pathing under `~/.ai`.
+This folder is your local AI workspace. It carries shared guardrails, scripts, and skills with local pathing under `~/.ai`.
 
 ## Quick Setup
 Run this on a new machine (or after pulling updates):
 
 ```bash
 brew bundle --file ~/.Brewfile
-npm install -g tsx ts-node commander puppeteer-core
+npm install -g tsx commander puppeteer-core
 curl -o /tmp/gitpod -fsSL "https://releases.gitpod.io/cli/stable/gitpod-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m | sed 's/x86_64/amd64/;s/\\(arm64\\|aarch64\\)/arm64/')" \
   && chmod +x /tmp/gitpod \
   && sudo mv /tmp/gitpod /usr/local/bin/gitpod
@@ -15,18 +15,12 @@ brew install steipete/tap/summarize || bun add -g @steipete/summarize
 bun add -g @steipete/bslog
 
 cd ~/.ai/skills/brave-search && npm ci
-cd ~/.ai/skills/video-transcript-downloader && npm ci
 
 mkdir -p ~/.codex
 if [ -e ~/.codex/AGENTS.md ] && [ ! -L ~/.codex/AGENTS.md ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
 if [ -L ~/.codex/AGENTS.md ] && [ "$(readlink ~/.codex/AGENTS.md)" != "$HOME/.ai/AGENTS.md" ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
 rm -f ~/.codex/AGENTS.md
 ln -s ~/.ai/AGENTS.md ~/.codex/AGENTS.md
-
-if [ -e ~/.codex/prompts ] && [ ! -L ~/.codex/prompts ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
-if [ -L ~/.codex/prompts ] && [ "$(readlink ~/.codex/prompts)" != "$HOME/.ai/docs/slash-commands" ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
-rm -f ~/.codex/prompts
-ln -s ~/.ai/docs/slash-commands ~/.codex/prompts
 
 mkdir -p ~/.codex/skills
 for d in ~/.ai/skills/*; do
@@ -47,17 +41,14 @@ Quick verification:
 
 ```bash
 command -v oracle
-command -v tsc
 command -v tsx
-command -v yt-dlp
-command -v ffmpeg
 command -v gitpod
 gitpod version
 command -v summarize
 summarize --version
+command -v bslog
 test -f ~/.peekaboo/config.json && echo "peekaboo config ok"
 readlink ~/.codex/AGENTS.md
-readlink ~/.codex/prompts
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 ```
 
@@ -103,17 +94,7 @@ find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 - `markdown-converter`
 - `oracle`
 - `openai-image-gen`
-- `swift-concurrency-expert`
-- `swiftui-liquid-glass`
-- `swiftui-performance-audit`
-- `swiftui-view-refactor`
-- `video-transcript-downloader`
 
 ### Parked (Needs Setup)
 - `instruments-profiling` (install/configure Xcode tooling so `xcrun xctrace` works)
 - `nano-banana-pro` (set `GEMINI_API_KEY`)
-- `native-app-performance` (install/configure Xcode tooling so `xcrun xctrace` works)
-
-## Slash Commands
-- Local mirror lives in `docs/slash-commands/`.
-- Global prompts (if used) live in `~/.codex/prompts/`.

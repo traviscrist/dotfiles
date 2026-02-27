@@ -22,8 +22,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - New deps: quick health check (recent releases/commits, adoption).
 - Installs: prefer `brew`; fallback `bun` when no brew formula.
 - After new `brew` installs (formula/cask), add them to `~/.Brewfile`.
-- Slash cmds: `~/.codex/prompts/` (global), `~/.ai/docs/slash-commands/` (local mirror).
-- Web: search early; quote exact errors; prefer 2024–2025 sources; fallback: `mcporter`.
+- Web: search early; quote exact errors; prefer 2025–2026 sources; fallback: `mcporter`.
 - Oracle: run `oracle --help` once/session before first use.
 - Style: telegraph. Drop filler/grammar. Min tokens (global AGENTS + replies).
 
@@ -37,7 +36,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Important Locations
 - AI workspace root: `~/.ai`
 - AGENTS source of truth: `~/.ai/AGENTS.md` (linked at `~/.codex/AGENTS.md`)
-- Slash commands: `~/.ai/docs/slash-commands` (linked at `~/.codex/prompts`)
 - Skills source: `~/.ai/skills` (linked at `~/.codex/skills`)
 - Local binaries: `~/.ai/bin`
 
@@ -80,7 +78,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Multi-agent: check `git status/diff` before edits; ship small commits.
 
 ## Language/Stack Notes
-- Swift: use workspace helper/daemon; validate `swift build` + tests; keep concurrency attrs right.
 - TypeScript: use repo PM; run `docs:list`; keep files small; follow existing patterns.
 
 ## macOS Permissions / Signing (TCC)
@@ -145,10 +142,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
 - Examples: `gh issue view <url> --comments -R owner/repo`, `gh pr view <url> --comments --files -R owner/repo`.
-
-### Slash Commands
-- Global prompts: `~/.codex/prompts` (symlinked to `~/.ai/docs/slash-commands`). Repo-local override: `docs/slash-commands/` when present.
-- Common: `/handoff`, `/pickup`.
 
 ### tmux
 - Use only when you need persistence/interaction (debugger/server).
