@@ -52,6 +52,39 @@ readlink ~/.codex/AGENTS.md
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 ```
 
+## AI Maestro (Optional)
+
+Install AI Maestro from upstream quickstart:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/23blocks-OS/ai-maestro/main/scripts/remote-install.sh | sh -s -- -y
+```
+
+If `http://localhost:23000` is not up after install, build and start manually:
+
+```bash
+cd ~/ai-maestro
+yarn build
+nohup yarn start >/tmp/ai-maestro.log 2>&1 &
+```
+
+Keep AI Maestro skills/settings in this repo workspace (`~/.ai/ai-maestro-runtime`) via symlinks:
+
+```bash
+mkdir -p ~/.ai/ai-maestro-runtime
+mv ~/.aimaestro ~/.ai/ai-maestro-runtime/aimaestro 2>/dev/null || true
+ln -sfn ~/.ai/ai-maestro-runtime/aimaestro ~/.aimaestro
+
+mv ~/.agent-messaging ~/.ai/ai-maestro-runtime/agent-messaging 2>/dev/null || true
+ln -sfn ~/.ai/ai-maestro-runtime/agent-messaging ~/.agent-messaging
+
+mv ~/.claude/skills ~/.ai/ai-maestro-runtime/claude-skills 2>/dev/null || true
+ln -sfn ~/.ai/ai-maestro-runtime/claude-skills ~/.claude/skills
+
+mv ~/.local/share/aimaestro ~/.ai/ai-maestro-runtime/local-share-aimaestro 2>/dev/null || true
+ln -sfn ~/.ai/ai-maestro-runtime/local-share-aimaestro ~/.local/share/aimaestro
+```
+
 ## Syncing With Other Repos
 - Treat `scripts/committer` and `scripts/docs-list.ts` as shared helpers. If you change them in another repo, mirror the change here (and vice versa) to avoid drift.
 - When syncing helpers into another repo, keep files portable and dependency-light.
