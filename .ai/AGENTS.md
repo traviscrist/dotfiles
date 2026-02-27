@@ -22,7 +22,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - New deps: quick health check (recent releases/commits, adoption).
 - Installs: prefer `brew`; fallback `bun` when no brew formula.
 - After new `brew` installs (formula/cask), add them to `~/.Brewfile`.
-- Web: search early; quote exact errors; prefer 2025–2026 sources; fallback: `mcporter`.
+- Web: search early; quote exact errors; prefer 2025–2026 sources.
 - Oracle: run `oracle --help` once/session before first use.
 - Style: telegraph. Drop filler/grammar. Min tokens (global AGENTS + replies).
 
@@ -80,9 +80,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Language/Stack Notes
 - TypeScript: use repo PM; run `docs:list`; keep files small; follow existing patterns.
 
-## macOS Permissions / Signing (TCC)
-- Never re-sign / ad-hoc sign / change bundle ID as “debug” without explicit ok (can mess TCC).
-
 ## Critical Thinking
 - Fix root cause (not band-aid).
 - No fallbacks: do not add compatibility fallback code/paths; move forward with the primary implementation.
@@ -129,15 +126,9 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Install/update: `brew install steipete/tap/summarize` (fallback: `bun add -g @steipete/summarize`).
 - Extension setup (optional): `summarize daemon install --token <TOKEN>`.
 
-### lldb
-- Use `lldb` inside tmux to debug native apps; attach to the running app to inspect state.
-
 ### oracle
 - Bundle prompt+files for 2nd model. Use when stuck/buggy/review.
 - Run `oracle --help` once/session (before first use).
-
-### mcporter / iterm / firecrawl / XcodeBuildMCP
-- MCP launcher: `mcporter <server>` (see `mcporter --help`). Common: `iterm`, `firecrawl`, `XcodeBuildMCP`.
 
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
@@ -147,7 +138,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Use only when you need persistence/interaction (debugger/server).
 - Quick refs: `tmux new -d -s codex-shell`, `tmux attach -t codex-shell`, `tmux list-sessions`, `tmux kill-session -t codex-shell`.
 
-<frontend_aesthetics>
+## Frontend Aesthetics
 Avoid “AI slop” UI. Be opinionated + distinctive.
 
 Do:
@@ -157,4 +148,3 @@ Do:
 - Background: add depth (gradients/patterns), not flat default.
 
 Avoid: purple-on-white clichés, generic component grids, predictable layouts.
-</frontend_aesthetics>
