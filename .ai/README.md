@@ -96,5 +96,4 @@ find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 - `openai-image-gen`
 
 ### Parked (Needs Setup)
-- `instruments-profiling` (install/configure Xcode tooling so `xcrun xctrace` works)
 - `nano-banana-pro` (set `GEMINI_API_KEY`)
