@@ -110,7 +110,6 @@ find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 - `video-transcript-downloader`
 
 ### Parked (Needs Setup)
-- `1password` (install `op` / `1password-cli`)
 - `instruments-profiling` (install/configure Xcode tooling so `xcrun xctrace` works)
 - `nano-banana-pro` (set `GEMINI_API_KEY`)
 - `native-app-performance` (install/configure Xcode tooling so `xcrun xctrace` works)
