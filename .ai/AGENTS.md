@@ -91,8 +91,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Tools
 
-- Skills inventory/status: see `README.md` (`Available Now` / `Parked (Needs Setup)`).
-
 ### peekaboo
 - Screen tools via installed `peekaboo` CLI (run `peekaboo --help`). Cmds: `capture`, `see`, `click`, `list`, `tools`, `permissions status`.
 - Needs Screen Recording + Accessibility permissions.
@@ -101,8 +99,10 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### committer
 - Commit helper on PATH via `~/.ai/bin/committer`. Stages only listed paths; required here. Repo may also ship `./scripts/committer`.
 
+<!--
 ### nanobanana
 - Image edit helper on PATH via `~/.ai/bin/nanobanana` (script source: `~/.ai/scripts/nanobanana`).
+-->
 
 ### shazam-song
 - Audio track detection helper on PATH via `~/.ai/bin/shazam-song` (script source: `~/.ai/scripts/shazam-song`).
