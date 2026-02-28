@@ -183,9 +183,3 @@ export PATH="$HOME/.ai/bin:$PATH"
 # BS Logs
 #
 export PATH="/Users/travis/.bun/bin:$PATH"
-
-# SSH Agent for tmux - AI Maestro
-if [ -S "$SSH_AUTH_SOCK" ] && [ ! -h "$SSH_AUTH_SOCK" ]; then
-    mkdir -p ~/.ssh
-    ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
-fi
