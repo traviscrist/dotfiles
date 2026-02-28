@@ -15,7 +15,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Bugs: add regression test when it fits.
 - Keep files <~500 LOC; split/refactor as needed.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
-- Local reminder: Commit/PR titles should follow `type: rc-<issue-number> <summary>` (example: `feat: rc-358 improve conditional branch builder UX`).
+- Local reminder: if linked to a real Linear issue, use `type: rc-<issue-number> <summary>` (example: `feat: rc-358 improve conditional branch builder UX`); otherwise use plain Conventional Commit title (`type: <summary>`). Never use placeholder issue IDs (for example `rc-0`).
 - For this dotfiles/workspace repo, use `yadm` (git wrapper): add files explicitly (`yadm add <path>`), commit, then `yadm push`.
 - Editor: `code <path>`.
 - CI: `gh run list/view` (rerun/fix til green).
