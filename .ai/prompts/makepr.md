@@ -20,6 +20,7 @@ Workflow:
    - Reply on all comments with fix references (file/line) and close resolved threads.
    - Request re-review from original reviewers after updates.
    - If reviewer is a bot (`Gemini`, `CodeRabbit`, `Codex`), explicitly request another review pass.
+   - After posting replies/re-review requests, wait 3 minutes before considering review complete, then re-check for new reviewer responses.
 4) Re-run checks after fixes; continue until feedback is addressed and tests/checks pass.
 5) Do not auto-merge and do not change Draft/Ready status unless explicitly directed.
 6) When complete, stop and notify the user:
