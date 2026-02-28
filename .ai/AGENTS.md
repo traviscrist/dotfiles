@@ -37,6 +37,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Important Locations
 - AI workspace root: `~/.ai`
 - AGENTS source of truth: `~/.ai/AGENTS.md` (linked at `~/.codex/AGENTS.md`)
+- Prompts source: `~/.ai/prompts` (linked at `~/.codex/prompts`)
 - Skills source: `~/.ai/skills` (linked at `~/.codex/skills`)
 - Local binaries: `~/.ai/bin`
 

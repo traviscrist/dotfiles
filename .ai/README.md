@@ -22,6 +22,12 @@ if [ -L ~/.codex/AGENTS.md ] && [ "$(readlink ~/.codex/AGENTS.md)" != "$HOME/.ai
 rm -f ~/.codex/AGENTS.md
 ln -s ~/.ai/AGENTS.md ~/.codex/AGENTS.md
 
+mkdir -p ~/.ai/prompts
+if [ -e ~/.codex/prompts ] && [ ! -L ~/.codex/prompts ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
+if [ -L ~/.codex/prompts ] && [ "$(readlink ~/.codex/prompts)" != "$HOME/.ai/prompts" ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
+rm -f ~/.codex/prompts
+ln -s ~/.ai/prompts ~/.codex/prompts
+
 mkdir -p ~/.codex/skills
 for d in ~/.ai/skills/*; do
   [ -d "$d" ] || continue
@@ -49,6 +55,7 @@ summarize --version
 command -v bslog
 test -f ~/.peekaboo/config.json && echo "peekaboo config ok"
 readlink ~/.codex/AGENTS.md
+readlink ~/.codex/prompts
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 ```
 
