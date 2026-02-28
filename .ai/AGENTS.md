@@ -15,6 +15,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Bugs: add regression test when it fits.
 - Keep files <~500 LOC; split/refactor as needed.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
+- Local reminder: Commit/PR titles should follow `type: rc-<issue-number> <summary>` (example: `feat: rc-358 improve conditional branch builder UX`).
 - For this dotfiles/workspace repo, use `yadm` (git wrapper): add files explicitly (`yadm add <path>`), commit, then `yadm push`.
 - Editor: `code <path>`.
 - CI: `gh run list/view` (rerun/fix til green).
@@ -51,6 +52,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Never auto-merge PRs with admin privileges.
 - PR comments: `gh pr view …` + `gh api …/comments --paginate`.
 - Replies: cite fix + file/line; resolve threads only after fix lands.
+- After updates, reply on all review comments and close resolved threads.
+- Ask original reviewers to re-review after changes; for bot reviewers (Gemini, CodeRabbit, Codex), explicitly request another review pass.
 
 ## Flow & Runtime
 - Use repo’s package manager/runtime; no swaps w/o approval.
