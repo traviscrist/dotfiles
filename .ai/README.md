@@ -77,7 +77,7 @@ find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 ### `scripts/docs-list.ts`
 - Walks `docs/`, enforces front-matter (`summary`, `read_when`), and prints summaries.
   - Build: `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`
-  - Run: `bin/docs-list`
+  - Run: `docs-list`
 
 ### `scripts/browser-tools.ts`
 - Standalone Chrome DevTools helper inspired by "What if you don't need MCP?".

@@ -42,7 +42,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Local binaries: `~/.ai/bin`
 
 ## Docs
-- Start: run docs list via `bin/docs-list` (or `tsx scripts/docs-list.ts`), then open relevant docs before coding.
+- Start: run docs list via `docs-list` (or `tsx scripts/docs-list.ts`), then open relevant docs before coding.
 - Follow links until domain makes sense; honor `Read when` hints.
 - Keep notes short; update docs when behavior/API changes (no ship w/o docs).
 - Add `read_when` hints on cross-cutting docs.
@@ -114,8 +114,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### trash
 - Move files to Trash: `trash …` (system command).
 
-### docs-list (`~/.ai/bin/docs-list`) / scripts/docs-list.ts
-- Optional. Lists `docs/` + enforces front-matter. Ignore if `bin/docs-list` not installed. Rebuild: `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`.
+### docs-list / scripts/docs-list.ts
+- Optional. Lists `docs/` + enforces front-matter. Ignore if `docs-list` is not installed. Rebuild: `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`.
 
 ### browser-tools (`~/.ai/bin/browser-tools`) / scripts/browser-tools.ts
 - Chrome DevTools helper. Cmds: `start`, `nav`, `eval`, `screenshot`, `pick`, `cookies`, `inspect`, `kill`.
