@@ -46,7 +46,6 @@ Path note: when adding new binary paths, append them at the end of `~/.zshrc` af
 Quick verification:
 
 ```bash
-command -v oracle
 command -v tsx
 command -v gitpod
 gitpod version

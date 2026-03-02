@@ -24,7 +24,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Installs: prefer `brew`; fallback `bun` when no brew formula.
 - After new `brew` installs (formula/cask), add them to `~/.Brewfile`.
 - Web: search early; quote exact errors; prefer 2025–2026 sources.
-- Oracle: run `oracle --help` once/session before first use.
 - Style: telegraph. Drop filler/grammar. Min tokens (global AGENTS + replies).
 
 ## Screenshots (“use a screenshot”)
@@ -129,10 +128,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - URL/file/media summarizer CLI: `https://github.com/steipete/summarize`.
 - Install/update: `brew install steipete/tap/summarize` (fallback: `bun add -g @steipete/summarize`).
 - Extension setup (optional): `summarize daemon install --token <TOKEN>`.
-
-### oracle
-- Bundle prompt+files for 2nd model. Use when stuck/buggy/review.
-- Run `oracle --help` once/session (before first use).
 
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
