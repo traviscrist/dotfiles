@@ -4,6 +4,7 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
 alias flush-dns="sudo killall -HUP mDNSResponder"
+alias awslogin='aws sso login --profile full-admin && export AWS_PROFILE=full-admin'
 alias tv-aws="export AWS_PROFILE=truevault"
 alias boom="npx npkill"
 alias aider="~/.config/scripts/aider_copilot.sh"
