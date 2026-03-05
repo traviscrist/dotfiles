@@ -95,6 +95,7 @@ cask 'fleet'
 brew 'mkcert'
 brew 'http-server'
 brew 'httpstat'
+brew 'websocat'
 brew 'vegeta'
 
 # Encryption
@@ -195,3 +196,5 @@ cask 'spectacle'
 # Raspberry PI
 brew 'libusb'
 brew 'pkg-config'
+
+brew "flyctl"
