@@ -103,11 +103,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### committer
 - Commit helper on PATH via `~/.ai/bin/committer`. Stages only listed paths; required here. Repo may also ship `./scripts/committer`.
 
-<!--
-### nanobanana
-- Image edit helper on PATH via `~/.ai/bin/nanobanana` (script source: `~/.ai/scripts/nanobanana`).
--->
-
 ### shazam-song
 - Audio track detection helper on PATH via `~/.ai/bin/shazam-song` (script source: `~/.ai/scripts/shazam-song`).
 
