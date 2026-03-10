@@ -58,6 +58,29 @@ readlink ~/.codex/prompts
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 ```
 
+## bslog Setup Checks
+
+`bslog` uses split auth:
+- `BETTERSTACK_API_TOKEN`: source discovery (`bslog sources list`)
+- `BETTERSTACK_QUERY_USERNAME` + `BETTERSTACK_QUERY_PASSWORD`: query paths (`bslog tail|search|errors|warnings|sql|query`)
+
+Validate both paths:
+
+```bash
+bslog sources list --format json >/dev/null
+bslog config source "Polaris Web"
+bslog sql "SELECT 1 FORMAT JSONEachRow" --format json
+```
+
+If query auth fails:
+- In Better Stack Logs, create fresh Query API credentials via `Connect remotely`.
+- Update `~/.secrets` exports for `BETTERSTACK_QUERY_USERNAME` and `BETTERSTACK_QUERY_PASSWORD`.
+- Reload shell: `source ~/.zshrc`.
+
+Source/region notes:
+- Prefer source **name** in config (`bslog config source "Polaris Web"`), not numeric ID.
+- If a source is in a non-default data region and queries fail unexpectedly, run verbose command and confirm query endpoint/region alignment.
+
 ## Syncing With Other Repos
 - Treat `scripts/committer` and `scripts/docs-list.ts` as shared helpers. If you change them in another repo, mirror the change here (and vice versa) to avoid drift.
 - When syncing helpers into another repo, keep files portable and dependency-light.
