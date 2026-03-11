@@ -8,6 +8,7 @@ alias setupClaudeMcpServers=' claude mcp add playwright npx @playwright/mcp@late
   claude mcp add --transport sse linear https://mcp.linear.app/sse && \
   claude mcp add serena -- uvx --from git+https://github.com/oraios/serena serena-mcp-server --context ide-assistant --project $(pwd)'
 alias di="describe-instances"
+alias pnpm="corepack pnpm"
 alias pp="pnpm"
 alias kgp='kubectl get po -o custom-columns="Name:metadata.name,CPU-limit:spec.containers[*].resources.limits.cpu, CPU-request:spec.containers[*].resources.requests.cpu, memory-limits:spec.containers[*].resources.limits.memory, memory-request:spec.containers[*].resources.requests.memory"'
 alias tf="terraform"
