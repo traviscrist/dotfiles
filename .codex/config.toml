@@ -15,6 +15,7 @@ tool_output_token_limit = 25000
 # With tool_output_token_limit=25000 ⇒ 273000 - (25000 + 15000) = 233000
 model_auto_compact_token_limit = 233000
 suppress_unstable_features_warning = true
+service_tier = "fast"
 
 [features]
 multi_agent = true
@@ -86,5 +87,29 @@ trust_level = "trusted"
 [projects."/Users/travis/travis/interview/Grind-75"]
 trust_level = "trusted"
 
+[projects."/Users/travis/.ai"]
+trust_level = "trusted"
+
+[projects."/Users/travis/git/polaris-naga-preevy"]
+trust_level = "trusted"
+
+[projects."/"]
+trust_level = "trusted"
+
+[projects."/Users/travis/travis/cocacola"]
+trust_level = "trusted"
+
+[projects."/Users/travis/travis/potato"]
+trust_level = "trusted"
+
+[projects."/Users/travis/git/polaris-naga"]
+trust_level = "trusted"
+
 [mcp_servers.linear]
 url = "https://mcp.linear.app/mcp"
+
+[mcp_servers.neon]
+url = "https://mcp.neon.tech/mcp"
+
+[notice.model_migrations]
+"gpt-5.3-codex" = "gpt-5.4"
