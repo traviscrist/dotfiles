@@ -38,3 +38,33 @@ d-restart-logs() {
 dc() {
   docker-compose
 }
+
+# Route Linear MCP workspace by repo context:
+# - redcrayon* and homemgmt-ai* repos -> linear_redcrayon
+# - polaris-* repos   -> linear_truevault
+codex() {
+  local repo_root repo_name
+  repo_root="$(command git rev-parse --show-toplevel 2>/dev/null || pwd)"
+  repo_name="${repo_root##*/}"
+
+  local -a codex_route_args
+  case "$repo_name" in
+    *redcrayon*|homemgmt-ai*)
+      codex_route_args=(
+        -c 'mcp_servers.linear_redcrayon.enabled=true'
+        -c 'mcp_servers.linear_truevault.enabled=false'
+      )
+      ;;
+    polaris-*)
+      codex_route_args=(
+        -c 'mcp_servers.linear_redcrayon.enabled=false'
+        -c 'mcp_servers.linear_truevault.enabled=true'
+      )
+      ;;
+    *)
+      codex_route_args=()
+      ;;
+  esac
+
+  command codex "${codex_route_args[@]}" "$@"
+}

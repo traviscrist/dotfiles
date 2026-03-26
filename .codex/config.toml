@@ -105,14 +105,19 @@ trust_level = "trusted"
 [projects."/Users/travis/git/polaris-naga"]
 trust_level = "trusted"
 
-[mcp_servers.linear]
-url = "https://mcp.linear.app/mcp"
-
 [mcp_servers.neon]
 url = "https://mcp.neon.tech/mcp"
 
 [mcp_servers.notion]
 url = "https://mcp.notion.com/mcp"
+
+[mcp_servers.linear_redcrayon]
+url = "https://mcp.linear.app/mcp"
+bearer_token_env_var = "LINEAR_API_REDCRAYON"
+
+[mcp_servers.linear_truevault]
+url = "https://mcp.linear.app/mcp"
+bearer_token_env_var = "LINEAR_API_TRUEVAULT"
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
