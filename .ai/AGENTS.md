@@ -15,7 +15,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Bugs: add regression test when it fits.
 - Keep files <~500 LOC; split/refactor as needed.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
-- Local reminder: if linked to a real Linear issue, use `type: rc-<issue-number> <summary>` (example: `feat: rc-358 improve conditional branch builder UX`); otherwise use plain Conventional Commit title (`type: <summary>`). Never use placeholder issue IDs (for example `rc-0`).
+- Format with issue ID: `<type>: <linear-issue-id>: <commit message>`.
+- Format without issue ID: `<type>: <commit message>`.
 - For this dotfiles/workspace repo, use `yadm` (git wrapper): add files explicitly (`yadm add <path>`), commit, then `yadm push`.
 - Editor: `code <path>`.
 - Shell config split: keep in `~/.zsh/*.zsh` (`paths.zsh`, `secrets.zsh`, `aliases.zsh`, `functions.zsh`, `completions.zsh`), sourced from `~/.zshrc`.
