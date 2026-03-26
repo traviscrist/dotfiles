@@ -111,5 +111,8 @@ url = "https://mcp.linear.app/mcp"
 [mcp_servers.neon]
 url = "https://mcp.neon.tech/mcp"
 
+[mcp_servers.notion]
+url = "https://mcp.notion.com/mcp"
+
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
