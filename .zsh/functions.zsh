@@ -95,16 +95,26 @@ kanban() {
       shift
       if [[ -f "$pid_file" ]] && kill -0 "$(cat "$pid_file")" 2>/dev/null; then
         echo "kanban already running for ${repo_name} (pid $(cat "$pid_file"))"
+        local existing_url
+        existing_url="$(sed -nE 's/.*(http:\/\/127\.0\.0\.1:[0-9]+\/[^[:space:]]+).*/\1/p' "$log_file" | tail -n 1)"
+        [[ -n "$existing_url" ]] && echo "url: $existing_url"
         echo "log: $log_file"
         return 0
       fi
       mkdir -p "${HOME}/Library/Logs"
       (
         cd "$repo_root" || exit 1
-        nohup env PATH="/opt/homebrew/bin:${PATH}" "$kanban_bin" --no-open "$@" >"$log_file" 2>&1 &
+        nohup env PATH="/opt/homebrew/bin:${PATH}" "$kanban_bin" --no-open "$@" >|"$log_file" 2>&1 &
         echo $! > "$pid_file"
       )
       echo "started kanban for ${repo_name} (pid $(cat "$pid_file"))"
+      local url i
+      for i in {1..50}; do
+        url="$(sed -nE 's/.*(http:\/\/127\.0\.0\.1:[0-9]+\/[^[:space:]]+).*/\1/p' "$log_file" | tail -n 1)"
+        [[ -n "$url" ]] && break
+        sleep 0.1
+      done
+      [[ -n "$url" ]] && echo "url: $url"
       echo "log: $log_file"
       ;;
     stop)
@@ -125,6 +135,9 @@ kanban() {
     status)
       if [[ -f "$pid_file" ]] && kill -0 "$(cat "$pid_file")" 2>/dev/null; then
         echo "kanban running for ${repo_name} (pid $(cat "$pid_file"))"
+        local status_url
+        status_url="$(sed -nE 's/.*(http:\/\/127\.0\.0\.1:[0-9]+\/[^[:space:]]+).*/\1/p' "$log_file" | tail -n 1)"
+        [[ -n "$status_url" ]] && echo "url: $status_url"
         [[ -f "$log_file" ]] && tail -n 5 "$log_file"
       else
         echo "kanban not running for ${repo_name}"
