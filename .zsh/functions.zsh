@@ -68,3 +68,13 @@ codex() {
 
   command codex "${codex_route_args[@]}" "$@"
 }
+
+# Force kanban to run on Homebrew Node (>=20), regardless of repo fnm version.
+kanban() {
+  local kanban_bin="${HOME}/.bun/bin/kanban"
+  if [[ ! -x "$kanban_bin" ]]; then
+    echo "kanban binary not found at $kanban_bin" >&2
+    return 1
+  fi
+  env PATH="/opt/homebrew/bin:${PATH}" "$kanban_bin" "$@"
+}
