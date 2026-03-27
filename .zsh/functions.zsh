@@ -70,11 +70,74 @@ codex() {
 }
 
 # Force kanban to run on Homebrew Node (>=20), regardless of repo fnm version.
+# Adds daemon helpers:
+# - kanban start [args...]
+# - kanban stop
+# - kanban status
+# - kanban logs
 kanban() {
   local kanban_bin="${HOME}/.bun/bin/kanban"
   if [[ ! -x "$kanban_bin" ]]; then
     echo "kanban binary not found at $kanban_bin" >&2
     return 1
   fi
-  env PATH="/opt/homebrew/bin:${PATH}" "$kanban_bin" "$@"
+
+  local repo_root repo_name safe_name pid_file log_file cmd
+  repo_root="$(command git rev-parse --show-toplevel 2>/dev/null || pwd)"
+  repo_name="${repo_root##*/}"
+  safe_name="${repo_name//[^a-zA-Z0-9._-]/-}"
+  pid_file="/tmp/kanban-${safe_name}.pid"
+  log_file="${HOME}/Library/Logs/kanban-${safe_name}.log"
+  cmd="$1"
+
+  case "$cmd" in
+    start)
+      shift
+      if [[ -f "$pid_file" ]] && kill -0 "$(cat "$pid_file")" 2>/dev/null; then
+        echo "kanban already running for ${repo_name} (pid $(cat "$pid_file"))"
+        echo "log: $log_file"
+        return 0
+      fi
+      mkdir -p "${HOME}/Library/Logs"
+      (
+        cd "$repo_root" || exit 1
+        nohup env PATH="/opt/homebrew/bin:${PATH}" "$kanban_bin" --no-open "$@" >"$log_file" 2>&1 &
+        echo $! > "$pid_file"
+      )
+      echo "started kanban for ${repo_name} (pid $(cat "$pid_file"))"
+      echo "log: $log_file"
+      ;;
+    stop)
+      if [[ ! -f "$pid_file" ]]; then
+        echo "kanban not running for ${repo_name} (no pid file)"
+        return 0
+      fi
+      local pid
+      pid="$(cat "$pid_file")"
+      if kill -0 "$pid" 2>/dev/null; then
+        kill "$pid"
+        echo "stopped kanban for ${repo_name} (pid $pid)"
+      else
+        echo "kanban not running for ${repo_name} (stale pid $pid)"
+      fi
+      rm -f "$pid_file"
+      ;;
+    status)
+      if [[ -f "$pid_file" ]] && kill -0 "$(cat "$pid_file")" 2>/dev/null; then
+        echo "kanban running for ${repo_name} (pid $(cat "$pid_file"))"
+        [[ -f "$log_file" ]] && tail -n 5 "$log_file"
+      else
+        echo "kanban not running for ${repo_name}"
+      fi
+      echo "log: $log_file"
+      ;;
+    logs)
+      mkdir -p "${HOME}/Library/Logs"
+      touch "$log_file"
+      tail -f "$log_file"
+      ;;
+    *)
+      env PATH="/opt/homebrew/bin:${PATH}" "$kanban_bin" "$@"
+      ;;
+  esac
 }
