@@ -105,6 +105,21 @@ trust_level = "trusted"
 [projects."/Users/travis/git/polaris-naga"]
 trust_level = "trusted"
 
+[projects."/Users/travis/git/redcrayon"]
+trust_level = "trusted"
+
+[projects."/Users/travis/.cline/worktrees/90f88/homemgmt-ai-dragon"]
+trust_level = "trusted"
+
+[projects."/Users/travis/.cline/worktrees/4d31f/homemgmt-ai-dragon"]
+trust_level = "trusted"
+
+[projects."/Users/travis/Downloads/coinbase"]
+trust_level = "trusted"
+
+[projects."/Users/travis/Downloads"]
+trust_level = "trusted"
+
 [mcp_servers.neon]
 url = "https://mcp.neon.tech/mcp"
 
@@ -124,3 +139,12 @@ url = "https://mcp.webflow.com/mcp"
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
+
+[plugins."gmail@openai-curated"]
+enabled = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."google-drive@openai-curated"]
+enabled = true
