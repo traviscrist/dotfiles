@@ -49,3 +49,6 @@ export PATH="$HOME/.ai/bin:$PATH"
 # BS Logs
 #
 export PATH="/Users/travis/.bun/bin:$PATH"
+
+# Better Stack Query Endpoint
+export BETTERSTACK_QUERY_BASE_URL="https://us-east-9-connect.betterstackdata.com"

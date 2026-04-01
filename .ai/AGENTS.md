@@ -69,6 +69,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Git
 - Safe by default: `git status/diff/log`. Push only when user asks.
 - In `~/.ai` (dotfiles/workspace repo), use `yadm add <path>` (explicit paths), commit, and `yadm push`.
+- Never commit `~/.secrets` (or any raw secrets file). Local-only.
 - `git checkout` ok for PR review / explicit request.
 - Branch changes require user consent.
 - Destructive ops forbidden unless explicit (`reset --hard`, `clean`, `restore`, `rm`, …).
