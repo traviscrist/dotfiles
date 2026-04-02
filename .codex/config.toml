@@ -134,9 +134,6 @@ bearer_token_env_var = "LINEAR_API_REDCRAYON"
 url = "https://mcp.linear.app/mcp"
 bearer_token_env_var = "LINEAR_API_TRUEVAULT"
 
-[mcp_servers.webflow]
-url = "https://mcp.webflow.com/mcp"
-
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.4"
 
