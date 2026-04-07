@@ -20,6 +20,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - For this dotfiles/workspace repo, use `yadm` (git wrapper): add files explicitly (`yadm add <path>`), commit, then `yadm push`.
 - Editor: `code <path>`.
 - Shell config split: keep in `~/.zsh/*.zsh` (`paths.zsh`, `secrets.zsh`, `aliases.zsh`, `functions.zsh`, `completions.zsh`), sourced from `~/.zshrc`.
+- AWS CLI: MUST use `AWS_PROFILE='read-only'` for all `aws` commands.
 - CI: `gh run list/view` (rerun/fix til green).
 - Prefer end-to-end verify; if blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
@@ -130,6 +131,13 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
 - Examples: `gh issue view <url> --comments -R owner/repo`, `gh pr view <url> --comments --files -R owner/repo`.
+
+### render
+- Render CLI for services/deploys/logs/workspaces.
+- Install: `brew install render` (then add `brew 'render'` to `~/.Brewfile`).
+- Auth: prefer API key via `RENDER_API_KEY` (e.g., in `~/.secrets`/`~/.zsh/secrets.zsh`), then `render whoami`.
+- Workspace bootstrap: `render workspaces list`, `render workspace set <workspace-id> --confirm`.
+- Common: `render services`, `render deploys`, `render logs`.
 
 ### tmux
 - Use only when you need persistence/interaction (debugger/server).
