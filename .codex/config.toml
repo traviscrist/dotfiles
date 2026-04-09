@@ -120,6 +120,12 @@ trust_level = "trusted"
 [projects."/Users/travis/Downloads"]
 trust_level = "trusted"
 
+[projects."/Users/travis/travis/midnightbear"]
+trust_level = "trusted"
+
+[projects."/Users/travis/git/utils"]
+trust_level = "trusted"
+
 [mcp_servers.neon]
 url = "https://mcp.neon.tech/mcp"
 
