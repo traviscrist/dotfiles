@@ -1,5 +1,6 @@
 alias flush-dns="sudo killall -HUP mDNSResponder"
 alias awslogin='aws sso login --profile full-admin && export AWS_PROFILE=full-admin'
+alias awsloginRead='aws sso login --profile read-only && export AWS_PROFILE=full-admin'
 alias tv-aws="export AWS_PROFILE=truevault"
 alias boom="npx npkill"
 alias aider="~/.config/scripts/aider_copilot.sh"
