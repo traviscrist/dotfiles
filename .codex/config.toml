@@ -16,6 +16,7 @@ tool_output_token_limit = 25000
 model_auto_compact_token_limit = 233000
 suppress_unstable_features_warning = true
 service_tier = "fast"
+plan_mode_reasoning_effort = "high"
 
 [features]
 multi_agent = true
@@ -126,8 +127,17 @@ trust_level = "trusted"
 [projects."/Users/travis/git/utils"]
 trust_level = "trusted"
 
-[mcp_servers.neon]
-url = "https://mcp.neon.tech/mcp"
+[projects."/Users/travis/travis/crypto"]
+trust_level = "trusted"
+
+[projects."/Users/travis/travis/bluequartz"]
+trust_level = "trusted"
+
+[projects."/private/var/folders/6h/w3vbh2p96bz6wq01sfds2c1c0000gn/T/tmp.yrZHDthawc"]
+trust_level = "trusted"
+
+[projects."/Users/travis/git/webflow"]
+trust_level = "trusted"
 
 [mcp_servers.notion]
 url = "https://mcp.notion.com/mcp"
@@ -157,3 +167,10 @@ enabled = true
 
 [plugins."google-drive@openai-curated"]
 enabled = true
+
+[[skills.config]]
+path = "/Users/travis/.ai/skills/brave-search/SKILL.md"
+enabled = false
+
+[tui.model_availability_nux]
+"gpt-5.5" = 4
