@@ -30,6 +30,16 @@ eval "$(pyenv init -)"
 #
 eval "$(fnm env --use-on-cd)"
 
+_fnm_fallback_lts_latest() {
+  if [[ -f .node-version || -f .nvmrc ]]; then
+    return
+  fi
+  fnm use --install-if-missing --silent-if-unchanged lts-latest >/dev/null 2>&1
+}
+add-zsh-hook -d chpwd _fnm_fallback_lts_latest 2>/dev/null
+add-zsh-hook chpwd _fnm_fallback_lts_latest
+_fnm_fallback_lts_latest
+
 #
 # Deno
 #
