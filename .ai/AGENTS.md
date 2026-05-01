@@ -115,9 +115,11 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### docs-list / scripts/docs-list.ts
 - Optional. Lists `docs/` + enforces front-matter. Ignore if `docs-list` is not installed. Rebuild: `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`.
 
-### browser-tools (`~/.ai/bin/browser-tools`) / scripts/browser-tools.ts
-- Chrome DevTools helper. Cmds: `start`, `nav`, `eval`, `screenshot`, `pick`, `cookies`, `inspect`, `kill`.
-- Rebuild: `NODE_PATH="$(npm root -g)" bun build scripts/browser-tools.ts --compile --target bun --outfile bin/browser-tools`.
+### agent-browser
+- Browser automation CLI for agent workflows.
+- Install: `brew install agent-browser` (fallback: `npm install -g agent-browser`), then `agent-browser install`.
+- Quick refs: `agent-browser open <url>`, `agent-browser snapshot`, `agent-browser click <sel>`, `agent-browser fill <sel> <text>`, `agent-browser screenshot`, `agent-browser close`.
+- Health check: `agent-browser doctor`.
 
 ### bslog
 - Better Stack log CLI: `https://github.com/steipete/bslog`.

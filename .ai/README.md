@@ -7,7 +7,9 @@ Run this on a new machine (or after pulling updates):
 
 ```bash
 brew bundle --file ~/.Brewfile
-npm install -g tsx commander puppeteer-core
+npm install -g tsx
+brew install agent-browser
+agent-browser install
 curl -o /tmp/gitpod -fsSL "https://releases.gitpod.io/cli/stable/gitpod-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m | sed 's/x86_64/amd64/;s/\\(arm64\\|aarch64\\)/arm64/')" \
   && chmod +x /tmp/gitpod \
   && sudo mv /tmp/gitpod /usr/local/bin/gitpod
@@ -47,6 +49,9 @@ Quick verification:
 
 ```bash
 command -v tsx
+command -v agent-browser
+agent-browser --version
+agent-browser doctor
 command -v gitpod
 gitpod version
 command -v summarize
@@ -101,15 +106,17 @@ Source/region notes:
   - Build: `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`
   - Run: `docs-list`
 
-### `scripts/browser-tools.ts`
-- Standalone Chrome DevTools helper inspired by "What if you don't need MCP?".
-- Optional compiled binary:
-  - Build: `NODE_PATH="$(npm root -g)" bun build scripts/browser-tools.ts --compile --target bun --outfile bin/browser-tools`
-  - Run: `bin/browser-tools --help`
-- Notes:
-  - Requires global npm modules: `commander`, `puppeteer-core`.
-  - `bin/browser-tools` is not tracked by git; rebuild locally as needed.
-  - Keep this helper dependency-light and portable across repos.
+### `agent-browser` (external CLI)
+- Preferred browser automation tool for agent workflows.
+- Install/update:
+  - `brew install agent-browser` (fallback: `npm install -g agent-browser`)
+  - `agent-browser install` (first-time Chrome for Testing bootstrap)
+  - `agent-browser upgrade` (update to latest)
+- Quick usage:
+  - `agent-browser open https://example.com`
+  - `agent-browser snapshot`
+  - `agent-browser screenshot page.png`
+  - `agent-browser close`
 
 ## Skills
 - Skills live in `skills/`.
