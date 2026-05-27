@@ -1,5 +1,5 @@
 # https://developers.openai.com/codex/config-reference
-model = "gpt-5.3-codex"
+model = "gpt-5.5"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 
@@ -139,8 +139,8 @@ trust_level = "trusted"
 [projects."/Users/travis/git/webflow"]
 trust_level = "trusted"
 
-[mcp_servers.notion]
-url = "https://mcp.notion.com/mcp"
+[projects."/Users/travis/travis/arodraw"]
+trust_level = "trusted"
 
 [mcp_servers.linear_redcrayon]
 url = "https://mcp.linear.app/mcp"
@@ -150,14 +150,11 @@ bearer_token_env_var = "LINEAR_API_REDCRAYON"
 url = "https://mcp.linear.app/mcp"
 bearer_token_env_var = "LINEAR_API_TRUEVAULT"
 
-[mcp_servers.webflow]
-url = "https://mcp.webflow.com/mcp"
-
 [mcp_servers.figma]
 url = "https://mcp.figma.com/mcp"
 
 [notice.model_migrations]
-"gpt-5.3-codex" = "gpt-5.4"
+"gpt-5.3-codex" = "gpt-5.5"
 
 [plugins."gmail@openai-curated"]
 enabled = true
