@@ -134,6 +134,9 @@ trust_level = "trusted"
 [projects."/Users/travis/travis/aurabear"]
 trust_level = "trusted"
 
+[projects."/Users/travis/.Trash/polaris-naga-mono"]
+trust_level = "trusted"
+
 [mcp_servers.linear_redcrayon]
 url = "https://mcp.linear.app/mcp"
 bearer_token_env_var = "LINEAR_API_REDCRAYON"
