@@ -1,0 +1,37 @@
+prefix_rule(
+    pattern=["rm"],
+    decision="forbidden",
+    justification="Use `trash` for deletes; destructive removal needs explicit user direction.",
+    match=["rm file.txt", "rm -rf build"],
+)
+prefix_rule(
+    pattern=["git", "reset", "--hard"],
+    decision="forbidden",
+    justification="Destructive git reset is forbidden unless Travis explicitly asks for that exact operation.",
+    match=["git reset --hard", "git reset --hard HEAD"],
+)
+prefix_rule(
+    pattern=["git", "clean"],
+    decision="forbidden",
+    justification="Destructive git clean is forbidden unless Travis explicitly asks for that exact operation.",
+    match=["git clean -fd", "git clean -xfd"],
+)
+prefix_rule(
+    pattern=["git", "restore"],
+    decision="forbidden",
+    justification="Do not discard local changes with git restore unless Travis explicitly asks for that exact operation.",
+    match=["git restore .", "git restore path/to/file"],
+)
+prefix_rule(
+    pattern=["aws"],
+    decision="forbidden",
+    justification="Run AWS CLI commands with `AWS_PROFILE=read-only`.",
+    match=["aws s3 ls", "aws sts get-caller-identity"],
+)
+prefix_rule(pattern=["deno", "task", "agents:test", "-k", "flatten_preserves_existing_field_font_style"], decision="allow")
+prefix_rule(pattern=["deno", "task", "agents:test", "-k", "flatten_renders_text_decorations_from_style"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "exec", "-T", "agents-worker", "ls", "-la", "/app/shared/fonts"], decision="allow")
+prefix_rule(pattern=["docker", "compose", "exec", "-T", "agents-worker", "ls", "-la", "/app/shared/fonts/ttf"], decision="allow")
+prefix_rule(pattern=["docker-compose", "exec", "web", "bash", "-lc", "./gradlew test"], decision="allow")
+prefix_rule(pattern=["docker-compose", "up", "-d"], decision="allow")
+prefix_rule(pattern=["curl", "-L"], decision="allow")

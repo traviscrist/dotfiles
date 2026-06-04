@@ -20,11 +20,9 @@ plan_mode_reasoning_effort = "high"
 
 [features]
 multi_agent = true
-ghost_commit = false
 unified_exec = true
-apply_patch_freeform = true
-skills = true
 shell_snapshot = true
+hooks = true
 
 [agents.explorer]
 description = "Read-only codebase explorer for gathering evidence before changes are proposed."
@@ -82,9 +80,6 @@ trust_level = "trusted"
 [projects."/Users/travis/travis/terry"]
 trust_level = "trusted"
 
-[projects."/Users/travis"]
-trust_level = "trusted"
-
 [projects."/Users/travis/travis/interview/Grind-75"]
 trust_level = "trusted"
 
@@ -92,9 +87,6 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [projects."/Users/travis/git/polaris-naga-preevy"]
-trust_level = "trusted"
-
-[projects."/"]
 trust_level = "trusted"
 
 [projects."/Users/travis/travis/cocacola"]
@@ -115,12 +107,6 @@ trust_level = "trusted"
 [projects."/Users/travis/.cline/worktrees/4d31f/homemgmt-ai-dragon"]
 trust_level = "trusted"
 
-[projects."/Users/travis/Downloads/coinbase"]
-trust_level = "trusted"
-
-[projects."/Users/travis/Downloads"]
-trust_level = "trusted"
-
 [projects."/Users/travis/travis/midnightbear"]
 trust_level = "trusted"
 
@@ -133,13 +119,19 @@ trust_level = "trusted"
 [projects."/Users/travis/travis/bluequartz"]
 trust_level = "trusted"
 
-[projects."/private/var/folders/6h/w3vbh2p96bz6wq01sfds2c1c0000gn/T/tmp.yrZHDthawc"]
-trust_level = "trusted"
-
 [projects."/Users/travis/git/webflow"]
 trust_level = "trusted"
 
 [projects."/Users/travis/travis/arodraw"]
+trust_level = "trusted"
+
+[projects."/Users/travis/scratchpad/purefishing"]
+trust_level = "trusted"
+
+[projects."/Users/travis/scratchpad/wtb/2026-05"]
+trust_level = "trusted"
+
+[projects."/Users/travis/travis/aurabear"]
 trust_level = "trusted"
 
 [mcp_servers.linear_redcrayon]

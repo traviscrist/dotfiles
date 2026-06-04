@@ -2,6 +2,12 @@
 
 This folder is your local AI workspace. It carries shared guardrails, scripts, and skills with local pathing under `~/.ai`.
 
+## Codex Setup
+- Run `codex doctor` after Codex upgrades; fix `fail` items before changing agent behavior.
+- Reusable workflows live in `skills/`. Custom prompts in `prompts/` are legacy and should be converted to skills when touched.
+- This workspace intentionally symlinks `~/.ai/skills/*` into `~/.codex/skills/` so local skills are available immediately. For shared distribution, package workflows as Codex plugins.
+- `docs-list` expects a `docs/` directory in the current repo. In this workspace it may fail until `docs/` exists; record that as a skipped docs gate, not a repo failure.
+
 ## Quick Setup
 Run this on a new machine (or after pulling updates):
 
@@ -25,6 +31,7 @@ rm -f ~/.codex/AGENTS.md
 ln -s ~/.ai/AGENTS.md ~/.codex/AGENTS.md
 
 mkdir -p ~/.ai/prompts
+# Legacy prompt bridge. Prefer skills for new reusable workflows.
 if [ -e ~/.codex/prompts ] && [ ! -L ~/.codex/prompts ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
 if [ -L ~/.codex/prompts ] && [ "$(readlink ~/.codex/prompts)" != "$HOME/.ai/prompts" ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
 rm -f ~/.codex/prompts
@@ -120,5 +127,7 @@ Source/region notes:
 
 ## Skills
 - Skills live in `skills/`.
+- `skills/make-pr` replaces legacy `/makepr`.
+- `skills/alex-branch-review` replaces legacy `/alex`.
 - Some are guidance-only; others require local setup (API keys, npm installs, or external CLIs).
 - If a skill references scripts under `skills/<name>/scripts`, keep those files alongside the skill.
