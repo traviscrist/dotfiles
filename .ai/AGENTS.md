@@ -120,6 +120,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Install: `brew install agent-browser` (fallback: `npm install -g agent-browser`), then `agent-browser install`.
 - Quick refs: `agent-browser open <url>`, `agent-browser snapshot`, `agent-browser click <sel>`, `agent-browser fill <sel> <text>`, `agent-browser screenshot`, `agent-browser close`.
 - Health check: `agent-browser doctor`.
+- Browser testing: prefer `agent-browser` only. Do not add/run Puppeteer, Playwright, browser MCPs, or ad-hoc Node browser scripts unless the repo already owns that test stack or Travis explicitly asks.
 
 ### bslog
 - Better Stack log CLI: `https://github.com/steipete/bslog`.

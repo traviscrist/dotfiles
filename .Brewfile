@@ -201,3 +201,5 @@ brew 'libusb'
 brew 'pkg-config'
 
 brew "flyctl"
+brew "cloudflared"
+brew "doggo"

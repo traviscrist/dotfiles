@@ -115,6 +115,7 @@ Source/region notes:
 
 ### `agent-browser` (external CLI)
 - Preferred browser automation tool for agent workflows.
+- Use this for browser checks by default; avoid Puppeteer, Playwright, browser MCPs, and ad-hoc Node browser scripts unless a repo already owns that test stack or Travis explicitly asks.
 - Install/update:
   - `brew install agent-browser` (fallback: `npm install -g agent-browser`)
   - `agent-browser install` (first-time Chrome for Testing bootstrap)
