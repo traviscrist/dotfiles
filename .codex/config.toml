@@ -165,13 +165,17 @@ NODE_REPL_NODE_MODULE_DIRS = ""
 NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/travis/.codex"
 CODEX_HOME = "/Users/travis/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "2de792ebdf729e85542c94275f6654821dddce546d9c7374c915f2297529e313"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "4946b004b23af02244ece97240aceb8d123475207fa6a6fc399486bd7086049f"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.602.40724"
+BROWSER_USE_CODEX_APP_VERSION = "26.602.71036"
 CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+
+[mcp_servers.sentry]
+command = "npx"
+args = ["-y", "mcp-remote@latest", "https://mcp.sentry.dev/mcp"]
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.5"
@@ -185,9 +189,6 @@ enabled = true
 [plugins."google-drive@openai-curated"]
 enabled = true
 
-[plugins."browser@openai-bundled"]
-enabled = true
-
 [plugins."documents@openai-primary-runtime"]
 enabled = true
 
@@ -195,6 +196,9 @@ enabled = true
 enabled = true
 
 [plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
 enabled = true
 
 [[skills.config]]
@@ -217,7 +221,7 @@ global = "zed"
 "/Users/travis/Documents/New project" = "zed"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-06-08T23:20:31Z"
+last_updated = "2026-06-11T23:05:41Z"
 source_type = "local"
 source = "/Users/travis/.codex/.tmp/bundled-marketplaces/openai-bundled"
 

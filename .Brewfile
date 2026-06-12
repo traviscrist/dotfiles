@@ -203,3 +203,5 @@ brew 'pkg-config'
 brew "flyctl"
 brew "cloudflared"
 brew "doggo"
+brew "crit"
+brew "clerk"
