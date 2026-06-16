@@ -26,6 +26,7 @@ unified_exec = true
 shell_snapshot = true
 hooks = true
 js_repl = false
+terminal_resize_reflow = true
 
 [agents.explorer]
 description = "Read-only codebase explorer for gathering evidence before changes are proposed."
@@ -156,26 +157,29 @@ url = "https://mcp.cloudflare.com/mcp"
 
 [mcp_servers.node_repl]
 args = []
-command = "/Applications/Codex.app/Contents/Resources/node_repl"
+command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = ""
-NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/node"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/travis/.codex"
 CODEX_HOME = "/Users/travis/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "4946b004b23af02244ece97240aceb8d123475207fa6a6fc399486bd7086049f"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "27dca86fd6b571c49414a4b78e46b57bcf683a46cd1319799c11fbb6cfae3110"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.602.71036"
+BROWSER_USE_CODEX_APP_VERSION = "26.609.41114"
 CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
 [mcp_servers.sentry]
 command = "npx"
 args = ["-y", "mcp-remote@latest", "https://mcp.sentry.dev/mcp"]
+
+[notice]
+hide_rate_limit_model_nudge = true
 
 [notice.model_migrations]
 "gpt-5.3-codex" = "gpt-5.5"
@@ -201,6 +205,9 @@ enabled = true
 [plugins."browser@openai-bundled"]
 enabled = true
 
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
 [[skills.config]]
 path = "/Users/travis/.ai/skills/brave-search/SKILL.md"
 enabled = false
@@ -221,11 +228,11 @@ global = "zed"
 "/Users/travis/Documents/New project" = "zed"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-06-11T23:05:41Z"
+last_updated = "2026-06-15T01:55:56Z"
 source_type = "local"
 source = "/Users/travis/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-06-08T23:21:36Z"
+last_updated = "2026-06-15T01:28:17Z"
 source_type = "local"
 source = "/Users/travis/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
