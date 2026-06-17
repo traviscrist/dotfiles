@@ -82,6 +82,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - If user types a command (“pull and push”), that’s consent for that command.
 - No amend unless asked.
 - Big review: `git --no-pager diff --color=never`.
+- Home repo status: prefer `yadm status -uno`; use explicit paths for untracked checks.
 - Multi-agent: check `git status/diff` before edits; ship small commits.
 
 ## Language/Stack Notes
@@ -99,52 +100,35 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Tools
 
 ### peekaboo
-- Screen tools via installed `peekaboo` CLI (run `peekaboo --help`). Cmds: `capture`, `see`, `click`, `list`, `tools`, `permissions status`.
-- Needs Screen Recording + Accessibility permissions.
-- Config tracked in dotfiles: `~/.peekaboo/config.json`.
+- Screen inspection/clicks when needed; config at `~/.peekaboo/config.json`.
 
 ### committer
-- Commit helper on PATH via `~/.ai/bin/committer`. Stages only listed paths; required here. Repo may also ship `./scripts/committer`.
-
-### shazam-song
-- Audio track detection helper on PATH via `~/.ai/bin/shazam-song` (script source: `~/.ai/scripts/shazam-song`).
+- Commit helper on PATH via `~/.ai/bin/committer`; stages only listed paths.
 
 ### trash
 - Move files to Trash: `trash …` (system command).
 
 ### docs-list / scripts/docs-list.ts
-- Optional. Lists `docs/` + enforces front-matter. Ignore if `docs-list` is not installed. Rebuild: `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`.
+- Optional docs gate. Ignore if missing or no `docs/` directory.
 
 ### agent-browser
-- Browser automation CLI for agent workflows.
-- Install: `brew install agent-browser` (fallback: `npm install -g agent-browser`), then `agent-browser install`.
-- Quick refs: `agent-browser open <url>`, `agent-browser snapshot`, `agent-browser click <sel>`, `agent-browser fill <sel> <text>`, `agent-browser screenshot`, `agent-browser close`.
-- Health check: `agent-browser doctor`.
-- Browser testing: prefer `agent-browser` only. Do not add/run Puppeteer, Playwright, browser MCPs, or ad-hoc Node browser scripts unless the repo already owns that test stack or Travis explicitly asks.
+- Browser automation CLI for agent workflows: `open`, `snapshot`, `click`, `fill`, `screenshot`, `close`.
+- Browser testing: use `agent-browser` only. Do not add/run Puppeteer, Playwright, browser MCPs, or ad-hoc Node browser scripts unless a repo already owns that stack or Travis explicitly asks.
 
 ### bslog
-- Better Stack log CLI: `https://github.com/steipete/bslog`.
-- Install/update: `bun add -g @steipete/bslog`.
+- Better Stack logs CLI.
 
 ### summarize
-- URL/file/media summarizer CLI: `https://github.com/steipete/summarize`.
-- Install/update: `brew install steipete/tap/summarize` (fallback: `bun add -g @steipete/summarize`).
-- Extension setup (optional): `summarize daemon install --token <TOKEN>`.
+- URL/file/media summarizer CLI.
 
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
-- Examples: `gh issue view <url> --comments -R owner/repo`, `gh pr view <url> --comments --files -R owner/repo`.
 
 ### render
-- Render CLI for services/deploys/logs/workspaces.
-- Install: `brew install render` (then add `brew 'render'` to `~/.Brewfile`).
-- Auth: prefer API key via `RENDER_API_KEY` (e.g., in `~/.secrets`/`~/.zsh/secrets.zsh`), then `render whoami`.
-- Workspace bootstrap: `render workspaces list`, `render workspace set <workspace-id> --confirm`.
-- Common: `render services`, `render deploys`, `render logs`.
+- Render CLI for services, deploys, logs, and workspaces.
 
 ### tmux
 - Use only when you need persistence/interaction (debugger/server).
-- Quick refs: `tmux new -d -s codex-shell`, `tmux attach -t codex-shell`, `tmux list-sessions`, `tmux kill-session -t codex-shell`.
 
 ## Frontend Aesthetics
 Avoid “AI slop” UI. Be opinionated + distinctive.

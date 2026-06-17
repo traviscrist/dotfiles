@@ -22,8 +22,6 @@ curl -o /tmp/gitpod -fsSL "https://releases.gitpod.io/cli/stable/gitpod-$(uname 
 brew install steipete/tap/summarize || bun add -g @steipete/summarize
 bun add -g @steipete/bslog
 
-cd ~/.ai/skills/brave-search && npm ci
-
 mkdir -p ~/.codex
 if [ -e ~/.codex/AGENTS.md ] && [ ! -L ~/.codex/AGENTS.md ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
 if [ -L ~/.codex/AGENTS.md ] && [ "$(readlink ~/.codex/AGENTS.md)" != "$HOME/.ai/AGENTS.md" ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
@@ -68,6 +66,7 @@ test -f ~/.peekaboo/config.json && echo "peekaboo config ok"
 readlink ~/.codex/AGENTS.md
 readlink ~/.codex/prompts
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
+yadm status -uno
 ```
 
 ## bslog Setup Checks
@@ -115,7 +114,7 @@ Source/region notes:
 
 ### `agent-browser` (external CLI)
 - Preferred browser automation tool for agent workflows.
-- Use this for browser checks by default; avoid Puppeteer, Playwright, browser MCPs, and ad-hoc Node browser scripts unless a repo already owns that test stack or Travis explicitly asks.
+- Use this for browser checks. Avoid Puppeteer, Playwright, browser MCPs, and ad-hoc Node browser scripts unless a repo already owns that test stack or Travis explicitly asks.
 - Install/update:
   - `brew install agent-browser` (fallback: `npm install -g agent-browser`)
   - `agent-browser install` (first-time Chrome for Testing bootstrap)
@@ -126,9 +125,18 @@ Source/region notes:
   - `agent-browser screenshot page.png`
   - `agent-browser close`
 
+## Tool Details
+- `peekaboo`: screen inspection/clicks. Requires Screen Recording + Accessibility permissions. Check with `peekaboo permissions status`.
+- `trash`: delete guardrail. Use `trash <path>` instead of destructive shell deletes.
+- `summarize`: install/update with `brew install steipete/tap/summarize` or `bun add -g @steipete/summarize`.
+- `bslog`: install/update with `bun add -g @steipete/bslog`; see setup checks below.
+- `render`: install with `brew install render`, then add `brew "render"` to `~/.Brewfile`; prefer `RENDER_API_KEY` auth.
+- `tmux`: reserve for persistent interactive work such as servers/debuggers.
+- `yadm`: use `yadm status -uno` by default in the home repo; use explicit paths for untracked checks.
+
 ## Skills
-- Skills live in `skills/`.
+- Durable local skills live in `~/.ai/skills` and symlink into `~/.codex/skills`.
+- Installed third-party skills live in `~/.agents/skills`.
 - `skills/make-pr` replaces legacy `/makepr`.
-- `skills/alex-branch-review` replaces legacy `/alex`.
 - Some are guidance-only; others require local setup (API keys, npm installs, or external CLIs).
 - If a skill references scripts under `skills/<name>/scripts`, keep those files alongside the skill.
