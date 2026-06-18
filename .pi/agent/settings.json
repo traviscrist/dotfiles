@@ -2,5 +2,8 @@
   "lastChangelogVersion": "0.79.6",
   "theme": "dark",
   "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.5"
+  "defaultModel": "gpt-5.5",
+  "steeringMode": "one-at-a-time",
+  "enableInstallTelemetry": false,
+  "defaultProjectTrust": "always"
 }
