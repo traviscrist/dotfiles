@@ -1,9 +1,17 @@
 {
   "lastChangelogVersion": "0.79.6",
-  "theme": "dark",
+  "theme": "everforest-dark",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
   "steeringMode": "one-at-a-time",
   "enableInstallTelemetry": false,
-  "defaultProjectTrust": "always"
+  "defaultProjectTrust": "always",
+  "treeFilterMode": "default",
+  "defaultThinkingLevel": "high",
+  "packages": [
+    "npm:pi-codex-goal",
+    "npm:pi-lens",
+    "npm:pi-simplify",
+    "npm:pi-code-previews"
+  ]
 }

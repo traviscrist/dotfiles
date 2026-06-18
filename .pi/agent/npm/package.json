@@ -1,0 +1,10 @@
+{
+  "name": "pi-extensions",
+  "private": true,
+  "dependencies": {
+    "pi-code-previews": "^0.1.32",
+    "pi-codex-goal": "^0.1.27",
+    "pi-lens": "^3.8.53",
+    "pi-simplify": "^0.2.2"
+  }
+}

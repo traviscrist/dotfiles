@@ -20,8 +20,8 @@ kls_database.db
 
 # AI TOOLING
 sessions
+.pi/agent/auth.json
 
 
 # Serena cache files
 .serena/cache/
-
