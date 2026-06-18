@@ -38,7 +38,7 @@ type LensState = {
 
 type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
 
-const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+const SPINNER_FRAMES = ["·", "•", "●", "•"];
 
 function hexToRgb(hex: string): [number, number, number] {
 	const normalized = hex.replace("#", "");
@@ -207,8 +207,8 @@ function lensSegments(state: LensState, lspStatus: string | undefined): Segment[
 
 function activitySegment(state: ActivityState, spinnerFrame: string): Segment {
 	const color = state === "IDLE" ? COLORS.green : state === "BASH" ? COLORS.blue : state === "TOOLS" ? COLORS.yellow : state === "COMPACT" ? COLORS.red : COLORS.fg;
-	const prefix = state === "IDLE" ? "" : `${spinnerFrame} `;
-	return { text: ` ${prefix}${state} `, fg: COLORS.bgDim, bg: color };
+	const label = state === "IDLE" ? state : `${spinnerFrame} ${state}`;
+	return { text: ` ${label} `, fg: COLORS.bgDim, bg: color };
 }
 
 function goalElapsedSegment(status: string | undefined): Segment | undefined {
