@@ -1,5 +1,6 @@
 .tern-port
 /node_modules
+node_modules/
 *.log
 .#*
 README.md.temp

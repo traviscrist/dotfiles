@@ -70,6 +70,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Git
 - Safe by default: `git status/diff/log`. Push only when user asks.
 - In `~/.ai` (dotfiles/workspace repo), use `yadm add <path>` (explicit paths), commit, and `yadm push`.
+- After every intentional `~/.pi` config/extension/theme/package change, immediately run subagent `pi-syncer` (or follow its checklist) to safely yadm commit + push before handoff.
 - Never commit `~/.secrets` (or any raw secrets file). Local-only.
 - `git checkout` ok for PR review / explicit request.
 - Branch changes require user consent.
