@@ -36,7 +36,9 @@ type LensState = {
 	lastDurationMs?: number;
 };
 
-type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH";
+type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
+
+const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
 
 function hexToRgb(hex: string): [number, number, number] {
 	const normalized = hex.replace("#", "");
@@ -65,7 +67,8 @@ function leftPowerline(segments: Segment[]): string {
 	return segments
 		.map((segment, index) => {
 			const next = segments[index + 1];
-			const separator = next ? `${fg(segment.bg)}${bg(next.bg)}\x1b[0m` : `${fg(segment.bg)}\x1b[0m`;
+			const nextBg = next?.bg ?? COLORS.bgDim;
+			const separator = `${fg(segment.bg)}${bg(nextBg)}\x1b[0m`;
 			return paint(segment) + separator;
 		})
 		.join("");
@@ -87,13 +90,6 @@ function compactModel(modelId: string | undefined): string {
 		.replace(/^claude-/, "claude ")
 		.replace(/-20\d{6}$/, "")
 		.replace(/-/g, " ");
-}
-
-function formatElapsed(startedAt: number): string {
-	const totalSeconds = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
-	const minutes = Math.floor(totalSeconds / 60);
-	const seconds = totalSeconds % 60;
-	return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
 function stripAnsi(text: string): string {
@@ -130,7 +126,10 @@ function truncateToWidth(text: string, maxWidth: number): string {
 function makeFooterLine(width: number, left: string, right: string): string {
 	const rightWidth = visibleWidth(right);
 	const availableLeftWidth = Math.max(0, width - rightWidth - 1);
-	const fittedLeft = truncateToWidth(left, availableLeftWidth);
+	const leftWasTruncated = visibleWidth(left) > availableLeftWidth;
+	const fittedLeft = leftWasTruncated && availableLeftWidth > 1
+		? truncateToWidth(left, availableLeftWidth - 1) + `${fg(COLORS.bg0)}${bg(COLORS.bgDim)}\x1b[0m`
+		: truncateToWidth(left, availableLeftWidth);
 	const pad = " ".repeat(Math.max(0, width - visibleWidth(fittedLeft) - rightWidth));
 	return truncateToWidth(fittedLeft + bg(COLORS.bgDim) + pad + "\x1b[0m" + right, width);
 }
@@ -182,10 +181,10 @@ function lensSummary(state: LensState, lspStatus: string | undefined): { text: s
 		blocking += file.blocking;
 	}
 
-	if (errors > 0) return { text: ` ${blocking > 0 ? "●" : "!"}${errors}E${warnings > 0 ? ` ${warnings}W` : ""} `, fg: blocking > 0 ? COLORS.red : COLORS.yellow };
-	if (warnings > 0) return { text: ` !${warnings}W `, fg: COLORS.yellow };
-	if (state.files.size > 0) return { text: " ✓ clean ", fg: COLORS.green };
-	return { text: ` ${lspStatus ? stripAnsi(lspStatus).replace(/^LSP /, "") : "ready"} `, fg: COLORS.muted };
+	if (errors > 0) return { text: ` 󰅚 ${errors}E${warnings > 0 ? `   ${warnings}W` : ""} `, fg: blocking > 0 ? COLORS.red : COLORS.yellow };
+	if (warnings > 0) return { text: `  ${warnings}W `, fg: COLORS.yellow };
+	if (state.files.size > 0) return { text: "  clean ", fg: COLORS.green };
+	return { text: ` 󰒡 ${lspStatus ? stripAnsi(lspStatus).replace(/^LSP /, "") : "ready"} `, fg: COLORS.muted };
 }
 
 function lensSegments(state: LensState, lspStatus: string | undefined): Segment[] {
@@ -200,41 +199,33 @@ function lensSegments(state: LensState, lspStatus: string | undefined): Segment[
 	const detail = `${duration}${recentFiles ? ` · ${recentFiles}` : ""}`;
 
 	return [
-		{ text: ` pi-lens${languages ? ` ${languages}` : ""} `, fg: COLORS.green, bg: COLORS.bg0 },
+		...(languages ? [{ text: ` ${languages} `, fg: COLORS.green, bg: COLORS.bg0 }] : []),
 		{ text: summary.text, fg: summary.fg, bg: COLORS.bg0 },
 		...(detail ? [{ text: ` ${detail} `, fg: COLORS.muted, bg: COLORS.bg0 }] : []),
 	];
 }
 
-function activitySegment(state: ActivityState): Segment {
-	const color = state === "IDLE" ? COLORS.green : state === "BASH" ? COLORS.blue : state === "TOOLS" ? COLORS.yellow : COLORS.fg;
-	return { text: ` ${state} `, fg: COLORS.bgDim, bg: color };
+function activitySegment(state: ActivityState, spinnerFrame: string): Segment {
+	const color = state === "IDLE" ? COLORS.green : state === "BASH" ? COLORS.blue : state === "TOOLS" ? COLORS.yellow : state === "COMPACT" ? COLORS.red : COLORS.fg;
+	const prefix = state === "IDLE" ? "" : `${spinnerFrame} `;
+	return { text: ` ${prefix}${state} `, fg: COLORS.bgDim, bg: color };
 }
 
-function goalSegments(status: string | undefined): Segment[] {
-	if (!status) return [];
+function goalElapsedSegment(status: string | undefined): Segment | undefined {
+	if (!status) return undefined;
 
 	const clean = stripAnsi(status);
-	let text = clean
-		.replace(/^Pursuing goal/i, "goal")
-		.replace(/^Goal achieved/i, "goal done")
-		.replace(/^Goal paused/i, "goal paused")
-		.replace(/^Goal unmet/i, "goal unmet")
-		.replace(/\/goal resume/g, "resume");
-	if (text.length > 34) text = `${text.slice(0, 33)}…`;
-
-	const color = clean.includes("paused") || clean.includes("unmet") ? COLORS.yellow : clean.includes("achieved") ? COLORS.green : COLORS.blue;
-	return [
-		{ text: " goal ", fg: COLORS.bgDim, bg: color },
-		{ text: ` ${text} `, fg: COLORS.fg, bg: COLORS.bg0 },
-	];
+	const duration = clean.match(/\((\d+d(?: \d+h)?(?: \d+m)?|\d+h(?: \d+m)?|\d+m|\d+s)\)/)?.[1];
+	if (duration) return { text: ` ${duration} `, fg: COLORS.bgDim, bg: COLORS.green };
+	if (clean === "Pursuing goal") return { text: " 0s ", fg: COLORS.bgDim, bg: COLORS.green };
+	return undefined;
 }
 
 export default function (pi: ExtensionAPI) {
 	let enabled = true;
 	let activityState: ActivityState = "IDLE";
 	let activeToolCount = 0;
-	const startedAt = Date.now();
+	let spinnerIndex = 0;
 	const lensState: LensState = { languages: new Set(), files: new Map() };
 	const renderers = new Set<() => void>();
 	const renderAll = () => {
@@ -265,21 +256,30 @@ export default function (pi: ExtensionAPI) {
 		activeToolCount = 0;
 		setActivity("IDLE");
 	});
+	pi.on("session_before_compact", () => setActivity("COMPACT"));
+	pi.on("session_compact", () => setActivity("IDLE"));
 
 	function apply(ctx: ExtensionContext): void {
 		const repoLabel = basename(ctx.cwd) || "pi";
+		ctx.ui.setWorkingVisible(false);
 
 		ctx.ui.setFooter((tui, _theme, footerData) => {
 			const requestRender = () => tui.requestRender();
 			renderers.add(requestRender);
 			const branchDisposer = footerData.onBranchChange(requestRender);
-			const interval = setInterval(requestRender, 1000);
+			const interval = setInterval(() => {
+				if (activityState !== "IDLE") {
+					spinnerIndex = (spinnerIndex + 1) % SPINNER_FRAMES.length;
+				}
+				requestRender();
+			}, 120);
 
 			return {
 				dispose() {
 					renderers.delete(requestRender);
 					branchDisposer();
 					clearInterval(interval);
+					ctx.ui.setWorkingVisible(true);
 				},
 				invalidate() {},
 				render(width: number): string[] {
@@ -290,12 +290,12 @@ export default function (pi: ExtensionAPI) {
 					const usage = ctx.getContextUsage();
 					const percent = usage?.percent == null ? "--%" : `${Math.round(usage.percent)}%`;
 					const thinking = pi.getThinkingLevel();
+					const goalElapsed = goalElapsedSegment(goalStatus);
 
 					const left = leftPowerline([
-						activitySegment(activityState),
+						activitySegment(activityState, SPINNER_FRAMES[spinnerIndex] ?? "⠋"),
 						{ text: `  ${branch} `, fg: COLORS.fg, bg: COLORS.bg2 },
 						{ text: ` ${repoLabel} `, fg: COLORS.muted, bg: COLORS.bg1 },
-						...goalSegments(goalStatus),
 						...lensSegments(lensState, lspStatus),
 					]);
 
@@ -304,7 +304,7 @@ export default function (pi: ExtensionAPI) {
 						{ text: ` ${thinking} `, fg: COLORS.yellow, bg: COLORS.bg2 },
 						{ text: ` ${compactModel(ctx.model?.id)} `, fg: COLORS.fg, bg: COLORS.bg1 },
 						{ text: ` ${percent} `, fg: COLORS.bgDim, bg: COLORS.blue },
-						{ text: ` ${formatElapsed(startedAt)} `, fg: COLORS.bgDim, bg: COLORS.green },
+						...(goalElapsed ? [goalElapsed] : []),
 					]);
 
 					return [makeFooterLine(width, left, right)];
