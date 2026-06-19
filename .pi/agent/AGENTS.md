@@ -54,6 +54,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - New PRs: open as Draft by default (`gh pr create --draft`); show the PR link to Travis after opening; mark ready only when explicitly directed.
 - Never auto-merge PRs with admin privileges.
 - PR comments: `gh pr view …` + `gh api …/comments --paginate`.
+- For full PR feedback loops, use `/pr [number|url]`: triage each comment with `pr-comment-triager`, fix via `pr-comment-fixer`, main agent replies/resolves, then monitor CI to green.
 - Replies: cite fix + file/line; resolve threads only after fix lands.
 - After updates, reply on all review comments and close resolved threads.
 - Ask original reviewers to re-review after changes; for bot reviewers (Gemini, CodeRabbit, Codex), explicitly request another review pass.
