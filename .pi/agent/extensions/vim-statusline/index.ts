@@ -1,7 +1,5 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { execFile } from "node:child_process";
-import { readFileSync } from "node:fs";
-import { basename, join } from "node:path";
+import { basename } from "node:path";
 
 const COLORS = {
 	bgDim: "#232A2E",
@@ -39,11 +37,8 @@ type LensState = {
 };
 
 type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
-type RateWindow = { usedPercent?: number; resetsAt?: string; windowMinutes?: number };
-type CodexPaceState = { deltaPercent?: number; refreshing: boolean };
 
 const SPINNER_FRAMES = ["·", "•", "●", "•"];
-const CODEXBAR_REFRESH_MS = 120_000;
 
 function hexToRgb(hex: string): [number, number, number] {
 	const normalized = hex.replace("#", "");
@@ -220,61 +215,15 @@ function contextUsageSegment(percent: number | undefined): Segment {
 	if (percent == null || Number.isNaN(percent)) {
 		return { text: " --% ", fg: COLORS.muted, bg: COLORS.bg1 };
 	}
+
 	const rounded = Math.round(percent);
 	const color = rounded >= 95 ? COLORS.red : rounded >= 80 ? COLORS.yellow : COLORS.blue;
 	return { text: ` ${rounded}% `, fg: COLORS.bgDim, bg: color };
 }
 
-function codexPaceDelta(window: RateWindow | undefined, now = Date.now()): number | undefined {
-	const used = Number(window?.usedPercent);
-	const resetsAt = Date.parse(window?.resetsAt ?? "");
-	const minutes = Number(window?.windowMinutes);
-	if (!Number.isFinite(used) || !Number.isFinite(resetsAt) || !Number.isFinite(minutes) || minutes <= 0) return undefined;
-	const duration = minutes * 60_000;
-	const remaining = resetsAt - now;
-	if (remaining <= 0 || remaining > duration) return undefined;
-	const expected = ((duration - remaining) / duration) * 100;
-	return Math.max(0, Math.min(100, used)) - Math.max(0, Math.min(100, expected));
-}
-
-function parseCodexPaceDelta(raw: string): number | undefined {
-	const json = JSON.parse(raw);
-	const entry = Array.isArray(json) ? json.find((item) => item?.provider === "codex") : json.entries?.find((item: { provider?: string }) => item.provider === "codex");
-	const usage = entry?.usage ?? entry;
-	return codexPaceDelta(usage?.secondary ?? usage?.primary);
-}
-
-function snapshotCodexPaceDelta(): number | undefined {
-	try {
-		const path = join(process.env.HOME ?? "", "Library/Group Containers/group.com.steipete.codexbar/widget-snapshot.json");
-		return parseCodexPaceDelta(readFileSync(path, "utf8"));
-	} catch {
-		return undefined;
-	}
-}
-
-function refreshCodexPace(state: CodexPaceState, renderAll: () => void): void {
-	if (state.refreshing) return;
-	state.refreshing = true;
-	execFile("codexbar", ["usage", "--provider", "codex", "--source", "cli", "--format", "json", "--no-color"], { timeout: 15_000 }, (_error, stdout) => {
-		state.refreshing = false;
-		const delta = (() => {
-			try { return parseCodexPaceDelta(stdout); } catch { return snapshotCodexPaceDelta(); }
-		})();
-		if (delta !== undefined) state.deltaPercent = delta;
-		renderAll();
-	});
-}
-
-function codexPaceSegment(delta: number | undefined): Segment {
-	if (delta === undefined) return { text: " ±--% ", fg: COLORS.muted, bg: COLORS.bg1 };
-	const rounded = Math.round(delta);
-	const color = rounded > 0 ? (rounded >= 12 ? COLORS.red : COLORS.yellow) : rounded < 0 ? COLORS.green : COLORS.blue;
-	return { text: ` ${rounded >= 0 ? "+" : ""}${rounded}% `, fg: COLORS.bgDim, bg: color };
-}
-
 function goalElapsedSegment(status: string | undefined): Segment | undefined {
 	if (!status) return undefined;
+
 	const clean = stripAnsi(status);
 	const duration = clean.match(/\((\d+d(?: \d+h)?(?: \d+m)?|\d+h(?: \d+m)?|\d+m|\d+s)\)/)?.[1];
 	if (duration) return { text: ` ${duration} `, fg: COLORS.bgDim, bg: COLORS.green };
@@ -288,7 +237,6 @@ export default function (pi: ExtensionAPI) {
 	let activeToolCount = 0;
 	let spinnerIndex = 0;
 	const lensState: LensState = { languages: new Set(), files: new Map() };
-	const codexPaceState: CodexPaceState = { refreshing: false };
 	const renderers = new Set<() => void>();
 	const renderAll = () => {
 		for (const requestRender of renderers) requestRender();
@@ -329,8 +277,6 @@ export default function (pi: ExtensionAPI) {
 			const requestRender = () => tui.requestRender();
 			renderers.add(requestRender);
 			const branchDisposer = footerData.onBranchChange(requestRender);
-			refreshCodexPace(codexPaceState, renderAll);
-			const paceInterval = setInterval(() => refreshCodexPace(codexPaceState, renderAll), CODEXBAR_REFRESH_MS);
 			const interval = setInterval(() => {
 				if (activityState !== "IDLE") {
 					spinnerIndex = (spinnerIndex + 1) % SPINNER_FRAMES.length;
@@ -342,7 +288,6 @@ export default function (pi: ExtensionAPI) {
 				dispose() {
 					renderers.delete(requestRender);
 					branchDisposer();
-					clearInterval(paceInterval);
 					clearInterval(interval);
 					ctx.ui.setWorkingVisible(true);
 				},
@@ -366,7 +311,6 @@ export default function (pi: ExtensionAPI) {
 
 					const right = rightPowerline([
 						{ text: " utf-8 ", fg: COLORS.muted, bg: COLORS.bg1 },
-						codexPaceSegment(codexPaceState.deltaPercent),
 						{ text: ` ${thinking} `, fg: COLORS.yellow, bg: COLORS.bg2 },
 						{ text: ` ${compactModel(ctx.model?.id)} `, fg: COLORS.fg, bg: COLORS.bg1 },
 						contextUsage,
