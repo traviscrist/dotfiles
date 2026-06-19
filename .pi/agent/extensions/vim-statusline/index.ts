@@ -211,6 +211,16 @@ function activitySegment(state: ActivityState, spinnerFrame: string): Segment {
 	return { text: ` ${label} `, fg: COLORS.bgDim, bg: color };
 }
 
+function contextUsageSegment(percent: number | undefined): Segment {
+	if (percent == null || Number.isNaN(percent)) {
+		return { text: " --% ", fg: COLORS.muted, bg: COLORS.bg1 };
+	}
+
+	const rounded = Math.round(percent);
+	const color = rounded >= 95 ? COLORS.red : rounded >= 80 ? COLORS.yellow : COLORS.blue;
+	return { text: ` ${rounded}% `, fg: COLORS.bgDim, bg: color };
+}
+
 function goalElapsedSegment(status: string | undefined): Segment | undefined {
 	if (!status) return undefined;
 
@@ -288,7 +298,7 @@ export default function (pi: ExtensionAPI) {
 					const lspStatus = statuses.get("pi-lens-lsp");
 					const goalStatus = statuses.get("codex-goal");
 					const usage = ctx.getContextUsage();
-					const percent = usage?.percent == null ? "--%" : `${Math.round(usage.percent)}%`;
+					const contextUsage = contextUsageSegment(usage?.percent);
 					const thinking = pi.getThinkingLevel();
 					const goalElapsed = goalElapsedSegment(goalStatus);
 
@@ -303,7 +313,7 @@ export default function (pi: ExtensionAPI) {
 						{ text: " utf-8 ", fg: COLORS.muted, bg: COLORS.bg1 },
 						{ text: ` ${thinking} `, fg: COLORS.yellow, bg: COLORS.bg2 },
 						{ text: ` ${compactModel(ctx.model?.id)} `, fg: COLORS.fg, bg: COLORS.bg1 },
-						{ text: ` ${percent} `, fg: COLORS.bgDim, bg: COLORS.blue },
+						contextUsage,
 						...(goalElapsed ? [goalElapsed] : []),
 					]);
 
