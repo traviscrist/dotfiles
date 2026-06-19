@@ -38,7 +38,8 @@ type LensState = {
 
 type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
 
-const SPINNER_FRAMES = ["·", "•", "●", "•"];
+const PLANET_RING_FRAMES = ["⊙", "⊚", "◎", "◌", "◎", "⊚"];
+const PLANET_RING_INTERVAL_MS = 260;
 
 function hexToRgb(hex: string): [number, number, number] {
 	const normalized = hex.replace("#", "");
@@ -205,9 +206,9 @@ function lensSegments(state: LensState, lspStatus: string | undefined): Segment[
 	];
 }
 
-function activitySegment(state: ActivityState, spinnerFrame: string): Segment {
+function activitySegment(state: ActivityState, ringFrame: string): Segment {
 	const color = state === "IDLE" ? COLORS.green : state === "BASH" ? COLORS.blue : state === "TOOLS" ? COLORS.yellow : state === "COMPACT" ? COLORS.red : COLORS.fg;
-	const label = state === "IDLE" ? state : `${spinnerFrame} ${state}`;
+	const label = state === "IDLE" ? state : `${ringFrame} ${state}`;
 	return { text: ` ${label} `, fg: COLORS.bgDim, bg: color };
 }
 
@@ -235,7 +236,7 @@ export default function (pi: ExtensionAPI) {
 	let enabled = true;
 	let activityState: ActivityState = "IDLE";
 	let activeToolCount = 0;
-	let spinnerIndex = 0;
+	let ringIndex = 0;
 	const lensState: LensState = { languages: new Set(), files: new Map() };
 	const renderers = new Set<() => void>();
 	const renderAll = () => {
@@ -279,10 +280,10 @@ export default function (pi: ExtensionAPI) {
 			const branchDisposer = footerData.onBranchChange(requestRender);
 			const interval = setInterval(() => {
 				if (activityState !== "IDLE") {
-					spinnerIndex = (spinnerIndex + 1) % SPINNER_FRAMES.length;
+					ringIndex = (ringIndex + 1) % PLANET_RING_FRAMES.length;
 				}
 				requestRender();
-			}, 120);
+			}, PLANET_RING_INTERVAL_MS);
 
 			return {
 				dispose() {
@@ -298,19 +299,18 @@ export default function (pi: ExtensionAPI) {
 					const lspStatus = statuses.get("pi-lens-lsp");
 					const goalStatus = statuses.get("codex-goal");
 					const usage = ctx.getContextUsage();
-					const contextUsage = contextUsageSegment(usage?.percent);
+					const contextUsage = contextUsageSegment(usage?.percent ?? undefined);
 					const thinking = pi.getThinkingLevel();
 					const goalElapsed = goalElapsedSegment(goalStatus);
 
 					const left = leftPowerline([
-						activitySegment(activityState, SPINNER_FRAMES[spinnerIndex] ?? "⠋"),
+						activitySegment(activityState, PLANET_RING_FRAMES[ringIndex] ?? "⊙"),
 						{ text: `  ${branch} `, fg: COLORS.fg, bg: COLORS.bg2 },
 						{ text: ` ${repoLabel} `, fg: COLORS.muted, bg: COLORS.bg1 },
 						...lensSegments(lensState, lspStatus),
 					]);
 
 					const right = rightPowerline([
-						{ text: " utf-8 ", fg: COLORS.muted, bg: COLORS.bg1 },
 						{ text: ` ${thinking} `, fg: COLORS.yellow, bg: COLORS.bg2 },
 						{ text: ` ${compactModel(ctx.model?.id)} `, fg: COLORS.fg, bg: COLORS.bg1 },
 						contextUsage,
