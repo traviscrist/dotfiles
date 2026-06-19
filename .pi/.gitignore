@@ -1,4 +1,6 @@
 node_modules/
 agent/auth.json
 agent/sessions/
+agent/run-history.jsonl
+agent/intercom/
 agent/npm/node_modules/
