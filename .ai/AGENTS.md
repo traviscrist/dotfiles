@@ -112,8 +112,9 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Optional docs gate. Ignore if missing or no `docs/` directory.
 
 ### agent-browser
-- Browser automation CLI for agent workflows: `open`, `snapshot`, `click`, `fill`, `screenshot`, `close`.
-- Browser testing: use `agent-browser` only. Do not add/run Puppeteer, Playwright, browser MCPs, or ad-hoc Node browser scripts unless a repo already owns that stack or Travis explicitly asks.
+- Prefer Pi's native `agent_browser` tool when available and `pi-agent-browser-doctor` is healthy.
+- Browser automation CLI fallback: `agent-browser open|snapshot|click|fill|screenshot|close`.
+- Browser testing: use `agent-browser`/`agent_browser` only. Do not add/run Puppeteer, Playwright, browser MCPs, or ad-hoc Node browser scripts unless a repo already owns that stack or Travis explicitly asks.
 
 ### betterstack
 - Better Stack MCP for uptime, telemetry, incidents, dashboards, and logs.
