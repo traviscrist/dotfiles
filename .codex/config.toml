@@ -208,6 +208,9 @@ enabled = false
 [plugins."pdf@openai-primary-runtime"]
 enabled = true
 
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 
@@ -229,6 +232,6 @@ source_type = "local"
 source = "/Users/travis/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-06-15T01:28:17Z"
+last_updated = "2026-06-23T02:28:21Z"
 source_type = "local"
 source = "/Users/travis/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
