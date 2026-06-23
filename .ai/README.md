@@ -20,7 +20,6 @@ curl -o /tmp/gitpod -fsSL "https://releases.gitpod.io/cli/stable/gitpod-$(uname 
   && chmod +x /tmp/gitpod \
   && sudo mv /tmp/gitpod /usr/local/bin/gitpod
 brew install steipete/tap/summarize || bun add -g @steipete/summarize
-bun add -g @steipete/bslog
 
 mkdir -p ~/.codex
 if [ -e ~/.codex/AGENTS.md ] && [ ! -L ~/.codex/AGENTS.md ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
@@ -61,7 +60,6 @@ command -v gitpod
 gitpod version
 command -v summarize
 summarize --version
-command -v bslog
 test -f ~/.peekaboo/config.json && echo "peekaboo config ok"
 readlink ~/.codex/AGENTS.md
 readlink ~/.codex/prompts
@@ -69,28 +67,16 @@ find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 yadm status -uno
 ```
 
-## bslog Setup Checks
+## Better Stack MCP
 
-`bslog` uses split auth:
-- `BETTERSTACK_API_TOKEN`: source discovery (`bslog sources list`)
-- `BETTERSTACK_QUERY_USERNAME` + `BETTERSTACK_QUERY_PASSWORD`: query paths (`bslog tail|search|errors|warnings|sql|query`)
+Better Stack is configured as a remote HTTP MCP server in `~/.codex/config.toml`:
 
-Validate both paths:
-
-```bash
-bslog sources list --format json >/dev/null
-bslog config source "Polaris Web"
-bslog sql "SELECT 1 FORMAT JSONEachRow" --format json
+```toml
+[mcp_servers.betterstack]
+url = "https://mcp.betterstack.com"
 ```
 
-If query auth fails:
-- In Better Stack Logs, create fresh Query API credentials via `Connect remotely`.
-- Update `~/.secrets` exports for `BETTERSTACK_QUERY_USERNAME` and `BETTERSTACK_QUERY_PASSWORD`.
-- Reload shell: `source ~/.zshrc`.
-
-Source/region notes:
-- Prefer source **name** in config (`bslog config source "Polaris Web"`), not numeric ID.
-- If a source is in a non-default data region and queries fail unexpectedly, run verbose command and confirm query endpoint/region alignment.
+Use OAuth when the client prompts for browser sign-in. For non-OAuth clients, configure an API-token-backed MCP header instead of reinstalling a local CLI.
 
 ## Syncing With Other Repos
 - Treat `scripts/committer` and `scripts/docs-list.ts` as shared helpers. If you change them in another repo, mirror the change here (and vice versa) to avoid drift.
@@ -129,7 +115,7 @@ Source/region notes:
 - `peekaboo`: screen inspection/clicks. Requires Screen Recording + Accessibility permissions. Check with `peekaboo permissions status`.
 - `trash`: delete guardrail. Use `trash <path>` instead of destructive shell deletes.
 - `summarize`: install/update with `brew install steipete/tap/summarize` or `bun add -g @steipete/summarize`.
-- `bslog`: install/update with `bun add -g @steipete/bslog`; see setup checks below.
+- `betterstack`: remote MCP server for Better Stack uptime, telemetry, incidents, dashboards, and logs.
 - `render`: install with `brew install render`, then add `brew "render"` to `~/.Brewfile`; prefer `RENDER_API_KEY` auth.
 - `tmux`: reserve for persistent interactive work such as servers/debuggers.
 - `yadm`: use `yadm status -uno` by default in the home repo; use explicit paths for untracked checks.

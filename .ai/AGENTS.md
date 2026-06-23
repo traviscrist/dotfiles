@@ -115,8 +115,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Browser automation CLI for agent workflows: `open`, `snapshot`, `click`, `fill`, `screenshot`, `close`.
 - Browser testing: use `agent-browser` only. Do not add/run Puppeteer, Playwright, browser MCPs, or ad-hoc Node browser scripts unless a repo already owns that stack or Travis explicitly asks.
 
-### bslog
-- Better Stack logs CLI.
+### betterstack
+- Better Stack MCP for uptime, telemetry, incidents, dashboards, and logs.
 
 ### summarize
 - URL/file/media summarizer CLI.

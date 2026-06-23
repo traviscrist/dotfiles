@@ -158,6 +158,9 @@ url = "https://mcp.figma.com/mcp"
 [mcp_servers.cloudflare]
 url = "https://mcp.cloudflare.com/mcp"
 
+[mcp_servers.betterstack]
+url = "https://mcp.betterstack.com"
+
 [mcp_servers.node_repl]
 args = []
 command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
