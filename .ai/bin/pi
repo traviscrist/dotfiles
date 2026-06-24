@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-exec /opt/homebrew/bin/node /opt/homebrew/bin/pi "$@"

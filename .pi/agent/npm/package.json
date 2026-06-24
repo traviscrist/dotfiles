@@ -2,7 +2,6 @@
   "name": "pi-extensions",
   "private": true,
   "dependencies": {
-    "pi-agent-browser-native": "^0.2.58",
     "pi-code-previews": "^0.1.32",
     "pi-codex-goal": "^0.1.27",
     "pi-intercom": "^0.6.0",
