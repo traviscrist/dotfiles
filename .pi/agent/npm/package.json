@@ -8,6 +8,6 @@
     "pi-lens": "^3.8.53",
     "pi-simplify": "^0.2.2",
     "pi-subagents": "^0.28.0",
-    "pi-web-access": "^0.10.7"
+    "pi-web-access": "^0.12.0"
   }
 }
