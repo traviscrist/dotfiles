@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+exec "/Users/travis/Library/Application Support/fnm/node-versions/v24.16.0/installation/bin/agent-browser" "$@"
