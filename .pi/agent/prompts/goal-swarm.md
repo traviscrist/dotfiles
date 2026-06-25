@@ -28,7 +28,7 @@ Do not set a token budget unless the user explicitly provided one.
 
 Before launching subagents, call `subagent({ action: "list" })` and use only executable, non-disabled agents.
 
-Default workflow: one writer, parallel readers/reviewers. Use `async: true` and `clarify: false` so the parent session remains responsive.
+Default workflow: one writer at a time, parallel readers/reviewers. Use `async: true` and `clarify: false` so the parent session remains responsive. Include a post-implementation simplify pass that follows the installed `/simplify` extension's principles, but keep it scoped to files changed by the worker.
 
 Launch a `pi-subagents` chain shaped like this unless the task is clearly review/research-only:
 
@@ -81,20 +81,30 @@ subagent({
       progress: true
     },
     {
+      agent: "worker",
+      phase: "Simplify",
+      label: "Scoped simplify pass",
+      as: "simplifyResult",
+      task: "Run a scoped simplification pass equivalent to the installed /simplify workflow, limited to files changed by the implementation. Detect changed files from the current diff, read only those files unless validation requires more context, and apply only concrete clarity/maintainability improvements that preserve behavior. Reduce unnecessary complexity, redundant logic, unclear names, and obvious comments. Do not add features, change public APIs, broaden scope, or refactor unrelated files. Run focused validation if you change anything. Report changed files, commands, exit codes, and any skipped simplifications.\n\nWorker result:\n{outputs.workerResult}",
+      output: "goal-swarm/simplify-result.md",
+      outputMode: "file-only",
+      progress: true
+    },
+    {
       phase: "Validation",
       label: "Fresh review",
       parallel: [
         {
           agent: "reviewer",
           model: "openai-codex/gpt-5.3-codex-spark",
-          task: "Validate the post-worker diff for correctness and regressions. Start from the worker result: {outputs.workerResult}. Inspect files directly. Do not modify project/source files; returning findings through this output artifact is allowed. Report blockers only with file/line evidence and smallest safe fix.",
+          task: "Validate the post-worker and post-simplify diff for correctness and regressions. Start from the worker result and simplify result: {outputs.workerResult}\n\n{outputs.simplifyResult}. Inspect files directly. Do not modify project/source files; returning findings through this output artifact is allowed. Report blockers only with file/line evidence and smallest safe fix.",
           output: "goal-swarm/correctness-review.md",
           outputMode: "file-only"
         },
         {
           agent: "reviewer",
           model: "openai-codex/gpt-5.3-codex-spark",
-          task: "Validate the post-worker diff for tests, docs, and acceptance evidence. Start from the worker result: {outputs.workerResult}. Inspect files directly. Do not modify project/source files; returning findings through this output artifact is allowed. Report missing validation or blockers only with concrete evidence.",
+          task: "Validate the post-worker and post-simplify diff for tests, docs, and acceptance evidence. Start from the worker result and simplify result: {outputs.workerResult}\n\n{outputs.simplifyResult}. Inspect files directly. Do not modify project/source files; returning findings through this output artifact is allowed. Report missing validation or blockers only with concrete evidence.",
           output: "goal-swarm/validation-review.md",
           outputMode: "file-only"
         }
@@ -114,9 +124,10 @@ For review-only or research-only tasks, skip the worker step and use parallel re
 When the async workflow returns:
 
 1. Read file-only artifacts needed for synthesis.
-2. Apply only concrete blocker fixes worth doing now, using a single writer path.
-3. Run or request the validation required by the goal.
-4. Audit every goal requirement against fresh evidence.
-5. Call `update_goal({ status: "complete" })` only when every requirement is verified and no required work remains.
+2. Ensure the scoped simplify pass ran or consciously skip it only when there are no changed code/docs files to simplify.
+3. Apply only concrete blocker fixes worth doing now, using a single writer path.
+4. Run or request the validation required by the goal.
+5. Audit every goal requirement against fresh evidence.
+6. Call `update_goal({ status: "complete" })` only when every requirement is verified and no required work remains.
 
 If blocked, do not mark the goal complete. Report attempted paths, evidence gathered, exact blockers, remaining unmet requirements, and what would unblock progress.
