@@ -17,6 +17,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Commits: Conventional Commits (`feat|fix|refactor|build|ci|chore|docs|style|perf|test`).
 - Format with issue ID: `<type>: <linear-issue-id>: <commit message>`.
 - Format without issue ID: `<type>: <commit message>`.
+- PR titles follow the same Conventional Commit rules and include the Linear issue ID when one exists: `<type>: <linear-issue-id>: <PR title>`.
 - For this dotfiles/workspace repo, use `yadm` (git wrapper): add files explicitly (`yadm add <path>`), commit, then `yadm push`.
 - Editor: `code <path>`.
 - Shell config split: keep in `~/.zsh/*.zsh` (`paths.zsh`, `secrets.zsh`, `aliases.zsh`, `functions.zsh`, `completions.zsh`), sourced from `~/.zshrc`.
