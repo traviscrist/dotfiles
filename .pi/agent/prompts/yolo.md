@@ -15,7 +15,7 @@ Treat this `/yolo` invocation as Travis's explicit request to run a full impleme
    - current branch and upstream
    - recent commits if needed
 2. If unexpected/unrelated local changes exist, keep them separate. If they conflict with the work, stop and ask Travis.
-3. If a branch change is required, ask before changing branches unless Travis's invocation already named the target branch.
+3. Create or use a working branch based on the Linear issue before implementation. Prefer `<type>/<linear-issue-id>-<short-slug>` when the issue key is known, for example `feat/ABC-123-calendar-sync`; choose the Conventional Commit type from the issue scope. If a suitable branch already exists, use it. If unrelated local changes or branch state make this unsafe, stop and ask Travis.
 4. New PRs are Draft by default. Never auto-merge.
 
 ## Phase 1. Linear requirements and clarification
@@ -28,22 +28,23 @@ Use the `/gather-context-and-clarify` pattern before planning or implementing.
 2. Retrieve or reconstruct the Linear context:
    - title
    - description
-   - acceptance criteria / functional requirements
+   - functional requirements from the issue text
    - relevant comments or decisions
    - non-goals / constraints
    - linked PRs or docs if available
-3. If Linear tooling is unavailable or the issue cannot be fetched, ask Travis for the issue text instead of guessing.
-4. Launch context-gathering subagents before implementation:
+3. Treat the Linear issue text as the acceptance criteria. Do not require a separate acceptance-criteria field. If the issue text is missing, inaccessible, contradictory, or too ambiguous to verify, ask Travis targeted clarification questions about the acceptance criteria.
+4. If Linear tooling is unavailable or the issue cannot be fetched, ask Travis for the issue text instead of guessing.
+5. Launch context-gathering subagents before implementation:
    - call `subagent({ action: "list" })`
    - use executable agents only
    - run `scout` for local code context and likely integration points
    - add `researcher` only when external docs/current sources materially help
-5. Bring requirements back to Travis before implementation:
-   - summarize the Linear requirements in bullets
+6. Bring requirements back to Travis before implementation:
+   - summarize the Linear issue text as the acceptance criteria in bullets
    - list assumptions
-   - ask all blocking clarification questions
+   - ask all blocking clarification questions only when the issue text cannot be verified as written
    - ask any important non-blocking questions separately
-6. Stop and wait for Travis's answers if there are blocking questions. Do not implement until scope and acceptance criteria are clear enough.
+7. Stop and wait for Travis's answers if there are blocking questions. Do not implement until scope and acceptance criteria are clear enough.
 
 ## Phase 2. Goal swarm implementation
 
@@ -85,7 +86,7 @@ Use the installed `/parallel-review` behavior, without `autofix` unless Travis e
 
 Proceed only when:
 
-- Linear requirements are implemented or any intentional exclusions are explicitly approved by Travis
+- Linear issue text acceptance criteria are implemented or any intentional exclusions are explicitly approved by Travis
 - no show-stopper review findings remain
 - required validation has passed or exact blockers are documented
 
