@@ -5,7 +5,7 @@ const WORKFLOW_PROMPT = String.raw`Run PR Reviewer for this repository.
 Input from /pr-reviewer:
 {{ARGS}}
 
-This is a review-only workflow. Do not modify files, push, reply to GitHub, resolve comments, or mark anything complete. Use evidence from the PR diff, repository files, and the associated Linear issue.
+This is a review-only workflow. Do not modify files, push, reply to GitHub, resolve comments, or mark anything complete. Use evidence from the PR diff, repository files, and the associated Linear issue when one is cited.
 
 Workflow:
 
@@ -21,16 +21,17 @@ Workflow:
    - Inspect the PR diff against its base branch using gh pr diff and/or git diff base...HEAD.
    - Do not overwrite or revert unrelated local changes.
 
-3. Find the associated Linear issue
+3. Find the associated Linear issue, if cited
    - Look for Linear issue keys like ABC-123 in PR title, body, branch name, commit messages, and linked references.
+   - If no Linear issue is cited, continue without Linear context. Do not stop or ask for one solely because it is absent; use the PR title, body, commits, diff, tests, and repository context as the functional-review source.
    - If multiple Linear issues are referenced, include all that appear directly relevant.
-   - Retrieve the Linear issue title, description, acceptance criteria, comments, labels/status if tooling or links make that accessible.
-   - If Linear details are not accessible from available tools, stop before functional judgment and ask Travis for the Linear issue text or a reachable issue link. Do not pretend PR text is the full Linear requirement source.
+   - When a Linear issue is cited, retrieve the Linear issue title, description, issue text as acceptance criteria, comments, labels/status if tooling or links make that accessible.
+   - If a cited Linear issue cannot be fetched, ask Travis for the Linear issue text or a reachable issue link only if PR context is insufficient to judge functionality. Otherwise continue and clearly mark Linear confidence as limited. Do not pretend PR text is the full Linear requirement source.
 
 4. Functional requirements review
    - Use the existing code review workflow/tooling through pi-subagents: call subagent({ action: "list" }) first, then launch fresh-context reviewer subagent(s) only from executable agents.
-   - Give the reviewer the Linear issue details, PR metadata, base/head context, and explicit instruction to inspect the diff and repository files directly.
-   - Review question: does the code fully satisfy every functional requirement from Linear without narrowing scope, missing edge cases, or breaking existing behavior?
+   - Give the reviewer the Linear issue details when present, otherwise the PR title/body/commits as the functional context, plus PR metadata, base/head context, and explicit instruction to inspect the diff and repository files directly.
+   - Review question: does the code fully satisfy every functional requirement from the Linear issue when cited, otherwise from the PR description and apparent change intent, without narrowing scope, missing edge cases, or breaking existing behavior?
    - Require evidence-backed findings with file/line references.
    - Review-only: subagents must not edit files.
 
@@ -53,12 +54,12 @@ Workflow:
    - Inspect reviewer outputs yourself before finalizing.
    - Do not blindly accept every reviewer suggestion; separate blockers from optional polish.
    - If a reviewer lacks evidence, discount it.
-   - If Linear context was incomplete, say that clearly and mark functional confidence as blocked/limited.
+   - If no Linear issue was cited, say that clearly and base functionality findings on PR context. If a cited Linear issue was inaccessible, say that clearly and mark Linear-specific confidence as limited.
 
 Final response must use exactly these headings:
 
 ## Functionality
-Did the PR meet all Linear functional requirements? List each requirement as met / missing / unclear. For any missing or unclear item, cite evidence and file/line references when possible.
+Did the PR meet all cited Linear requirements, or if no Linear issue was cited, the PR-described functional requirements? List each requirement as met / missing / unclear. For any missing or unclear item, cite evidence and file/line references when possible.
 
 ## Code Readability
 Give the 0-100 readability score, short rationale, and highest-leverage readability improvement.
@@ -70,7 +71,7 @@ List things to possibly bring to the engineer who wrote the code. Group by prior
 List bugs or requirement gaps that must be fixed before merge. If none, say "None found" and include confidence/limitations.
 
 ## TLDR Summary
-Explain how the new code works and how it solves the Linear issue, in concise product/engineering language.
+Explain how the new code works and how it solves the cited Linear issue, or if no Linear issue was cited, the PR's stated problem, in concise product/engineering language.
 `;
 
 function buildPrompt(args: string): string {
