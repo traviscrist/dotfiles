@@ -93,7 +93,7 @@ function sendPrReviewerWorkflow(pi: ExtensionAPI, ctx: ExtensionContext, args: s
 
 export default function (pi: ExtensionAPI) {
 	pi.registerCommand("pr-reviewer", {
-		description: "Review a PR against its Linear issue, simplicity, readability, and show-stoppers",
+		description: "Review a PR against cited Linear or PR context, simplicity, readability, and show-stoppers",
 		handler: async (args, ctx) => sendPrReviewerWorkflow(pi, ctx, args),
 	});
 }

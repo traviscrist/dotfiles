@@ -1,12 +1,12 @@
 ---
-description: Clarify a Linear issue, implement with goal swarm, review, push, and open a PR
+description: Clarify an issue/task, implement with goal swarm, review, push, and open a PR
 argument-hint: "<Linear issue key|URL|task>"
 ---
 
 YOLO workflow input:
 $@
 
-Treat this `/yolo` invocation as Travis's explicit request to run a full implementation workflow for the provided Linear issue or task: clarify requirements, implement, review, commit, push, open a draft PR, and summarize. Stay safe: do not skip clarification, do not overwrite unrelated work, and do not merge.
+Treat this `/yolo` invocation as Travis's explicit request to run a full implementation workflow for the provided Linear issue or task: clarify requirements, implement, review, commit, push, open a draft PR, and summarize. Linear context is optional unless the input cites a Linear issue. Stay safe: do not skip clarification, do not overwrite unrelated work, and do not merge.
 
 ## Phase 0. Safety and scope
 
@@ -15,34 +15,30 @@ Treat this `/yolo` invocation as Travis's explicit request to run a full impleme
    - current branch and upstream
    - recent commits if needed
 2. If unexpected/unrelated local changes exist, keep them separate. If they conflict with the work, stop and ask Travis.
-3. Create or use a working branch based on the Linear issue before implementation. Prefer `<type>/<linear-issue-id>-<short-slug>` when the issue key is known, for example `feat/ABC-123-calendar-sync`; choose the Conventional Commit type from the issue scope. If a suitable branch already exists, use it. If unrelated local changes or branch state make this unsafe, stop and ask Travis.
+3. Create or use a working branch before implementation. If a Linear issue key is known, prefer `<type>/<linear-issue-id>-<short-slug>`, for example `feat/ABC-123-calendar-sync`. If no Linear issue is cited, prefer `<type>/<short-task-slug>`. Choose the Conventional Commit type from the issue/task scope. If a suitable branch already exists, use it. If unrelated local changes or branch state make this unsafe, stop and ask Travis.
 4. New PRs are Draft by default. Never auto-merge.
 
-## Phase 1. Linear requirements and clarification
+## Phase 1. Requirements and clarification
 
 Use the `/gather-context-and-clarify` pattern before planning or implementing.
 
-1. Identify the Linear issue from the input:
+1. Identify whether the input cites a Linear issue:
    - issue key or URL from `$@`
-   - if missing, ask Travis for the Linear issue key/URL or pasted issue text
-2. Retrieve or reconstruct the Linear context:
-   - title
-   - description
-   - functional requirements from the issue text
-   - relevant comments or decisions
-   - non-goals / constraints
-   - linked PRs or docs if available
-3. Treat the Linear issue text as the acceptance criteria. Do not require a separate acceptance-criteria field. If the issue text is missing, inaccessible, contradictory, or too ambiguous to verify, ask Travis targeted clarification questions about the acceptance criteria.
-4. If Linear tooling is unavailable or the issue cannot be fetched, ask Travis for the issue text instead of guessing.
+   - if no Linear issue is cited, continue with `$@` as the task context; do not ask for Linear solely because it is absent
+2. Retrieve or reconstruct context:
+   - if Linear is cited: title, description, functional requirements from the issue text, relevant comments/decisions, non-goals/constraints, linked PRs/docs if available
+   - if no Linear is cited: use the provided task text, nearby conversation context, repo docs, and discovered code context as the acceptance criteria source
+3. Treat the cited Linear issue text as the acceptance criteria. If no Linear issue is cited, treat the provided task text as the acceptance criteria. Do not require a separate acceptance-criteria field. If the acceptance source is missing, contradictory, or too ambiguous to verify, ask Travis targeted clarification questions.
+4. If a cited Linear issue cannot be fetched, ask Travis for the issue text only when the provided PR/task context is insufficient. Otherwise continue and clearly mark Linear confidence as limited.
 5. Launch context-gathering subagents before implementation:
    - call `subagent({ action: "list" })`
    - use executable agents only
    - run `scout` for local code context and likely integration points
    - add `researcher` only when external docs/current sources materially help
 6. Bring requirements back to Travis before implementation:
-   - summarize the Linear issue text as the acceptance criteria in bullets
+   - summarize the Linear issue text or provided task text as the acceptance criteria in bullets
    - list assumptions
-   - ask all blocking clarification questions only when the issue text cannot be verified as written
+   - ask all blocking clarification questions only when the acceptance source cannot be verified as written
    - ask any important non-blocking questions separately
 7. Stop and wait for Travis's answers if there are blocking questions. Do not implement until scope and acceptance criteria are clear enough.
 
@@ -68,9 +64,9 @@ After implementation and local validation, kick off a fresh parallel review.
 
 Use the installed `/parallel-review` behavior, without `autofix` unless Travis explicitly asked for autofix:
 
-1. Launch fresh-context reviewers with distinct angles based on the Linear issue and diff.
+1. Launch fresh-context reviewers with distinct angles based on the cited Linear issue or task acceptance criteria and diff.
 2. Include at least:
-   - functionality/correctness against Linear requirements
+   - functionality/correctness against cited Linear requirements or task acceptance criteria
    - tests/validation and regression risk
    - simplicity/maintainability, duplication, inefficient loops
 3. Reviewers must inspect repository files and diff directly.
@@ -86,7 +82,7 @@ Use the installed `/parallel-review` behavior, without `autofix` unless Travis e
 
 Proceed only when:
 
-- Linear issue text acceptance criteria are implemented or any intentional exclusions are explicitly approved by Travis
+- cited Linear issue text or task acceptance criteria are implemented, or any intentional exclusions are explicitly approved by Travis
 - no show-stopper review findings remain
 - required validation has passed or exact blockers are documented
 
@@ -103,7 +99,7 @@ Then:
 4. Open a Draft PR with `gh pr create --draft` unless Travis explicitly asked for ready-for-review.
 5. PR title must follow the same Conventional Commit rules and include the Linear issue ID when one exists:
    - `<type>: <linear-issue-id>: <PR title>`
-6. Include Linear context, validation evidence, and review notes in the PR body.
+6. Include Linear context when cited, otherwise task context, plus validation evidence and review notes in the PR body.
 7. Show Travis the PR link.
 
 ## Phase 5. Final summary to Travis
@@ -111,13 +107,13 @@ Then:
 Finish with these headings:
 
 ## TLDR
-A short plain-English walkthrough of what changed, how the new code works, and how it solves the Linear issue.
+A short plain-English walkthrough of what changed, how the new code works, and how it solves the cited Linear issue or task.
 
 ## Clean Changes Made
 Bullets grouped by area/file. Focus on purposeful, clean changes rather than implementation noise.
 
 ## Requirements Coverage
-List each Linear requirement as met / not met / intentionally deferred. Include evidence.
+List each cited Linear requirement or task acceptance criterion as met / not met / intentionally deferred. Include evidence.
 
 ## Validation
 Commands/checks run and results. If any were blocked, say exactly why.
