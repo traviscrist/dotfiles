@@ -59,7 +59,8 @@ Workflow:
    - Main agent, not subagents, replies to every addressed comment.
    - Reply format: concise, cite fix and file/line or commit, mention validation.
    - Resolve review threads only after the fix is pushed.
-   - For bot reviewers (Gemini, CodeRabbit, Codex, etc.), explicitly request another review pass after updates.
+   - Track each bot reviewer/comment author that supplied actionable feedback.
+   - After addressed comment replies are posted, add a PR-level comment for each bot reviewer asking for another pass and @mentioning that bot. Strip the GitHub [bot] suffix for the mention when needed (example: codeant-ai[bot] -> @codeant-ai). Do this once per bot reviewer per loop, not once per individual comment.
 
 10. Monitor CI until green
    - Use gh run list/view and/or gh pr checks.
