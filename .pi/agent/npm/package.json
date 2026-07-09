@@ -6,6 +6,7 @@
     "@earendil-works/pi-ai": "0.80.2",
     "@earendil-works/pi-coding-agent": "0.80.2",
     "@earendil-works/pi-tui": "0.80.2",
+    "@hypabolic/pi-hypa": "^0.1.8",
     "@juicesharp/rpiv-ask-user-question": "^1.20.0",
     "pi-code-previews": "^0.1.32",
     "pi-codex-goal": "^0.1.34",
