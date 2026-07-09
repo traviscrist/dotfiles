@@ -7,7 +7,7 @@
   "enableInstallTelemetry": false,
   "defaultProjectTrust": "always",
   "treeFilterMode": "default",
-  "defaultThinkingLevel": "low",
+  "defaultThinkingLevel": "high",
   "packages": [
     "npm:pi-codex-goal",
     "npm:pi-lens",
