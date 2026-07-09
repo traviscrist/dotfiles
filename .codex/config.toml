@@ -15,12 +15,13 @@ tool_output_token_limit = 25000
 # With tool_output_token_limit=25000 ⇒ 273000 - (25000 + 15000) = 233000
 model_auto_compact_token_limit = 233000
 suppress_unstable_features_warning = true
-service_tier = "default"
+service_tier = "fast"
 plan_mode_reasoning_effort = "high"
 
 notify = ["/Users/travis/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended"]
 
 [features]
+fast_mode = true
 multi_agent = true
 unified_exec = true
 shell_snapshot = true
