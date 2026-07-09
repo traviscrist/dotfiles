@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.80.2",
+  "lastChangelogVersion": "0.80.3",
   "theme": "everforest-dark",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.5",
@@ -16,7 +16,6 @@
     "npm:pi-subagents",
     "npm:pi-web-access",
     "npm:pi-intercom",
-    "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:@hypabolic/pi-hypa"
+    "npm:@juicesharp/rpiv-ask-user-question"
   ]
 }
