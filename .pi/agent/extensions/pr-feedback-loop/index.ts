@@ -33,6 +33,9 @@ Workflow:
 4. Triage every comment
    - For each distinct review/issue comment, run subagent pr-comment-triager.
    - Triage may run in parallel.
+   - IMPORTANT: triage is read-only. When launching pr-comment-triager, pass acceptance none (or acceptance false) on every triage task so pi-subagents does not infer write-capable implementation acceptance.
+   - Triage task text must say "classify only; do not edit, implement, validate, reply, resolve, push, or contact supervisor for implementation acceptance".
+   - Do not ask triagers to satisfy changed-files/tests-added/no-staged-files acceptance evidence. That belongs only to fixer tasks.
    - Each triage must classify one comment as:
      fix | already_fixed | explain | wont_fix | duplicate | needs_travis
    - Require evidence: files/lines, current code state, and proposed response.
@@ -44,6 +47,7 @@ Workflow:
 6. Fix accepted comments
    - Use subagent pr-comment-fixer for implementation.
    - Fixers must run serially when they may touch overlapping files.
+   - Fixer tasks may use checked acceptance because they are write-capable.
    - Each fixer gets the comment, triage, target files, and acceptance criteria.
    - Fix root cause, add/update tests when appropriate, run focused validation.
 
