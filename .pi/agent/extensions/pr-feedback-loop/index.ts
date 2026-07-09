@@ -7,6 +7,15 @@ Input from /pr:
 
 Treat this /pr invocation as Travis's consent to update the current PR branch, push fixes, reply to GitHub review comments, resolve threads when fixed, and monitor CI until green. Do not merge.
 
+Core rules:
+- Use gh, not browser URLs.
+- One writer at a time.
+- Do not overwrite unrelated local changes.
+- Main agent owns replies, thread resolution, pushes, and CI decisions.
+- Triage subagents are read-only and must use acceptance none/false.
+- Fixer subagents may edit but must not reply, resolve, push, or commit.
+- Cap the automatic fix/CI loop at two rounds. If still red or new feedback remains, report blockers and ask Travis.
+
 Workflow:
 
 1. Identify PR
@@ -18,62 +27,73 @@ Workflow:
 2. Snapshot state
    - Run git status/diff/log checks.
    - Confirm current branch matches the PR head branch before editing.
-   - Do not overwrite unrelated local changes. If unexpected changes conflict, stop and ask.
+   - If unexpected unrelated changes conflict with review fixes, stop and ask.
 
 3. Collect feedback
-   - Use gh, not web URLs.
-   - Fetch PR details, review comments, issue comments, reviews, and unresolved review threads.
+   - Fetch PR details, reviews, review comments, issue comments, and unresolved review threads.
    - Suggested commands:
      gh pr view <pr> --json number,title,url,headRefName,baseRefName,reviewDecision,statusCheckRollup,reviews,comments
      gh api repos/:owner/:repo/pulls/<pr>/comments --paginate
      gh api repos/:owner/:repo/issues/<pr>/comments --paginate
-     gh api graphql ... for reviewThreads when line/thread resolution is needed.
-   - Preserve comment IDs, thread IDs, author, path, line, body, and URL only for traceability in your private notes. Do not paste huge payloads into final output.
+     gh api graphql ... for unresolved reviewThreads when resolution is needed.
+   - Filter obvious bot lifecycle noise ("review started", "review finished", generated diagrams) unless it contains actionable criticism.
+   - Keep raw payloads out of final output.
 
-4. Triage every comment
-   - For each distinct review/issue comment, run subagent pr-comment-triager.
-   - Triage may run in parallel.
-   - IMPORTANT: triage is read-only. When launching pr-comment-triager, pass acceptance none (or acceptance false) on every triage task so pi-subagents does not infer write-capable implementation acceptance.
-   - Triage task text must say "classify only; do not edit, implement, validate, reply, resolve, push, or contact supervisor for implementation acceptance".
-   - Do not ask triagers to satisfy changed-files/tests-added/no-staged-files acceptance evidence. That belongs only to fixer tasks.
-   - Each triage must classify one comment as:
+4. Maintain a private comment ledger
+   Track each distinct comment/thread:
+   - comment/thread id
+   - author
+   - path/line when present
+   - classification
+   - planned action
+   - fix commit or file evidence
+   - validation evidence
+   - reply posted?
+   - thread resolved?
+   - re-review requested for bot author?
+
+5. Triage every actionable comment
+   - Call subagent({ action: "list" }) first and use only executable agents.
+   - For each distinct actionable comment, run pr-comment-triager.
+   - Triage tasks must say: "classify only; do not edit, implement, validate, reply, resolve, push, or contact supervisor for implementation acceptance".
+   - Pass acceptance: false or acceptance: "none" on every triage task.
+   - Do not ask triagers to satisfy changed-files/tests-added/no-staged-files evidence.
+   - Classification must be one of:
      fix | already_fixed | explain | wont_fix | duplicate | needs_travis
-   - Require evidence: files/lines, current code state, and proposed response.
+   - Require evidence: current files/lines or command output plus proposed concise reply.
 
-5. Plan batches
-   - Main agent groups accepted fixes by file/area to reduce churn.
-   - If a comment needs Travis or is product/design-sensitive, stop before editing that item and ask.
-
-6. Fix accepted comments
-   - Use subagent pr-comment-fixer for implementation.
-   - Fixers must run serially when they may touch overlapping files.
-   - Fixer tasks may use checked acceptance because they are write-capable.
-   - Each fixer gets the comment, triage, target files, and acceptance criteria.
-   - Fix root cause, add/update tests when appropriate, run focused validation.
+6. Plan and fix accepted comments
+   - Group fix items by file/area to reduce churn.
+   - If any item is product/design/security-sensitive, stop for Travis before editing it.
+   - Use pr-comment-fixer for implementation.
+   - Run fixers serially when they may touch overlapping files.
+   - Fixer tasks should use checked acceptance and include the comment, triage, target files, and acceptance criteria.
+   - Fix root cause; add/update focused tests when appropriate.
 
 7. Validate locally
-   - Run repo-appropriate lint/typecheck/tests/docs gates.
-   - Prefer full gate before push. If blocked, state the exact missing dependency/service.
+   - Run focused tests/checks for touched behavior.
+   - Run repo-appropriate lint/typecheck/tests/docs gates before push when practical.
+   - If a full gate is blocked, state the exact blocker and strongest validation that did run.
 
 8. Push updates
-   - Push the PR branch after local validation.
+   - Push the PR branch only after local validation is acceptable.
    - If push fails, report the exact error and stop unless it is a safe retry.
 
-9. Reply and resolve comments
-   - Main agent, not subagents, replies to every addressed comment.
-   - Reply format: concise, cite fix and file/line or commit, mention validation.
+9. Reply and resolve
+   - Main agent replies to every addressed comment.
+   - Reply format: concise fix summary + file/line or commit + validation.
    - Resolve review threads only after the fix is pushed.
-   - Track each bot reviewer/comment author that supplied actionable feedback.
-   - After addressed comment replies are posted, add a PR-level comment for each bot reviewer asking for another pass and @mentioning that bot. Strip the GitHub [bot] suffix for the mention when needed (example: codeant-ai[bot] -> @codeant-ai). Do this once per bot reviewer per loop, not once per individual comment.
+   - Reply to explain/wont_fix/already_fixed items with evidence.
+   - Request another review pass once per bot reviewer per loop after addressed comment replies are posted. Strip [bot] from mention when needed (codeant-ai[bot] -> @codeant-ai).
 
-10. Monitor CI until green
+10. Monitor CI
    - Use gh run list/view and/or gh pr checks.
-   - If checks fail, inspect logs, diagnose root cause, and run pr-comment-fixer or a targeted fix loop.
-   - Push again and continue monitoring.
-   - Stop only when all required checks are green, no actionable unresolved review feedback remains, or a blocker needs Travis.
+   - If checks fail, inspect logs and apply one targeted fix loop when safe.
+   - Stop when required checks are green, no actionable unresolved review feedback remains, or a blocker needs Travis.
+   - Do not exceed two automatic fix/CI rounds.
 
 11. Final response
-   - Summarize: PR number, comments handled, fixes made, validation, CI state, remaining blockers.
+   - Summarize PR number, comments handled, fixes made, validation, CI state, replies/resolutions, re-review requests, and remaining blockers.
    - Keep it short.
 `;
 

@@ -1,128 +1,108 @@
 ---
-description: Clarify an issue/task, implement with goal swarm, review, push, and open a PR
+description: Clarify a task, implement to shippable quality, commit, push, and open a draft PR
 argument-hint: "<Linear issue key|URL|task>"
 ---
 
 YOLO workflow input:
 $@
 
-Treat this `/yolo` invocation as Travis's explicit request to run a full implementation workflow for the provided Linear issue or task: clarify requirements, implement, review, commit, push, open a draft PR, and summarize. Linear context is optional unless the input cites a Linear issue. Stay safe: do not skip clarification, do not overwrite unrelated work, and do not merge.
+Treat this `/yolo` invocation as Travis's explicit request to drive the provided Linear issue or task end-to-end: clarify only when needed, implement, validate, review, commit, push, open a Draft PR, and summarize. Do not merge.
 
-## Phase 0. Safety and scope
+`/yolo` is `/ship` plus git/PR publication. Use one writer at a time.
 
-1. Check repository state first:
-   - `git status --short --branch`
-   - current branch and upstream
-   - recent commits if needed
-2. If unexpected/unrelated local changes exist, keep them separate. If they conflict with the work, stop and ask Travis.
-3. Create or use a working branch before implementation. If a Linear issue key is known, prefer `<type>/<linear-issue-id>-<short-slug>`, for example `feat/ABC-123-calendar-sync`. If no Linear issue is cited, prefer `<type>/<short-task-slug>`. Choose the Conventional Commit type from the issue/task scope. If a suitable branch already exists, use it. If unrelated local changes or branch state make this unsafe, stop and ask Travis.
-4. New PRs are Draft by default. Never auto-merge.
+## 1. Safety and scope
 
-## Phase 1. Requirements and clarification
+1. Run `git status --short --branch`.
+2. Identify current branch/upstream and recent relevant commits if needed.
+3. If unrelated local changes exist, keep them separate. If they conflict, stop and ask Travis.
+4. Identify whether `$@` cites a Linear issue key/URL.
+5. If a branch is needed, create/use a safe branch:
+   - with Linear: `<type>/<linear-issue-id>-<short-slug>`
+   - without Linear: `<type>/<short-task-slug>`
+   Ask before changing branches if local state makes this unsafe.
 
-Use the `/gather-context-and-clarify` pattern before planning or implementing.
+## 2. Requirements
 
-1. Identify whether the input cites a Linear issue:
-   - issue key or URL from `$@`
-   - if no Linear issue is cited, continue with `$@` as the task context; do not ask for Linear solely because it is absent
-2. Retrieve or reconstruct context:
-   - if Linear is cited: title, description, functional requirements from the issue text, relevant comments/decisions, non-goals/constraints, linked PRs/docs if available
-   - if no Linear is cited: use the provided task text, nearby conversation context, repo docs, and discovered code context as the acceptance criteria source
-3. Treat the cited Linear issue text as the acceptance criteria. If no Linear issue is cited, treat the provided task text as the acceptance criteria. Do not require a separate acceptance-criteria field. If the acceptance source is missing, contradictory, or too ambiguous to verify, ask Travis targeted clarification questions.
-4. If a cited Linear issue cannot be fetched, ask Travis for the issue text only when the provided PR/task context is insufficient. Otherwise continue and clearly mark Linear confidence as limited.
-5. Launch context-gathering subagents before implementation:
-   - call `subagent({ action: "list" })`
-   - use executable agents only
-   - run `scout` for local code context and likely integration points
-   - add `researcher` only when external docs/current sources materially help
-6. Bring requirements back to Travis before implementation:
-   - summarize the Linear issue text or provided task text as the acceptance criteria in bullets
-   - list assumptions
-   - ask all blocking clarification questions only when the acceptance source cannot be verified as written
-   - ask any important non-blocking questions separately
-7. Stop and wait for Travis's answers if there are blocking questions. Do not implement until scope and acceptance criteria are clear enough.
+1. If Linear is cited, fetch/reconstruct title, description, comments, labels/status, and linked context when available.
+2. If no Linear is cited, use `$@`, nearby conversation, repo docs, and discovered code context as the acceptance source. Do not ask for Linear solely because it is absent.
+3. If the acceptance source is missing, contradictory, product-sensitive, or impossible to verify, ask concise blocking questions and wait.
+4. Otherwise state the acceptance criteria and assumptions, then proceed.
 
-## Phase 2. Goal swarm implementation
+## 3. Goal and implementation
 
-After Travis answers clarification questions, use the existing `/goal-swarm` workflow.
+Create or replace one durable goal with `create_goal({ replace_existing: true, ... })`.
 
-1. Read `~/.pi/agent/prompts/goal-swarm.md` if needed and apply it directly.
-2. Create a strict durable goal with `create_goal({ replace_existing: true, ... })`.
-3. Launch the goal-swarm subagent chain:
-   - context/risk passes
-   - planner
-   - sole writer implementation
-   - scoped simplify pass
-   - validation reviewers
-4. Keep one writer at a time in the active worktree unless Travis explicitly requested worktree-isolated parallel implementation.
-5. Run the validation required by the goal and repository instructions.
-6. If implementation is blocked by missing access, tools, or decisions, stop without committing and report blockers.
+Use the lean `/ship` workflow directly; do not use the old swarm pattern:
+- preflight and docs/TODO context
+- optional read-only `scout` and risk `reviewer` only when useful
+- parent-owned plan/validation contract
+- one writer only
+- focused validation
+- fresh read-only review for non-trivial diffs
+- fix show-stoppers with one writer
+- completion audit before `update_goal`
 
-## Phase 3. Parallel review
+Delegation rules:
+- Read-only helpers use `acceptance: "none"` or `false`.
+- Writer uses `acceptance: "checked"`.
+- No parallel writers in the active worktree.
+- No subagent launches from child workers.
+- Use external `researcher` only when current official docs materially affect the implementation.
 
-After implementation and local validation, kick off a fresh parallel review.
+## 4. Review and fix loop
 
-Use the installed `/parallel-review` behavior, without `autofix` unless Travis explicitly asked for autofix:
+After implementation and local validation:
+1. For non-trivial diffs, run fresh-context read-only reviewers for:
+   - functionality/correctness against requirements
+   - tests/validation/regression risk
+   - simplicity/maintainability
+2. Parent synthesizes findings into:
+   - must-fix before PR
+   - worth fixing now
+   - optional follow-up
+   - ignore/defer with reason
+3. Fix must-fix items with one writer.
+4. Rerun focused validation and relevant review angle.
+5. Do not proceed to commit while show-stoppers remain.
 
-1. Launch fresh-context reviewers with distinct angles based on the cited Linear issue or task acceptance criteria and diff.
-2. Include at least:
-   - functionality/correctness against cited Linear requirements or task acceptance criteria
-   - tests/validation and regression risk
-   - simplicity/maintainability, duplication, inefficient loops
-3. Reviewers must inspect repository files and diff directly.
-4. Reviewers must not edit files.
-5. Synthesize:
-   - show-stoppers that must be fixed before PR
-   - fixes worth doing now
-   - optional/actionable follow-up items
-   - feedback to ignore/defer with reason
-6. If show-stoppers are found, fix them with a single writer path, rerun focused validation, and rerun the relevant review angle before commit.
+## 5. Commit, push, draft PR
 
-## Phase 4. Commit, push, and PR
+Proceed only when requirements are implemented or intentionally deferred with Travis approval, and validation/review is acceptable.
 
-Proceed only when:
-
-- cited Linear issue text or task acceptance criteria are implemented, or any intentional exclusions are explicitly approved by Travis
-- no show-stopper review findings remain
-- required validation has passed or exact blockers are documented
-
-Then:
-
-1. Inspect final diff:
+1. Inspect final state:
    - `git status --short`
    - `git diff --stat`
    - `git diff --check`
 2. Commit with Conventional Commit format:
-   - with Linear issue ID: `<type>: <linear-issue-id>: <message>`
-   - without issue ID only if no Linear issue exists: `<type>: <message>`
+   - with Linear: `<type>: <linear-issue-id>: <message>`
+   - without Linear: `<type>: <message>`
 3. Push the branch.
 4. Open a Draft PR with `gh pr create --draft` unless Travis explicitly asked for ready-for-review.
-5. PR title must follow the same Conventional Commit rules and include the Linear issue ID when one exists:
-   - `<type>: <linear-issue-id>: <PR title>`
-6. Include Linear context when cited, otherwise task context, plus validation evidence and review notes in the PR body.
+5. PR title follows the same Conventional Commit rule.
+6. PR body includes requirements, implementation summary, validation, review results, and residual risks.
 7. Show Travis the PR link.
 
-## Phase 5. Final summary to Travis
+## 6. Final response
 
-Finish with these headings:
+Use these headings:
 
 ## TLDR
-A short plain-English walkthrough of what changed, how the new code works, and how it solves the cited Linear issue or task.
-
-## Clean Changes Made
-Bullets grouped by area/file. Focus on purposeful, clean changes rather than implementation noise.
+Plain-English walkthrough of what changed and why.
 
 ## Requirements Coverage
-List each cited Linear requirement or task acceptance criterion as met / not met / intentionally deferred. Include evidence.
+Each requirement: met / deferred / blocked, with evidence.
+
+## Clean Changes Made
+Purposeful changes grouped by area/file.
 
 ## Validation
-Commands/checks run and results. If any were blocked, say exactly why.
+Commands/checks and results.
 
-## Parallel Review Results
-Summarize the review passes and confidence level.
-
-## Actionable Review Items
-List remaining actionable items from review for Travis/us to decide or take action on. Separate must-fix-before-merge from optional follow-up.
+## Review Results
+Show-stoppers fixed, optional follow-up, confidence.
 
 ## PR
-PR number/link, branch, commit hash, and draft/ready state.
+PR link/number, branch, commit hash, draft/ready state.
+
+## Remaining Risk
+Only real residual risk.

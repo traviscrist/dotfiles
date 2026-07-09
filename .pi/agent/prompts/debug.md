@@ -12,8 +12,8 @@ Run a read-only root-cause investigation. Do not edit files, commit, push, open 
 
 - Use `/debug` when the goal is diagnosis, root cause, commit archaeology, and a recommended fix.
 - Use `/pr-reviewer` when the target is a PR and the question is whether it satisfies a Linear issue.
-- Use `/goal-swarm` after Travis approves implementing the fix.
-- Use `/yolo` only when Travis wants clarify → implement → review → PR end-to-end.
+- Use `/ship` after Travis approves implementing the fix locally.
+- Use `/yolo` only when Travis wants clarify → implement → review → commit/push/draft PR end-to-end.
 
 ## 1. Understand the input
 
@@ -104,4 +104,4 @@ Explain the root cause chain with file/function references and evidence. Include
 Answer yes/no/unclear. If yes, cite commit hash, title, date, and why it introduced the issue. If no/unclear, explain what evidence was checked and what would be needed to prove it.
 
 ## What's the best way to resolve the issue?
-Recommend the smallest safe fix, any needed regression test, validation commands, risk areas, and whether this should proceed via `/goal-swarm` or `/yolo`.
+Recommend the smallest safe fix, any needed regression test, validation commands, risk areas, and whether this should proceed via `/ship` or `/yolo`.
