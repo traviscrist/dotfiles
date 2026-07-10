@@ -8,6 +8,9 @@
   "defaultProjectTrust": "always",
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
+  "subagents": {
+    "defaultModel": "openai-codex/gpt-5.6-sol:medium"
+  },
   "packages": [
     "npm:pi-codex-goal",
     "npm:pi-lens",
