@@ -115,6 +115,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### agent-browser
 - Browser automation CLI for agent workflows: `open`, `snapshot`, `click`, `fill`, `screenshot`, `close`.
 - Browser testing: use `agent-browser` only. Do not add/run Puppeteer, Playwright, browser MCPs, or ad-hoc Node browser scripts unless a repo already owns that stack or Travis explicitly asks.
+- Headless default. Do not use `--headed`, `inspect`, `--auto-connect`, or manually launch Chrome/Edge with `--remote-debugging-port` unless Travis explicitly asks for a visible browser.
 
 ### betterstack
 - Better Stack MCP for uptime, telemetry, incidents, dashboards, and logs.
