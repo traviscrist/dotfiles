@@ -92,7 +92,10 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - TypeScript: use repo PM; run `docs:list`; keep files small; follow existing patterns.
 
 ## Critical Thinking
-- Fix root cause (not band-aid).
+- Fix root cause (not band-aid). State the root cause, trigger, owning boundary, and invariant before choosing the fix.
+- For concurrency/state bugs, map every legitimate writer and distinguish create/claim/update/transition semantics. Enforce invariants at storage boundaries; use targeted writes that preserve unrelated concurrent state.
+- Before changing API or state semantics, inspect all callers and lifecycle transitions. Never make one path pass by rejecting another valid path.
+- Before calling a fix solid or complete, reproduce the original failure end-to-end and adversarially check adjacent valid flows, retries, and lost-update races; focused tests alone are insufficient.
 - No fallbacks: do not add compatibility fallback code/paths; move forward with the primary implementation.
 - If compatibility is needed, do explicit data/config migrations instead of runtime fallbacks.
 - Unsure: read more code; if still stuck, ask w/ short options.
