@@ -1,5 +1,5 @@
 # https://developers.openai.com/codex/config-reference
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 personality = "pragmatic"
 
@@ -212,6 +212,7 @@ enabled = true
 
 [tui.model_availability_nux]
 "gpt-5.5" = 4
+"gpt-5.6-sol" = 1
 
 [desktop]
 appearanceTheme = "system"
