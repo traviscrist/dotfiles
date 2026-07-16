@@ -112,6 +112,8 @@ brew 'gnupg'
 # Design
 cask 'figma'
 cask 'pika'
+cask 'imageoptim'
+brew 'imageoptim-cli'
 
 # Languages
 
