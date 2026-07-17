@@ -22,7 +22,6 @@ M.treessitter_langs = {
   "regex",
   "rust",
   "sql",
-  "swift",
   "terraform",
   "typescript",
   "tsx",

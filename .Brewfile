@@ -30,7 +30,6 @@ brew 'gemini-cli'
 
 # AI TOOLS
 tap 'steipete/tap'
-tap 'humanlayer/humanlayer'
 brew 'peekaboo'
 brew 'codexbar'
 brew 'agent-browser'
@@ -40,8 +39,6 @@ brew 'render'
 brew 'mcporter'
 brew 'summarize'
 cask '1password-cli'
-cask 'humanlayer/humanlayer/humanlayer'
-cask 'trimmy'
 brew 'tmux'
 brew 'yt-dlp'
 brew 'ffmpeg'
@@ -50,12 +47,6 @@ brew 'typescript'
 # Email
 cask 'mimestream'
 
-# Calendar
-cask 'cron'
-
-# Task Management
-cask 'asana'
-
 # Monitors
 cask 'monitorcontrol'
 
@@ -63,11 +54,8 @@ cask 'monitorcontrol'
 cask 'google-drive'
 
 # Shell
-brew 'nushell'
 brew 'starship'
 
-# Fonts
-tap 'homebrew/cask-fonts'
 brew 'brew-cask-completion'
 cask 'font-source-code-pro'
 cask 'font-sauce-code-pro-nerd-font'
@@ -96,7 +84,6 @@ brew 'act'
 tap 'twilio/brew'
 brew 'twilio'
 cask 'github'
-cask 'fleet'
 brew 'mkcert'
 brew 'http-server'
 brew 'httpstat'
@@ -129,7 +116,6 @@ brew 'bun'
 
 # Python
 brew 'pyenv'
-brew 'astral-sh/uv'
 
 # Go
 brew 'go'
@@ -162,14 +148,8 @@ brew 'heroku'
 cask 'karabiner-elements'
 
 # IDEs
-## IntelliJ Community
-cask 'intellij-idea-ce'
-
 ## VS Code
 cask 'visual-studio-code'
-
-## Cursor
-brew 'cursor'
 
 ## Helix
 brew 'helix'
@@ -191,10 +171,9 @@ brew 'tectonic'
 # AI Tooling
 # Claude AI
 cask 'claude'
-brew 'sst/tap/opencode'
 
 # Window Management
-cask 'spectacle'
+cask 'rectangle'
 
 # Dev/Containers
 # brew 'kubectl'
@@ -208,5 +187,4 @@ brew "flyctl"
 brew "cloudflared"
 brew "doggo"
 brew "crit"
-brew "clerk"
 brew "pi-coding-agent"
