@@ -1,4 +1,5 @@
 import { getAgentDir, type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import { basename, join } from "node:path";
 import { createFastModeConfigTracker, FAST_MODE_STATUS_KEY, isFastModeActive, thinkingSegmentText } from "./fast-mode.ts";
 
@@ -99,42 +100,15 @@ function stripAnsi(text: string): string {
 	return text.replace(ANSI_PATTERN, "");
 }
 
-function visibleWidth(text: string): number {
-	return Array.from(stripAnsi(text)).length;
-}
-
-function truncateToWidth(text: string, maxWidth: number): string {
-	if (maxWidth <= 0) return "";
-
-	let width = 0;
-	let output = "";
-	for (let index = 0; index < text.length;) {
-		const ansi = text.slice(index).match(/^\x1b\[[0-9;]*m/);
-		if (ansi) {
-			output += ansi[0];
-			index += ansi[0].length;
-			continue;
-		}
-
-		const char = Array.from(text.slice(index))[0]!;
-		if (width + 1 > maxWidth) break;
-		output += char;
-		width += 1;
-		index += char.length;
-	}
-
-	return output + "\x1b[0m";
-}
-
-function makeFooterLine(width: number, left: string, right: string): string {
+export function makeFooterLine(width: number, left: string, right: string): string {
 	const rightWidth = visibleWidth(right);
 	const availableLeftWidth = Math.max(0, width - rightWidth - 1);
 	const leftWasTruncated = visibleWidth(left) > availableLeftWidth;
 	const fittedLeft = leftWasTruncated && availableLeftWidth > 1
-		? truncateToWidth(left, availableLeftWidth - 1) + `${fg(COLORS.bg0)}${bg(COLORS.bgDim)}\x1b[0m`
-		: truncateToWidth(left, availableLeftWidth);
+		? truncateToWidth(left, availableLeftWidth - 1, "") + `${fg(COLORS.bg0)}${bg(COLORS.bgDim)}\x1b[0m`
+		: truncateToWidth(left, availableLeftWidth, "");
 	const pad = " ".repeat(Math.max(0, width - visibleWidth(fittedLeft) - rightWidth));
-	return truncateToWidth(fittedLeft + bg(COLORS.bgDim) + pad + "\x1b[0m" + right, width);
+	return truncateToWidth(fittedLeft + bg(COLORS.bgDim) + pad + "\x1b[0m" + right, width, "");
 }
 
 function languageToken(filePath: string): string | undefined {
