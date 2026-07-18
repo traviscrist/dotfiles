@@ -12,6 +12,7 @@
     "pi-codex-goal": "^0.1.37",
     "pi-intercom": "^0.6.0",
     "pi-lens": "^3.8.67",
+    "pi-openai-fast-mode": "^0.3.0",
     "pi-simplify": "^0.2.2",
     "pi-subagents": "^0.34.0",
     "pi-web-access": "^0.13.0"
