@@ -1,5 +1,6 @@
-import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { basename } from "node:path";
+import { getAgentDir, type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { basename, join } from "node:path";
+import { createFastModeConfigTracker, FAST_MODE_STATUS_KEY, isFastModeActive, thinkingSegmentText } from "./fast-mode.ts";
 
 const COLORS = {
 	bgDim: "#232A2E",
@@ -38,6 +39,7 @@ type LensState = {
 
 type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
 
+const FAST_MODE_CONFIG_PATH = join(getAgentDir(), "extensions", FAST_MODE_STATUS_KEY, "config.json");
 const PLANET_RING_FRAMES = ["⊙", "⊚", "◎", "◌", "◎", "⊚"];
 const PLANET_RING_INTERVAL_MS = 260;
 
@@ -273,9 +275,14 @@ export default function (pi: ExtensionAPI) {
 	function apply(ctx: ExtensionContext): void {
 		const repoLabel = basename(ctx.cwd) || "pi";
 		ctx.ui.setWorkingVisible(false);
+		ctx.ui.setWidget(FAST_MODE_STATUS_KEY, undefined);
 
 		ctx.ui.setFooter((tui, _theme, footerData) => {
 			const requestRender = () => tui.requestRender();
+			const fastModeTracker = createFastModeConfigTracker(FAST_MODE_CONFIG_PATH, () => {
+				ctx.ui.setWidget(FAST_MODE_STATUS_KEY, undefined);
+				requestRender();
+			});
 			renderers.add(requestRender);
 			const branchDisposer = footerData.onBranchChange(requestRender);
 			const interval = setInterval(() => {
@@ -290,6 +297,7 @@ export default function (pi: ExtensionAPI) {
 					renderers.delete(requestRender);
 					branchDisposer();
 					clearInterval(interval);
+					fastModeTracker.dispose();
 					ctx.ui.setWorkingVisible(true);
 				},
 				invalidate() {},
@@ -301,6 +309,7 @@ export default function (pi: ExtensionAPI) {
 					const usage = ctx.getContextUsage();
 					const contextUsage = contextUsageSegment(usage?.percent ?? undefined);
 					const thinking = pi.getThinkingLevel();
+					const fastModeActive = isFastModeActive(fastModeTracker.get(), ctx.model);
 					const goalElapsed = goalElapsedSegment(goalStatus);
 
 					const left = leftPowerline([
@@ -311,7 +320,7 @@ export default function (pi: ExtensionAPI) {
 					]);
 
 					const right = rightPowerline([
-						{ text: ` ${thinking} `, fg: COLORS.yellow, bg: COLORS.bg2 },
+						{ text: thinkingSegmentText(thinking, fastModeActive), fg: COLORS.yellow, bg: COLORS.bg2 },
 						{ text: ` ${compactModel(ctx.model?.id)} `, fg: COLORS.fg, bg: COLORS.bg1 },
 						contextUsage,
 						...(goalElapsed ? [goalElapsed] : []),
@@ -325,6 +334,12 @@ export default function (pi: ExtensionAPI) {
 
 	pi.on("session_start", (_event, ctx) => {
 		if (enabled) apply(ctx);
+	});
+	pi.on("model_select", (_event, ctx) => {
+		setTimeout(() => {
+			ctx.ui.setWidget(FAST_MODE_STATUS_KEY, undefined);
+			renderAll();
+		}, 0);
 	});
 
 	pi.registerCommand("vimline", {
