@@ -13,6 +13,8 @@ const COLORS = {
 	green: "#A7C080",
 	blue: "#7FBBB3",
 	yellow: "#DBBC7F",
+	orange: "#E69875",
+	purple: "#D699B6",
 	red: "#E67E80",
 };
 
@@ -183,7 +185,7 @@ function lensSegments(state: LensState, lspStatus: string | undefined): Segment[
 }
 
 function activitySegment(state: ActivityState, ringFrame: string): Segment {
-	const color = state === "IDLE" ? COLORS.green : state === "BASH" ? COLORS.blue : state === "TOOLS" ? COLORS.yellow : state === "COMPACT" ? COLORS.red : COLORS.fg;
+	const color = state === "IDLE" ? COLORS.orange : state === "THINK" ? COLORS.purple : state === "BASH" ? COLORS.blue : state === "TOOLS" ? COLORS.yellow : COLORS.red;
 	const label = state === "IDLE" ? state : `${ringFrame} ${state}`;
 	return { text: ` ${label} `, fg: COLORS.bgDim, bg: color };
 }
