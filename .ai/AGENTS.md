@@ -22,7 +22,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Editor: `code <path>`.
 - Shell config split: keep in `~/.zsh/*.zsh` (`paths.zsh`, `secrets.zsh`, `aliases.zsh`, `functions.zsh`, `completions.zsh`), sourced from `~/.zshrc`.
 - AWS CLI: MUST use `AWS_PROFILE='read-only'` for all `aws` commands.
-- CI: `gh run list/view` (rerun/fix til green).
+- GitHub CI is not a handoff gate. Local validation is sufficient; do not wait or poll for CI after pushing unless Travis explicitly asks.
 - Prefer end-to-end verify; if blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
 - Installs: prefer `brew`; fallback `bun` when no brew formula.
@@ -35,7 +35,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Verify it’s the right UI (ignore filename).
 - Size: `sips -g pixelWidth -g pixelHeight <file>` (prefer 2×).
 - Optimize: `imageoptim <file>` (install: `brew install imageoptim-cli`).
-- Replace asset; keep dimensions; commit; run gate; verify CI.
+- Replace asset; keep dimensions; commit; run the local gate.
 
 ## Important Locations
 - AI workspace root: `~/.ai`
@@ -64,8 +64,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Use Codex background for long jobs; tmux only for interactive/persistent (debugger/server).
 
 ## Build / Test
-- Before handoff: run full gate (lint/typecheck/tests/docs).
-- CI red: `gh run list/view`, rerun, fix, push, repeat til green.
+- Before handoff: run the local full gate (lint/typecheck/tests/docs).
+- Do not wait or poll for GitHub CI after pushing unless Travis explicitly asks. If an already-visible CI failure affects the work, inspect it with `gh run list/view` and report or fix it.
 - Keep it observable (logs, panes, tails, MCP/browser tools).
 
 ## Git
