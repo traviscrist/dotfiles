@@ -21,6 +21,7 @@ kls_database.db
 
 # AI TOOLING
 sessions
+.pi-subagents
 
 
 # Serena cache files
