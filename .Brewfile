@@ -109,7 +109,6 @@ brew 'deno'
 
 # NodeJS
 brew 'yarn'
-brew 'pnpm'
 brew 'fnm'
 tap 'oven-sh/bun'
 brew 'bun'
