@@ -4,7 +4,7 @@ import { truncateToWidth, visibleWidth } from "../../npm/node_modules/@earendil-
 mock.module("@earendil-works/pi-coding-agent", () => ({ getAgentDir: () => "/tmp/pi-agent" }));
 mock.module("@earendil-works/pi-tui", () => ({ truncateToWidth, visibleWidth }));
 
-const { makeFooterLine } = await import("./index.ts");
+const { lensSegments, lensSummary, makeFooterLine } = await import("./index.ts");
 
 const green = "\x1b[38;2;167;192;128m";
 const dimBackground = "\x1b[48;2;35;42;46m";
@@ -27,5 +27,42 @@ describe("statusline layout", () => {
 		for (let width = 1; width <= 160; width++) {
 			expect(visibleWidth(makeFooterLine(width, left, right)), `overflow at width ${width}`).toBeLessThanOrEqual(width);
 		}
+	});
+
+	it("scopes a clean result to the number of files checked", () => {
+		const state = {
+			languages: new Set(["jsts"]),
+			files: new Map([
+				["/repo/a.ts", { name: "a.ts", errors: 0, warnings: 0, blocking: 0, touchedAt: 1 }],
+				["/repo/b.ts", { name: "b.ts", errors: 0, warnings: 0, blocking: 0, touchedAt: 2 }],
+			]),
+			lastDurationMs: 42,
+		};
+
+		expect(lensSummary(state, undefined).text).toContain("2 files checked");
+		const rendered = lensSegments(state, undefined).map((segment) => segment.text).join("");
+		expect(rendered).not.toContain("a.ts");
+		expect(rendered).not.toContain("b.ts");
+		expect(rendered).not.toContain("42ms");
+	});
+
+	it("shows only finding-bearing filenames when diagnostics exist", () => {
+		const state = {
+			languages: new Set(["jsts"]),
+			files: new Map([
+				["/repo/clean.ts", { name: "clean.ts", errors: 0, warnings: 0, blocking: 0, touchedAt: 3 }],
+				["/repo/warn.ts", { name: "warn.ts", errors: 0, warnings: 2, blocking: 0, touchedAt: 2 }],
+				["/repo/block.ts", { name: "block.ts", errors: 1, warnings: 0, blocking: 1, touchedAt: 1 }],
+			]),
+			lastDurationMs: 42,
+		};
+
+		const rendered = lensSegments(state, undefined).map((segment) => segment.text).join("");
+		expect(rendered).toContain("1E");
+		expect(rendered).toContain("2W");
+		expect(rendered).toContain("warn.ts");
+		expect(rendered).toContain("block.ts");
+		expect(rendered).not.toContain("clean.ts");
+		expect(rendered).toContain("42ms");
 	});
 });

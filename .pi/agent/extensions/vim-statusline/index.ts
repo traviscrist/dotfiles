@@ -26,7 +26,7 @@ type Segment = {
 	bg: string;
 };
 
-type LensFile = {
+export type LensFile = {
 	name: string;
 	errors: number;
 	warnings: number;
@@ -34,7 +34,7 @@ type LensFile = {
 	touchedAt: number;
 };
 
-type LensState = {
+export type LensState = {
 	languages: Set<string>;
 	files: Map<string, LensFile>;
 	lastDurationMs?: number;
@@ -150,7 +150,7 @@ function updateLensState(state: LensState, payload: { filePath?: string; diagnos
 	state.lastDurationMs = payload.durationMs;
 }
 
-function lensSummary(state: LensState, lspStatus: string | undefined): { text: string; fg: string } {
+export function lensSummary(state: LensState, lspStatus: string | undefined): { text: string; fg: string } {
 	let errors = 0;
 	let warnings = 0;
 	let blocking = 0;
@@ -162,20 +162,26 @@ function lensSummary(state: LensState, lspStatus: string | undefined): { text: s
 
 	if (errors > 0) return { text: ` 󰅚 ${errors}E${warnings > 0 ? `   ${warnings}W` : ""} `, fg: blocking > 0 ? COLORS.red : COLORS.yellow };
 	if (warnings > 0) return { text: `  ${warnings}W `, fg: COLORS.yellow };
-	if (state.files.size > 0) return { text: "  clean ", fg: COLORS.green };
+	if (state.files.size > 0) {
+		const noun = state.files.size === 1 ? "file" : "files";
+		return { text: `  ${state.files.size} ${noun} checked `, fg: COLORS.green };
+	}
 	return { text: ` 󰒡 ${lspStatus ? stripAnsi(lspStatus).replace(/^LSP /, "") : "ready"} `, fg: COLORS.muted };
 }
 
-function lensSegments(state: LensState, lspStatus: string | undefined): Segment[] {
+export function lensSegments(state: LensState, lspStatus: string | undefined): Segment[] {
 	const languages = [...state.languages].slice(0, 3).join(" ");
 	const summary = lensSummary(state, lspStatus);
-	const duration = state.lastDurationMs === undefined ? "" : ` ${Math.round(state.lastDurationMs)}ms`;
-	const recentFiles = [...state.files.values()]
+	const findingFiles = [...state.files.values()]
+		.filter((file) => file.errors > 0 || file.warnings > 0 || file.blocking > 0)
 		.sort((a, b) => b.touchedAt - a.touchedAt)
 		.slice(0, 2)
 		.map((file) => file.name)
 		.join(" · ");
-	const detail = `${duration}${recentFiles ? ` · ${recentFiles}` : ""}`;
+	const duration = findingFiles && state.lastDurationMs !== undefined
+		? `${Math.round(state.lastDurationMs)}ms · `
+		: "";
+	const detail = `${duration}${findingFiles}`;
 
 	return [
 		...(languages ? [{ text: ` ${languages} `, fg: COLORS.green, bg: COLORS.bg0 }] : []),
