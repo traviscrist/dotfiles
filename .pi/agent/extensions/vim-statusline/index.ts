@@ -1,7 +1,7 @@
-import { getAgentDir, type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { basename, join } from "node:path";
-import { createFastModeConfigTracker, FAST_MODE_STATUS_KEY, isFastModeActive, thinkingSegmentText } from "./fast-mode.ts";
+import { basename } from "node:path";
+import { FAST_MODE_STATUS_KEY, isFastModeStatusActive, thinkingSegmentText } from "./fast-mode.ts";
 
 const COLORS = {
 	bgDim: "#232A2E",
@@ -42,7 +42,6 @@ export type LensState = {
 
 type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
 
-const FAST_MODE_CONFIG_PATH = join(getAgentDir(), "extensions", FAST_MODE_STATUS_KEY, "config.json");
 const PLANET_RING_FRAMES = ["⊙", "⊚", "◎", "◌", "◎", "⊚"];
 const PLANET_RING_INTERVAL_MS = 260;
 
@@ -261,10 +260,6 @@ export default function (pi: ExtensionAPI) {
 
 		ctx.ui.setFooter((tui, _theme, footerData) => {
 			const requestRender = () => tui.requestRender();
-			const fastModeTracker = createFastModeConfigTracker(FAST_MODE_CONFIG_PATH, () => {
-				ctx.ui.setWidget(FAST_MODE_STATUS_KEY, undefined);
-				requestRender();
-			});
 			renderers.add(requestRender);
 			const branchDisposer = footerData.onBranchChange(requestRender);
 			const interval = setInterval(() => {
@@ -279,7 +274,6 @@ export default function (pi: ExtensionAPI) {
 					renderers.delete(requestRender);
 					branchDisposer();
 					clearInterval(interval);
-					fastModeTracker.dispose();
 					ctx.ui.setWorkingVisible(true);
 				},
 				invalidate() {},
@@ -291,7 +285,7 @@ export default function (pi: ExtensionAPI) {
 					const usage = ctx.getContextUsage();
 					const contextUsage = contextUsageSegment(usage?.percent ?? undefined);
 					const thinking = pi.getThinkingLevel();
-					const fastModeActive = isFastModeActive(fastModeTracker.get(), ctx.model);
+					const fastModeActive = isFastModeStatusActive(statuses.get(FAST_MODE_STATUS_KEY));
 					const goalElapsed = goalElapsedSegment(goalStatus);
 
 					const left = leftPowerline([
