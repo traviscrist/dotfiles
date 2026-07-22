@@ -56,3 +56,4 @@ export PATH="/Users/travis/.cargo/bin:$PATH"
 export PATH="$HOME/.ai/bin:$PATH"
 
 export PATH="/Users/travis/.bun/bin:$PATH"
+export PATH="/Users/travis/.local/bin:$PATH"
