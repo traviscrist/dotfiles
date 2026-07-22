@@ -127,6 +127,7 @@ brew 'rust'
 
 # Google Cloud
 cask 'gcloud-cli'
+brew 'cloud-sql-proxy'
 # brew 'google-backup-and-sync'
 
 # AWS
