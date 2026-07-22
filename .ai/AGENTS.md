@@ -52,7 +52,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## PR Feedback
 - Active PR: `gh pr view --json number,title,url --jq '"PR #\\(.number): \\(.title)\\n\\(.url)"'`.
-- New PRs: open as Draft by default (`gh pr create --draft`); show the PR link to Travis after opening; mark ready only when explicitly directed.
+- New PRs: open ready for review by default (omit `--draft`) and show the PR link to Travis after opening. Use Draft only when Travis explicitly asks.
 - Never auto-merge PRs with admin privileges.
 - PR comments: `gh pr view …` + `gh api …/comments --paginate`.
 - Replies: cite fix + file/line; resolve threads only after fix lands.
