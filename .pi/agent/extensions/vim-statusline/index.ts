@@ -40,7 +40,19 @@ export type LensState = {
 	lastDurationMs?: number;
 };
 
-type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
+export type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
+
+const ACTIVITY_TITLES: Record<ActivityState, string> = {
+	IDLE: "π IDLE",
+	THINK: "π THINKING",
+	TOOLS: "π TOOLS",
+	BASH: "π BASH",
+	COMPACT: "π COMPACTING",
+};
+
+export function activityTitle(state: ActivityState): string {
+	return ACTIVITY_TITLES[state];
+}
 
 const PLANET_RING_FRAMES = ["⊙", "⊚", "◎", "◌", "◎", "⊚"];
 const PLANET_RING_INTERVAL_MS = 260;
@@ -220,15 +232,18 @@ export default function (pi: ExtensionAPI) {
 	let activityState: ActivityState = "IDLE";
 	let activeToolCount = 0;
 	let ringIndex = 0;
+	let currentContext: ExtensionContext | undefined;
 	const lensState: LensState = { languages: new Set(), files: new Map() };
 	const renderers = new Set<() => void>();
 	const renderAll = () => {
 		for (const requestRender of renderers) requestRender();
 	};
+	const syncTitle = () => currentContext?.ui.setTitle(activityTitle(activityState));
 	const setActivity = (next: ActivityState) => {
-		if (activityState === next) return;
+		const changed = activityState !== next;
 		activityState = next;
-		renderAll();
+		syncTitle();
+		if (changed) renderAll();
 	};
 
 	pi.events.on("pi-lens/analysis-complete", (payload: unknown) => {
@@ -248,10 +263,10 @@ export default function (pi: ExtensionAPI) {
 	});
 	pi.on("agent_end", () => {
 		activeToolCount = 0;
-		setActivity("IDLE");
 	});
+	pi.on("agent_settled", (_event, ctx) => setActivity(ctx.isIdle() ? "IDLE" : "THINK"));
 	pi.on("session_before_compact", () => setActivity("COMPACT"));
-	pi.on("session_compact", () => setActivity("IDLE"));
+	pi.on("session_compact", (_event, ctx) => setActivity(ctx.isIdle() ? "IDLE" : "THINK"));
 
 	function apply(ctx: ExtensionContext): void {
 		const repoLabel = basename(ctx.cwd) || "pi";
@@ -309,7 +324,14 @@ export default function (pi: ExtensionAPI) {
 	}
 
 	pi.on("session_start", (_event, ctx) => {
+		currentContext = ctx;
+		activeToolCount = 0;
+		setActivity("IDLE");
 		if (enabled) apply(ctx);
+	});
+	pi.on("session_info_changed", () => syncTitle());
+	pi.on("session_shutdown", () => {
+		currentContext = undefined;
 	});
 	pi.on("model_select", (_event, ctx) => {
 		setTimeout(() => {
