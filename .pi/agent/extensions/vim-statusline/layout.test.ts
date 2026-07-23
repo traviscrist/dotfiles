@@ -4,29 +4,49 @@ import { truncateToWidth, visibleWidth } from "../../npm/node_modules/@earendil-
 mock.module("@earendil-works/pi-coding-agent", () => ({ getAgentDir: () => "/tmp/pi-agent" }));
 mock.module("@earendil-works/pi-tui", () => ({ truncateToWidth, visibleWidth }));
 
-const { activityTitle, default: vimStatusline, lensSegments, lensSummary, makeFooterLine } = await import("./index.ts");
+const { activityTitle, compactBranchName, default: vimStatusline, lensSegments, lensSummary, makeFooterLine } = await import("./index.ts");
 
 const green = "\x1b[38;2;167;192;128m";
 const dimBackground = "\x1b[48;2;35;42;46m";
 const reset = "\x1b[0m";
 
 describe("activity title", () => {
-	it("uses the pi symbol followed by the expanded state", () => {
-		expect(activityTitle("IDLE")).toBe("π IDLE");
-		expect(activityTitle("THINK")).toBe("π THINKING");
-		expect(activityTitle("TOOLS")).toBe("π TOOLS");
-		expect(activityTitle("BASH")).toBe("π BASH");
-		expect(activityTitle("COMPACT")).toBe("π COMPACTING");
+	it("uses compact state icons and a truncated branch name", () => {
+		const branch = "feat/pol-7306-cipa-business-survey-question";
+
+		expect(compactBranchName(branch)).toBe("feat/pol-7306-cipa-busi…");
+		expect(Array.from(compactBranchName(branch))).toHaveLength(24);
+		expect(compactBranchName("")).toBe("no git");
+		expect(activityTitle("IDLE", branch)).toBe("○ IDLE - feat/pol-7306-cipa-busi…");
+		expect(activityTitle("THINK", "feat/short")).toBe("◐ THINK - feat/short");
+		expect(activityTitle("TOOLS", "feat/short")).toBe("◆ TOOLS - feat/short");
+		expect(activityTitle("BASH", "feat/short")).toBe("❯ BASH - feat/short");
+		expect(activityTitle("COMPACT", "feat/short")).toBe("↻ COMPACT - feat/short");
 	});
 
 	it("tracks thinking, concurrent tools, compaction, and settled state", async () => {
 		const handlers = new Map<string, Array<(event: any, ctx: any) => unknown>>();
 		const setTitle = mock(() => {});
+		let branchName = "feat/pol-7306-cipa-business-survey-question";
+		let branchChangeHandler: (() => void) | undefined;
+		const setFooter = mock((factory: (tui: any, theme: any, footerData: any) => unknown) => {
+			factory(
+				{ requestRender: mock(() => {}) },
+				{},
+				{
+					getGitBranch: () => branchName,
+					onBranchChange: (handler: () => void) => {
+						branchChangeHandler = handler;
+						return () => {};
+					},
+				},
+			);
+		});
 		const ctx = {
 			cwd: "/repo",
 			isIdle: () => true,
 			ui: {
-				setFooter: mock(() => {}),
+				setFooter,
 				setTitle,
 				setWidget: mock(() => {}),
 				setWorkingVisible: mock(() => {}),
@@ -48,29 +68,33 @@ describe("activity title", () => {
 		await emit("session_start");
 		setTitle("π - repo");
 		await new Promise<void>((resolve) => setTimeout(resolve, 300));
-		expect(setTitle).toHaveBeenLastCalledWith("π IDLE");
+		expect(setTitle).toHaveBeenLastCalledWith("○ IDLE - feat/pol-7306-cipa-busi…");
 
 		await emit("agent_start");
-		expect(setTitle).toHaveBeenLastCalledWith("π THINKING");
+		expect(setTitle).toHaveBeenLastCalledWith("◐ THINK - feat/pol-7306-cipa-busi…");
 
 		await emit("tool_execution_start", { toolCallId: "read-1", toolName: "read" });
-		expect(setTitle).toHaveBeenLastCalledWith("π TOOLS");
+		expect(setTitle).toHaveBeenLastCalledWith("◆ TOOLS - feat/pol-7306-cipa-busi…");
 		await emit("tool_execution_start", { toolCallId: "bash-1", toolName: "bash" });
-		expect(setTitle).toHaveBeenLastCalledWith("π BASH");
+		expect(setTitle).toHaveBeenLastCalledWith("❯ BASH - feat/pol-7306-cipa-busi…");
 		await emit("tool_execution_end", { toolCallId: "bash-1", toolName: "bash" });
-		expect(setTitle).toHaveBeenLastCalledWith("π TOOLS");
+		expect(setTitle).toHaveBeenLastCalledWith("◆ TOOLS - feat/pol-7306-cipa-busi…");
 		await emit("tool_execution_end", { toolCallId: "read-1", toolName: "read" });
-		expect(setTitle).toHaveBeenLastCalledWith("π THINKING");
+		expect(setTitle).toHaveBeenLastCalledWith("◐ THINK - feat/pol-7306-cipa-busi…");
 
 		await emit("agent_end");
-		expect(setTitle).toHaveBeenLastCalledWith("π THINKING");
+		expect(setTitle).toHaveBeenLastCalledWith("◐ THINK - feat/pol-7306-cipa-busi…");
 		await emit("agent_settled");
-		expect(setTitle).toHaveBeenLastCalledWith("π IDLE");
+		expect(setTitle).toHaveBeenLastCalledWith("○ IDLE - feat/pol-7306-cipa-busi…");
+
+		branchName = "fix/short";
+		branchChangeHandler?.();
+		expect(setTitle).toHaveBeenLastCalledWith("○ IDLE - fix/short");
 
 		await emit("session_before_compact");
-		expect(setTitle).toHaveBeenLastCalledWith("π COMPACTING");
+		expect(setTitle).toHaveBeenLastCalledWith("↻ COMPACT - fix/short");
 		await emit("session_compact");
-		expect(setTitle).toHaveBeenLastCalledWith("π IDLE");
+		expect(setTitle).toHaveBeenLastCalledWith("○ IDLE - fix/short");
 	});
 });
 

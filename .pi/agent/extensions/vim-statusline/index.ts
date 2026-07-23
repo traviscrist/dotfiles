@@ -42,16 +42,24 @@ export type LensState = {
 
 export type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
 
-const ACTIVITY_TITLES: Record<ActivityState, string> = {
-	IDLE: "π IDLE",
-	THINK: "π THINKING",
-	TOOLS: "π TOOLS",
-	BASH: "π BASH",
-	COMPACT: "π COMPACTING",
+const ACTIVITY_TITLE_LABELS: Record<ActivityState, string> = {
+	IDLE: "○ IDLE",
+	THINK: "◐ THINK",
+	TOOLS: "◆ TOOLS",
+	BASH: "❯ BASH",
+	COMPACT: "↻ COMPACT",
 };
 
-export function activityTitle(state: ActivityState): string {
-	return ACTIVITY_TITLES[state];
+const MAX_TITLE_BRANCH_LENGTH = 24;
+
+export function compactBranchName(branch: string): string {
+	const characters = Array.from(branch.trim() || "no git");
+	if (characters.length <= MAX_TITLE_BRANCH_LENGTH) return characters.join("");
+	return `${characters.slice(0, MAX_TITLE_BRANCH_LENGTH - 1).join("")}…`;
+}
+
+export function activityTitle(state: ActivityState, branch: string): string {
+	return `${ACTIVITY_TITLE_LABELS[state]} - ${compactBranchName(branch)}`;
 }
 
 const PLANET_RING_FRAMES = ["⊙", "⊚", "◎", "◌", "◎", "⊚"];
@@ -233,13 +241,14 @@ export default function (pi: ExtensionAPI) {
 	let activityState: ActivityState = "IDLE";
 	const activeTools = new Map<string, string>();
 	let ringIndex = 0;
+	let currentBranch = "no git";
 	let currentContext: ExtensionContext | undefined;
 	const lensState: LensState = { languages: new Set(), files: new Map() };
 	const renderers = new Set<() => void>();
 	const renderAll = () => {
 		for (const requestRender of renderers) requestRender();
 	};
-	const syncTitle = () => currentContext?.ui.setTitle(activityTitle(activityState));
+	const syncTitle = () => currentContext?.ui.setTitle(activityTitle(activityState, currentBranch));
 	const setActivity = (next: ActivityState) => {
 		const changed = activityState !== next;
 		activityState = next;
@@ -284,8 +293,18 @@ export default function (pi: ExtensionAPI) {
 
 		ctx.ui.setFooter((tui, _theme, footerData) => {
 			const requestRender = () => tui.requestRender();
+			const syncBranch = () => {
+				const nextBranch = footerData.getGitBranch() || "no git";
+				if (currentBranch === nextBranch) return;
+				currentBranch = nextBranch;
+				syncTitle();
+			};
 			renderers.add(requestRender);
-			const branchDisposer = footerData.onBranchChange(requestRender);
+			syncBranch();
+			const branchDisposer = footerData.onBranchChange(() => {
+				syncBranch();
+				requestRender();
+			});
 			const interval = setInterval(() => {
 				if (activityState !== "IDLE") {
 					ringIndex = (ringIndex + 1) % PLANET_RING_FRAMES.length;
@@ -334,6 +353,7 @@ export default function (pi: ExtensionAPI) {
 
 	pi.on("session_start", (_event, ctx) => {
 		currentContext = ctx;
+		currentBranch = "no git";
 		activeTools.clear();
 		setActivity("IDLE");
 		setTimeout(syncTitle, STARTUP_TITLE_DELAY_MS);
