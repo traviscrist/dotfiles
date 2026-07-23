@@ -4,11 +4,73 @@ import { truncateToWidth, visibleWidth } from "../../npm/node_modules/@earendil-
 mock.module("@earendil-works/pi-coding-agent", () => ({ getAgentDir: () => "/tmp/pi-agent" }));
 mock.module("@earendil-works/pi-tui", () => ({ truncateToWidth, visibleWidth }));
 
-const { lensSegments, lensSummary, makeFooterLine } = await import("./index.ts");
+const { activityTitle, default: vimStatusline, lensSegments, lensSummary, makeFooterLine } = await import("./index.ts");
 
 const green = "\x1b[38;2;167;192;128m";
 const dimBackground = "\x1b[48;2;35;42;46m";
 const reset = "\x1b[0m";
+
+describe("activity title", () => {
+	it("uses the pi symbol followed by the expanded state", () => {
+		expect(activityTitle("IDLE")).toBe("π IDLE");
+		expect(activityTitle("THINK")).toBe("π THINKING");
+		expect(activityTitle("TOOLS")).toBe("π TOOLS");
+		expect(activityTitle("BASH")).toBe("π BASH");
+		expect(activityTitle("COMPACT")).toBe("π COMPACTING");
+	});
+
+	it("tracks thinking, concurrent tools, compaction, and settled state", async () => {
+		const handlers = new Map<string, Array<(event: any, ctx: any) => unknown>>();
+		const setTitle = mock(() => {});
+		const ctx = {
+			cwd: "/repo",
+			isIdle: () => true,
+			ui: {
+				setFooter: mock(() => {}),
+				setTitle,
+				setWidget: mock(() => {}),
+				setWorkingVisible: mock(() => {}),
+			},
+		};
+		const pi = {
+			events: { on: mock(() => {}) },
+			getThinkingLevel: () => "high",
+			on: (event: string, handler: (event: any, ctx: any) => unknown) => {
+				handlers.set(event, [...(handlers.get(event) ?? []), handler]);
+			},
+			registerCommand: mock(() => {}),
+		};
+		const emit = async (event: string, payload: Record<string, unknown> = {}) => {
+			for (const handler of handlers.get(event) ?? []) await handler(payload, ctx);
+		};
+
+		vimStatusline(pi as never);
+		await emit("session_start");
+		expect(setTitle).toHaveBeenLastCalledWith("π IDLE");
+
+		await emit("agent_start");
+		expect(setTitle).toHaveBeenLastCalledWith("π THINKING");
+
+		await emit("tool_execution_start", { toolCallId: "read-1", toolName: "read" });
+		expect(setTitle).toHaveBeenLastCalledWith("π TOOLS");
+		await emit("tool_execution_start", { toolCallId: "bash-1", toolName: "bash" });
+		expect(setTitle).toHaveBeenLastCalledWith("π BASH");
+		await emit("tool_execution_end", { toolCallId: "bash-1", toolName: "bash" });
+		expect(setTitle).toHaveBeenLastCalledWith("π TOOLS");
+		await emit("tool_execution_end", { toolCallId: "read-1", toolName: "read" });
+		expect(setTitle).toHaveBeenLastCalledWith("π THINKING");
+
+		await emit("agent_end");
+		expect(setTitle).toHaveBeenLastCalledWith("π THINKING");
+		await emit("agent_settled");
+		expect(setTitle).toHaveBeenLastCalledWith("π IDLE");
+
+		await emit("session_before_compact");
+		expect(setTitle).toHaveBeenLastCalledWith("π COMPACTING");
+		await emit("session_compact");
+		expect(setTitle).toHaveBeenLastCalledWith("π IDLE");
+	});
+});
 
 describe("statusline layout", () => {
 	it("fits the fast-mode lightning bolt within the reported terminal width", () => {

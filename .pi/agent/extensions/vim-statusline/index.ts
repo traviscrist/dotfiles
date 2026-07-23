@@ -230,7 +230,7 @@ function goalElapsedSegment(status: string | undefined): Segment | undefined {
 export default function (pi: ExtensionAPI) {
 	let enabled = true;
 	let activityState: ActivityState = "IDLE";
-	let activeToolCount = 0;
+	const activeTools = new Map<string, string>();
 	let ringIndex = 0;
 	let currentContext: ExtensionContext | undefined;
 	const lensState: LensState = { languages: new Set(), files: new Map() };
@@ -251,18 +251,26 @@ export default function (pi: ExtensionAPI) {
 		renderAll();
 	});
 
+	const syncToolActivity = () => {
+		if (activeTools.size === 0) {
+			setActivity("THINK");
+			return;
+		}
+		setActivity(Array.from(activeTools.values()).includes("bash") ? "BASH" : "TOOLS");
+	};
+
 	pi.on("agent_start", () => setActivity("THINK"));
 	pi.on("turn_start", () => setActivity("THINK"));
 	pi.on("tool_execution_start", (event) => {
-		activeToolCount++;
-		setActivity(event.toolName === "bash" ? "BASH" : "TOOLS");
+		activeTools.set(event.toolCallId, event.toolName);
+		syncToolActivity();
 	});
-	pi.on("tool_execution_end", () => {
-		activeToolCount = Math.max(0, activeToolCount - 1);
-		if (activeToolCount === 0) setActivity("THINK");
+	pi.on("tool_execution_end", (event) => {
+		activeTools.delete(event.toolCallId);
+		syncToolActivity();
 	});
 	pi.on("agent_end", () => {
-		activeToolCount = 0;
+		activeTools.clear();
 	});
 	pi.on("agent_settled", (_event, ctx) => setActivity(ctx.isIdle() ? "IDLE" : "THINK"));
 	pi.on("session_before_compact", () => setActivity("COMPACT"));
@@ -325,7 +333,7 @@ export default function (pi: ExtensionAPI) {
 
 	pi.on("session_start", (_event, ctx) => {
 		currentContext = ctx;
-		activeToolCount = 0;
+		activeTools.clear();
 		setActivity("IDLE");
 		if (enabled) apply(ctx);
 	});
