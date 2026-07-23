@@ -335,6 +335,7 @@ export default function (pi: ExtensionAPI) {
 		currentContext = ctx;
 		activeTools.clear();
 		setActivity("IDLE");
+		setTimeout(syncTitle, 0);
 		if (enabled) apply(ctx);
 	});
 	pi.on("session_info_changed", () => syncTitle());
