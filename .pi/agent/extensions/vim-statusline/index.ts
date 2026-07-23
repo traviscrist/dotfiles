@@ -42,12 +42,12 @@ export type LensState = {
 
 export type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
 
-const ACTIVITY_TITLE_LABELS: Record<ActivityState, string> = {
-	IDLE: "○ IDLE",
-	THINK: "◐ THINK",
-	TOOLS: "◆ TOOLS",
-	BASH: "❯ BASH",
-	COMPACT: "↻ COMPACT",
+const ACTIVITY_TITLE_ICONS: Record<ActivityState, string> = {
+	IDLE: "○",
+	THINK: "◐",
+	TOOLS: "◆",
+	BASH: "❯",
+	COMPACT: "↻",
 };
 
 const MAX_TITLE_BRANCH_LENGTH = 24;
@@ -59,7 +59,7 @@ export function compactBranchName(branch: string): string {
 }
 
 export function activityTitle(state: ActivityState, branch: string): string {
-	return `${ACTIVITY_TITLE_LABELS[state]} - ${compactBranchName(branch)}`;
+	return `${ACTIVITY_TITLE_ICONS[state]} - ${compactBranchName(branch)}`;
 }
 
 const PLANET_RING_FRAMES = ["⊙", "⊚", "◎", "◌", "◎", "⊚"];

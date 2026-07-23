@@ -17,11 +17,11 @@ describe("activity title", () => {
 		expect(compactBranchName(branch)).toBe("feat/pol-7306-cipa-busi…");
 		expect(Array.from(compactBranchName(branch))).toHaveLength(24);
 		expect(compactBranchName("")).toBe("no git");
-		expect(activityTitle("IDLE", branch)).toBe("○ IDLE - feat/pol-7306-cipa-busi…");
-		expect(activityTitle("THINK", "feat/short")).toBe("◐ THINK - feat/short");
-		expect(activityTitle("TOOLS", "feat/short")).toBe("◆ TOOLS - feat/short");
-		expect(activityTitle("BASH", "feat/short")).toBe("❯ BASH - feat/short");
-		expect(activityTitle("COMPACT", "feat/short")).toBe("↻ COMPACT - feat/short");
+		expect(activityTitle("IDLE", branch)).toBe("○ - feat/pol-7306-cipa-busi…");
+		expect(activityTitle("THINK", "feat/short")).toBe("◐ - feat/short");
+		expect(activityTitle("TOOLS", "feat/short")).toBe("◆ - feat/short");
+		expect(activityTitle("BASH", "feat/short")).toBe("❯ - feat/short");
+		expect(activityTitle("COMPACT", "feat/short")).toBe("↻ - feat/short");
 	});
 
 	it("tracks thinking, concurrent tools, compaction, and settled state", async () => {
@@ -68,33 +68,33 @@ describe("activity title", () => {
 		await emit("session_start");
 		setTitle("π - repo");
 		await new Promise<void>((resolve) => setTimeout(resolve, 300));
-		expect(setTitle).toHaveBeenLastCalledWith("○ IDLE - feat/pol-7306-cipa-busi…");
+		expect(setTitle).toHaveBeenLastCalledWith("○ - feat/pol-7306-cipa-busi…");
 
 		await emit("agent_start");
-		expect(setTitle).toHaveBeenLastCalledWith("◐ THINK - feat/pol-7306-cipa-busi…");
+		expect(setTitle).toHaveBeenLastCalledWith("◐ - feat/pol-7306-cipa-busi…");
 
 		await emit("tool_execution_start", { toolCallId: "read-1", toolName: "read" });
-		expect(setTitle).toHaveBeenLastCalledWith("◆ TOOLS - feat/pol-7306-cipa-busi…");
+		expect(setTitle).toHaveBeenLastCalledWith("◆ - feat/pol-7306-cipa-busi…");
 		await emit("tool_execution_start", { toolCallId: "bash-1", toolName: "bash" });
-		expect(setTitle).toHaveBeenLastCalledWith("❯ BASH - feat/pol-7306-cipa-busi…");
+		expect(setTitle).toHaveBeenLastCalledWith("❯ - feat/pol-7306-cipa-busi…");
 		await emit("tool_execution_end", { toolCallId: "bash-1", toolName: "bash" });
-		expect(setTitle).toHaveBeenLastCalledWith("◆ TOOLS - feat/pol-7306-cipa-busi…");
+		expect(setTitle).toHaveBeenLastCalledWith("◆ - feat/pol-7306-cipa-busi…");
 		await emit("tool_execution_end", { toolCallId: "read-1", toolName: "read" });
-		expect(setTitle).toHaveBeenLastCalledWith("◐ THINK - feat/pol-7306-cipa-busi…");
+		expect(setTitle).toHaveBeenLastCalledWith("◐ - feat/pol-7306-cipa-busi…");
 
 		await emit("agent_end");
-		expect(setTitle).toHaveBeenLastCalledWith("◐ THINK - feat/pol-7306-cipa-busi…");
+		expect(setTitle).toHaveBeenLastCalledWith("◐ - feat/pol-7306-cipa-busi…");
 		await emit("agent_settled");
-		expect(setTitle).toHaveBeenLastCalledWith("○ IDLE - feat/pol-7306-cipa-busi…");
+		expect(setTitle).toHaveBeenLastCalledWith("○ - feat/pol-7306-cipa-busi…");
 
 		branchName = "fix/short";
 		branchChangeHandler?.();
-		expect(setTitle).toHaveBeenLastCalledWith("○ IDLE - fix/short");
+		expect(setTitle).toHaveBeenLastCalledWith("○ - fix/short");
 
 		await emit("session_before_compact");
-		expect(setTitle).toHaveBeenLastCalledWith("↻ COMPACT - fix/short");
+		expect(setTitle).toHaveBeenLastCalledWith("↻ - fix/short");
 		await emit("session_compact");
-		expect(setTitle).toHaveBeenLastCalledWith("○ IDLE - fix/short");
+		expect(setTitle).toHaveBeenLastCalledWith("○ - fix/short");
 	});
 });
 
