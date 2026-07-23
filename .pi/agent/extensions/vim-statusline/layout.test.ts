@@ -47,7 +47,7 @@ describe("activity title", () => {
 		vimStatusline(pi as never);
 		await emit("session_start");
 		setTitle("π - repo");
-		await new Promise<void>((resolve) => setTimeout(resolve, 0));
+		await new Promise<void>((resolve) => setTimeout(resolve, 300));
 		expect(setTitle).toHaveBeenLastCalledWith("π IDLE");
 
 		await emit("agent_start");

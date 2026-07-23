@@ -56,6 +56,7 @@ export function activityTitle(state: ActivityState): string {
 
 const PLANET_RING_FRAMES = ["⊙", "⊚", "◎", "◌", "◎", "⊚"];
 const PLANET_RING_INTERVAL_MS = 260;
+const STARTUP_TITLE_DELAY_MS = 250;
 
 function hexToRgb(hex: string): [number, number, number] {
 	const normalized = hex.replace("#", "");
@@ -335,7 +336,7 @@ export default function (pi: ExtensionAPI) {
 		currentContext = ctx;
 		activeTools.clear();
 		setActivity("IDLE");
-		setTimeout(syncTitle, 0);
+		setTimeout(syncTitle, STARTUP_TITLE_DELAY_MS);
 		if (enabled) apply(ctx);
 	});
 	pi.on("session_info_changed", () => syncTitle());
