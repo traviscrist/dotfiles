@@ -162,23 +162,23 @@ url = "https://mcp.betterstack.com"
 
 [mcp_servers.node_repl]
 args = []
-command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
+command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/travis/.codex"
 CODEX_HOME = "/Users/travis/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "5b74180ac40ca4cf726cad15c5ff886f159224f1c0306ea364ad9eea6a7e7ac2,6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,7182a69deb1cf34d457c66e124d0df74d480677b1136fc255b1a52074a5b4b6d"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
 NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.715.21425"
-CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+BROWSER_USE_CODEX_APP_VERSION = "26.715.70719"
+CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
 [mcp_servers.sentry]
 command = "npx"
@@ -243,8 +243,9 @@ enabled = true
 appearanceTheme = "system"
 followUpQueueMode = "queue"
 composerEnterBehavior = "cmdIfMultiline"
-conversationDetailMode = "STEPS_PROSE"
+conversationDetailMode = "STEPS_COMMANDS"
 ambient-suggestions-enabled = true
+dock-icon-preference = "codex-system"
 
 [desktop.open-in-target-preferences]
 global = "zed"
@@ -253,16 +254,16 @@ global = "zed"
 "/Users/travis/Documents/New project" = "zed"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-07-17T17:02:36Z"
+last_updated = "2026-07-22T02:13:23Z"
 source_type = "local"
 source = "/Users/travis/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-07-17T16:54:28Z"
+last_updated = "2026-07-18T02:28:27Z"
 source_type = "local"
 source = "/Users/travis/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [shell_environment_policy.set]
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "5b74180ac40ca4cf726cad15c5ff886f159224f1c0306ea364ad9eea6a7e7ac2,6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,7182a69deb1cf34d457c66e124d0df74d480677b1136fc255b1a52074a5b4b6d"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/travis/.codex"
