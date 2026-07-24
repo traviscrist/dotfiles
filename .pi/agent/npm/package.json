@@ -6,15 +6,15 @@
     "@earendil-works/pi-ai": "0.80.2",
     "@earendil-works/pi-coding-agent": "0.80.2",
     "@earendil-works/pi-tui": "0.80.2",
-    "@juicesharp/rpiv-ask-user-question": "^1.20.0",
-    "@juicesharp/rpiv-todo": "^1.20.0",
-    "pi-code-previews": "^0.1.32",
-    "pi-codex-goal": "^0.1.37",
+    "@juicesharp/rpiv-ask-user-question": "^2.1.0",
+    "@juicesharp/rpiv-todo": "^2.1.0",
+    "pi-code-previews": "^0.1.36",
+    "pi-codex-goal": "^0.1.38",
     "pi-intercom": "^0.6.0",
-    "pi-lens": "^3.8.67",
+    "pi-lens": "^3.8.71",
     "pi-openai-fast-mode": "^0.3.0",
-    "pi-simplify": "^0.2.2",
-    "pi-subagents": "^0.34.0",
+    "pi-simplify": "^0.2.3",
+    "pi-subagents": "^0.35.1",
     "pi-web-access": "^0.13.0"
   }
 }
