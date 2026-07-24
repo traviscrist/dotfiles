@@ -22,7 +22,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Editor: `code <path>`.
 - Shell config split: keep in `~/.zsh/*.zsh` (`paths.zsh`, `secrets.zsh`, `aliases.zsh`, `functions.zsh`, `completions.zsh`), sourced from `~/.zshrc`.
 - AWS CLI: MUST use `AWS_PROFILE='read-only'` for all `aws` commands.
-- CI: `gh run list/view` (rerun/fix til green).
+- GitHub CI is a final PR gate, not a per-commit gate. Do not invoke or wait for CI after intermediate commits.
 - Prefer end-to-end verify; if blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
 - Installs: prefer `brew`; fallback `bun` when no brew formula.
@@ -35,7 +35,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Verify it’s the right UI (ignore filename).
 - Size: `sips -g pixelWidth -g pixelHeight <file>` (prefer 2×).
 - Optimize: `imageoptim <file>` (install: `brew install imageoptim-cli`).
-- Replace asset; keep dimensions; commit; run gate; verify CI.
+- Replace asset; keep dimensions; commit; run the local gate; include it in the final PR CI pass.
 
 ## Important Locations
 - AI workspace root: `~/.ai`
@@ -66,7 +66,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Build / Test
 - Before handoff: run full gate (lint/typecheck/tests/docs).
-- CI red: `gh run list/view`, rerun, fix, push, repeat til green.
+- Once a PR is open, run one final GitHub CI pass after the local full gate. Use `gh run list/view`; fix failures, push, and re-check until green. Do not invoke or wait for CI after each intermediate commit.
 - Keep it observable (logs, panes, tails, MCP/browser tools).
 
 ## Git

@@ -22,7 +22,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Editor: `code <path>`.
 - Shell config split: keep in `~/.zsh/*.zsh` (`paths.zsh`, `secrets.zsh`, `aliases.zsh`, `functions.zsh`, `completions.zsh`), sourced from `~/.zshrc`.
 - AWS CLI: MUST use `AWS_PROFILE='read-only'` for all `aws` commands.
-- GitHub CI is not a handoff gate. Local validation is sufficient; do not wait or poll for CI after pushing unless Travis explicitly asks.
+- GitHub CI is a final PR gate, not a per-commit gate. Do not invoke or wait for CI after intermediate commits.
 - Prefer end-to-end verify; if blocked, say what’s missing.
 - New deps: quick health check (recent releases/commits, adoption).
 - Installs: prefer `brew`; fallback `bun` when no brew formula.
@@ -65,7 +65,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Build / Test
 - Before handoff: run the local full gate (lint/typecheck/tests/docs).
-- Do not wait or poll for GitHub CI after pushing unless Travis explicitly asks. If an already-visible CI failure affects the work, inspect it with `gh run list/view` and report or fix it.
+- Once a PR is open, run one final GitHub CI pass after the local full gate. Use `gh run list/view`; fix failures, push, and re-check until green. Do not invoke or wait for CI after each intermediate commit.
 - Keep it observable (logs, panes, tails, MCP/browser tools).
 
 ## Git
