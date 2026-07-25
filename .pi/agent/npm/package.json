@@ -14,7 +14,7 @@
     "pi-lens": "^3.8.71",
     "pi-openai-fast-mode": "^0.3.0",
     "pi-simplify": "^0.2.3",
-    "pi-subagents": "^0.35.1",
+    "pi-subagents": "^0.36.0",
     "pi-web-access": "^0.13.0"
   }
 }
