@@ -317,7 +317,6 @@ export default function (pi: ExtensionAPI) {
 					renderers.delete(requestRender);
 					branchDisposer();
 					clearInterval(interval);
-					ctx.ui.setWorkingVisible(true);
 				},
 				invalidate() {},
 				render(width: number): string[] {
@@ -360,7 +359,8 @@ export default function (pi: ExtensionAPI) {
 		if (enabled) apply(ctx);
 	});
 	pi.on("session_info_changed", () => syncTitle());
-	pi.on("session_shutdown", () => {
+	pi.on("session_shutdown", (_event, ctx) => {
+		ctx.ui.setWorkingVisible(true);
 		currentContext = undefined;
 	});
 	pi.on("model_select", (_event, ctx) => {

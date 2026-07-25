@@ -29,8 +29,9 @@ describe("activity title", () => {
 		const setTitle = mock(() => {});
 		let branchName = "feat/pol-7306-cipa-business-survey-question";
 		let branchChangeHandler: (() => void) | undefined;
+		let footerComponent: { dispose?: () => void } | undefined;
 		const setFooter = mock((factory: (tui: any, theme: any, footerData: any) => unknown) => {
-			factory(
+			footerComponent = factory(
 				{ requestRender: mock(() => {}) },
 				{},
 				{
@@ -42,6 +43,10 @@ describe("activity title", () => {
 				},
 			);
 		});
+		let contextIsStale = false;
+		const setWorkingVisible = mock(() => {
+			if (contextIsStale) throw new Error("stale context");
+		});
 		const ctx = {
 			cwd: "/repo",
 			isIdle: () => true,
@@ -49,7 +54,7 @@ describe("activity title", () => {
 				setFooter,
 				setTitle,
 				setWidget: mock(() => {}),
-				setWorkingVisible: mock(() => {}),
+				setWorkingVisible,
 			},
 		};
 		const pi = {
@@ -95,6 +100,11 @@ describe("activity title", () => {
 		expect(setTitle).toHaveBeenLastCalledWith("↻ - fix/short");
 		await emit("session_compact");
 		expect(setTitle).toHaveBeenLastCalledWith("○ - fix/short");
+
+		await emit("session_shutdown");
+		expect(setWorkingVisible).toHaveBeenLastCalledWith(true);
+		contextIsStale = true;
+		expect(() => footerComponent?.dispose?.()).not.toThrow();
 	});
 });
 
