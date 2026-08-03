@@ -117,6 +117,12 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### docs-list / scripts/docs-list.ts
 - Optional docs gate. Ignore if missing or no `docs/` directory.
 
+### graphify
+- Local code knowledge graph CLI + Pi skill. Build with `/skill:graphify .` from the intended repo or bounded subsystem; use `--update` after source changes.
+- Query before broad search with `graphify query`, `graphify path`, or `graphify explain`; pass `--graph <path>/graphify-out/graph.json` for subsystem graphs. Confirm conclusions against source before editing.
+- For shared repo setup, commit only `graphify-out/graph.json`, `graph.html`, and `GRAPH_REPORT.md`; ignore caches, manifests, interpreter paths, cost files, and temporary extraction state.
+- Add a concise repo-local `AGENTS.md` section listing committed graph paths, query-first guidance, source verification, and the requirement to refresh and commit affected graph outputs with code changes.
+
 ### agent-browser
 - Browser automation CLI for agent workflows: `open`, `snapshot`, `click`, `fill`, `screenshot`, `close`.
 - Browser testing: use `agent-browser` only. Do not add/run Puppeteer, Playwright, browser MCPs, or ad-hoc Node browser scripts unless a repo already owns that stack or Travis explicitly asks.
