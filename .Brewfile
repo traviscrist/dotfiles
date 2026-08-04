@@ -115,6 +115,7 @@ brew 'bun'
 
 # Python
 brew 'pyenv'
+brew 'uv'
 
 # Go
 brew 'go'
