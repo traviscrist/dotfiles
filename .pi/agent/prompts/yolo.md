@@ -32,6 +32,8 @@ Treat this `/yolo` invocation as Travis's explicit request to drive the provided
 
 Create or replace one durable goal with `create_goal({ replace_existing: true, ... })`.
 
+Do not set `token_budget` unless Travis explicitly provided a token budget or limit in `$@`. Omit the field otherwise; never infer, estimate, or invent a budget from task size.
+
 Use the lean `/ship` workflow directly; do not use the old swarm pattern:
 - preflight and docs/TODO context
 - optional read-only `scout` and risk `reviewer` only when useful
