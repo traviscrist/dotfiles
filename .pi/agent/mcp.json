@@ -1,0 +1,24 @@
+{
+  "mcpServers": {
+    "lunchmoney": {
+      "command": "/Users/travis/.ai/bin/lunchmoney-mcp",
+      "env": {
+        "LUNCHMONEY_TOKEN": "${LM_TOKEN}"
+      },
+      "lifecycle": "lazy",
+      "directTools": false,
+      "approveTools": [
+        "lm_*_create",
+        "lm_*_update",
+        "lm_*_delete",
+        "lm_budgets_upsert",
+        "lm_plaid_accounts_fetch",
+        "lm_transactions_group",
+        "lm_transactions_ungroup",
+        "lm_transactions_split",
+        "lm_transactions_unsplit",
+        "lm_transactions_attachment_upload"
+      ]
+    }
+  }
+}
