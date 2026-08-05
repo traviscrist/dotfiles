@@ -113,13 +113,47 @@ describe("agent status extension", () => {
 		assert.match(replayHarness.component().render(80)[1], /Built the status package/);
 	});
 
-	it("rejects blank or sensitive summaries and strips terminal controls", async () => {
+	it("preserves multiline bullet summaries and advertises the preferred format", async () => {
+		const harness = createHarness();
+		await harness.emit("session_start");
+		const tool = harness.tools.get("status_update");
+		assert.match(tool.description, /2–4 line bullet summary/);
+		assert.match(tool.parameters.properties.summary.description, /2–4 bullet lines/);
+		assert.equal(tool.parameters.properties.summary.maxLength, 480);
+
+		const policy = await harness.emit("before_agent_start", { systemPrompt: "base" });
+		assert.match(policy.systemPrompt, /Prefer 2–4 concise bullet lines/);
+		const result = await tool.execute(
+			"multiline",
+			{ phase: "validating", summary: "  - Added multiline support.  \n\n - Running focused tests. " },
+			null,
+			undefined,
+			harness.ctx,
+		);
+		assert.equal(result.details.status.summary, "- Added multiline support.\n- Running focused tests.");
+		assert.deepEqual(harness.component().render(80), [
+			"warning:◐ Status · validating",
+			"text:  - Added multiline support.",
+			"text:  - Running focused tests.",
+			"",
+		]);
+	});
+
+	it("rejects blank, oversized, too-tall, or sensitive summaries and strips terminal controls", async () => {
 		const harness = createHarness();
 		await harness.emit("session_start");
 		const tool = harness.tools.get("status_update");
 		assert.throws(
 			() => tool.execute("blank", { phase: "implementing", summary: "  \n " }, null, undefined, harness.ctx),
 			/non-whitespace/,
+		);
+		assert.throws(
+			() => tool.execute("oversized", { phase: "implementing", summary: "x".repeat(481) }, null, undefined, harness.ctx),
+			/480 characters/,
+		);
+		assert.throws(
+			() => tool.execute("too-tall", { phase: "implementing", summary: "a\nb\nc\nd\ne" }, null, undefined, harness.ctx),
+			/4 lines/,
 		);
 		assert.throws(
 			() => tool.execute("secret", { phase: "implementing", summary: "token=abcdefghijklmnop" }, null, undefined, harness.ctx),
@@ -243,7 +277,7 @@ describe("agent status extension", () => {
 });
 
 describe("status rendering", () => {
-	it("clips both lines to terminal width", () => {
+	it("wraps every summary line to terminal width", () => {
 		const theme = { fg: (_color, text) => text };
 		const lines = renderStatus(
 			{
@@ -254,7 +288,7 @@ describe("status rendering", () => {
 			theme,
 			12,
 		);
-		assert.ok(visibleWidth(lines[0]) <= 12);
-		assert.ok(visibleWidth(lines[1]) <= 12);
+		assert.ok(lines.length > 3);
+		assert.ok(lines.slice(0, -1).every((line) => visibleWidth(line) <= 12));
 	});
 });

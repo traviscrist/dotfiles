@@ -2,6 +2,8 @@ export const TOOL_NAME = "status_update";
 export const STATE_ENTRY_TYPE = "agent-status-state.v1";
 export const CONTEXT_MESSAGE_TYPE = "agent-status-reminder.v1";
 export const TOOLS_BEFORE_REMINDER = 6;
+export const MAX_SUMMARY_LENGTH = 480;
+export const MAX_SUMMARY_LINES = 4;
 
 export const STATUS_PHASES = ["planning", "implementing", "validating", "blocked", "done"] as const;
 export type StatusPhase = (typeof STATUS_PHASES)[number];
@@ -57,7 +59,12 @@ function stripTerminalControls(value: string): string {
 }
 
 export function normalizeSummary(value: string): string {
-	return stripTerminalControls(value).trim().replace(/\s+/g, " ");
+	return stripTerminalControls(value)
+		.replace(/\r\n?/g, "\n")
+		.split("\n")
+		.map((line) => line.trim().replace(/[\t ]+/g, " "))
+		.filter(Boolean)
+		.join("\n");
 }
 
 export function containsSensitiveMaterial(value: string): boolean {
@@ -71,7 +78,8 @@ function isSafePersistedSummary(value: unknown): value is string {
 	return (
 		typeof value === "string" &&
 		value.length > 0 &&
-		value.length <= 180 &&
+		value.length <= MAX_SUMMARY_LENGTH &&
+		value.split("\n").length <= MAX_SUMMARY_LINES &&
 		normalizeSummary(value) === value &&
 		!containsSensitiveMaterial(value)
 	);

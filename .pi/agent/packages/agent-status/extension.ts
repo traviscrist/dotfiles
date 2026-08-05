@@ -12,6 +12,8 @@ import {
 	CONTEXT_MESSAGE_TYPE,
 	containsSensitiveMaterial,
 	createRuntimeState,
+	MAX_SUMMARY_LENGTH,
+	MAX_SUMMARY_LINES,
 	normalizeSummary,
 	publishStatus,
 	recordToolProgress,
@@ -33,18 +35,18 @@ const STATUS_POLICY = `
 [AGENT STATUS POLICY]
 For multi-step work in the interactive parent session:
 - Call status_update after the initial plan starts, after meaningful milestones or blockers, and before the final response when progress changed.
-- Write one concise, human-readable sentence about the outcome and current focus. Do not narrate routine tool calls or duplicate the todo list.
+- Prefer 2–4 concise bullet lines covering the outcome, current focus, and any relevant validation or blocker. A single line is fine for a small update. Do not narrate routine tool calls or duplicate the todo list.
 - Use phase planning, implementing, validating, blocked, or done. Use blocked only for a real unresolved blocker and done only when the requested work is complete.
 - Never include secrets, credentials, tokens, private user data, or raw sensitive payloads.`;
 const DUE_CONTEXT = `[AGENT STATUS UPDATE DUE]
-Meaningful progress changed since the latest status. Before more substantive work or the final response, call status_update with one concise outcome-and-current-focus sentence. Do not duplicate todos or narrate routine tool calls.`;
+Meaningful progress changed since the latest status. Before more substantive work or the final response, call status_update. Prefer 2–4 concise bullet lines covering the outcome and current focus; include validation or a blocker when relevant. Do not duplicate todos or narrate routine tool calls.`;
 
 const StatusParamsSchema = Type.Object({
 	phase: StringEnum(STATUS_PHASES, { description: "Current work phase" }),
 	summary: Type.String({
 		minLength: 1,
-		maxLength: 180,
-		description: "One concise human-readable sentence describing the outcome and current focus",
+		maxLength: MAX_SUMMARY_LENGTH,
+		description: "Concise user-facing progress summary. Prefer 2–4 bullet lines covering outcome, current focus, and relevant validation or blockers; use one line for a small update.",
 	}),
 });
 
@@ -76,7 +78,12 @@ function getState(runtime: StatusRuntime, id: string): RuntimeState {
 function executeStatus(runtime: StatusRuntime, params: StatusParams, ctx: ExtensionContext) {
 	const summary = normalizeSummary(params.summary);
 	if (!summary) throw new Error("Status summary must contain safe non-whitespace text");
-	if (summary.length > 180) throw new Error("Status summary must be 180 characters or fewer");
+	if (summary.length > MAX_SUMMARY_LENGTH) {
+		throw new Error(`Status summary must be ${MAX_SUMMARY_LENGTH} characters or fewer`);
+	}
+	if (summary.split("\n").length > MAX_SUMMARY_LINES) {
+		throw new Error(`Status summary must be ${MAX_SUMMARY_LINES} lines or fewer`);
+	}
 	if (containsSensitiveMaterial(summary)) throw new Error("Status summary must not contain credentials or secret values");
 	const id = sessionId(ctx);
 	const status = { phase: params.phase, summary, updatedAt: Date.now() };
@@ -174,7 +181,7 @@ function registerTool(runtime: StatusRuntime): void {
 	runtime.pi.registerTool({
 		name: TOOL_NAME,
 		label: "Status Update",
-		description: "Publish the latest concise progress status for the interactive user. Use for meaningful milestones, blockers, validation, and completion; do not duplicate the todo list.",
+		description: "Publish the latest concise progress status for the interactive user. Prefer a 2–4 line bullet summary for meaningful milestones, blockers, validation, and completion; do not duplicate the todo list.",
 		parameters: StatusParamsSchema,
 		execute: (...args) => executeStatus(runtime, args[1], args[4]),
 	});

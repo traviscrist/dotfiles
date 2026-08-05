@@ -5,6 +5,8 @@ import {
 	containsSensitiveMaterial,
 	createRuntimeState,
 	isMeaningfulTodoTransition,
+	MAX_SUMMARY_LENGTH,
+	MAX_SUMMARY_LINES,
 	normalizeSummary,
 	publishStatus,
 	recordToolProgress,
@@ -34,10 +36,11 @@ describe("status replay", () => {
 		assert.deepEqual(replayStatus([...entries, toolResult(secondStatus)]), secondStatus);
 	});
 
-	it("ignores malformed, unknown-version, and oversized snapshots", () => {
+	it("ignores malformed, unknown-version, oversized, and too-tall snapshots", () => {
 		const malformed = [
 			{ type: "custom", customType: STATE_ENTRY_TYPE, data: { version: 2, status: secondStatus } },
-			toolResult({ ...secondStatus, summary: "x".repeat(181) }),
+			toolResult({ ...secondStatus, summary: "x".repeat(MAX_SUMMARY_LENGTH + 1) }),
+			toolResult({ ...secondStatus, summary: Array.from({ length: MAX_SUMMARY_LINES + 1 }, () => "line").join("\n") }),
 			toolResult({ ...secondStatus, phase: "unknown" }),
 			toolResult({ ...secondStatus, summary: "token=abcdefghijklmnop" }),
 			toolResult({ ...secondStatus, summary: "Unsafe\u001b[31m status" }),
@@ -84,8 +87,11 @@ describe("progress reminders", () => {
 });
 
 describe("summary safety", () => {
-	it("trims whitespace and strips terminal controls", () => {
-		assert.equal(normalizeSummary("  Built\n\tthe   \u001b[31mextension.\u001b[0m "), "Built the extension.");
+	it("normalizes each line while preserving meaningful line breaks", () => {
+		assert.equal(
+			normalizeSummary(" \r\n - Built   the \u001b[31mextension.\u001b[0m \n\n - Running\t tests. "),
+			"- Built the extension.\n- Running tests.",
+		);
 		assert.equal(normalizeSummary("Safe\u0000 status"), "Safe status");
 	});
 

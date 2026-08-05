@@ -1,5 +1,5 @@
 import type { ExtensionUIContext, Theme } from "../../npm/node_modules/@earendil-works/pi-coding-agent/dist/index.js";
-import { truncateToWidth, type TUI } from "../../npm/node_modules/@earendil-works/pi-tui/dist/index.js";
+import { truncateToWidth, wrapTextWithAnsi, type TUI } from "../../npm/node_modules/@earendil-works/pi-tui/dist/index.js";
 import type { RuntimeState, StatusPhase } from "./state.js";
 
 const WIDGET_KEY = "agent-status";
@@ -35,8 +35,11 @@ export function renderStatus(state: RuntimeState, theme: Theme, width: number): 
 		presentation.color,
 		truncateToWidth(`${presentation.icon} Status · ${state.status.phase}`, width),
 	);
-	const summary = theme.fg("text", truncateToWidth(`  ${state.status.summary}`, width));
-	return [heading, summary, ""];
+	const summaryLines = state.status.summary
+		.split("\n")
+		.flatMap((line) => wrapTextWithAnsi(`  ${line}`, width))
+		.map((line) => theme.fg("text", line));
+	return [heading, ...summaryLines, ""];
 }
 
 export function createStatusWidget(): StatusWidget {
