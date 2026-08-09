@@ -2,20 +2,20 @@
   "name": "pi-extensions",
   "private": true,
   "dependencies": {
-    "@earendil-works/pi-agent-core": "0.80.2",
-    "@earendil-works/pi-ai": "0.80.2",
-    "@earendil-works/pi-coding-agent": "0.80.2",
-    "@earendil-works/pi-tui": "0.80.2",
-    "@juicesharp/rpiv-ask-user-question": "^2.1.0",
-    "@juicesharp/rpiv-todo": "^2.1.0",
+    "@earendil-works/pi-agent-core": "0.84.1",
+    "@earendil-works/pi-ai": "0.84.1",
+    "@earendil-works/pi-coding-agent": "0.84.1",
+    "@earendil-works/pi-tui": "0.84.1",
+    "@juicesharp/rpiv-ask-user-question": "^2.4.0",
+    "@juicesharp/rpiv-todo": "^2.4.0",
     "pi-code-previews": "^0.1.36",
-    "pi-codex-goal": "^0.1.38",
-    "pi-intercom": "^0.6.0",
-    "pi-lens": "^3.8.71",
-    "pi-mcp-adapter": "^2.20.1",
+    "pi-codex-goal": "^0.2.0",
+    "pi-intercom": "^0.9.3",
+    "pi-lens": "^3.8.74",
+    "pi-mcp-adapter": "^2.21.1",
     "pi-openai-fast-mode": "^0.3.0",
     "pi-simplify": "^0.2.3",
-    "pi-subagents": "^0.36.0",
-    "pi-web-access": "^0.13.0"
+    "pi-subagents": "^0.45.0",
+    "pi-web-access": "^0.19.0"
   }
 }
