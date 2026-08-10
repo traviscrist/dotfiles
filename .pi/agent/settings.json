@@ -1,5 +1,5 @@
 {
-  "lastChangelogVersion": "0.81.1",
+  "lastChangelogVersion": "0.84.1",
   "theme": "everforest-dark",
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-5.6-sol",
@@ -25,15 +25,11 @@
     }
   },
   "packages": [
-    "npm:pi-codex-goal",
     "npm:pi-lens",
     "npm:pi-simplify",
-    "npm:pi-code-previews",
     "npm:pi-subagents",
     "npm:pi-web-access",
-    "npm:pi-intercom",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "./packages/agent-status",
     "npm:@juicesharp/rpiv-todo",
     "npm:pi-mcp-adapter"
   ]

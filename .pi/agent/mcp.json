@@ -1,4 +1,7 @@
 {
+  "settings": {
+    "scriptMode": false
+  },
   "mcpServers": {
     "lunchmoney": {
       "command": "/Users/travis/.ai/bin/lunchmoney-mcp",
