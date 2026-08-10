@@ -243,7 +243,7 @@ enabled = true
 appearanceTheme = "system"
 followUpQueueMode = "queue"
 composerEnterBehavior = "cmdIfMultiline"
-conversationDetailMode = "STEPS_COMMANDS"
+conversationDetailMode = "STEPS_PROSE"
 ambient-suggestions-enabled = true
 dock-icon-preference = "codex-system"
 
