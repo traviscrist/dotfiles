@@ -54,6 +54,7 @@ export PATH="/Users/travis/.cargo/bin:$PATH"
 # AI Workspace
 #
 export PATH="$HOME/.ai/bin:$PATH"
+export PI_FFF_MODE='override'
 
 export PATH="/Users/travis/.bun/bin:$PATH"
 export PATH="/Users/travis/.local/bin:$PATH"

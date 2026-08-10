@@ -6,6 +6,7 @@
     "@earendil-works/pi-ai": "0.84.1",
     "@earendil-works/pi-coding-agent": "0.84.1",
     "@earendil-works/pi-tui": "0.84.1",
+    "@ff-labs/pi-fff": "^0.10.3",
     "@juicesharp/rpiv-ask-user-question": "^2.4.0",
     "pi-lens": "^3.8.74",
     "pi-mcp-adapter": "^2.21.1",

@@ -30,6 +30,7 @@
     "npm:pi-subagents",
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question",
-    "npm:pi-mcp-adapter"
+    "npm:pi-mcp-adapter",
+    "npm:@ff-labs/pi-fff"
   ]
 }
