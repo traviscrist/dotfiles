@@ -1,5 +1,11 @@
 {
   "widget": {
     "visible": false
+  },
+  "contextInjection": {
+    "enabled": false
+  },
+  "tests": {
+    "enabled": false
   }
 }
