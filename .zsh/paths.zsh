@@ -55,6 +55,7 @@ export PATH="/Users/travis/.cargo/bin:$PATH"
 #
 export PATH="$HOME/.ai/bin:$PATH"
 export PI_FFF_MODE='override'
+export PI_LENS_WARM_ATTACH='1'
 
 export PATH="/Users/travis/.bun/bin:$PATH"
 export PATH="/Users/travis/.local/bin:$PATH"

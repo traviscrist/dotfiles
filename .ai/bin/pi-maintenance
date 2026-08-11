@@ -1,0 +1,250 @@
+#!/usr/bin/env python3
+"""Bounded maintenance for Pi sessions and orphaned Pi Lens ast-grep servers."""
+
+from __future__ import annotations
+
+import argparse
+import fcntl
+import os
+from pathlib import Path
+import re
+import shutil
+import signal
+import sqlite3
+import subprocess
+import sys
+import time
+from typing import Iterable
+
+SESSION_ROOT = Path.home() / ".pi" / "agent" / "sessions"
+STATE_ROOT = Path.home() / ".cache" / "pi-maintenance"
+STAMP_PATH = STATE_ROOT / "last-run"
+LOCK_PATH = STATE_ROOT / "lock"
+BATCH_SIZE = 100
+
+
+def parse_elapsed(value: str) -> int:
+    """Convert ps etime ([[dd-]hh:]mm:ss) to seconds."""
+    days = 0
+    clock = value
+    if "-" in value:
+        day_text, clock = value.split("-", 1)
+        days = int(day_text)
+    parts = [int(part) for part in clock.split(":")]
+    if len(parts) == 3:
+        hours, minutes, seconds = parts
+    elif len(parts) == 2:
+        hours, (minutes, seconds) = 0, parts
+    else:
+        hours, minutes, seconds = 0, 0, parts[0]
+    return days * 86_400 + hours * 3_600 + minutes * 60 + seconds
+
+
+def is_pi_lens_ast_grep_orphan(ppid: int, elapsed: str, command: str) -> bool:
+    """Match only old, reparented ast-grep LSPs launched with Pi Lens configs."""
+    if ppid != 1 or parse_elapsed(elapsed) < 600:
+        return False
+    normalized = command.replace("\\", "/")
+    return (
+        re.search(r"(?:^|/)ast-grep(?:\s|$)", normalized) is not None
+        and " lsp " in f" {normalized} "
+        and "/pi-lens-ast-grep/" in normalized
+    )
+
+
+def orphan_pids() -> list[int]:
+    result = subprocess.run(
+        ["ps", "-axo", "pid=,ppid=,etime=,command="],
+        check=True,
+        capture_output=True,
+        text=True,
+        timeout=15,
+    )
+    matches: list[int] = []
+    for line in result.stdout.splitlines():
+        fields = line.strip().split(None, 3)
+        if len(fields) != 4:
+            continue
+        try:
+            pid, ppid = int(fields[0]), int(fields[1])
+        except ValueError:
+            continue
+        if is_pi_lens_ast_grep_orphan(ppid, fields[2], fields[3]):
+            matches.append(pid)
+    return matches
+
+
+def open_session_paths() -> set[Path]:
+    """Find open session files so concurrent Pi processes are never cleaned."""
+    paths: set[Path] = set()
+    lsof = shutil.which("lsof")
+    if not lsof:
+        return paths
+    try:
+        result = subprocess.run(
+            [lsof, "-Fn"],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=20,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return paths
+    root_prefix = f"{SESSION_ROOT}{os.sep}"
+    for line in result.stdout.splitlines():
+        if line.startswith("n") and line[1:].startswith(root_prefix):
+            paths.add(Path(line[1:]).resolve())
+    return paths
+
+
+def session_candidates(retention_days: int) -> list[Path]:
+    if not SESSION_ROOT.exists():
+        return []
+    cutoff = time.time() - retention_days * 86_400
+    protected = open_session_paths()
+    current = os.environ.get("PI_SESSION_FILE")
+    if current:
+        protected.add(Path(current).expanduser().resolve())
+
+    candidates: list[Path] = []
+    for path in SESSION_ROOT.rglob("*.jsonl"):
+        try:
+            resolved = path.resolve()
+            if resolved in protected or path.stat().st_mtime >= cutoff:
+                continue
+            lock_path = Path(f"{path}.lock")
+            if lock_path.exists() and lock_path.stat().st_mtime >= cutoff:
+                continue
+            candidates.append(path)
+        except FileNotFoundError:
+            continue
+    return candidates
+
+
+def chunks(values: list[Path], size: int) -> Iterable[list[Path]]:
+    for index in range(0, len(values), size):
+        yield values[index : index + size]
+
+
+def trash_paths(paths: list[Path]) -> list[Path]:
+    trash = shutil.which("trash")
+    if not trash:
+        raise RuntimeError("trash CLI not found")
+    moved: list[Path] = []
+    for batch in chunks(paths, BATCH_SIZE):
+        result = subprocess.run(
+            [trash, *map(str, batch)],
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+        if result.returncode == 0:
+            moved.extend(path for path in batch if not path.exists())
+            continue
+        for path in batch:
+            single = subprocess.run(
+                [trash, str(path)],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            if single.returncode == 0 and not path.exists():
+                moved.append(path)
+    return moved
+
+
+def prune_session_index(paths: list[Path]) -> None:
+    index_path = SESSION_ROOT / "session-index.sqlite"
+    if not paths or not index_path.exists():
+        return
+    try:
+        with sqlite3.connect(index_path, timeout=10) as connection:
+            for batch in chunks(paths, 500):
+                placeholders = ",".join("?" for _ in batch)
+                connection.execute(
+                    f"DELETE FROM sessions WHERE path IN ({placeholders})",
+                    [str(path) for path in batch],
+                )
+    except (sqlite3.Error, OSError):
+        # The index is a rebuildable optimization; session files remain authoritative.
+        pass
+
+
+def reap_orphans(pids: list[int]) -> int:
+    for pid in pids:
+        try:
+            os.kill(pid, signal.SIGTERM)
+        except ProcessLookupError:
+            pass
+    deadline = time.monotonic() + 2
+    remaining = set(pids)
+    while remaining and time.monotonic() < deadline:
+        for pid in list(remaining):
+            try:
+                os.kill(pid, 0)
+            except ProcessLookupError:
+                remaining.remove(pid)
+        if remaining:
+            time.sleep(0.05)
+    for pid in remaining:
+        try:
+            os.kill(pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    return len(pids)
+
+
+def due(interval_seconds: int | None) -> bool:
+    if interval_seconds is None or not STAMP_PATH.exists():
+        return True
+    return time.time() - STAMP_PATH.stat().st_mtime >= interval_seconds
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--apply", action="store_true", help="perform cleanup; default is a dry run")
+    parser.add_argument(
+        "--session-days",
+        type=int,
+        default=int(os.environ.get("PI_SESSION_RETENTION_DAYS", "7")),
+        help="trash sessions at least this old (default: 7)",
+    )
+    parser.add_argument("--if-due", type=int, metavar="SECONDS", help="skip if maintenance ran recently")
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+    if args.session_days < 1:
+        raise SystemExit("--session-days must be at least 1")
+
+    STATE_ROOT.mkdir(parents=True, exist_ok=True)
+    with LOCK_PATH.open("a+") as lock_file:
+        fcntl.flock(lock_file, fcntl.LOCK_EX)
+        session_cleanup_due = due(args.if_due)
+        sessions = session_candidates(args.session_days) if session_cleanup_due else []
+        bytes_total = sum(path.stat().st_size for path in sessions if path.exists())
+        # Reap on every invocation; only the more expensive session walk is daily.
+        orphans = orphan_pids()
+        if not args.apply:
+            print(
+                f"pi-maintenance dry-run: sessions={len(sessions)} "
+                f"bytes={bytes_total} orphan_ast_grep={len(orphans)}"
+            )
+            return 0
+
+        moved = trash_paths(sessions) if sessions else []
+        prune_session_index(moved)
+        reaped = reap_orphans(orphans)
+        complete = len(moved) == len(sessions)
+        if session_cleanup_due and complete:
+            STAMP_PATH.touch()
+        print(
+            f"pi-maintenance: trashed_sessions={len(moved)} "
+            f"bytes={bytes_total} reaped_ast_grep={reaped}"
+        )
+        return 0 if complete else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

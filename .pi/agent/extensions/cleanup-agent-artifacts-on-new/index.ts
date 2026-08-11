@@ -2,34 +2,21 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
-const SCRIPT_PATH = join(
-	process.env.HOME ?? "",
-	".ai/skills/cleanup-agent-artifacts/scripts/cleanup-agent-artifacts.sh",
-);
+const SCRIPT_PATH = join(process.env.HOME ?? "", ".ai/bin/pi-maintenance");
+const DAILY_INTERVAL_SECONDS = 24 * 60 * 60;
 
 export default function (pi: ExtensionAPI) {
-	pi.on("session_shutdown", async (event, ctx) => {
-		if (event.reason !== "new") return;
+	pi.on("session_start", () => {
+		if (!existsSync(SCRIPT_PATH)) return;
 
-		if (!existsSync(SCRIPT_PATH)) {
-			if (ctx.hasUI) {
-				ctx.ui.notify("Cleanup skill script not found; skipped artifact cleanup", "warning");
-			}
-			return;
-		}
-
-		const result = await pi.exec("bash", [SCRIPT_PATH, "--apply"], { timeout: 30_000 });
-		const output = [result.stdout.trim(), result.stderr.trim()].filter(Boolean).join("\n");
-
-		if (result.code === 0) {
-			if (ctx.hasUI) {
-				ctx.ui.notify(output || "Cleaned agent artifacts", "info");
-			}
-			return;
-		}
-
-		if (ctx.hasUI) {
-			ctx.ui.notify(output || "Agent artifact cleanup failed", "warning");
-		}
+		// Maintenance owns its cross-process lock and session-cleanup throttle.
+		// Do not await: orphan reaping and cleanup must never extend startup or a turn.
+		void pi.exec(
+			SCRIPT_PATH,
+			["--apply", "--session-days", "7", "--if-due", String(DAILY_INTERVAL_SECONDS)],
+			{ timeout: 120_000 },
+		).catch(() => {
+			// Best effort. A later session retries because failed runs are not stamped.
+		});
 	});
 }

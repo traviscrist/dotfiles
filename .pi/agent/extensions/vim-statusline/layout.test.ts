@@ -30,9 +30,10 @@ describe("activity title", () => {
 		let branchName = "feat/pol-7306-cipa-business-survey-question";
 		let branchChangeHandler: (() => void) | undefined;
 		let footerComponent: { dispose?: () => void } | undefined;
+		const requestRender = mock(() => {});
 		const setFooter = mock((factory: (tui: any, theme: any, footerData: any) => unknown) => {
 			footerComponent = factory(
-				{ requestRender: mock(() => {}) },
+				{ requestRender },
 				{},
 				{
 					getGitBranch: () => branchName,
@@ -74,6 +75,7 @@ describe("activity title", () => {
 		setTitle("π - repo");
 		await new Promise<void>((resolve) => setTimeout(resolve, 300));
 		expect(setTitle).toHaveBeenLastCalledWith("○ - feat/pol-7306-cipa-busi…");
+		expect(requestRender).toHaveBeenCalledTimes(0);
 
 		await emit("agent_start");
 		expect(setTitle).toHaveBeenLastCalledWith("◐ - feat/pol-7306-cipa-busi…");

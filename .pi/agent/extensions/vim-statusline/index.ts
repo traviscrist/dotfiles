@@ -306,9 +306,8 @@ export default function (pi: ExtensionAPI) {
 				requestRender();
 			});
 			const interval = setInterval(() => {
-				if (activityState !== "IDLE") {
-					ringIndex = (ringIndex + 1) % PLANET_RING_FRAMES.length;
-				}
+				if (activityState === "IDLE") return;
+				ringIndex = (ringIndex + 1) % PLANET_RING_FRAMES.length;
 				requestRender();
 			}, PLANET_RING_INTERVAL_MS);
 
