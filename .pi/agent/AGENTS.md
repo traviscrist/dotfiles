@@ -78,7 +78,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Branch changes require user consent.
 - Destructive ops forbidden unless explicit (`reset --hard`, `clean`, `restore`, `rm`, …).
 - Remotes under `~/git` and `~/travis`: prefer SSH; flip HTTPS->SSH before pull/push.
-- Commit helper on PATH (`~/.ai/bin`): `committer` (bash). Prefer it; if repo has `./scripts/committer`, use that.
+- Commit helper on PATH (`~/.ai/bin`): `committer` (bash). Prefer it; if repo has `./scripts/committer`, use that. Exact syntax: `committer "<commit message>" <file> [<file> ...]` — message first, then every explicit path.
 - Don’t delete/rename unexpected stuff; stop + ask.
 - No repo-wide S/R scripts; keep edits small/reviewable.
 - Avoid manual `git stash`; if Git auto-stashes during pull/rebase, that’s fine (hint, not hard guardrail).

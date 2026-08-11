@@ -2,8 +2,10 @@ import { describe, expect, it } from "bun:test";
 import {
   buildNextKickoff,
   buildNextSessionName,
+  buildTaskSessionName,
   createNextExtension,
   normalizeFocus,
+  parseTaskSessionName,
 } from "./index.ts";
 
 const SKILL_MARKDOWN = `---
@@ -23,6 +25,9 @@ function createHarness(
     string,
     { handler: (args: string, ctx: any) => Promise<void> }
   >();
+  const handlers = new Map<string, Array<(event: any, ctx: any) => any>>();
+  const renamedSessions: string[] = [];
+
   const pi = {
     registerCommand(
       name: string,
@@ -30,14 +35,21 @@ function createHarness(
     ) {
       commands.set(name, command);
     },
+    on(name: string, handler: (event: any, ctx: any) => any) {
+      handlers.set(name, [...(handlers.get(name) ?? []), handler]);
+    },
+    setSessionName(name: string) {
+      renamedSessions.push(name);
+    },
   };
   createNextExtension(pi as any, loadSkill ? { loadSkill } : {});
-  return commands;
+  return { commands, handlers, renamedSessions };
 }
 
 function createContext(options: { idle?: boolean; cancelled?: boolean } = {}) {
   const notifications: Array<[string, string]> = [];
   const sessionNames: string[] = [];
+  const customEntries: Array<{ customType: string; data: unknown }> = [];
   const messages: string[] = [];
   let newSessionCalls = 0;
 
@@ -51,6 +63,7 @@ function createContext(options: { idle?: boolean; cancelled?: boolean } = {}) {
     async newSession(config: {
       setup: (sessionManager: {
         appendSessionInfo: (name: string) => void;
+        appendCustomEntry: (customType: string, data: unknown) => void;
       }) => Promise<void>;
       withSession: (replacementCtx: {
         sendUserMessage: (message: string) => Promise<void>;
@@ -60,6 +73,8 @@ function createContext(options: { idle?: boolean; cancelled?: boolean } = {}) {
       if (options.cancelled) return { cancelled: true };
       await config.setup({
         appendSessionInfo: (name) => sessionNames.push(name),
+        appendCustomEntry: (customType, data) =>
+          customEntries.push({ customType, data }),
       });
       await config.withSession({
         async sendUserMessage(message) {
@@ -72,6 +87,7 @@ function createContext(options: { idle?: boolean; cancelled?: boolean } = {}) {
 
   return {
     ctx,
+    customEntries,
     messages,
     notifications,
     sessionNames,
@@ -79,6 +95,37 @@ function createContext(options: { idle?: boolean; cancelled?: boolean } = {}) {
       return newSessionCalls;
     },
   };
+}
+
+async function finishAssistantMessage(
+  harness: ReturnType<typeof createHarness>,
+  text: string,
+  marked: boolean,
+): Promise<void> {
+  const handler = harness.handlers.get("message_end")?.[0];
+  expect(handler).toBeFunction();
+  await handler!(
+    {
+      message: {
+        role: "assistant",
+        content: [{ type: "text", text }],
+      },
+    },
+    {
+      sessionManager: {
+        getEntries: () =>
+          marked
+            ? [
+                {
+                  type: "custom",
+                  customType: "next-session",
+                  data: { version: 1 },
+                },
+              ]
+            : [],
+      },
+    },
+  );
 }
 
 describe("next command", () => {
@@ -92,70 +139,105 @@ describe("next command", () => {
     );
     expect(buildNextSessionName("")).toBe("Next project step");
     expect(buildNextSessionName("backend evals")).toBe("Next: backend evals");
+    expect(buildTaskSessionName("  rotate managed\n sessions ")).toBe(
+      "Next: rotate managed sessions",
+    );
+    expect(
+      parseTaskSessionName(
+        "NEXT_SESSION_NAME: rotate managed sessions\n\n## Plan",
+      ),
+    ).toBe("Next: rotate managed sessions");
+    expect(
+      parseTaskSessionName("NEXT_SESSION_NAME: <short task title>"),
+    ).toBeUndefined();
   });
 
-  it("creates a fresh named session with expanded skill instructions", async () => {
-    const commands = createHarness();
-    const harness = createContext();
+  it("creates a fresh named and marked session with expanded instructions", async () => {
+    const harness = createHarness();
+    const context = createContext();
 
-    await commands.get("next")!.handler(" backend\n evals ", harness.ctx);
+    await harness.commands
+      .get("next")!
+      .handler(" backend\n evals ", context.ctx);
 
-    expect(harness.newSessionCalls).toBe(1);
-    expect(harness.sessionNames).toEqual(["Next: backend evals"]);
-    expect(harness.messages).toEqual([
+    expect(context.newSessionCalls).toBe(1);
+    expect(context.sessionNames).toEqual(["Next: backend evals"]);
+    expect(context.customEntries).toEqual([
+      { customType: "next-session", data: { version: 1 } },
+    ]);
+    expect(context.messages).toEqual([
       "# Next Project Step\n\nExecute the next slice.\n\n## Invocation focus\n\nbackend evals",
     ]);
-    expect(harness.messages[0]).not.toContain("/skill:next");
-    expect(harness.messages[0]).not.toContain("name: next");
+    expect(context.messages[0]).not.toContain("/skill:next");
+    expect(context.messages[0]).not.toContain("name: next");
   });
 
   it("loads the deployed skill through the default path", async () => {
-    const commands = createHarness(null);
-    const harness = createContext();
+    const harness = createHarness(null);
+    const context = createContext();
 
-    await commands.get("next")!.handler("", harness.ctx);
+    await harness.commands.get("next")!.handler("", context.ctx);
 
-    expect(harness.newSessionCalls).toBe(1);
-    expect(harness.messages[0]).toContain("# Next Project Step");
-    expect(harness.messages[0]).toContain(
-      "open a ready-for-review pull request",
+    expect(context.newSessionCalls).toBe(1);
+    expect(context.messages[0]).toContain("# Next Project Step");
+    expect(context.messages[0]).toContain("always ask for explicit approval");
+    expect(context.messages[0]).toContain(
+      "NEXT_SESSION_NAME: <short task title>",
     );
-    expect(harness.messages[0]).not.toContain("name: next");
+    expect(context.messages[0]).not.toContain("name: next");
+  });
+
+  it("automatically renames only marked next sessions from the plan", async () => {
+    const regular = createHarness();
+    await finishAssistantMessage(
+      regular,
+      "NEXT_SESSION_NAME: ordinary task",
+      false,
+    );
+    expect(regular.renamedSessions).toEqual([]);
+
+    const next = createHarness();
+    await finishAssistantMessage(
+      next,
+      "NEXT_SESSION_NAME: rotate managed sessions\n\n## Plan",
+      true,
+    );
+    expect(next.renamedSessions).toEqual(["Next: rotate managed sessions"]);
   });
 
   it("refuses session replacement while the agent is busy", async () => {
-    const commands = createHarness();
-    const harness = createContext({ idle: false });
+    const harness = createHarness();
+    const context = createContext({ idle: false });
 
-    await commands.get("next")!.handler("", harness.ctx);
+    await harness.commands.get("next")!.handler("", context.ctx);
 
-    expect(harness.newSessionCalls).toBe(0);
-    expect(harness.notifications).toEqual([
+    expect(context.newSessionCalls).toBe(0);
+    expect(context.notifications).toEqual([
       ["Wait for the current turn to finish before using /next", "warning"],
     ]);
   });
 
   it("keeps the current session when the skill cannot load", async () => {
-    const commands = createHarness(async () => {
+    const harness = createHarness(async () => {
       throw new Error("missing skill");
     });
-    const harness = createContext();
+    const context = createContext();
 
-    await commands.get("next")!.handler("", harness.ctx);
+    await harness.commands.get("next")!.handler("", context.ctx);
 
-    expect(harness.newSessionCalls).toBe(0);
-    expect(harness.notifications).toEqual([
+    expect(context.newSessionCalls).toBe(0);
+    expect(context.notifications).toEqual([
       ["Unable to load the next skill: missing skill", "error"],
     ]);
   });
 
   it("reports a cancelled session replacement", async () => {
-    const commands = createHarness();
-    const harness = createContext({ cancelled: true });
+    const harness = createHarness();
+    const context = createContext({ cancelled: true });
 
-    await commands.get("next")!.handler("", harness.ctx);
+    await harness.commands.get("next")!.handler("", context.ctx);
 
-    expect(harness.newSessionCalls).toBe(1);
-    expect(harness.notifications).toEqual([["New session cancelled", "info"]]);
+    expect(context.newSessionCalls).toBe(1);
+    expect(context.notifications).toEqual([["New session cancelled", "info"]]);
   });
 });

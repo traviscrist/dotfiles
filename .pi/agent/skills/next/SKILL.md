@@ -1,6 +1,6 @@
 ---
 name: next
-description: Select, implement, validate, commit, and open a ready-for-review PR for the smallest coherent slice of the next authoritative project step.
+description: Discover the next authoritative project step, present the smallest coherent implementation plan for approval, then implement, validate, commit, and open a ready-for-review PR.
 disable-model-invocation: true
 ---
 
@@ -13,13 +13,13 @@ Invoking `/next` grants permission to:
 
 - switch from a clean working tree to `main`
 - fast-forward local `main`
-- create a task branch
-- implement one small coherent slice
-- commit and push that slice
+- discover and propose one small coherent slice
+- after explicit plan approval, create a task branch and implement the slice
+- commit and push the approved slice
 - open a ready-for-review pull request
 
-It does not grant permission to merge, use admin privileges, discard work, reset,
-clean, or overwrite unrelated changes.
+It does not grant permission to implement before approval, merge, use admin
+privileges, discard work, reset, clean, or overwrite unrelated changes.
 
 ## 1. Synchronize
 
@@ -49,7 +49,7 @@ Stop if any synchronization step cannot complete safely.
 
 ## 3. Clarify uncertainty
 
-Before choosing or implementing the slice, identify anything unclear about:
+Before selecting the slice, identify anything unclear about:
 
 - which next step has authority
 - intended behavior or acceptance criteria
@@ -61,9 +61,9 @@ If anything is unclear, ask the user before proceeding. Group all blocking
 questions into one structured `ask_user_question` call when available.
 
 Do not invent requirements or silently choose between materially different
-options. If everything is clear, continue without asking.
+options. Continue to planning only after every blocking ambiguity is resolved.
 
-## 4. Choose the slice
+## 4. Select, name, and plan
 
 Choose the smallest coherent slice that:
 
@@ -74,18 +74,40 @@ Choose the smallest coherent slice that:
 - fits into one focused pull request
 - requires no unresolved decision
 
-Before editing, state:
+Start the approval-plan response with exactly one machine-readable line:
 
-- selected next step
-- chosen slice
+`NEXT_SESSION_NAME: <short task title>`
+
+The `/next` extension uses that line to rename the session automatically. Emit an
+updated line if user feedback changes the selected task.
+
+Outline:
+
+- authoritative next step and why it is next
+- chosen smallest slice and explicit exclusions
 - completion criteria
-- branch name
-- likely files
-- validation plan
+- proposed branch name
+- likely files and ownership boundaries
+- tests and validation gates
+- risks, assumptions, and any deferred follow-up
 
-Create a Conventional Commit-style task branch from updated `main`.
+Do not create a branch or edit files yet.
 
-## 5. Delegate sparingly
+## 5. Request approval
+
+Present the plan, then always ask for explicit approval with one structured
+`ask_user_question` call. Offer:
+
+- **Approve and implement (Recommended)** — create the branch and execute the plan
+- **Revise the plan** — stop implementation and incorporate the user's feedback
+- **Choose another step** — return to discovery
+- **Stop here** — leave the synchronized `main` worktree unchanged
+
+If the user does not approve, do not implement. If feedback changes the plan or
+selected task, update the session name, present the revised plan, and request
+approval again in a later turn.
+
+## 6. Delegate sparingly
 
 The parent is the only writer.
 
@@ -99,22 +121,26 @@ Subagents remain available but bounded:
 If delegating, list executable agents first. Skip delegation for small, obvious
 changes.
 
-## 6. Implement and validate
+## 7. Implement and validate
 
-1. Implement the slice; do not stop at planning.
-2. Add focused regression coverage when behavior changes.
-3. Update `TODO.md` and owning documentation when progress or behavior changes.
-4. Run focused validation followed by repository-required gates.
-5. Inspect final status, diff, and diff check.
-6. Run one focused review when warranted.
-7. Fix show-stoppers and rerun affected validation.
+Only after explicit approval:
 
-Do not publish partial or knowingly failing work.
+1. Create the approved Conventional Commit-style task branch from updated `main`.
+2. Implement the approved slice; do not widen scope.
+3. Add focused regression coverage when behavior changes.
+4. Update `TODO.md` and owning documentation when progress or behavior changes.
+5. Run focused validation followed by repository-required gates.
+6. Inspect final status, diff, and diff check.
+7. Run one focused review when warranted.
+8. Fix show-stoppers and rerun affected validation.
 
-## 7. Commit and publish
+Do not publish partial, unapproved, or knowingly failing work.
+
+## 8. Commit and publish
 
 1. Stage only intentional files.
-2. Commit using the repository's Conventional Commit rules.
+2. Commit using the repository's Conventional Commit rules and documented
+   `committer` syntax.
 3. Push the task branch.
 4. Open a non-draft pull request targeting `main`.
 5. Use a Conventional Commit PR title.
