@@ -4,18 +4,18 @@ import { basename } from "node:path";
 import { FAST_MODE_STATUS_KEY, isFastModeStatusActive, thinkingSegmentText } from "./fast-mode.ts";
 
 const COLORS = {
-	bgDim: "#232A2E",
-	bg0: "#2D353B",
-	bg1: "#343F44",
-	bg2: "#3D484D",
-	fg: "#D3C6AA",
-	muted: "#859289",
-	green: "#A7C080",
-	blue: "#7FBBB3",
-	yellow: "#DBBC7F",
-	orange: "#E69875",
-	purple: "#D699B6",
-	red: "#E67E80",
+	bgDim: "#2E353E",
+	bg0: "#303841",
+	bg1: "#3F4750",
+	bg2: "#444E59",
+	fg: "#D8DEE9",
+	muted: "#A6ACB9",
+	green: "#99C794",
+	blue: "#5C99D6",
+	yellow: "#FAC761",
+	orange: "#F97B58",
+	purple: "#C695C6",
+	red: "#EC5F66",
 };
 
 const ANSI_PATTERN = /\x1b\[[0-9;]*m/g;

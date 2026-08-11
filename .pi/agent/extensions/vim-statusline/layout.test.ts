@@ -6,8 +6,8 @@ mock.module("@earendil-works/pi-tui", () => ({ truncateToWidth, visibleWidth }))
 
 const { activityTitle, compactBranchName, default: vimStatusline, lensSegments, lensSummary, makeFooterLine } = await import("./index.ts");
 
-const green = "\x1b[38;2;167;192;128m";
-const dimBackground = "\x1b[48;2;35;42;46m";
+const green = "\x1b[38;2;153;199;148m";
+const dimBackground = "\x1b[48;2;46;53;62m";
 const reset = "\x1b[0m";
 
 describe("activity title", () => {
