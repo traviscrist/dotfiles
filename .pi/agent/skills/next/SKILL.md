@@ -36,16 +36,27 @@ Stop if any synchronization step cannot complete safely.
 
 ## 2. Discover the next step
 
+Use this bounded funnel and stop as soon as authority, scope, and completion are
+clear:
+
 1. Run the repository's documentation-list command when available.
-2. Read `TODO.md` and relevant roadmap, milestone, architecture, and operations
-   documentation.
-3. Prefer, in order:
+2. Read `TODO.md` or the repository's equivalent authoritative work list.
+3. Read only the owning roadmap, milestone, architecture, or operations documents
+   identified by repository instructions and `read_when` guidance.
+4. Query only the committed graph for the affected subsystem when one exists, then
+   confirm the relevant conclusion against source.
+5. Inspect only enough recent history to prove the work is not already complete.
+6. Prefer, in order:
    - an explicitly named next action
    - the first unblocked item in the active milestone
    - the smallest missing prerequisite for that item
-4. Confirm through source and recent commits that it is not already complete.
-5. Treat optional `/next` arguments as a focus hint, not permission to ignore
+7. Treat optional `/next` arguments as a focus hint, not permission to ignore
    authoritative project priorities.
+
+Do not query unrelated subsystem graphs, disabled or non-authoritative issue
+trackers, broad history, or extra documentation unless the bounded funnel leaves a
+material ambiguity. More reading after the next step is proven is waste, not extra
+confidence.
 
 ## 3. Clarify uncertainty
 
@@ -115,7 +126,12 @@ Subagents remain available but bounded:
 
 - optionally one fresh-context scout or researcher when repository inspection
   cannot answer a material question
-- optionally one fresh-context reviewer after validation for a non-trivial diff
+- optionally one fresh-context reviewer after focused validation for a non-trivial
+  diff
+- run the reviewer in the foreground with `async:false` and inline output; do not
+  use `subagent_wait`, status polling, or temporary output logs
+- after fixing a reviewer finding, resume that same retained reviewer once in the
+  foreground instead of launching another reviewer
 - no worker subagent, forked context, fanout, nested delegation, or polling
 
 If delegating, list executable agents first. Skip delegation for small, obvious
@@ -129,10 +145,17 @@ Only after explicit approval:
 2. Implement the approved slice; do not widen scope.
 3. Add focused regression coverage when behavior changes.
 4. Update `TODO.md` and owning documentation when progress or behavior changes.
-5. Run focused validation followed by repository-required gates.
+5. Run focused validation.
 6. Inspect final status, diff, and diff check.
 7. Run one focused review when warranted.
-8. Fix show-stoppers and rerun affected validation.
+8. Fix show-stoppers and rerun affected focused validation.
+9. Find the repository's **Required Pre-Publish Gate** section, when present, and
+   run every command and check it declares before the first push. Focused tests do
+   not replace that gate. If the repository uses another explicit name, follow its
+   documented equivalent. Never inject ecosystem-specific commands into this
+   generic workflow.
+10. If anything changes after that gate, rerun the complete required pre-publish
+    gate before publishing.
 
 Do not publish partial, unapproved, or knowingly failing work.
 

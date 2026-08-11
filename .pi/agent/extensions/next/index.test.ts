@@ -184,6 +184,10 @@ describe("next command", () => {
     expect(context.messages[0]).toContain(
       "NEXT_SESSION_NAME: <short task title>",
     );
+    expect(context.messages[0]).toContain("Required Pre-Publish Gate");
+    expect(context.messages[0]).toContain("async:false");
+    expect(context.messages[0]).toContain("unrelated subsystem graphs");
+    expect(context.messages[0]).not.toContain("corepack");
     expect(context.messages[0]).not.toContain("name: next");
   });
 
