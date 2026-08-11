@@ -180,10 +180,6 @@ BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
 BROWSER_USE_CODEX_APP_VERSION = "26.715.70719"
 CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
 
-[mcp_servers.sentry]
-command = "npx"
-args = ["-y", "mcp-remote@latest", "https://mcp.sentry.dev/mcp"]
-
 [mcp_servers.computer-use]
 command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
 args = ["mcp"]
