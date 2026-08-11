@@ -19,7 +19,7 @@ Treat this `/yolo` invocation as Travis's explicit request to drive the provided
 5. If a branch is needed, create/use a safe branch:
    - with Linear: `<type>/<linear-issue-id>-<short-slug>`
    - without Linear: `<type>/<short-task-slug>`
-   Ask before changing branches if local state makes this unsafe.
+     Ask before changing branches if local state makes this unsafe.
 
 ## 2. Requirements
 
@@ -28,13 +28,10 @@ Treat this `/yolo` invocation as Travis's explicit request to drive the provided
 3. If the acceptance source is missing, contradictory, product-sensitive, or impossible to verify, ask concise blocking questions and wait.
 4. Otherwise state the acceptance criteria and assumptions, then proceed.
 
-## 3. Goal and implementation
+## 3. Completion contract and implementation
 
-Create or replace one durable goal with `create_goal({ replace_existing: true, ... })`.
+Write a concise acceptance checklist from the requirements, then use the lean `/ship` workflow directly; do not use the old swarm pattern:
 
-Do not set `token_budget` unless Travis explicitly provided a token budget or limit in `$@`. Omit the field otherwise; never infer, estimate, or invent a budget from task size.
-
-Use the lean `/ship` workflow directly; do not use the old swarm pattern:
 - preflight and docs/TODO context
 - optional read-only `scout` and risk `reviewer` only when useful
 - parent-owned plan/validation contract
@@ -42,10 +39,11 @@ Use the lean `/ship` workflow directly; do not use the old swarm pattern:
 - focused validation
 - fresh read-only review for non-trivial diffs
 - fix show-stoppers with one writer
-- completion audit before `update_goal`
+- requirement-by-requirement completion audit before claiming completion
 
 Delegation rules:
-- Read-only helpers use `acceptance: "none"` or `false`.
+
+- Omit `acceptance` for read-only helpers.
 - Writer uses `acceptance: "checked"`.
 - No parallel writers in the active worktree.
 - No subagent launches from child workers.
@@ -54,6 +52,7 @@ Delegation rules:
 ## 4. Review and fix loop
 
 After implementation and local validation:
+
 1. For non-trivial diffs, run fresh-context read-only reviewers for:
    - functionality/correctness against requirements
    - tests/validation/regression risk
@@ -89,22 +88,29 @@ Proceed only when requirements are implemented or intentionally deferred with Tr
 Use these headings:
 
 ## TLDR
+
 Plain-English walkthrough of what changed and why.
 
 ## Requirements Coverage
+
 Each requirement: met / deferred / blocked, with evidence.
 
 ## Clean Changes Made
+
 Purposeful changes grouped by area/file.
 
 ## Validation
+
 Commands/checks and results.
 
 ## Review Results
+
 Show-stoppers fixed, optional follow-up, confidence.
 
 ## PR
+
 PR link/number, branch, commit hash, draft/ready state.
 
 ## Remaining Risk
+
 Only real residual risk.
