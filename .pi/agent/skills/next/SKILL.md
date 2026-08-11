@@ -174,4 +174,18 @@ Do not publish partial, unapproved, or knowingly failing work.
 9. Fix attributable failures, push, and recheck until green or genuinely blocked.
 10. Never merge the PR.
 
-Report the PR link, branch, commit, CI state, and any remaining risk.
+## 9. Summarize and hand off
+
+End with a concise handoff containing:
+
+- **TL;DR** — a high-level summary of what changed, the user-visible or operational
+  outcome, and why it matters. Describe the completed result, not a file-by-file
+  changelog.
+- **How to QA** — clear, actionable manual verification steps. Include any setup,
+  exact commands or navigation, inputs/actions, and expected results needed to prove
+  the change works. When no meaningful manual QA exists, say so explicitly and
+  explain which automated evidence replaces it.
+- **Delivery** — PR link, branch, commit, CI state, and any remaining risk.
+
+Write the QA steps for the user performing them after checkout or deployment; do not
+merely repeat tests already run by the agent.
