@@ -2,7 +2,7 @@
 
 Local Pi extension for OpenAI priority inference.
 
-- `defaults.json` is read-only configuration; Fast Mode defaults to disabled.
+- `defaults.json` is read-only configuration; Fast Mode defaults to enabled.
 - `/fast [on|off|toggle]` changes only the current session.
 - `--fast` enables only the current session.
 - Session shutdown never writes defaults or runtime state.
