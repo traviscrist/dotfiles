@@ -24,9 +24,35 @@
       ]
     },
     "figma": {
-      "url": "http://127.0.0.1:3845/mcp",
-      "lifecycle": "lazy",
-      "directTools": false
+      "command": "/opt/homebrew/bin/codex",
+      "args": [
+        "mcp-server",
+        "-c",
+        "sandbox_mode=\"read-only\"",
+        "-c",
+        "approval_policy=\"never\"",
+        "-c",
+        "model_reasoning_effort=\"low\"",
+        "-c",
+        "mcp_servers.betterstack.enabled=false",
+        "-c",
+        "mcp_servers.cloudflare.enabled=false",
+        "-c",
+        "mcp_servers.linear_redcrayon.enabled=false",
+        "-c",
+        "mcp_servers.linear_truevault.enabled=false",
+        "-c",
+        "mcp_servers.node_repl.enabled=false"
+      ],
+      "lifecycle": "lazy-keep-alive",
+      "directTools": [
+        "codex",
+        "codex-reply"
+      ],
+      "approveTools": [
+        "codex",
+        "codex-reply"
+      ]
     }
   }
 }
