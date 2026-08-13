@@ -1,7 +1,8 @@
 import { CustomEditor, type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { matchesKey } from "@earendil-works/pi-tui";
+import { rewriteChainedNextInput } from "../next/index.ts";
 
-class BusyTabEditor extends CustomEditor {
+export class BusyTabEditor extends CustomEditor {
 	constructor(
 		...args: ConstructorParameters<typeof CustomEditor>
 	) {
@@ -28,12 +29,18 @@ class BusyTabEditor extends CustomEditor {
 	}
 
 	override handleInput(data: string): void {
+		const ctx = getContext();
+		if (matchesKey(data, "return") && ctx?.isIdle() && !this.isShowingAutocomplete()) {
+			const text = this.getExpandedText?.() ?? this.getText();
+			const rewritten = rewriteChainedNextInput(text, ctx.sessionManager.getBranch());
+			if (rewritten) this.setText(rewritten);
+		}
+
 		if (!matchesKey(data, "tab")) {
 			super.handleInput(data);
 			return;
 		}
 
-		const ctx = getContext();
 		const pi = getPi();
 
 		if (!ctx || !pi || ctx.isIdle() || this.isShowingAutocomplete()) {
@@ -58,7 +65,7 @@ function getPi(): ExtensionAPI | undefined {
 	return currentPi;
 }
 
-export default function (pi: ExtensionAPI) {
+export function createBusyTabFollowupExtension(pi: ExtensionAPI) {
 	currentPi = pi;
 
 	pi.on("session_start", (_event, ctx) => {
@@ -70,3 +77,5 @@ export default function (pi: ExtensionAPI) {
 		currentContext = undefined;
 	});
 }
+
+export default createBusyTabFollowupExtension;

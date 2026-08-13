@@ -186,6 +186,25 @@ End with a concise handoff containing:
   the change works. When no meaningful manual QA exists, say so explicitly and
   explain which automated evidence replaces it.
 - **Delivery** — PR link, branch, commit, CI state, and any remaining risk.
+- **Suggested next steps** — up to three small authoritative candidates, ordered by
+  priority. Label the first candidate **Recommended** and state whether it is
+  independently actionable or blocked on the current PR merging.
 
 Write the QA steps for the user performing them after checkout or deployment; do not
 merely repeat tests already run by the agent.
+
+End with exactly one machine-readable line for the recommended candidate:
+
+`NEXT_CHAIN: {"version":1,"title":"<short task title>","prompt":"<concise imperative focus for the next discovery session>","prerequisite":"<optional prerequisite>"}`
+
+Keep the JSON on one line with valid double-quoted JSON. Omit `prerequisite` when the
+candidate is independently actionable. The title must be at most 72 characters, the
+prompt at most 1,000 characters, and the optional prerequisite at most 500
+characters. Do not emit placeholders. If no safe next step can be recommended, say
+why under **Suggested next steps** and end with `NEXT_CHAIN: null` so any older
+recommendation is withdrawn.
+
+The extension stores this recommendation durably. When the user later types exact
+plain `next`, it opens a fresh child session with the recommendation as a focus hint.
+That new session must still synchronize, revalidate authority and prerequisites,
+plan, and obtain explicit approval before implementation.
