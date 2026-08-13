@@ -131,6 +131,10 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### betterstack
 - Better Stack MCP for uptime, telemetry, incidents, dashboards, and logs.
 
+### figma
+- For all Figma and FigJam requests, use the configured `figma_codex` / `figma_codex-reply` MCP tools. They route through the approved Codex client to Figma's official remote MCP server.
+- Do not connect Pi directly to Figma's remote OAuth endpoint or substitute the read-only desktop MCP endpoint.
+
 ### summarize
 - URL/file/media summarizer CLI.
 
