@@ -24,8 +24,7 @@
       ]
     },
     "figma": {
-      "url": "https://mcp.figma.com/mcp",
-      "auth": "oauth",
+      "url": "http://127.0.0.1:3845/mcp",
       "lifecycle": "lazy",
       "directTools": false
     }
