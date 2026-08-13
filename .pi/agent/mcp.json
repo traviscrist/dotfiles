@@ -22,6 +22,12 @@
         "lm_transactions_unsplit",
         "lm_transactions_attachment_upload"
       ]
+    },
+    "figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "auth": "oauth",
+      "lifecycle": "lazy",
+      "directTools": false
     }
   }
 }
