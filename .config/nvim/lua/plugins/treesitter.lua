@@ -1,61 +1,77 @@
-local M = {
+local function setup_textobjects()
+  require("nvim-treesitter-textobjects").setup({
+    select = { lookahead = true },
+  })
+
+  local select = require("nvim-treesitter-textobjects.select")
+  local textobjects = {
+    af = "@function.outer",
+    ["if"] = "@function.inner",
+    ac = "@class.outer",
+    ic = "@class.inner",
+    al = "@loop.outer",
+    il = "@loop.inner",
+    ib = "@block.inner",
+    ab = "@block.outer",
+    ir = "@parameter.inner",
+    ar = "@parameter.outer",
+  }
+
+  local function select_textobject(query)
+    return function()
+      select.select_textobject(query, "textobjects")
+    end
+  end
+
+  for key, query in pairs(textobjects) do
+    vim.keymap.set({ "x", "o" }, key, select_textobject(query), { desc = "Select " .. query })
+  end
+end
+
+local function start_treesitter(args)
+  if not pcall(vim.treesitter.start, args.buf) then
+    return
+  end
+
+  vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+
+  local options = { buffer = args.buf, silent = true }
+  vim.keymap.set({ "n", "x" }, "<CR>", function()
+    vim.treesitter.select("parent")
+  end, vim.tbl_extend("force", options, { desc = "Select parent node" }))
+  vim.keymap.set("x", "<Tab>", function()
+    vim.treesitter.select("parent")
+  end, vim.tbl_extend("force", options, { desc = "Select parent node" }))
+  vim.keymap.set("x", "<S-Tab>", function()
+    vim.treesitter.select("child")
+  end, vim.tbl_extend("force", options, { desc = "Select child node" }))
+end
+
+return {
   "nvim-treesitter/nvim-treesitter",
+  branch = "main",
+  lazy = false,
   build = ":TSUpdate",
-  event = "BufReadPost",
   dependencies = {
-    "nvim-treesitter/nvim-treesitter-textobjects",
+    {
+      "nvim-treesitter/nvim-treesitter-textobjects",
+      branch = "main",
+      config = setup_textobjects,
+    },
     "RRethy/nvim-treesitter-endwise",
-    "mfussenegger/nvim-ts-hint-textobject",
     "windwp/nvim-ts-autotag",
-    "nvim-treesitter/playground",
   },
   config = function()
     local settings = require("config.settings")
-    require("nvim-treesitter.configs").setup({
-      ensure_installed = settings.treessitter_langs,
-      ignore_install = {}, -- List of parsers to ignore installing
-      highlight = {
-        enable = true, -- false will disable the whole extension
-        disable = {}, -- list of language that will be disabled
-        additional_vim_regex_highlighting = false,
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<CR>",
-          scope_incremental = "<CR>",
-          node_incremental = "<TAB>",
-          node_decremental = "<S-TAB>",
-        },
-      },
-      endwise = {
-        enable = true,
-      },
-      indent = { enable = true },
-      textobjects = {
-        select = {
-          enable = true,
-          -- Automatically jump forward to textobj, similar to targets.vim
-          lookahead = true,
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            ["ic"] = "@class.inner",
-            ["al"] = "@loop.outer",
-            ["il"] = "@loop.inner",
-            ["ib"] = "@block.inner",
-            ["ab"] = "@block.outer",
-            ["ir"] = "@parameter.inner",
-            ["ar"] = "@parameter.outer",
-          },
-        },
-      },
-    })
+    local treesitter = require("nvim-treesitter")
 
+    treesitter.setup()
+    treesitter.install(settings.treesitter_langs)
     require("nvim-ts-autotag").setup()
+
+    vim.api.nvim_create_autocmd("FileType", {
+      group = vim.api.nvim_create_augroup("treesitter-start", { clear = true }),
+      callback = start_treesitter,
+    })
   end,
 }
-
-return M

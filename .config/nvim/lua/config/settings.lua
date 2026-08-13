@@ -1,8 +1,7 @@
 local M = {}
 
--- treesitter parsers to be installed
--- one of "all", "maintained" (parsers with maintainers), or a list of languages
-M.treessitter_langs = {
+-- Treesitter parsers to install.
+M.treesitter_langs = {
   "bash",
   "css",
   "dockerfile",
