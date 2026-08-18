@@ -60,7 +60,6 @@ command -v gitpod
 gitpod version
 command -v summarize
 summarize --version
-test -f ~/.peekaboo/config.json && echo "peekaboo config ok"
 readlink ~/.codex/AGENTS.md
 readlink ~/.codex/prompts
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
@@ -112,7 +111,6 @@ Use OAuth when the client prompts for browser sign-in. For non-OAuth clients, co
   - `agent-browser close`
 
 ## Tool Details
-- `peekaboo`: screen inspection/clicks. Requires Screen Recording + Accessibility permissions. Check with `peekaboo permissions status`.
 - `trash`: delete guardrail. Use `trash <path>` instead of destructive shell deletes.
 - `summarize`: install/update with `brew install steipete/tap/summarize` or `bun add -g @steipete/summarize`.
 - `betterstack`: remote MCP server for Better Stack uptime, telemetry, incidents, dashboards, and logs.

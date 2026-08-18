@@ -100,9 +100,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Tools
 
-### peekaboo
-- Screen inspection/clicks when needed; config at `~/.peekaboo/config.json`.
-
 ### committer
 - Commit helper on PATH via `~/.ai/bin/committer`; stages only listed paths.
 

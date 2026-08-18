@@ -30,7 +30,6 @@ brew 'gemini-cli'
 
 # AI TOOLS
 tap 'steipete/tap'
-brew 'peekaboo'
 brew 'codexbar'
 brew 'agent-browser'
 brew 'oracle'
