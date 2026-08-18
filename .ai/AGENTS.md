@@ -117,9 +117,6 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### betterstack
 - Better Stack MCP for uptime, telemetry, incidents, dashboards, and logs.
 
-### summarize
-- URL/file/media summarizer CLI.
-
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
 

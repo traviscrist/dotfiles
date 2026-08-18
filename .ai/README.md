@@ -19,7 +19,6 @@ agent-browser install
 curl -o /tmp/gitpod -fsSL "https://releases.gitpod.io/cli/stable/gitpod-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m | sed 's/x86_64/amd64/;s/\\(arm64\\|aarch64\\)/arm64/')" \
   && chmod +x /tmp/gitpod \
   && sudo mv /tmp/gitpod /usr/local/bin/gitpod
-brew install steipete/tap/summarize || bun add -g @steipete/summarize
 
 mkdir -p ~/.codex
 if [ -e ~/.codex/AGENTS.md ] && [ ! -L ~/.codex/AGENTS.md ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
@@ -58,8 +57,6 @@ agent-browser --version
 agent-browser doctor
 command -v gitpod
 gitpod version
-command -v summarize
-summarize --version
 readlink ~/.codex/AGENTS.md
 readlink ~/.codex/prompts
 find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
@@ -112,7 +109,6 @@ Use OAuth when the client prompts for browser sign-in. For non-OAuth clients, co
 
 ## Tool Details
 - `trash`: delete guardrail. Use `trash <path>` instead of destructive shell deletes.
-- `summarize`: install/update with `brew install steipete/tap/summarize` or `bun add -g @steipete/summarize`.
 - `betterstack`: remote MCP server for Better Stack uptime, telemetry, incidents, dashboards, and logs.
 - `render`: install with `brew install render`, then add `brew "render"` to `~/.Brewfile`; prefer `RENDER_API_KEY` auth.
 - `tmux`: reserve for persistent interactive work such as servers/debuggers.
