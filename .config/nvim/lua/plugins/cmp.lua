@@ -107,42 +107,19 @@ local M = {
     -- Setup lspconfig.
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-    -- Default LSP settings
-    local default_settings = {
-      -- Add your default settings here that should apply to all servers
-      diagnostics = {
-        enable = true,
-        signs = true,
-        underline = true,
-        update_in_insert = false,
-        severity_sort = true,
-      }
-    }
+    vim.o.winborder = "rounded"
 
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      border = "rounded",
-    })
-
-    local function on_attach(client, bufnr)
-      -- Enable completion triggered by <c-x><c-o>
-      -- require('lsp-format').on_attach(client, bufrn)
-      vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+    local function on_attach(_, bufnr)
+      vim.bo[bufnr].omnifunc = "v:lua.vim.lsp.omnifunc"
     end
 
-    -- Base configuration for all language servers
-    local base_config = {
-      on_attach = on_attach,
-      capabilities = capabilities,
-      settings = default_settings
-    }
-
     for server_name, server_settings in pairs(settings.lang_servers) do
-      -- Merge server-specific settings with base config
-      local config = vim.tbl_deep_extend("force", base_config, {
-        settings = server_settings.settings or {}
+      vim.lsp.config(server_name, {
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = server_settings.settings or {},
       })
-
-      require('lspconfig')[server_name].setup(config)
+      vim.lsp.enable(server_name)
     end
   end,
 }

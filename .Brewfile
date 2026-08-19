@@ -158,6 +158,7 @@ cask 'zed'
 
 ## Neovim
 brew 'neovim'
+brew 'tree-sitter-cli'
 brew 'fzf'
 brew 'ripgrep'
 brew 'bat'
