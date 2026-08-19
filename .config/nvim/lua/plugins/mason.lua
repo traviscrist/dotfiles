@@ -41,8 +41,8 @@ local M = {
     })
 
     require("mason-lspconfig").setup({
-      ensure_installed = settings.lang_servers,
-      automatic_installation = true,
+      ensure_installed = vim.tbl_keys(settings.lang_servers),
+      automatic_enable = false,
     })
 
     require("mason-tool-installer").setup({

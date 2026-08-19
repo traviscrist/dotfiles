@@ -49,6 +49,17 @@ M.lang_servers = {
   eslint = {
     settings = {}
   },
+  gopls = {
+    settings = {
+      gopls = {
+        analyses = {
+          unusedparams = true
+        },
+        gofumpt = true,
+        staticcheck = true
+      }
+    }
+  },
   html = {
     settings = {}
   },
