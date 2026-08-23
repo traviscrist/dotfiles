@@ -6,14 +6,14 @@
     "@earendil-works/pi-ai": "0.84.2",
     "@earendil-works/pi-coding-agent": "0.84.2",
     "@earendil-works/pi-tui": "0.84.2",
-    "@ff-labs/pi-fff": "^0.10.3",
-    "@juicesharp/rpiv-ask-user-question": "^2.4.0",
+    "@ff-labs/pi-fff": "^0.10.5",
+    "@juicesharp/rpiv-ask-user-question": "^2.7.0",
     "@osolmaz/pi-workflows": "^0.12.1",
-    "pi-lens": "^3.8.74",
-    "pi-mcp-adapter": "^2.21.2",
+    "pi-lens": "^4.1.1",
+    "pi-mcp-adapter": "^2.27.0",
     "pi-openai-fast-mode": "^0.3.0",
     "pi-simplify": "^0.2.3",
-    "pi-subagents": "^0.45.2",
-    "pi-web-access": "^0.21.0"
+    "pi-subagents": "^0.54.0",
+    "pi-web-access": "^0.24.2"
   }
 }
