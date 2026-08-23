@@ -11,7 +11,8 @@ Use this skill to select and implement one authoritative next project item. Keep
 item, branch, and pull request per invocation.
 
 Invoking `/skill:auto-next` grants permission to synchronize `main`, inspect project
-authority, select one item, and start the applicable workflow. It does not grant
+authority, select one item, start the applicable workflow, and publish one pull
+request that is ready for merge when all owned work and gates pass. It does not grant
 permission to discard work, merge, deploy, release, change credentials, modify
 unrelated repositories, or override repository policy.
 
@@ -155,18 +156,39 @@ List workflows and confirm `autoimplement` is available. Build one complete inpu
 - `plan`: pass the complete existing or Autoplan-selected plan;
 - `repository`: absolute repository path;
 - `scope`: name and permit only the already prepared task branch, task-related edits,
-  tests, commits, pushes, and opening or updating its repository-required pull
-  request; explicitly forbid additional branch creation, unrelated repositories,
-  merge, release, deployment, credential changes, and policy changes unless
-  separately authorized;
+  tests, commits, pushes, and opening or updating its single pull request; permit
+  marking that pull request ready for review after all owned work and gates pass;
+  explicitly forbid additional branch creation, unrelated repositories, merge,
+  release, deployment, credential changes, and policy changes unless separately
+  authorized;
 - `constraints`: all user and repository constraints;
 - `baseBranch`: `main`;
 - `merge`: `false` unless explicit authority says otherwise;
 - `documents`: every relevant canonical TODO, plan, architecture, and behavior path.
 
 Omit `approval` unless the user explicitly requires or skips approval for later plan
-changes. Do not duplicate implementation, Autodoc, review, pull-request, or CI stages
-owned by Autoimplement.
+changes. Add these Auto Next operating requirements to `constraints`:
+
+- During every task-writing agent step—`implement`, `fix`, and `addressP2`—work
+  directly in the active workflow agent. Do not call the `subagent` tool, delegate
+  task-writing work, launch async or detached work, or start background processes.
+  Autoimplement's built-in action-based command batches and independent read-only
+  review and verification lanes remain allowed.
+- At each material task-writing phase change and before and after a long foreground
+  check, call the `workflow` tool with `action: "update"`, the current step and
+  attempt IDs, and `update: { "type": "progress", "key": "implementation",
+  "data": { "schema": "pi-workflows.progress.v1", "status": "running",
+  "phase": "<observed phase>" } }`. Send an explicit terminal status before the
+  track disappears. Report only observed status and phase; never invent counts,
+  rates, confidence, or ETA.
+- Keep the pull request draft while implementation and pre-ready validation remain
+  incomplete. After documentation, required local gates, reviewer loops, review
+  comments, and all checks available on the draft pass, run `gh pr ready`. Then
+  inspect the current-head required checks again, including checks triggered by the
+  `ready_for_review` event, and fix or wait until they are green. Never merge it.
+
+Do not duplicate implementation, Autodoc, review, pull-request, or CI stages owned by
+Autoimplement.
 
 Start `autoimplement` exactly once. While it runs, follow each exact step and attempt
 contract. Never start a second workflow from an active workflow step.
@@ -181,9 +203,19 @@ Autoimplement must:
 - run focused checks and every repository-required pre-publish gate;
 - inspect final status and diff;
 - commit and push only intentional files;
-- open or update the repository-required pull request;
-- complete its review and CI loop; and
+- open or update exactly one pull request and keep it draft while implementation and
+  pre-ready validation are incomplete;
+- complete its review, review-comment, and pre-ready CI loops;
+- mark the pull request ready for review after owned implementation, local gates, and
+  valid review findings are complete;
+- re-inspect the ready PR's current-head required checks and keep working until they
+  are green; and
 - leave merge, release, and deployment undone unless separately authorized.
 
+A ready handoff means a non-draft pull request with a current pushed head, green
+required checks, no known merge conflict, and no valid unresolved owned review item.
+A required external approval may still remain; report it rather than claiming the PR
+is mergeable.
+
 Finish with the selected TODO item, plan source, branch, pull request, validation,
-CI state, and residual risks.
+CI state, readiness state, and residual risks.
