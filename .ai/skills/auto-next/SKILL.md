@@ -1,221 +1,118 @@
 ---
 name: auto-next
-description: Select the next authoritative unblocked TODO item from the latest main branch, obtain a clear plan when needed, then run Autoimplement for that one focused item. Invoke explicitly with /skill:auto-next.
-compatibility: Requires Git, a repository with a main branch, Pi Workflows, and the built-in autoplan and autoimplement workflows.
+description: Orchestrate one authoritative next project item through Autoplan approval and Autoimplement from a fresh session. Invoke with /auto-next; direct /skill:auto-next invocation cannot reset context.
+compatibility: Requires Git, GitHub CLI, Pi Workflows, and the built-in autoplan and autoimplement workflows.
 disable-model-invocation: true
 ---
 
 # Auto Next
 
-Use this skill to select and implement one authoritative next project item. Keep one
-item, branch, and pull request per invocation.
+Use this skill only through `/auto-next`. The extension opens a fresh session and
+appends `AUTO_NEXT_FRESH_SESSION: true` to the kickoff. If that marker is absent,
+stop and ask the user to invoke `/auto-next`; a skill-only invocation cannot reset
+context.
 
-Invoking `/skill:auto-next` grants permission to synchronize `main`, inspect project
-authority, select one item, start the applicable workflow, and publish one pull
-request that is ready for merge when all owned work and gates pass. It does not grant
-permission to discard work, merge, deploy, release, change credentials, modify
-unrelated repositories, or override repository policy.
+One invocation owns one authoritative TODO item, one approved plan, one new branch,
+and one pull request. It may synchronize `main`, plan, implement, commit, push, and
+prepare that pull request for review. It may not discard work, merge, deploy, release,
+change credentials or policy, or modify unrelated repositories.
 
-Optional arguments are focus hints. They never override the authoritative work list,
-active milestone, dependencies, or repository instructions.
+Optional arguments are focus hints only. Repository authority still decides what is
+next.
 
-## 1. Synchronize from latest main
+## 1. Start clean from latest main
 
-Always complete this preflight before selecting work:
-
-1. Read all applicable repository instructions.
-2. Run `git status --short --branch` and include untracked files.
-3. Require a clean working tree. If dirty, stop and report the exact paths. Never
-   stash, discard, reset, clean, or overwrite them.
-4. Switch to `main` when needed.
-5. Follow the repository's remote policy, then run:
+1. Read applicable repository instructions.
+2. Run the repository's documentation-list command when available.
+3. Run `git status --short --branch`, including untracked files. Require a clean
+   worktree; otherwise stop and report the exact paths. Never stash, discard, reset,
+   clean, or overwrite them.
+4. Switch to `main`, follow repository remote policy, and run:
 
    ```bash
    git fetch origin main
    git pull --ff-only origin main
    ```
 
-6. Require `git rev-parse HEAD` to exactly equal
-   `git rev-parse refs/remotes/origin/main`. An ahead local `main` is not an
-   authoritative starting point.
-7. Inspect recent relevant commits.
+5. Require `HEAD` to equal `refs/remotes/origin/main` exactly. Stop if synchronization
+   or authentication is unsafe or incomplete.
 
-Never select or implement from a stale or locally augmented `main`. Stop if `main` is
-unavailable, the pull cannot fast-forward, local and remote `main` differ,
-authentication fails, or synchronization is otherwise unsafe.
+## 2. Select one authoritative item
 
-## 2. Discover one authoritative next item
+Read the authoritative TODO or equivalent work list plus only the owning documents
+needed to establish priority, dependencies, and observable completion. Query a
+committed subsystem graph first when repository instructions require it, then confirm
+against source.
 
-Use the smallest bounded discovery funnel that proves priority and readiness:
+Select the explicitly designated next action, otherwise the first incomplete,
+unblocked item in the active milestone. Choose one coherent branch-sized slice; do
+not invent work, skip ahead for convenience, or process multiple items. If selection
+or acceptance behavior remains materially ambiguous, ask one grouped clarification
+and stop.
 
-1. Run the repository's documentation-list command when available.
-2. Read `TODO.md` or the repository's equivalent authoritative work list.
-3. Read the owning roadmap, milestone, architecture, and behavior documents named by
-   repository instructions or `read_when` guidance.
-4. Query the committed graph for only the affected subsystem when one exists, then
-   confirm conclusions against source.
-5. Inspect enough source and recent history to prove the item is not already complete.
-6. Select, in order:
-   - an explicitly designated next action;
-   - otherwise the first incomplete, unblocked listed item in the active milestone.
+## 3. Always run Autoplan
 
-Choose one listed item or one clearly listed sub-item that is reviewable, testable,
-and suitable for one focused branch and pull request. Do not invent an unlisted
-prerequisite, process the entire TODO list, or skip an item merely because a later
-item is easier or more interesting. If the designated item requires an unlisted
-prerequisite, stop for authorization to add or select that prerequisite.
+List workflows, confirm `autoplan` is available, and start it exactly once with:
 
-If authority, ordering, scope, dependencies, or acceptance behavior remain materially
-ambiguous, ask one grouped clarification and stop selection until answered.
+- `problem`: the selected TODO item and observable end state;
+- `scope`: the current repository and affected systems, with explicit exclusions;
+- `constraints`: all user and repository constraints.
 
-## 3. Determine whether a clear plan exists
+Do not edit files or create a branch before approval. When Autoplan completes, read
+its persisted ready result and present its exact `.plan` field for approval; retain
+the result status and digest as provenance rather than treating the whole result
+envelope as the plan. Identify the selected item and ask one explicit approval
+question with these choices:
 
-A TODO checkbox alone is not necessarily a plan. A clear plan must identify:
+- **Approve and implement (Recommended)** — execute the plan with Autoimplement;
+- **Revise the plan** — rerun Autoplan with `previousPlan` and the user's
+  `newEvidence`;
+- **Choose another item** — return to authoritative selection and Autoplan; or
+- **Stop here** — leave synchronized `main` unchanged.
 
-- the observable end state and acceptance criteria;
-- relevant behavior and ownership boundaries;
-- the intended implementation direction;
-- important constraints and exclusions;
-- affected canonical documents or interfaces; and
-- meaningful verification.
+The user's approval response is the continuation turn. Do not require a separate
+`continue` command and do not start Autoimplement without explicit approval.
 
-Find the plan in the selected TODO entry, current conversation, or canonical project
-documents. Preserve exact document paths and requirements.
+## 4. Prepare the approved branch
 
-### Clear plan found
+After approval, repeat the complete latest-main synchronization and revalidate the
+item and accepted plan against current authority. If either changed materially,
+return to Autoplan and request approval again.
 
-Proceed to **Synchronize again before implementation**, then start Autoimplement.
+Before creating work, inspect open pull requests and remote branches enough to avoid
+duplicating the selected item. Stop and report matching active work rather than
+claiming it twice.
 
-### No clear plan found
+Derive one short repository-compliant branch name, create that new branch directly
+from the exact updated `main`, and verify the clean worktree is on it. Autoimplement
+must not create another branch or make task changes on `main`.
 
-Start the built-in `autoplan` workflow once with complete input:
+## 5. Run Autoimplement
 
-- `problem`: the exact selected TODO item and observable completion state;
-- `scope`: the current repository, affected systems, and explicit exclusions;
-- `constraints`: all user and repository constraints;
-- omit revision fields unless revising an existing plan from new evidence.
+Confirm `autoimplement` is available and start it exactly once with:
 
-Do not invent an initial plan inside Autoimplement. Do not start another workflow
-while Autoplan is active.
-
-Record the Autoplan run ID and preserve its exact accepted final output. After its
-normal result presentation completes, report the selected item and ask the user to
-run:
-
-```text
-/skill:auto-next continue
-```
-
-The explicit continuation is required for a skill-only design: Autoplan queues one
-presentation turn, Pi rejects another workflow start until that response settles, and
-presentation cannot route or schedule more work. No further assistant turn is created
-after settlement. On continuation, read the persisted Autoplan result by run ID; never
-reconstruct the plan from its prose presentation.
-
-Autoimplement will record or update canonical documentation through its native
-Autodoc path when the supplied plan lacks a current-document receipt; do not run a
-separate standalone Autodoc workflow.
-
-## 4. Synchronize again before implementation
-
-Immediately before starting Autoimplement—including after an Autoplan continuation—
-repeat the complete latest-`main` synchronization preflight.
-
-Then re-read the relevant TODO section and verify that:
-
-- the selected item remains incomplete and unblocked;
-- no newer `main` change completed, superseded, or materially changed it; and
-- the plan still matches current authority and source.
-
-If the item changed materially, do not implement the stale plan. Return to discovery
-and planning.
-
-After revalidation, inspect matching remote branches and open pull requests before
-changing branches. Autoimplement and its native Autodoc path must never make task
-changes directly on `main`.
-
-- If no matching work exists, derive a short repository-compliant task branch name,
-  create it from the exact updated `main`, and verify the clean worktree is on it.
-- If a matching active pull request or remote branch exists, do not create duplicate
-  work. Treat the item as claimed and return to discovery, unless repository policy
-  clearly requires continuing that exact branch. In that case, switch to the exact
-  branch, verify it is clean and correctly tracks its remote, and preserve the
-  existing pull request. Require
-  `git merge-base --is-ancestor refs/remotes/origin/main HEAD` to succeed. If the
-  branch does not contain latest `origin/main`, stop and report; never merge, rebase,
-  or force-push without separate authorization.
-
-Record the exact prepared branch name. Stop if branch ownership, worktree state, or
-whether existing work matches the item is unclear.
-
-## 5. Start Autoimplement
-
-List workflows and confirm `autoimplement` is available. Build one complete input:
-
-- `task`: quote or precisely identify the selected TODO item and end state;
-- `plan`: pass the complete existing or Autoplan-selected plan;
-- `repository`: absolute repository path;
-- `scope`: name and permit only the already prepared task branch, task-related edits,
-  tests, commits, pushes, and opening or updating its single pull request; permit
-  marking that pull request ready for review after all owned work and gates pass;
-  explicitly forbid additional branch creation, unrelated repositories, merge,
-  release, deployment, credential changes, and policy changes unless separately
-  authorized;
+- `task`: the selected item and approved observable end state;
+- `plan`: the exact approved `.plan` field from the persisted Autoplan result;
+- `repository`: the absolute repository path;
+- `scope`: permit only task-related edits, tests, commits, pushing the prepared
+  branch, and opening or updating its single pull request; require that pull request
+  to finish non-draft and ready for review; forbid additional branches, unrelated
+  repositories, merge, release, deployment, credential changes, and policy changes;
 - `constraints`: all user and repository constraints;
 - `baseBranch`: `main`;
-- `merge`: `false` unless explicit authority says otherwise;
-- `documents`: every relevant canonical TODO, plan, architecture, and behavior path.
+- `merge`: `false`;
+- `approval`: `{ "mode": "required" }`, so any material plan revision discovered
+  during implementation returns to the user rather than silently replacing the
+  approved plan;
+- `documents`: the authoritative TODO and relevant canonical document paths.
 
-Omit `approval` unless the user explicitly requires or skips approval for later plan
-changes. Add these Auto Next operating requirements to `constraints`:
+Do not otherwise duplicate or override Autoimplement's native Autodoc,
+implementation, validation, review, review-comment, CI, publication, or finalization
+stages.
 
-- During every task-writing agent step—`implement`, `fix`, and `addressP2`—work
-  directly in the active workflow agent. Do not call the `subagent` tool, delegate
-  task-writing work, launch async or detached work, or start background processes.
-  Autoimplement's built-in action-based command batches and independent read-only
-  review and verification lanes remain allowed.
-- At each material task-writing phase change and before and after a long foreground
-  check, call the `workflow` tool with `action: "update"`, the current step and
-  attempt IDs, and `update: { "type": "progress", "key": "implementation",
-  "data": { "schema": "pi-workflows.progress.v1", "status": "running",
-  "phase": "<observed phase>" } }`. Send an explicit terminal status before the
-  track disappears. Report only observed status and phase; never invent counts,
-  rates, confidence, or ETA.
-- Keep the pull request draft while implementation and pre-ready validation remain
-  incomplete. After documentation, required local gates, reviewer loops, review
-  comments, and all checks available on the draft pass, run `gh pr ready`. Then
-  inspect the current-head required checks again, including checks triggered by the
-  `ready_for_review` event, and fix or wait until they are green. Never merge it.
+## 6. Finish
 
-Do not duplicate implementation, Autodoc, review, pull-request, or CI stages owned by
-Autoimplement.
-
-Start `autoimplement` exactly once. While it runs, follow each exact step and attempt
-contract. Never start a second workflow from an active workflow step.
-
-## 6. Completion requirements
-
-Autoimplement must:
-
-- implement only the selected coherent slice;
-- add regression or deterministic coverage when behavior changes;
-- update the authoritative TODO and owning documentation as progress changes;
-- run focused checks and every repository-required pre-publish gate;
-- inspect final status and diff;
-- commit and push only intentional files;
-- open or update exactly one pull request and keep it draft while implementation and
-  pre-ready validation are incomplete;
-- complete its review, review-comment, and pre-ready CI loops;
-- mark the pull request ready for review after owned implementation, local gates, and
-  valid review findings are complete;
-- re-inspect the ready PR's current-head required checks and keep working until they
-  are green; and
-- leave merge, release, and deployment undone unless separately authorized.
-
-A ready handoff means a non-draft pull request with a current pushed head, green
-required checks, no known merge conflict, and no valid unresolved owned review item.
-A required external approval may still remain; report it rather than claiming the PR
-is mergeable.
-
-Finish with the selected TODO item, plan source, branch, pull request, validation,
-CI state, readiness state, and residual risks.
+Accept completion only when Autoimplement leaves exactly one current, non-draft pull
+request ready for review on the prepared branch and does not merge it. Report the
+selected item, accepted plan, branch, pull request, validation and CI state, and any
+remaining blocker or risk.
