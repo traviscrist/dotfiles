@@ -143,8 +143,9 @@ brew 'certbot'
 tap 'heroku/brew'
 brew 'heroku'
 
-# Keyboard
+# Keyboard and Mouse
 cask 'karabiner-elements'
+cask 'linearmouse'
 
 # IDEs
 ## VS Code
