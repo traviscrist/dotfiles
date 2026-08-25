@@ -126,6 +126,12 @@ describe("auto-next command", () => {
     expect(context.messages[0]).toContain('exact approved `.plan` field');
     expect(context.messages[0]).toContain('`merge`: `false`');
     expect(context.messages[0]).toContain('`approval`: `{ "mode": "required" }`');
+    expect(context.messages[0]).toContain("including an effect automatically triggered by a merge");
+    expect(context.messages[0]).toContain("Ask for a separate explicit approval to merge only that pull request");
+    expect(context.messages[0]).toContain("Treat merge approval as single-use");
+    expect(context.messages[0]).toContain("Never bundle approval for multiple pull");
+    expect(context.messages[0]).toContain("All environments are eligible only when");
+    expect(context.messages[0]).toContain("apply only the exact reviewed saved plan");
     expect(context.messages[0]).not.toContain("name: auto-next");
   });
 
