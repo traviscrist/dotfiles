@@ -8,7 +8,7 @@
     "@earendil-works/pi-tui": "0.84.2",
     "@ff-labs/pi-fff": "^0.10.5",
     "@juicesharp/rpiv-ask-user-question": "^2.7.0",
-    "@osolmaz/pi-workflows": "^0.12.1",
+    "@osolmaz/pi-workflows": "^0.13.4",
     "pi-lens": "^4.1.1",
     "pi-mcp-adapter": "^2.27.0",
     "pi-openai-fast-mode": "^0.3.0",
