@@ -31,7 +31,6 @@
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-mcp-adapter",
-    "npm:@ff-labs/pi-fff",
-    "npm:@osolmaz/pi-workflows"
+    "npm:@ff-labs/pi-fff"
   ]
 }
