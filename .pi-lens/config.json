@@ -2,6 +2,9 @@
   "widget": {
     "visible": false
   },
+  "format": {
+    "mode": "immediate"
+  },
   "contextInjection": {
     "enabled": false
   },
