@@ -267,7 +267,8 @@ describe("next command", () => {
       "NEXT_SESSION_NAME: <short task title>",
     );
     expect(context.messages[0]).toContain("Required Pre-Publish Gate");
-    expect(context.messages[0]).toContain("async:false");
+    expect(context.messages[0]).toContain("async:true");
+    expect(context.messages[0]).toContain("Keep context lean");
     expect(context.messages[0]).toContain("unrelated subsystem graphs");
     expect(context.messages[0]).toContain("NEXT_CHAIN:");
     expect(context.messages[0]).not.toContain("corepack");

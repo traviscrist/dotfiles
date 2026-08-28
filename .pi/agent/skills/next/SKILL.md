@@ -23,7 +23,8 @@ privileges, discard work, reset, clean, or overwrite unrelated changes.
 
 ## 1. Synchronize
 
-1. Read repository instructions.
+1. Use the repository instructions Pi already loaded. Do not reread `AGENTS.md`
+   unless Pi did not load it or it changed after session start.
 2. Run `git status --short --branch`.
 3. Require a clean working tree, including untracked files.
 4. If dirty, stop and report the exact paths. Never stash or discard them.
@@ -128,16 +129,29 @@ Subagents remain available but bounded:
   cannot answer a material question
 - optionally one fresh-context reviewer after focused validation for a non-trivial
   diff
-- run the reviewer in the foreground with `async:false` and inline output; do not
-  use `subagent_wait`, status polling, or temporary output logs
-- after fixing a reviewer finding, resume that same retained reviewer once in the
-  foreground instead of launching another reviewer
+- run the reviewer with `async:true`; use `subagent_wait` only when its result gates
+  work in the current turn, and never status-poll
+- after fixing a reviewer finding, resume that same retained reviewer once instead
+  of launching another reviewer
 - no worker subagent, forked context, fanout, nested delegation, or polling
 
 If delegating, list executable agents first. Skip delegation for small, obvious
 changes.
 
 ## 7. Implement and validate
+
+Keep context lean throughout implementation:
+
+- Read a known file directly. Do not use `grep` to search one exact absolute file.
+- Scope every search. When inspecting `~/.pi` or another external tree, use tightly
+  scoped `rg`/file reads and exclude sessions, workflows, caches, logs, and artifacts.
+- Do not print a large whole-repository diff when a stat plus targeted diffs proves
+  the change.
+- Redirect repetitive long-running gate and CI-watch output to a `/tmp` log. On
+  success, return a bounded final summary/readback. On failure, return the relevant
+  tail and full log path.
+- Run the required pre-publish gate once after final edits. Rerun it only when files
+  change afterward.
 
 Only after explicit approval:
 
