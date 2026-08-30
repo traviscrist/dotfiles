@@ -145,7 +145,7 @@ tap 'heroku/brew'
 brew 'heroku'
 
 # Keyboard
-cask 'karabiner-elements'
+brew 'kanata'
 
 # IDEs
 ## VS Code

@@ -1,0 +1,113 @@
+;; MacBook parity for the Keebart Corne Choc Pro.
+;; QWERTY + macOS CAGS home-row mods + Caps/Escape navigation layer.
+
+(defcfg
+  process-unmapped-keys yes
+  macos-dev-names-include (
+    "Apple Internal Keyboard / Trackpad"
+  )
+)
+
+(defsrc
+  caps  q  w  e  r  t  y  u  i  o  p
+        a  s  d  f  g  h  j  k  l  ;
+        z  x  c  v  b  n  m  ,  .  /
+  spc
+)
+
+(defvar
+  tap-time 250
+  hold-time 250
+  flow-time 125
+
+  left-hand-keys (
+    q w e r t
+    a s d f g
+    z x c v b
+  )
+  right-hand-keys (
+    y u i o p
+    h j k l ;
+    n m , . /
+  )
+)
+
+(deflayer base
+  @caps  @tq  @tw  @te  @tr  @tt  @ty  @tu  @ti  @to  @tp
+          @a   @s   @d   @f  @tg  @th   @j   @k   @l   @;
+         @tz  @tx  @tc  @tv  @tb  @tn  @tm  @tcomm  @tdot  @tslash
+  @tspc
+)
+
+;; A 125 ms typing streak stays literal. Every normal typing key rearms it.
+(deflayer nomods
+  @caps  @tq  @tw  @te  @tr  @tt  @ty  @tu  @ti  @to  @tp
+         @ta   @ts   @td   @tf  @tg  @th  @tj  @tk  @tl  @tsemi
+         @tz  @tx  @tc  @tv  @tb  @tn  @tm  @tcomm  @tdot  @tslash
+  @tspc
+)
+
+(deflayer nav
+  _  M-1  M-2  M-3  M-4  M-5  M-S-lbrc  M-S-rbrc  XX  \  S-\
+      home  end  -  =  pgdn  left  down  up  rght  menu
+      S-,  S-.  M-c  M-v  ;  pp  prev  next  vold  volu
+  spc
+)
+
+(defvirtualkeys
+  to-base (layer-switch base)
+)
+
+(defalias
+  ;; Tap Caps for Escape. Hold it for the shared Navigation layer.
+  caps (tap-hold-press $tap-time $hold-time esc (layer-while-held nav))
+
+  ;; QMK Flow Tap analogue: return to HRMs after 125 ms of typing idle.
+  tap (multi
+    (layer-switch nomods)
+    (on-idle $flow-time tap-vkey to-base)
+  )
+
+  ;; Literal typing aliases also start or extend the Flow Tap window.
+  tq (multi q @tap)
+  tw (multi w @tap)
+  te (multi e @tap)
+  tr (multi r @tap)
+  tt (multi t @tap)
+  ty (multi y @tap)
+  tu (multi u @tap)
+  ti (multi i @tap)
+  to (multi o @tap)
+  tp (multi p @tap)
+  ta (multi a @tap)
+  ts (multi s @tap)
+  td (multi d @tap)
+  tf (multi f @tap)
+  tg (multi g @tap)
+  th (multi h @tap)
+  tj (multi j @tap)
+  tk (multi k @tap)
+  tl (multi l @tap)
+  tsemi (multi ; @tap)
+  tz (multi z @tap)
+  tx (multi x @tap)
+  tc (multi c @tap)
+  tv (multi v @tap)
+  tb (multi b @tap)
+  tn (multi n @tap)
+  tm (multi m @tap)
+  tcomm (multi , @tap)
+  tdot (multi . @tap)
+  tslash (multi / @tap)
+  tspc (multi spc @tap)
+
+  ;; macOS CAGS: Ctrl, Option, Command, Shift; mirrored on the right.
+  a (tap-hold-release-keys $tap-time $hold-time @ta lctl $left-hand-keys)
+  s (tap-hold-release-keys $tap-time $hold-time @ts lalt $left-hand-keys)
+  d (tap-hold-release-keys $tap-time $hold-time @td lmet $left-hand-keys)
+  f (tap-hold-release-keys $tap-time $hold-time @tf lsft $left-hand-keys)
+  j (tap-hold-release-keys $tap-time $hold-time @tj rsft $right-hand-keys)
+  k (tap-hold-release-keys $tap-time $hold-time @tk rmet $right-hand-keys)
+  l (tap-hold-release-keys $tap-time $hold-time @tl ralt $right-hand-keys)
+  ; (tap-hold-release-keys $tap-time $hold-time @tsemi rctl $right-hand-keys)
+)
