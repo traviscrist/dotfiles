@@ -13,6 +13,7 @@
         a  s  d  f  g  h  j  k  l  ;
         z  x  c  v  b  n  m  ,  .  /
   spc
+  f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12 fn
 )
 
 (defvar
@@ -37,6 +38,7 @@
           @a   @s   @d   @f  @tg  @th   @j   @k   @l   @;
          @tz  @tx  @tc  @tv  @tb  @tn  @tm  @tcomm  @tdot  @tslash
   @tspc
+  brdn  bru  mctl  sls  dtn  dnd  prev  pp  next  mute  vold  volu  @fn
 )
 
 ;; A 125 ms typing streak stays literal. Every normal typing key rearms it.
@@ -45,6 +47,7 @@
          @ta   @ts   @td   @tf  @tg  @th  @tj  @tk  @tl  @tsemi
          @tz  @tx  @tc  @tv  @tb  @tn  @tm  @tcomm  @tdot  @tslash
   @tspc
+  brdn  bru  mctl  sls  dtn  dnd  prev  pp  next  mute  vold  volu  @fn
 )
 
 (deflayer nav
@@ -52,6 +55,16 @@
       M-left  M-rght  A-left  A-rght  pgdn  left  down  up  rght  M-tab
       M-z  M-S-z  M-c  M-v  M-x  pp  prev  next  vold  volu
   spc
+  _  _  _  _  _  _  _  _  _  _  _  _  _
+)
+
+;; Hold the physical Fn/Globe key for standard F1–F12.
+(deflayer fkeys
+  _  _  _  _  _  _  _  _  _  _  _
+     _  _  _  _  _  _  _  _  _  _
+     _  _  _  _  _  _  _  _  _  _
+  _
+  f1 f2 f3 f4 f5 f6 f7 f8 f9 f10 f11 f12 _
 )
 
 (defvirtualkeys
@@ -61,6 +74,9 @@
 (defalias
   ;; Tap Caps for Escape. Hold it for the shared Navigation layer.
   caps (tap-hold-press $tap-time $hold-time esc (layer-while-held nav))
+
+  ;; Restore Apple's media-row default while keeping Fn+row as F1–F12.
+  fn (layer-while-held fkeys)
 
   ;; QMK Flow Tap analogue: return to HRMs after 125 ms of typing idle.
   tap (multi

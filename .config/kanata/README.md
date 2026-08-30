@@ -13,6 +13,8 @@ Mirrors the Keebart Corne layout on the MacBook built-in keyboard:
 - Caps+Z/X/C/V/B = undo, redo, copy, paste, and cut.
 - Caps+; = Command+Tab application switching.
 - Caps+N, M, comma, period, and slash = play/pause, previous track, next track, volume down, and volume up.
+- The top row restores Apple's brightness, Mission Control, Spotlight, Dictation, Do Not Disturb, media, and volume actions.
+- Hold Fn/Globe with the top row for standard F1–F12.
 - Only `Apple Internal Keyboard / Trackpad` is captured. The Corne remains firmware-owned.
 
 BetterTouchTool can continue to own app/window automations. It should not remap these keys.
@@ -90,4 +92,5 @@ Emergency exit: hold Control+Space+Escape.
 - Test `asdf`, `jkl;`, `ion`, and repeated same-hand rolls for false modifiers.
 - Test opposite-hand Command, Shift, Option, and Control shortcuts.
 - Test Caps tap, held arrows, Command+1/2, tab cycling, line/word motion, Page Down, close/reopen, app/window switching, edit shortcuts, media, and volume.
+- Test all twelve Apple top-row actions and Fn/Globe+row for standard F1–F12.
 - Test after sleep, lock/unlock, and macOS updates.
