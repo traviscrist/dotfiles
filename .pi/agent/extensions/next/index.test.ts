@@ -270,6 +270,16 @@ describe("next command", () => {
     expect(context.messages[0]).toContain("async:true");
     expect(context.messages[0]).toContain("Keep context lean");
     expect(context.messages[0]).toContain("unrelated subsystem graphs");
+    expect(context.messages[0]).toContain(
+      "inspect and triage all review feedback after the pull request opens",
+    );
+    expect(context.messages[0]).toContain(
+      "Approve recommended review plan (Recommended)",
+    );
+    expect(context.messages[0]).toContain(
+      "Do not edit, test, commit, push, post replies, resolve threads",
+    );
+    expect(context.messages[0]).toContain("numbered plan and approval cycle");
     expect(context.messages[0]).toContain("NEXT_CHAIN:");
     expect(context.messages[0]).not.toContain("corepack");
     expect(context.messages[0]).not.toContain("name: next");

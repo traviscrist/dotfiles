@@ -17,9 +17,12 @@ Invoking `/next` grants permission to:
 - after explicit plan approval, create a task branch and implement the slice
 - commit and push the approved slice
 - open a ready-for-review pull request
+- inspect and triage all review feedback after the pull request opens
+- after a second explicit approval, address only the approved review-feedback plan
 
-It does not grant permission to implement before approval, merge, use admin
-privileges, discard work, reset, clean, or overwrite unrelated changes.
+It does not grant permission to implement before initial approval, address review
+feedback before post-PR plan approval, merge, use admin privileges, discard work,
+reset, clean, or overwrite unrelated changes.
 
 ## 1. Synchronize
 
@@ -188,7 +191,57 @@ Do not publish partial, unapproved, or knowingly failing work.
 9. Fix attributable failures, push, and recheck until green or genuinely blocked.
 10. Never merge the PR.
 
-## 9. Summarize and hand off
+## 9. Check review feedback and request approval
+
+After the pull request opens and the required final CI pass settles:
+
+1. Fetch the current PR reviews, review summaries, inline review comments, issue
+   comments containing review feedback, and unresolved review threads with `gh`.
+2. Do not sleep or poll solely waiting for feedback. If no review feedback exists,
+   say so explicitly and continue to the handoff.
+3. Filter only obvious lifecycle noise, generated summaries/diagrams, and approvals
+   with no request. Keep every substantive item, including feedback that should not
+   be fixed.
+4. Deduplicate repeated comments and compare each item against the current pushed
+   code before recommending action.
+5. Present a concise numbered review plan. For every substantive item include:
+   - author and path/line when present
+   - one-sentence request
+   - recommended disposition: `fix`, `already_fixed`, `explain`, `wont_fix`, or
+     `needs_travis`
+   - whether to fix it and why
+   - effort/risk: `small`, `medium`, or `large`
+   - proposed implementation or reply evidence
+6. Group recommended fixes into the smallest coherent plan. Call out product,
+   security, architecture, destructive, or scope-expanding decisions separately.
+7. Ask for explicit approval with one structured `ask_user_question` call. Offer:
+   - **Approve recommended review plan (Recommended)** — address only the proposed
+     items
+   - **Revise the review plan** — incorporate feedback and ask again later
+   - **Choose comment numbers** — let the user provide an explicit subset
+   - **Defer review feedback** — make no review-driven changes
+8. Stop after asking. Do not edit, test, commit, push, post replies, resolve threads,
+   or request re-review before the user approves the displayed review plan.
+
+After approval:
+
+1. Re-fetch the approved comments to detect stale positions or new replies.
+2. Address only approved items; prepare evidence-backed replies for `already_fixed`,
+   `explain`, and `wont_fix` dispositions.
+3. Run focused validation, then rerun the complete repository-required pre-publish
+   gate because files changed after its previous successful run.
+4. Show the resulting diff, validation, and reply evidence before publishing only
+   when the approved plan materially changed during implementation; ask again if it
+   did.
+5. Commit and push only approved fixes, reply to every approved substantive item,
+   and resolve only fully addressed threads after pushed evidence exists.
+6. Request one fresh review pass from each relevant reviewer after replies are posted.
+7. Run the final GitHub CI pass again. Fix only failures attributable to the approved
+   changes; stop and ask before widening scope.
+8. Re-check review feedback once. Surface any new substantive item through another
+   numbered plan and approval cycle rather than addressing it silently.
+
+## 10. Summarize and hand off
 
 End with a concise handoff containing:
 
