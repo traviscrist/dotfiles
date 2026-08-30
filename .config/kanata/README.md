@@ -8,6 +8,11 @@ Mirrors the Keebart Corne layout on the MacBook built-in keyboard:
 - Caps+H/J/K/L = Left/Down/Up/Right.
 - Caps+Q/W/E/R/T = Command+1 through Command+5.
 - Caps+Y/U = Command+Shift+[ / Command+Shift+].
+- Caps+I/O/P = close tab, reopen tab, and cycle windows in the current app.
+- Caps+A/S and D/F = macOS line and word movement; Caps+G = Page Down.
+- Caps+Z/X/C/V/B = undo, redo, copy, paste, and cut.
+- Caps+; = Command+Tab application switching.
+- Caps+N, M, comma, period, and slash = play/pause, previous track, next track, volume down, and volume up.
 - Only `Apple Internal Keyboard / Trackpad` is captured. The Corne remains firmware-owned.
 
 BetterTouchTool can continue to own app/window automations. It should not remap these keys.
@@ -60,6 +65,8 @@ Follow this order. Karabiner-Elements' uninstaller removes its bundled driver, s
    kanata --macos-request-permissions || true
    ```
 
+   macOS Tahoe 26.2 silently rejects bare executables dragged into these lists. Upgrade to a current Tahoe release before configuring the launch service; running Kanata from an already trusted Terminal is only a temporary workaround.
+
 7. Validate and only then start Kanata:
 
    ```sh
@@ -82,5 +89,5 @@ Emergency exit: hold Control+Space+Escape.
 - Corne input is unchanged when connected.
 - Test `asdf`, `jkl;`, `ion`, and repeated same-hand rolls for false modifiers.
 - Test opposite-hand Command, Shift, Option, and Control shortcuts.
-- Test Caps tap, held arrows, Command+1/2, and tab cycling.
+- Test Caps tap, held arrows, Command+1/2, tab cycling, line/word motion, Page Down, close/reopen, app/window switching, edit shortcuts, media, and volume.
 - Test after sleep, lock/unlock, and macOS updates.

@@ -48,9 +48,9 @@
 )
 
 (deflayer nav
-  _  M-1  M-2  M-3  M-4  M-5  M-S-lbrc  M-S-rbrc  XX  \  S-\
-      home  end  -  =  pgdn  left  down  up  rght  menu
-      S-,  S-.  M-c  M-v  ;  pp  prev  next  vold  volu
+  _  M-1  M-2  M-3  M-4  M-5  M-S-lbrc  M-S-rbrc  M-w  M-S-t  M-grv
+      M-left  M-rght  A-left  A-rght  pgdn  left  down  up  rght  M-tab
+      M-z  M-S-z  M-c  M-v  M-x  pp  prev  next  vold  volu
   spc
 )
 
