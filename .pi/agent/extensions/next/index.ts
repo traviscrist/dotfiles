@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
-const DEFAULT_SESSION_NAME = "Next project step";
+const DEFAULT_SESSION_NAME = "Next shippable goal";
 const MAX_FOCUS_NAME_LENGTH = 60;
 const MAX_TASK_NAME_LENGTH = 72;
 const MAX_CHAIN_PROMPT_LENGTH = 1_000;
@@ -169,7 +169,7 @@ export function createNextExtension(
 
   pi.registerCommand("next", {
     description:
-      "Discover and propose the smallest actionable next project step",
+      "Discover and propose the smallest QA-able shippable project goal",
     handler: async (args, ctx) => {
       if (!ctx.isIdle()) {
         ctx.ui.notify(

@@ -1,10 +1,10 @@
 ---
 name: next
-description: Discover the next authoritative project step, present the smallest coherent implementation plan for approval, then implement, validate, commit, and open a ready-for-review PR.
+description: Discover the next authoritative shippable project goal, decompose an oversized TODO goal when needed, present the plan for approval, then implement, QA, validate, commit, and open a ready-for-review PR.
 disable-model-invocation: true
 ---
 
-# Next Project Step
+# Next Shippable Project Goal
 
 The `/next` wrapper has already opened a fresh session. Do not create another
 session.
@@ -13,9 +13,10 @@ Invoking `/next` grants permission to:
 
 - switch from a clean working tree to `main`
 - fast-forward local `main`
-- discover and propose one small coherent slice
-- after explicit plan approval, create a task branch and implement the slice
-- commit and push the approved slice
+- discover and propose the smallest independently shippable goal
+- propose markable shippable subgoals when the authoritative TODO goal is too broad
+- after explicit plan approval, create a task branch and implement the goal
+- commit and push the approved goal
 - open a ready-for-review pull request
 - inspect and triage all review feedback after the pull request opens
 - after a second explicit approval, address only the approved review-feedback plan
@@ -38,9 +39,9 @@ reset, clean, or overwrite unrelated changes.
 
 Stop if any synchronization step cannot complete safely.
 
-## 2. Discover the next step
+## 2. Discover the next shippable goal
 
-Use this bounded funnel and stop as soon as authority, scope, and completion are
+Use this bounded funnel and stop as soon as authority, shippable scope, and QA are
 clear:
 
 1. Run the repository's documentation-list command when available.
@@ -51,26 +52,40 @@ clear:
    confirm the relevant conclusion against source.
 5. Inspect only enough recent history to prove the work is not already complete.
 6. Prefer, in order:
-   - an explicitly named next action
-   - the first unblocked item in the active milestone
-   - the smallest missing prerequisite for that item
-7. Treat optional `/next` arguments as a focus hint, not permission to ignore
+   - an explicitly named next shippable goal
+   - the first unblocked shippable checkbox in the active milestone
+   - the first shippable subgoal produced by decomposing the highest-priority
+     oversized TODO goal
+7. Treat a missing prerequisite as the selected goal only when it is independently
+   shippable and QA-able; never select scaffolding solely because it is small.
+8. Treat optional `/next` arguments as a focus hint, not permission to ignore
    authoritative project priorities.
+
+A shippable goal must:
+
+- deliver one coherent user-visible, operator-visible, or developer-usable outcome
+- be complete and safe to release without a knowingly unfinished behavior path
+- have a reproducible end-to-end QA procedure with concrete actions and expected
+  results; non-UI work may use an operator command or deployed readback
+- fit one focused pull request
+- map to one checkbox that can be marked complete in `TODO.md` or the repository's
+  authoritative equivalent
 
 Do not query unrelated subsystem graphs, disabled or non-authoritative issue
 trackers, broad history, or extra documentation unless the bounded funnel leaves a
-material ambiguity. More reading after the next step is proven is waste, not extra
-confidence.
+material ambiguity. More reading after the next shippable goal is proven is waste,
+not extra confidence.
 
 ## 3. Clarify uncertainty
 
-Before selecting the slice, identify anything unclear about:
+Before selecting the goal, identify anything unclear about:
 
-- which next step has authority
-- intended behavior or acceptance criteria
+- which next shippable goal has authority
+- intended behavior, acceptance criteria, or end-to-end QA
 - product, privacy, security, or architecture decisions
 - affected environment or surface
-- whether multiple next steps have equal priority
+- whether multiple shippable goals have equal priority
+- whether a broad TODO goal can be decomposed without inventing product scope
 
 If anything is unclear, ask the user before proceeding. Group all blocking
 questions into one structured `ask_user_question` call when available.
@@ -78,29 +93,37 @@ questions into one structured `ask_user_question` call when available.
 Do not invent requirements or silently choose between materially different
 options. Continue to planning only after every blocking ambiguity is resolved.
 
-## 4. Select, name, and plan
+## 4. Select, decompose, name, and plan
 
-Choose the smallest coherent slice that:
+Choose the smallest shippable goal that:
 
-- advances the selected next step
-- produces a reviewable and testable result
+- advances the authoritative TODO goal
+- delivers one complete outcome rather than an internal layer or scaffolding fragment
+- has a concrete end-to-end QA path with observable expected results
 - preserves existing behavior
 - avoids speculative infrastructure and broad refactors
 - fits into one focused pull request
 - requires no unresolved decision
+
+If the authoritative TODO goal does not fit that definition, decompose it in the
+plan into ordered nested checkbox subgoals. Each subgoal must be independently
+shippable and QA-able, dependencies must be explicit, and the set must fully cover
+the parent goal without silently narrowing it. Select the first unblocked subgoal.
+Do not edit `TODO.md` until the user approves the plan.
 
 Start the approval-plan response with exactly one machine-readable line:
 
 `NEXT_SESSION_NAME: <short task title>`
 
 The `/next` extension uses that line to rename the session automatically. Emit an
-updated line if user feedback changes the selected task.
+updated line if user feedback changes the selected goal.
 
 Outline:
 
-- authoritative next step and why it is next
-- chosen smallest slice and explicit exclusions
-- completion criteria
+- authoritative parent TODO goal and why it is next
+- chosen smallest shippable goal and explicit exclusions
+- exact proposed nested TODO checkboxes when decomposition is required
+- completion criteria and end-to-end QA procedure
 - proposed branch name
 - likely files and ownership boundaries
 - tests and validation gates
@@ -115,11 +138,11 @@ Present the plan, then always ask for explicit approval with one structured
 
 - **Approve and implement (Recommended)** — create the branch and execute the plan
 - **Revise the plan** — stop implementation and incorporate the user's feedback
-- **Choose another step** — return to discovery
+- **Choose another goal** — return to discovery
 - **Stop here** — leave the synchronized `main` worktree unchanged
 
 If the user does not approve, do not implement. If feedback changes the plan or
-selected task, update the session name, present the revised plan, and request
+selected goal, update the session name, present the revised plan, and request
 approval again in a later turn.
 
 ## 6. Delegate sparingly
@@ -159,19 +182,24 @@ Keep context lean throughout implementation:
 Only after explicit approval:
 
 1. Create the approved Conventional Commit-style task branch from updated `main`.
-2. Implement the approved slice; do not widen scope.
-3. Add focused regression coverage when behavior changes.
-4. Update `TODO.md` and owning documentation when progress or behavior changes.
-5. Run focused validation.
-6. Inspect final status, diff, and diff check.
-7. Run one focused review when warranted.
-8. Fix show-stoppers and rerun affected focused validation.
-9. Find the repository's **Required Pre-Publish Gate** section, when present, and
+2. Implement the approved shippable goal; do not widen scope.
+3. If decomposition was approved, add the exact nested checkboxes to `TODO.md` before
+   recording progress; do not rewrite or narrow the parent goal.
+4. Add focused regression coverage when behavior changes.
+5. Execute the approved end-to-end QA procedure and record its observable result.
+6. Mark only the selected shippable-goal checkbox complete after implementation and
+   QA both succeed. Mark the parent complete only when all child goals are complete.
+7. Update owning documentation when progress or behavior changes.
+8. Run focused validation.
+9. Inspect final status, diff, and diff check.
+10. Run one focused review when warranted.
+11. Fix show-stoppers and rerun affected focused validation.
+12. Find the repository's **Required Pre-Publish Gate** section, when present, and
    run every command and check it declares before the first push. Focused tests do
    not replace that gate. If the repository uses another explicit name, follow its
    documented equivalent. Never inject ecosystem-specific commands into this
    generic workflow.
-10. If anything changes after that gate, rerun the complete required pre-publish
+13. If anything changes after that gate, rerun the complete required pre-publish
     gate before publishing.
 
 Do not publish partial, unapproved, or knowingly failing work.
@@ -184,8 +212,8 @@ Do not publish partial, unapproved, or knowingly failing work.
 3. Push the task branch.
 4. Open a non-draft pull request targeting `main`.
 5. Use a Conventional Commit PR title.
-6. Include requirements, implementation, validation, review results, and residual
-   risks in the PR body.
+6. Include the shippable outcome, end-to-end QA steps/results, requirements,
+   implementation, validation, review results, and residual risks in the PR body.
 7. Confirm the PR is ready for review, not draft.
 8. Run the repository-required final GitHub CI pass.
 9. Fix attributable failures, push, and recheck until green or genuinely blocked.
@@ -248,14 +276,14 @@ End with a concise handoff containing:
 - **TL;DR** — a high-level summary of what changed, the user-visible or operational
   outcome, and why it matters. Describe the completed result, not a file-by-file
   changelog.
-- **How to QA** — clear, actionable manual verification steps. Include any setup,
-  exact commands or navigation, inputs/actions, and expected results needed to prove
-  the change works. When no meaningful manual QA exists, say so explicitly and
-  explain which automated evidence replaces it.
+- **How to QA** — the reproducible end-to-end procedure that proves the shippable
+  goal. Include setup, exact commands or navigation, inputs/actions, and observable
+  expected results. For non-UI work, provide an operator command or deployed readback;
+  automated tests alone do not replace QA.
 - **Delivery** — PR link, branch, commit, CI state, and any remaining risk.
-- **Suggested next steps** — up to three small authoritative candidates, ordered by
-  priority. Label the first candidate **Recommended** and state whether it is
-  independently actionable or blocked on the current PR merging.
+- **Suggested next shippable goals** — up to three authoritative QA-able candidates,
+  ordered by priority. Label the first candidate **Recommended** and state whether it
+  is independently shippable or blocked on the current PR merging.
 
 Write the QA steps for the user performing them after checkout or deployment; do not
 merely repeat tests already run by the agent.
@@ -265,13 +293,13 @@ End with exactly one machine-readable line for the recommended candidate:
 `NEXT_CHAIN: {"version":1,"title":"<short task title>","prompt":"<concise imperative focus for the next discovery session>","prerequisite":"<optional prerequisite>"}`
 
 Keep the JSON on one line with valid double-quoted JSON. Omit `prerequisite` when the
-candidate is independently actionable. The title must be at most 72 characters, the
+candidate is independently shippable. The title must be at most 72 characters, the
 prompt at most 1,000 characters, and the optional prerequisite at most 500
-characters. Do not emit placeholders. If no safe next step can be recommended, say
-why under **Suggested next steps** and end with `NEXT_CHAIN: null` so any older
-recommendation is withdrawn.
+characters. Do not emit placeholders. If no safe next shippable goal can be
+recommended, say why under **Suggested next shippable goals** and end with
+`NEXT_CHAIN: null` so the extension withdraws any older recommendation.
 
 The extension stores this recommendation durably. When the user later types exact
 plain `next`, it opens a fresh child session with the recommendation as a focus hint.
-That new session must still synchronize, revalidate authority and prerequisites,
-plan, and obtain explicit approval before implementation.
+That new session must still synchronize, revalidate authority, shippability, QA, and
+prerequisites, plan, and obtain explicit approval before implementation.

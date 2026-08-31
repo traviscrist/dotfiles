@@ -171,7 +171,7 @@ describe("next command", () => {
     expect(buildNextKickoff(SKILL_MARKDOWN, "backend evals")).toBe(
       "# Next Project Step\n\nExecute the next slice.\n\n## Invocation focus\n\nbackend evals",
     );
-    expect(buildNextSessionName("")).toBe("Next project step");
+    expect(buildNextSessionName("")).toBe("Next shippable goal");
     expect(buildNextSessionName("backend evals")).toBe("Next: backend evals");
     expect(buildTaskSessionName("  rotate managed\n sessions ")).toBe(
       "Next: rotate managed sessions",
@@ -261,8 +261,18 @@ describe("next command", () => {
     await harness.commands.get("next")!.handler("", context.ctx);
 
     expect(context.newSessionCalls).toBe(1);
-    expect(context.messages[0]).toContain("# Next Project Step");
+    expect(context.messages[0]).toContain("# Next Shippable Project Goal");
     expect(context.messages[0]).toContain("always ask for explicit approval");
+    expect(context.messages[0]).toContain("A shippable goal must:");
+    expect(context.messages[0]).toContain(
+      "never select scaffolding solely because it is small",
+    );
+    expect(context.messages[0]).toContain(
+      "exact proposed nested TODO checkboxes when decomposition is required",
+    );
+    expect(context.messages[0]).toContain(
+      "Mark only the selected shippable-goal checkbox complete",
+    );
     expect(context.messages[0]).toContain(
       "NEXT_SESSION_NAME: <short task title>",
     );
