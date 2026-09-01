@@ -53,6 +53,22 @@
         "codex",
         "codex-reply"
       ]
+    },
+    "paper": {
+      "url": "http://127.0.0.1:29979/mcp",
+      "lifecycle": "lazy-keep-alive",
+      "directTools": false,
+      "approveTools": [
+        "create_artboard",
+        "write_html",
+        "set_text_content",
+        "rename_nodes",
+        "duplicate_nodes",
+        "move_nodes",
+        "update_styles",
+        "delete_nodes",
+        "export"
+      ]
     }
   }
 }
