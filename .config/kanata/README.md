@@ -1,6 +1,6 @@
 # Kanata macOS keyboard config
 
-Mirrors the Keebart Corne layout on the MacBook built-in keyboard:
+Mirrors the Keebart Corne layout on the MacBook built-in and Apple Magic keyboards:
 
 - CAGS home-row mods: A/S/D/F = Control/Option/Command/Shift, mirrored on J/K/L/;.
 - Tap Caps Lock for Escape.
@@ -10,12 +10,12 @@ Mirrors the Keebart Corne layout on the MacBook built-in keyboard:
 - Caps+Y/U = Command+Shift+[ / Command+Shift+].
 - Caps+I/O/P = close tab, reopen tab, and cycle windows in the current app.
 - Caps+A/S and D/F = macOS line and word movement; Caps+G = Page Down.
-- Caps+Z/X/C/V/B = undo, redo, copy, paste, and cut.
+- Caps+Z/X/C/V = undo, redo, copy, and paste; Caps+B = Control+B.
 - Caps+; = Command+Tab application switching.
 - Caps+N, M, comma, period, and slash = play/pause, previous track, next track, volume down, and volume up.
 - The top row restores Apple's brightness, Mission Control, Spotlight, Dictation, Do Not Disturb, media, and volume actions.
 - Hold Fn/Globe with the top row for standard F1–F12.
-- Only `Apple Internal Keyboard / Trackpad` is captured. The Corne remains firmware-owned.
+- Only `Apple Internal Keyboard / Trackpad` and the Apple Magic Keyboard (`Travis’s Magic Keyboard`, device hash `0x4EC9F892450181B7`) are captured. The Corne remains firmware-owned.
 
 BetterTouchTool can continue to own app/window automations. It should not remap these keys.
 
@@ -87,10 +87,10 @@ Emergency exit: hold Control+Space+Escape.
 
 ## Validation
 
-- `kanata --list` reports `Apple Internal Keyboard / Trackpad` exactly.
+- `kanata --list` reports `Apple Internal Keyboard / Trackpad` and `Travis’s Magic Keyboard` exactly.
 - Corne input is unchanged when connected.
 - Test `asdf`, `jkl;`, `ion`, and repeated same-hand rolls for false modifiers.
 - Test opposite-hand Command, Shift, Option, and Control shortcuts.
-- Test Caps tap, held arrows, Command+1/2, tab cycling, line/word motion, Page Down, close/reopen, app/window switching, edit shortcuts, media, and volume.
+- Test Caps tap, held arrows, Command+1/2, tab cycling, line/word motion, Page Down, close/reopen, app/window switching, edit shortcuts, Caps+B as Control+B, media, and volume.
 - Test all twelve Apple top-row actions and Fn/Globe+row for standard F1–F12.
 - Test after sleep, lock/unlock, and macOS updates.
