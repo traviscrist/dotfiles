@@ -61,6 +61,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## Flow & Runtime
 - Use repo’s package manager/runtime; no swaps w/o approval.
+- Prefer `spark-worker` for bounded, low-risk implementation tasks.
+- Keep concurrency, migrations, security/privacy, architecture, and final acceptance on the standard worker/reviewer models.
 - Use Codex background for long jobs; tmux only for interactive/persistent (debugger/server).
 
 ## Build / Test
