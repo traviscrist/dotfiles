@@ -74,6 +74,13 @@ url = "https://mcp.betterstack.com"
 
 Use OAuth when the client prompts for browser sign-in. For non-OAuth clients, configure an API-token-backed MCP header instead of reinstalling a local CLI.
 
+## Terminal Multiplexing
+
+Herdr is uninstalled: no Homebrew service, agent hooks, skills, or saved runtime
+configuration. Use tmux only for interactive/persistent work under `AGENTS.md`.
+Restart existing agent sessions after removing extensions or skills so their loaded
+resources and instructions are refreshed.
+
 ## Syncing With Other Repos
 - Treat `scripts/committer` and `scripts/docs-list.ts` as shared helpers. If you change them in another repo, mirror the change here (and vice versa) to avoid drift.
 - When syncing helpers into another repo, keep files portable and dependency-light.
