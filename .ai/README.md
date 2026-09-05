@@ -74,6 +74,17 @@ url = "https://mcp.betterstack.com"
 
 Use OAuth when the client prompts for browser sign-in. For non-OAuth clients, configure an API-token-backed MCP header instead of reinstalling a local CLI.
 
+## Pi Lens Mutation Policy
+
+`~/.pi-lens/config.json` disables automatic formatting, lint autofixes, and LSP
+quickfix application; diagnostics and read guards remain enabled. Run the repository's
+format/fix commands explicitly before validation, staging, and committing. Lens can
+otherwise apply deferred fixes at `agent_end`, after a clean commit and handoff.
+
+Project `.pi-lens.json` mutation settings override these global defaults; do not
+re-enable them unintentionally. Restart existing Pi sessions after changing this
+policy so their cached settings and queued mutations cannot use the old policy.
+
 ## Terminal Multiplexing
 
 Herdr is uninstalled: no Homebrew service, agent hooks, skills, or saved runtime
