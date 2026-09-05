@@ -295,9 +295,30 @@ End with exactly one machine-readable line for the recommended candidate:
 Keep the JSON on one line with valid double-quoted JSON. Omit `prerequisite` when the
 candidate is independently shippable. The title must be at most 72 characters, the
 prompt at most 1,000 characters, and the optional prerequisite at most 500
-characters. Do not emit placeholders. If no safe next shippable goal can be
-recommended, say why under **Suggested next shippable goals** and end with
-`NEXT_CHAIN: null` so the extension withdraws any older recommendation.
+characters. Do not emit placeholders.
+
+A known prerequisite blocks execution, not recommendation. Apply these rules before
+emitting the final directive:
+
+- If a valid authoritative, QA-able successor is known, emit its recommendation
+  object. Include any unmet prerequisite in `prerequisite` with a concrete condition
+  the next session must verify before implementation.
+- Do not emit `NEXT_CHAIN: null` solely because a PR merge, review, deployment, or
+  other known prerequisite is pending. For example, a valid successor waiting on
+  the current PR should carry `prerequisite: "PR #123 must be merged first."`
+  (substitute the actual PR number).
+- If the handoff names a valid next candidate, the directive must recommend that
+  candidate rather than `null`. Select one **Recommended** candidate; prose and JSON
+  must agree, including its prerequisite.
+- Use `NEXT_CHAIN: null` only when no safe authoritative successor can be identified
+  even conditionally, such as an exhausted TODO or unresolved scope/authority.
+  Explain that reason under **Suggested next shippable goals**. Explicit `null`
+  withdraws any older recommendation; never retain stale advice to avoid a null.
+
+A recommendation is not permission to merge, bypass prerequisites, or implement
+without approval. If a chained session finds its prerequisite unmet but confirms the
+successor is still valid, report the blocker, re-emit the recommendation with its
+prerequisite, and stop before implementation.
 
 The extension stores this recommendation durably. When the user later types exact
 plain `next`, it opens a fresh child session with the recommendation as a focus hint.

@@ -291,6 +291,16 @@ describe("next command", () => {
     );
     expect(context.messages[0]).toContain("numbered plan and approval cycle");
     expect(context.messages[0]).toContain("NEXT_CHAIN:");
+    const instructions = normalizeFocus(context.messages[0]);
+    expect(instructions).toContain(
+      "A known prerequisite blocks execution, not recommendation.",
+    );
+    expect(instructions).toContain(
+      "Do not emit `NEXT_CHAIN: null` solely because a PR merge, review, deployment, or other known prerequisite is pending.",
+    );
+    expect(instructions).toContain(
+      "If the handoff names a valid next candidate, the directive must recommend that candidate rather than `null`.",
+    );
     expect(context.messages[0]).not.toContain("corepack");
     expect(context.messages[0]).not.toContain("name: next");
   });
@@ -342,6 +352,39 @@ describe("next command", () => {
     expect(context.messages[0]).toContain(
       "Revalidate it against current repository authority",
     );
+  });
+
+  it("carries a merge-blocked handoff into fresh discovery and still honors withdrawal", async () => {
+    const harness = createHarness(null);
+    await finishAssistantMessage(
+      harness,
+      `Recommended: ${CHAIN_SUGGESTION.title}; blocked on PR #123 merging.\nNEXT_CHAIN: ${JSON.stringify(CHAIN_SUGGESTION)}`,
+      true,
+    );
+    const entries = harness.appendedEntries.map((entry) => ({
+      type: "custom",
+      ...entry,
+    }));
+    expect(rewriteChainedNextInput("next", entries)).toBe("/next --chain");
+    const context = createContext({ entries, sessionFile: "/sessions/pr-123.jsonl" });
+    await harness.commands.get("next")!.handler("--chain", context.ctx);
+    expect(context.newSessionCalls).toBe(1);
+    expect(context.parentSessions).toEqual(["/sessions/pr-123.jsonl"]);
+    expect(context.customEntries.at(-1)).toEqual({
+      customType: "next-chain-origin",
+      data: CHAIN_SUGGESTION,
+    });
+    expect(context.messages[0]).toContain(CHAIN_SUGGESTION.prerequisite);
+    expect(context.messages[0]).toContain("always ask for explicit approval");
+    expect(context.messages[0]).toContain("Revalidate it against current repository authority");
+
+    await finishAssistantMessage(
+      harness,
+      "No authoritative successor can be identified.\nNEXT_CHAIN: null",
+      true,
+    );
+    const withdrawn = harness.appendedEntries.map((entry) => ({ type: "custom", ...entry }));
+    expect(rewriteChainedNextInput("next", withdrawn)).toBeUndefined();
   });
 
   it("refuses chain requests without a suggestion or persisted parent", async () => {
