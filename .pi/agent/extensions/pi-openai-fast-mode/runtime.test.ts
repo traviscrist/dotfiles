@@ -79,6 +79,44 @@ async function runHandler(
 }
 
 describe("Fast Mode runtime", () => {
+	it.each(["openai", "openai-codex"])("supports opt-in Astra priority on %s using shipped defaults", async (provider) => {
+		const { pi, commands, handlers } = createHarness();
+		createPiFastModeExtension()(pi as any);
+		const ctx = createContext();
+		ctx.model = { provider, id: "gpt-6-astra" };
+		const payload = { model: ctx.model.id, input: "test" };
+		const request = { payload };
+
+		await runHandler(handlers, "session_start", {}, ctx);
+		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, undefined]);
+		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toBeUndefined();
+
+		await commands.get("fast")!.handler("on", ctx);
+		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, "fast"]);
+		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toEqual({
+			...payload,
+			service_tier: "priority",
+		});
+		expect(payload).toEqual({ model: "gpt-6-astra", input: "test" });
+
+		ctx.model = { provider, id: "unlisted-model" };
+		await runHandler(handlers, "model_select", { model: ctx.model }, ctx);
+		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, undefined]);
+		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toBeUndefined();
+
+		ctx.model = { provider, id: "gpt-6-astra" };
+		await runHandler(handlers, "model_select", { model: ctx.model }, ctx);
+		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, "fast"]);
+		await commands.get("fast")!.handler("off", ctx);
+		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, undefined]);
+		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toBeUndefined();
+
+		await commands.get("fast")!.handler("on", ctx);
+		await runHandler(handlers, "session_start", {}, ctx);
+		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, undefined]);
+		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toBeUndefined();
+	});
+
 	it("parses a disabled default and only matches exact targets", () => {
 		const defaults = parseFastModeDefaults(CONFIG);
 		expect(defaults.enabled).toBeFalse();
