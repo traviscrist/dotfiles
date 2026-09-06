@@ -9,20 +9,20 @@
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
   "subagents": {
-    "defaultModel": "openai-codex/gpt-5.6-sol",
+    "defaultModel": "openai-codex/gpt-6-astra",
     "defaultThinking": "medium",
     "agentOverrides": {
       "worker": {
         "thinking": "high"
       },
       "reviewer": {
-        "model": "openai-codex/gpt-5.6-sol",
+        "model": "openai-codex/gpt-6-astra",
         "thinking": "high",
         "defaultContext": "fresh",
         "acceptanceRole": "read-only"
       },
       "oracle": {
-        "model": "openai-codex/gpt-5.6-sol",
+        "model": "openai-codex/gpt-6-astra",
         "thinking": "high",
         "acceptanceRole": "read-only"
       },
@@ -33,7 +33,7 @@
         "thinking": "medium"
       },
       "pr-comment-fixer": {
-        "model": "openai-codex/gpt-5.6-sol",
+        "model": "openai-codex/gpt-6-astra",
         "thinking": "high"
       }
     }
