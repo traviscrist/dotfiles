@@ -41,11 +41,11 @@
   "packages": [
     "npm:pi-lens",
     "npm:pi-simplify",
-    "npm:pi-subagents",
     "npm:pi-web-access",
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-mcp-adapter",
-    "npm:@ff-labs/pi-fff"
+    "npm:@ff-labs/pi-fff",
+    "git:git@github.com:nicobailon/pi-subagents@3e7f8f80f681705fffa0fd22e2c21c84093f61a1"
   ],
   "hideThinkingBlock": true
 }

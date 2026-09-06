@@ -74,6 +74,29 @@ url = "https://mcp.betterstack.com"
 
 Use OAuth when the client prompts for browser sign-in. For non-OAuth clients, configure an API-token-backed MCP header instead of reinstalling a local CLI.
 
+## Pi Installation
+
+Pi uses the official npm installation, not Homebrew:
+
+```bash
+npm install -g --ignore-scripts @earendil-works/pi-coding-agent
+pi update
+```
+
+Installed baseline: Pi 0.85.1. Updates are explicit, not automatic; restart Pi
+sessions afterward. npm installs under the active fnm Node version, so reinstall
+Pi when switching to a new Node installation if `pi` is no longer on PATH.
+
+Use native `openai-codex/gpt-6-astra`; no custom model definition is needed.
+The Astra default, subagent model assignments, and session-only `/fast` opt-in
+remain configured separately.
+
+`pi-subagents` is pinned in `~/.pi/agent/settings.json` to upstream commit
+`3e7f8f80f681705fffa0fd22e2c21c84093f61a1` (PR #1948), which supports stable
+Pi 0.85.1 background launches. `pi update --extensions` leaves this Git pin in
+place. Return to the npm package only after a published release includes the fix
+and passes the background-child smoke.
+
 ## Pi Lens Mutation Policy
 
 `~/.pi-lens/config.json` disables automatic formatting, lint autofixes, and LSP
