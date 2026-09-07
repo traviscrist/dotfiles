@@ -284,11 +284,16 @@ describe("next command", () => {
       "inspect and triage all review feedback after the pull request opens",
     );
     expect(context.messages[0]).toContain(
-      "Approve recommended review plan (Recommended)",
+      "~/.pi/agent/skills/pr-feedback/SKILL.md",
     );
-    expect(context.messages[0]).toContain(
-      "Do not edit, test, commit, push, post replies, resolve threads",
+    expect(context.messages[0]).toContain("**default PR mode**");
+    expect(normalizeFocus(context.messages[0])).toContain(
+      "Shared delegation options cannot relax Section 6: the parent remains the only writer, including all review-feedback fixes; do not delegate a fixer.",
     );
+    expect(context.messages[0]).toContain("separate explicit publication approval");
+    expect(context.messages[0]).toContain("Do not infer auto mode");
+    expect(context.messages[0]).toContain("native async");
+    expect(context.messages[0]).not.toContain("subagent_wait");
     expect(context.messages[0]).toContain("numbered plan and approval cycle");
     expect(context.messages[0]).toContain("NEXT_CHAIN:");
     const instructions = normalizeFocus(context.messages[0]);

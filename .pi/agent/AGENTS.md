@@ -52,13 +52,14 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 
 ## PR Feedback
 - Active PR: `gh pr view --json number,title,url --jq '"PR #\\(.number): \\(.title)\\n\\(.url)"'`.
-- New PRs: open as Draft by default (`gh pr create --draft`); show the PR link to Travis after opening; mark ready only when explicitly directed.
+- New PRs: open ready for review by default (omit `--draft`); show the PR link to Travis after opening. Use Draft only when Travis explicitly asks.
 - Never auto-merge PRs with admin privileges.
 - PR comments: `gh pr view …` + `gh api …/comments --paginate`.
-- For full PR feedback loops, use `/pr [number|url]`: triage each comment with `pr-comment-triager`, fix via `pr-comment-fixer`, main agent replies/resolves, then monitor CI to green.
+- PR feedback: `/pr [number|url]` uses `~/.pi/agent/skills/pr-feedback/SKILL.md`: triage, explicit selection approval, batched fixes, all required repo gates, explicit publication approval, then publish/reply/resolve and final CI. Only `/pr --auto` opts into at most two autonomous fix/CI rounds; publication still needs approval. Never merge.
+- `/review [number|url]` is read-only. Delegation is optional; one writer, no mandatory per-comment agents. Read-only subagent calls omit `acceptance`; use native async completion, not polling or separate wait tools.
 - Replies: cite fix + file/line; resolve threads only after fix lands.
-- After updates, reply on all review comments and close resolved threads.
-- Ask original reviewers to re-review after changes; for bot reviewers (Gemini, CodeRabbit, Codex), explicitly request another review pass.
+- After approved publication, reply on all selected substantive review comments and close only fully addressed threads.
+- Ask original reviewers to re-review after approved publication; for bot reviewers (Gemini, CodeRabbit, Codex), explicitly request another review pass.
 
 ## Flow & Runtime
 - Use repo’s package manager/runtime; no swaps w/o approval.

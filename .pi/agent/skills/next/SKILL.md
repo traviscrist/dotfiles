@@ -19,7 +19,8 @@ Invoking `/next` grants permission to:
 - commit and push the approved goal
 - open a ready-for-review pull request
 - inspect and triage all review feedback after the pull request opens
-- after a second explicit approval, address only the approved review-feedback plan
+- after a second explicit approval, address only the approved review-feedback plan;
+  publication of feedback results requires a separate explicit approval
 
 It does not grant permission to implement before initial approval, address review
 feedback before post-PR plan approval, merge, use admin privileges, discard work,
@@ -155,10 +156,11 @@ Subagents remain available but bounded:
   cannot answer a material question
 - optionally one fresh-context reviewer after focused validation for a non-trivial
   diff
-- run the reviewer with `async:true`; use `subagent_wait` only when its result gates
-  work in the current turn, and never status-poll
-- after fixing a reviewer finding, resume that same retained reviewer once instead
-  of launching another reviewer
+- run read-only helpers with `async:true` and omit `acceptance`; use native async
+  completion notifications, continuing safe independent work or yielding; no polling
+  or separate wait-tool calls
+- after fixing a reviewer finding, resume that retained reviewer once only when
+  useful and reported resumable; do not launch routine replacement reviewers
 - no worker subagent, forked context, fanout, nested delegation, or polling
 
 If delegating, list executable agents first. Skip delegation for small, obvious
@@ -219,55 +221,22 @@ Do not publish partial, unapproved, or knowingly failing work.
 9. Fix attributable failures, push, and recheck until green or genuinely blocked.
 10. Never merge the PR.
 
-## 9. Check review feedback and request approval
+## 9. Review feedback through the shared workflow
 
-After the pull request opens and the required final CI pass settles:
+After the required final CI pass settles, read and follow
+`~/.pi/agent/skills/pr-feedback/SKILL.md` in **default PR mode**, starting with
+Shared inspection and Triage and select. This is the same workflow as `/pr`,
+not another command invocation or a new session.
 
-1. Fetch the current PR reviews, review summaries, inline review comments, issue
-   comments containing review feedback, and unresolved review threads with `gh`.
-2. Do not sleep or poll solely waiting for feedback. If no review feedback exists,
-   say so explicitly and continue to the handoff.
-3. Filter only obvious lifecycle noise, generated summaries/diagrams, and approvals
-   with no request. Keep every substantive item, including feedback that should not
-   be fixed.
-4. Deduplicate repeated comments and compare each item against the current pushed
-   code before recommending action.
-5. Present a concise numbered review plan. For every substantive item include:
-   - author and path/line when present
-   - one-sentence request
-   - recommended disposition: `fix`, `already_fixed`, `explain`, `wont_fix`, or
-     `needs_travis`
-   - whether to fix it and why
-   - effort/risk: `small`, `medium`, or `large`
-   - proposed implementation or reply evidence
-6. Group recommended fixes into the smallest coherent plan. Call out product,
-   security, architecture, destructive, or scope-expanding decisions separately.
-7. Ask for explicit approval with one structured `ask_user_question` call. Offer:
-   - **Approve recommended review plan (Recommended)** — address only the proposed
-     items
-   - **Revise the review plan** — incorporate feedback and ask again later
-   - **Choose comment numbers** — let the user provide an explicit subset
-   - **Defer review feedback** — make no review-driven changes
-8. Stop after asking. Do not edit, test, commit, push, post replies, resolve threads,
-   or request re-review before the user approves the displayed review plan.
+Shared delegation options cannot relax Section 6: the parent remains the only
+writer, including all review-feedback fixes; do not delegate a fixer.
 
-After approval:
-
-1. Re-fetch the approved comments to detect stale positions or new replies.
-2. Address only approved items; prepare evidence-backed replies for `already_fixed`,
-   `explain`, and `wont_fix` dispositions.
-3. Run focused validation, then rerun the complete repository-required pre-publish
-   gate because files changed after its previous successful run.
-4. Show the resulting diff, validation, and reply evidence before publishing only
-   when the approved plan materially changed during implementation; ask again if it
-   did.
-5. Commit and push only approved fixes, reply to every approved substantive item,
-   and resolve only fully addressed threads after pushed evidence exists.
-6. Request one fresh review pass from each relevant reviewer after replies are posted.
-7. Run the final GitHub CI pass again. Fix only failures attributable to the approved
-   changes; stop and ask before widening scope.
-8. Re-check review feedback once. Surface any new substantive item through another
-   numbered plan and approval cycle rather than addressing it silently.
+The initial `/next` approval authorizes the goal's delivery, not review-driven
+changes. Request post-PR selection approval before addressing feedback, then
+separate explicit publication approval after displaying results and passing all
+repository-required gates. Do not infer auto mode from `/next` or earlier approvals.
+New substantive feedback returns to the shared numbered plan and approval cycle;
+no feedback means report that fact and continue to handoff.
 
 ## 10. Summarize and hand off
 

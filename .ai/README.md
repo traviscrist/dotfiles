@@ -89,14 +89,34 @@ Pi when switching to a new Node installation if `pi` is no longer on PATH.
 
 Use native `openai-codex/gpt-6-astra`; no custom model definition is needed.
 The Astra default and subagent model assignments remain configured separately.
-Fast Mode defaults to priority service for allowlisted models; `/fast off` disables
-it for the current session only.
+Fast Mode defaults to OFF (normal service). `/fast on` requests priority service
+for allowlisted models in the current session only; `/fast off` disables it.
 
 `pi-subagents` is pinned in `~/.pi/agent/settings.json` to upstream commit
 `3e7f8f80f681705fffa0fd22e2c21c84093f61a1` (PR #1948), which supports stable
 Pi 0.85.1 background launches. `pi update --extensions` leaves this Git pin in
 place. Return to the npm package only after a published release includes the fix
 and passes the background-child smoke.
+
+## Pi PR Workflows
+
+- `/pr [number|url]`: triage → approve selected comments → batch fixes → all
+  repository-required gates → approve publication → publish, reply, resolve, final CI.
+- `/pr --auto [number|url]`: explicit opt-in to at most two in-scope fix/CI rounds;
+  publication still requires approval. Never merge.
+- `/review [number|url]`: read-only requirements/correctness review, no fixes or
+  GitHub mutations. Replaces `/pr-reviewer`; `/pr` replaces `/pr-light` (no aliases).
+- Shared instructions: `~/.pi/agent/skills/pr-feedback/SKILL.md`. `/next` uses its
+  default approval flow after goal delivery; initial plan approval does not authorize
+  review-driven fixes or their publication.
+- Delegation optional, one writer. Read-only calls omit `acceptance`; native async
+  completion, no polling or separate wait calls.
+- `/followup` removed. Keep **Tab while busy** to queue follow-ups (autocomplete
+  still wins), native **Alt+Enter**, and exact plain `next` chaining from handoffs.
+- `pi-simplify` removed from configured packages; simplify the actual diff directly
+  rather than injecting a mandatory extra review workflow.
+
+Restart existing Pi sessions after cleanup so loaded commands and skills refresh.
 
 ## Pi Lens Mutation Policy
 

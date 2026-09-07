@@ -11,7 +11,7 @@ Run a read-only root-cause investigation. Do not edit files, commit, push, open 
 ## When to use other commands instead
 
 - Use `/debug` when the goal is diagnosis, root cause, commit archaeology, and a recommended fix.
-- Use `/pr-reviewer` when the target is a PR and the question is whether it satisfies a Linear issue.
+- Use `/review` for read-only PR review against its requirements, including a cited Linear issue.
 - Use `/ship` after Travis approves implementing the fix locally.
 - Use `/yolo` only when Travis wants clarify → implement → review → commit/push/draft PR end-to-end.
 
