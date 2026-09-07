@@ -79,7 +79,7 @@ async function runHandler(
 }
 
 describe("Fast Mode runtime", () => {
-	it.each(["openai", "openai-codex"])("supports opt-in Astra priority on %s using shipped defaults", async (provider) => {
+	it.each(["openai", "openai-codex"])("defaults Astra to priority on %s and resets session-only opt-out on startup", async (provider) => {
 		const { pi, commands, handlers } = createHarness();
 		createPiFastModeExtension()(pi as any);
 		const ctx = createContext();
@@ -88,10 +88,6 @@ describe("Fast Mode runtime", () => {
 		const request = { payload };
 
 		await runHandler(handlers, "session_start", {}, ctx);
-		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, undefined]);
-		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toBeUndefined();
-
-		await commands.get("fast")!.handler("on", ctx);
 		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, "fast"]);
 		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toEqual({
 			...payload,
@@ -111,10 +107,12 @@ describe("Fast Mode runtime", () => {
 		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, undefined]);
 		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toBeUndefined();
 
-		await commands.get("fast")!.handler("on", ctx);
 		await runHandler(handlers, "session_start", {}, ctx);
-		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, undefined]);
-		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toBeUndefined();
+		expect(ctx.statuses.at(-1)).toEqual([STATUS_KEY, "fast"]);
+		expect(await runHandler(handlers, "before_provider_request", request, ctx)).toEqual({
+			...payload,
+			service_tier: "priority",
+		});
 	});
 
 	it("parses a disabled default and only matches exact targets", () => {

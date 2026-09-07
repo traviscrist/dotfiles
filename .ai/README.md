@@ -88,8 +88,9 @@ sessions afterward. npm installs under the active fnm Node version, so reinstall
 Pi when switching to a new Node installation if `pi` is no longer on PATH.
 
 Use native `openai-codex/gpt-6-astra`; no custom model definition is needed.
-The Astra default, subagent model assignments, and session-only `/fast` opt-in
-remain configured separately.
+The Astra default and subagent model assignments remain configured separately.
+Fast Mode defaults to priority service for allowlisted models; `/fast off` disables
+it for the current session only.
 
 `pi-subagents` is pinned in `~/.pi/agent/settings.json` to upstream commit
 `3e7f8f80f681705fffa0fd22e2c21c84093f61a1` (PR #1948), which supports stable
