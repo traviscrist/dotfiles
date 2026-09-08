@@ -118,6 +118,20 @@ and passes the background-child smoke.
 
 Restart existing Pi sessions after cleanup so loaded commands and skills refresh.
 
+## Pi Lean Setup
+
+- Removed seven shared global skills from `~/.agents/skills`: `agents-sdk`,
+  `cloudflare`, `durable-objects`, `workers-best-practices`, `wrangler`,
+  `clerk-nextjs-patterns`, and `clerk-react-patterns`. Other Clerk/core/testing/
+  backend/crit skills remain; removal also affects other hosts using this directory.
+- Figma and Paper MCP use `lazy` lifecycle with an explicit 10-minute idle timeout.
+  Lunchmoney and Figma's direct `codex`/`codex-reply` routing remain unchanged.
+- Statusline no longer displays obsolete `codex-goal` elapsed status. Core UI,
+  Lens diagnostics/read guards, busy Tab, native Alt+Enter, and plain `next` remain.
+- Fast stays OFF by default; `gpt-6-astra` and pinned subagent assignments unchanged.
+  Lens remains installed with existing scan/security/LSP settings; startup A/B
+  benchmarking is deferred, not evidence of a measured speedup.
+
 ## Pi Lens Mutation Policy
 
 `~/.pi-lens/config.json` disables automatic formatting, lint autofixes, and LSP

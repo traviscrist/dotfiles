@@ -226,16 +226,6 @@ function contextUsageSegment(percent: number | undefined): Segment {
 	return { text: ` ${rounded}% `, fg: COLORS.bgDim, bg: color };
 }
 
-function goalElapsedSegment(status: string | undefined): Segment | undefined {
-	if (!status) return undefined;
-
-	const clean = stripAnsi(status);
-	const duration = clean.match(/\((\d+d(?: \d+h)?(?: \d+m)?|\d+h(?: \d+m)?|\d+m|\d+s)\)/)?.[1];
-	if (duration) return { text: ` ${duration} `, fg: COLORS.bgDim, bg: COLORS.green };
-	if (clean === "Pursuing goal") return { text: " 0s ", fg: COLORS.bgDim, bg: COLORS.green };
-	return undefined;
-}
-
 export default function (pi: ExtensionAPI) {
 	let enabled = true;
 	let activityState: ActivityState = "IDLE";
@@ -322,12 +312,10 @@ export default function (pi: ExtensionAPI) {
 					const branch = footerData.getGitBranch() || "no git";
 					const statuses = footerData.getExtensionStatuses();
 					const lspStatus = statuses.get("pi-lens-lsp");
-					const goalStatus = statuses.get("codex-goal");
 					const usage = ctx.getContextUsage();
 					const contextUsage = contextUsageSegment(usage?.percent ?? undefined);
 					const thinking = pi.getThinkingLevel();
 					const fastModeActive = isFastModeStatusActive(statuses.get(FAST_MODE_STATUS_KEY));
-					const goalElapsed = goalElapsedSegment(goalStatus);
 
 					const left = leftPowerline([
 						activitySegment(activityState, PLANET_RING_FRAMES[ringIndex] ?? "⊙"),
@@ -340,7 +328,6 @@ export default function (pi: ExtensionAPI) {
 						{ text: thinkingSegmentText(thinking, fastModeActive), fg: COLORS.yellow, bg: COLORS.bg2 },
 						{ text: ` ${compactModel(ctx.model?.id)} `, fg: COLORS.fg, bg: COLORS.bg1 },
 						contextUsage,
-						...(goalElapsed ? [goalElapsed] : []),
 					]);
 
 					return [makeFooterLine(width, left, right)];

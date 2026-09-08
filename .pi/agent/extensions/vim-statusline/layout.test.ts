@@ -111,6 +111,58 @@ describe("activity title", () => {
 });
 
 describe("statusline layout", () => {
+	it("ignores stale codex-goal statuses while rendering live model, thinking, context, and Lens", async () => {
+		const handlers = new Map<string, (event: any, ctx: any) => unknown>();
+		const statuses = new Map([["pi-lens-lsp", `${green}LSP ready${reset}`]]);
+		let footer: { render: (width: number) => string[]; dispose: () => void } | undefined;
+		let thinking = "high";
+		let percent = 37;
+		const ctx = {
+			cwd: "/repo",
+			model: { id: "gpt-6-astra" },
+			getContextUsage: () => ({ percent }),
+			ui: {
+				setTitle: mock(() => {}),
+				setWidget: mock(() => {}),
+				setWorkingVisible: mock(() => {}),
+				setFooter: (factory: any) => {
+					footer = factory({ requestRender: mock(() => {}) }, {}, {
+						getGitBranch: () => "main",
+						getExtensionStatuses: () => statuses,
+						onBranchChange: () => () => {},
+					});
+				},
+			},
+		};
+		vimStatusline({
+			events: { on: mock(() => {}) },
+			getThinkingLevel: () => thinking,
+			on: (event: string, handler: (event: any, ctx: any) => unknown) => handlers.set(event, handler),
+			registerCommand: mock(() => {}),
+		} as never);
+
+		try {
+			await handlers.get("session_start")!({}, ctx);
+			expect(footer).toBeDefined();
+			const baseline = footer!.render(160);
+			for (const status of ["Pursuing goal", `${green}Pursuing goal (12m)${reset}`, "Pursuing goal (2d 3h 4m)"]) {
+				statuses.set("codex-goal", status);
+				expect(footer!.render(160)).toEqual(baseline);
+			}
+			ctx.model.id = "gpt-6-astra-live";
+			thinking = "medium";
+			percent = 62;
+			const line = footer!.render(160)[0]!;
+			const text = line.replace(/\x1b\[[0-9;]*m/g, "");
+			for (const live of ["gpt 6 astra live", "medium", "62%", "ready"]) expect(text).toContain(live);
+			for (const stale of ["Pursuing goal", "2d 3h 4m", "high", "37%", "⚡"]) expect(text).not.toContain(stale);
+			expect(visibleWidth(line)).toBe(160);
+		} finally {
+			await handlers.get("session_shutdown")!({}, ctx);
+			footer?.dispose();
+		}
+	});
+
 	it("fits the fast-mode lightning bolt within the reported terminal width", () => {
 		const left = `${green}${dimBackground} IDLE   feat/golf-scramble-parity  aurabear  󰒡 Inactive ${reset}`;
 		const right = `${green}${dimBackground} ⚡ high  gpt 5.6 sol  0% ${reset}`;

@@ -44,7 +44,8 @@
         "-c",
         "mcp_servers.node_repl.enabled=false"
       ],
-      "lifecycle": "lazy-keep-alive",
+      "lifecycle": "lazy",
+      "idleTimeout": 10,
       "directTools": [
         "codex",
         "codex-reply"
@@ -56,7 +57,8 @@
     },
     "paper": {
       "url": "http://127.0.0.1:29979/mcp",
-      "lifecycle": "lazy-keep-alive",
+      "lifecycle": "lazy",
+      "idleTimeout": 10,
       "directTools": false,
       "approveTools": false
     }
