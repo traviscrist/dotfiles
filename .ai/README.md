@@ -84,8 +84,9 @@ pi update
 ```
 
 Installed baseline: Pi 0.85.1. Updates are explicit, not automatic; restart Pi
-sessions afterward. npm installs under the active fnm Node version, so reinstall
-Pi when switching to a new Node installation if `pi` is no longer on PATH.
+sessions afterward. npm installs under the active fnm Node version. The `pi` shell
+function in `~/.zsh/functions.zsh` launches it through `fnm exec --using=lts-latest`,
+so repository Node pins do not hide Pi or run it on an unsupported Node version.
 
 Use native `openai-codex/gpt-6-astra`; no custom model definition is needed.
 The Astra default and subagent model assignments remain configured separately.

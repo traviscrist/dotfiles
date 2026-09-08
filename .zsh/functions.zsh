@@ -69,6 +69,11 @@ codex() {
   command codex "${codex_route_args[@]}" "$@"
 }
 
+# Run Pi on the latest Node LTS, regardless of the current repo's Node pin.
+pi() {
+  command fnm exec --using=lts-latest pi "$@"
+}
+
 # Force kanban to run on Homebrew Node (>=20), regardless of repo fnm version.
 # Adds daemon helpers:
 # - kanban start [args...]
