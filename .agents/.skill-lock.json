@@ -60,6 +60,15 @@
       "pluginName": "features",
       "installedAt": "2026-06-12T02:49:43.004Z",
       "updatedAt": "2026-06-12T02:49:43.004Z"
+    },
+    "langfuse": {
+      "source": "langfuse/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/langfuse/skills.git",
+      "skillPath": "skills/langfuse/SKILL.md",
+      "skillFolderHash": "0031fcbd17f2e7fcfcb853dd4dbf1044cdf2d4ea",
+      "installedAt": "2026-09-08T18:20:30.716Z",
+      "updatedAt": "2026-09-08T18:20:30.716Z"
     }
   },
   "dismissed": {}

@@ -74,6 +74,32 @@ url = "https://mcp.betterstack.com"
 
 Use OAuth when the client prompts for browser sign-in. For non-OAuth clients, configure an API-token-backed MCP header instead of reinstalling a local CLI.
 
+## Langfuse CLI And Skill
+
+The official CLI is installed globally with Bun (no Homebrew formula):
+
+```bash
+bun add --global langfuse-cli@1.2.0
+npx skills add langfuse/skills --skill "langfuse" --global --agent pi --yes
+langfuse --version
+langfuse api projects list --help
+```
+
+The installer copies the official skill and references into
+`~/.pi/agent/skills/langfuse/`; provenance lives in `~/.agents/.skill-lock.json`.
+Restart Pi to discover `/skill:langfuse`. Agents use the `langfuse` binary through
+Bash; no custom extension or MCP server is needed.
+
+Before authenticated calls, load `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, and
+an explicit region-correct `LANGFUSE_BASE_URL` from approved local secret storage.
+Never paste keys into chat, commit them, pass them as command-line flags, or print
+credential-bearing `--curl` output. Verify access with `langfuse api projects list`;
+installation alone does not verify authentication.
+
+Repository privacy, pinned dependency, and approval rules override general upstream
+skill advice. Keep real traces/results out of Git and public logs; do not create
+or promote prompts, run evaluations, or export datasets without workflow approval.
+
 ## Pi Installation
 
 Pi uses the official npm installation, not Homebrew:
