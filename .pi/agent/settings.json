@@ -4,6 +4,11 @@
   "defaultProvider": "openai-codex",
   "defaultModel": "gpt-6-astra",
   "steeringMode": "one-at-a-time",
+  "retry": {
+    "enabled": true,
+    "maxRetries": 5,
+    "baseDelayMs": 8000
+  },
   "enableInstallTelemetry": false,
   "defaultProjectTrust": "always",
   "treeFilterMode": "default",

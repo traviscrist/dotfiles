@@ -139,6 +139,11 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### summarize
 - URL/file/media summarizer CLI.
 
+### linear
+- When Linear MCP is installed/configured, always use its tools for Linear API operations (issues, projects, comments, status updates, and searches).
+- Given a Linear URL or issue ID, use Linear MCP; do not substitute browser automation, web search, CLI commands, or ad-hoc HTTP requests.
+- If MCP is unavailable, authentication fails, or an operation is unsupported, report the blocker and ask Travis before switching access methods.
+
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
 

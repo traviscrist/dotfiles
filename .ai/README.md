@@ -93,6 +93,11 @@ The Astra default and subagent model assignments remain configured separately.
 Fast Mode defaults to OFF (normal service). `/fast on` requests priority service
 for allowlisted models in the current session only; `/fast off` disables it.
 
+Global transient-error retries use `maxRetries: 5` and `baseDelayMs: 8000` in
+`~/.pi/agent/settings.json`: 8s, 16s, 32s, 64s, 128s (4m 8s total waiting,
+plus request time). This is bounded retry, not connection monitoring. Restart Pi
+to load the settings; project retry overrides still take precedence.
+
 `pi-subagents` is pinned in `~/.pi/agent/settings.json` to upstream commit
 `3e7f8f80f681705fffa0fd22e2c21c84093f61a1` (PR #1948), which supports stable
 Pi 0.85.1 background launches. `pi update --extensions` leaves this Git pin in
