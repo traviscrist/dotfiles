@@ -55,6 +55,15 @@
         "codex-reply"
       ]
     },
+    "homeassistant": {
+      "url": "http://homeassistant.local:8123/api/mcp",
+      "auth": "bearer",
+      "bearerTokenEnv": "HA_MCP",
+      "lifecycle": "lazy",
+      "idleTimeout": 10,
+      "directTools": false,
+      "approveTools": true
+    },
     "paper": {
       "url": "http://127.0.0.1:29979/mcp",
       "lifecycle": "lazy",

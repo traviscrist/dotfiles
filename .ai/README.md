@@ -151,6 +151,18 @@ Restart existing Pi sessions after cleanup so loaded commands and skills refresh
   Lens remains installed with existing scan/security/LSP settings; startup A/B
   benchmarking is deferred, not evidence of a measured speedup.
 
+## Home Assistant MCP
+
+Pi's global `~/.pi/agent/mcp.json` configures `homeassistant` at
+`http://homeassistant.local:8123/api/mcp`, using `auth: "bearer"` and
+`bearerTokenEnv: "HA_MCP"`. Export the long-lived token before launching Pi;
+never store its value in tracked config. The local HTTP connection is unencrypted;
+use it only on a trusted LAN. Home Assistant's MCP Server integration must be
+configured, and only exposed entities are accessible.
+
+The server connects lazily through the MCP proxy and requires tool-call approval.
+After setup, run `/reload`, then `/mcp reconnect homeassistant` to load and verify.
+
 ## Pi Lens Mutation Policy
 
 `~/.pi-lens/config.json` disables automatic formatting, lint autofixes, and LSP
