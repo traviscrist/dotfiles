@@ -1,0 +1,2 @@
+# Machine-local layout and working directories; never sync between computers.
+/startup.kitty-session

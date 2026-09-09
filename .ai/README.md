@@ -149,6 +149,23 @@ Project `.pi-lens.json` mutation settings override these global defaults; do not
 re-enable them unintentionally. Restart existing Pi sessions after changing this
 policy so their cached settings and queued mutations cannot use the old policy.
 
+## Kitty Per-Computer Layouts
+
+- **Cmd+Shift+S** saves the current Kitty instance's windows, tabs, splits, and
+  working directories to `~/.config/kitty/startup.kitty-session`.
+- `startup_session` loads that snapshot on the next full Kitty launch. Saving is
+  manual, not automatic on exit. The shortcut does not open an editor or capture
+  foreground shell commands; this is not live process/Pi conversation recovery.
+- The shortcut/config is shared via yadm, but `.config/kitty/.gitignore` excludes
+  the session file. Each computer uses the same path with its own local contents.
+- **First setup on another computer:** launch `kitty --session=none` to bypass the
+  not-yet-created snapshot, arrange the layout, then press **Cmd+Shift+S**. Later
+  normal launches use that computer's saved layout. Use the same bypass if a local
+  snapshot is deliberately removed; do not commit snapshots containing local paths
+  or launch arguments.
+- Reload shortcut changes with **Ctrl+Cmd+,**. Startup restore takes effect on the
+  next full launch; reloading does not replace currently running windows.
+
 ## Terminal Multiplexing
 
 Herdr is uninstalled: no Homebrew service, agent hooks, skills, or saved runtime
