@@ -106,6 +106,19 @@ and passes the background-child smoke.
 
 ## Pi PR Workflows
 
+- `/ship <task>`: implement to local shippable quality; no commit/push/PR unless
+  explicitly requested, and never merge. `/yolo <task|Linear issue>` adds scoped
+  commit/push and a ready-for-review PR (Draft only on explicit request), then final
+  CI. Linear context uses the direct API, never MCP.
+- These are prompt templates in `~/.pi/agent/prompts/`, not skills or hard-coded
+  automation. `/yolo` explicitly reads `/ship` as its shared implementation contract;
+  Pi does not recursively expand nested template names. Use `/reload` after edits.
+- Both require the simplest correct complete change, one writer, full required
+  gates/QA, and an explicit final simplicity/Markdown audit. Keep transient plans,
+  review notes, and validation reports in chat or `/tmp`. Prefer existing owning
+  docs; commit new Markdown only when requested, repository-required, or justified
+  as necessary durable content with no suitable existing home. `/yolo` rechecks the
+  staged commit and full PR scope before publication, preserving unrelated work.
 - `/pr [number|url]`: triage → approve selected comments → batch fixes → all
   repository-required gates → approve publication → publish, reply, resolve, final CI.
 - `/pr --auto [number|url]`: explicit opt-in to at most two in-scope fix/CI rounds;
