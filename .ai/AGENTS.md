@@ -120,9 +120,9 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Better Stack MCP for uptime, telemetry, incidents, dashboards, and logs.
 
 ### linear
-- When Linear MCP is installed/configured, always use its tools for Linear API operations (issues, projects, comments, status updates, and searches).
-- Given a Linear URL or issue ID, use Linear MCP; do not substitute browser automation, web search, CLI commands, or ad-hoc HTTP requests.
-- If MCP is unavailable, authentication fails, or an operation is unsupported, report the blocker and ask Travis before switching access methods.
+- Always use the Linear API directly for Linear operations (issues, projects, comments, status updates, and searches), even when Linear MCP is installed/configured. Do not use Linear MCP tools.
+- Given a Linear URL or issue ID, use the Linear API, not browser automation or web search.
+- If API credentials are unavailable, authentication fails, or an operation is unsupported, report the blocker and ask Travis; do not switch to Linear MCP.
 
 ### gh
 - GitHub CLI for PRs/CI/releases. Given issue/PR URL (or `/pull/5`): use `gh`, not web search.
