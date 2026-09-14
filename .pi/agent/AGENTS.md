@@ -65,6 +65,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Flow & Runtime
 - Use repo’s package manager/runtime; no swaps w/o approval.
 - Use Codex background for long jobs; tmux only for interactive/persistent (debugger/server).
+- Docker: stop every container you start (including via Compose) when the task ends, succeeds, fails, or is abandoned; verify it is stopped before handoff. Leave containers running only with Travis’s explicit approval, and identify them in the handoff. Never stop unrelated or pre-existing running containers.
 
 ## Build / Test
 - Before handoff: run full gate (lint/typecheck/tests/docs).
