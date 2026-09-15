@@ -47,8 +47,8 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ## Docs
 - Start: run docs list via `docs-list` (or `tsx scripts/docs-list.ts`), then open relevant docs before coding.
 - Follow links until domain makes sense; honor `Read when` hints.
-- Keep notes short; document behavior/API changes in existing docs, or the PR description when appropriate. Do not automatically add a standalone Markdown file for each fix.
-- Before adding new Markdown docs, look for an existing documentation folder (e.g. `docs/`). Add new files only there; if none exists or a file belongs elsewhere, ask Travis first.
+- Docs are not required for every PR. Update documentation only when a relevant existing doc needs to change; otherwise keep context and verification notes in the PR description.
+- Do not create new documentation files unless Travis explicitly requests them. When requested, use the existing documentation folder (e.g. `docs/`); ask before placing them elsewhere.
 - Add `read_when` hints on cross-cutting docs.
 
 ## PR Feedback
