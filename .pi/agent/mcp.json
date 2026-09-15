@@ -3,6 +3,27 @@
     "scriptMode": false
   },
   "mcpServers": {
+    "cloudwatch": {
+      "command": "/opt/homebrew/bin/uvx",
+      "args": [
+        "--with",
+        "mcp<2",
+        "--from",
+        "git+https://github.com/awslabs/Log-Analyzer-with-MCP@70f3423635cc0d61996070dd92788f9b7d1f56fa",
+        "cw-mcp-server",
+        "--profile",
+        "read-only",
+        "--region",
+        "us-west-2"
+      ],
+      "env": {
+        "AWS_PROFILE": "read-only",
+        "AWS_REGION": "us-west-2",
+        "AWS_DEFAULT_REGION": "us-west-2"
+      },
+      "lifecycle": "lazy",
+      "directTools": false
+    },
     "lunchmoney": {
       "command": "/Users/travis/.ai/bin/lunchmoney-mcp",
       "env": {
