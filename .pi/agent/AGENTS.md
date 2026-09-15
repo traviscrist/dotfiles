@@ -143,8 +143,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 ### neon
 - Neon MCP is TrueVault-only, on work laptop `truevaultpolarbearblue`; never use for personal/RedCrayon work or enable on other machines.
 - Local-only config: `~/.config/mcp/mcp.json`, server `neon-truevault`; excluded from yadm sync. Keep OAuth credentials in the OS credential store, never tracked files.
-- Use the TrueVault Neon account and verify organization/project before access. Read-only mode and per-tool approval required; development/testing only, not production.
-
+- Use the TrueVault Neon account and verify organization/project before access. Read-only mode required; All Neon tool calls within those restrictions are pre-approved; no per-tool approval required.
 ### linear
 - Always use the Linear API directly for Linear operations (issues, projects, comments, status updates, and searches), even when Linear MCP is installed/configured. Do not use Linear MCP tools.
 - Given a Linear URL or issue ID, use the Linear API, not browser automation or web search.
