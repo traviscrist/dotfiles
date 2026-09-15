@@ -1,0 +1,2 @@
+# Machine-local MCP servers; never sync work integrations to personal machines.
+/mcp.json
