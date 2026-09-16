@@ -1,0 +1,25 @@
+{
+  "providers": {
+    "openai-codex": {
+      "models": [
+        {
+          "id": "gpt-daybreak-blue-latest",
+          "name": "Daybreak Blue",
+          "api": "openai-codex-responses",
+          "reasoning": true,
+          "thinkingLevelMap": {
+            "off": null,
+            "minimal": null,
+            "low": "low",
+            "medium": "medium",
+            "high": "high",
+            "xhigh": "xhigh",
+            "max": "max"
+          },
+          "input": ["text", "image"],
+          "contextWindow": 272000
+        }
+      ]
+    }
+  }
+}
