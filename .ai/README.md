@@ -109,7 +109,7 @@ npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 pi update
 ```
 
-Installed baseline: Pi 0.85.1. Updates are explicit, not automatic; restart Pi
+Installed baseline: Pi 0.87.0. Updates are explicit, not automatic; restart Pi
 sessions afterward. npm installs under the active fnm Node version. The `pi` shell
 function in `~/.zsh/functions.zsh` launches it through `fnm exec --using=lts-latest`,
 so repository Node pins do not hide Pi or run it on an unsupported Node version.
@@ -124,11 +124,19 @@ Global transient-error retries use `maxRetries: 5` and `baseDelayMs: 8000` in
 plus request time). This is bounded retry, not connection monitoring. Restart Pi
 to load the settings; project retry overrides still take precedence.
 
-`pi-subagents` is pinned in `~/.pi/agent/settings.json` to upstream commit
-`3e7f8f80f681705fffa0fd22e2c21c84093f61a1` (PR #1948), which supports stable
-Pi 0.85.1 background launches. `pi update --extensions` leaves this Git pin in
-place. Return to the npm package only after a published release includes the fix
-and passes the background-child smoke.
+`pi-subagents` 0.70.1 is pinned in `~/.pi/agent/settings.json` to upstream commit
+`1ac7b5e2652e9571164847ac2905ab4aded92791`, which includes the original PR #1948
+background-launch fix and later host-SDK compatibility repairs. Package updates
+reconcile the checkout but do not advance this pin. Return to npm only after the
+background-child smoke passes on the current host; extension-load checks alone
+are not that proof.
+
+The extension workspace's four Pi SDK packages are aligned to 0.87.0. Its tracked
+`~/.pi/agent/npm/package.json` and lockfile record installed npm extension versions.
+Local extension regression files run separately (`bun test <file>`) because their
+module mocks interfere when combined in one process. Restart existing sessions
+to load upgraded code and the selective-delegation/medium-thinking policy in
+`~/.pi/agent/AGENTS.md` and `~/.pi/agent/settings.json`.
 
 ## Pi PR Workflows
 

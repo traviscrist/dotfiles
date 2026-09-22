@@ -49,7 +49,7 @@
     "npm:@juicesharp/rpiv-ask-user-question",
     "npm:pi-mcp-adapter",
     "npm:@ff-labs/pi-fff",
-    "git:git@github.com:nicobailon/pi-subagents@3e7f8f80f681705fffa0fd22e2c21c84093f61a1"
+    "git:git@github.com:nicobailon/pi-subagents@1ac7b5e2652e9571164847ac2905ab4aded92791"
   ],
   "hideThinkingBlock": true
 }
