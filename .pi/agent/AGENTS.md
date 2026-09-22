@@ -62,6 +62,15 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - After approved publication, reply on all selected substantive review comments and close only fully addressed threads.
 - Ask original reviewers to re-review after approved publication; for bot reviewers (Gemini, CodeRabbit, Codex), explicitly request another review pass.
 
+## Delegation
+- Parent handles ordinary implementation, Git, publication, and CI checks directly; keep pi-subagents available, not a default workflow.
+- Delegate only for explicit user requests or a concrete benefit: substantial isolated/background implementation, independent review, or genuinely parallel work. State the benefit before launching.
+- For substantial changes, usually at most one worker and one independent reviewer; neither is mandatory. Extra agents or review rounds require a concrete unresolved issue, not a preset pipeline.
+- Do not spawn a fresh worker for a small administrative follow-up. Resume a suitable child when available; otherwise the parent handles it unless an existing protocol requires owner approval to change execution mode.
+- Routine children use medium thinking; scouts use low. High thinking is an explicit escalation for difficult debugging, serious review, or bounded oracle advice.
+- Keep child tasks/context narrow; avoid repeated unchanged document reads. Use native completion notifications, not status polling or repeated capability discovery without a change.
+- This local delegation policy takes precedence over optional orchestration recipes in package skills; preserve required safety checks, repository gates, and publication approvals.
+
 ## Flow & Runtime
 - Use repo’s package manager/runtime; no swaps w/o approval.
 - Use Codex background for long jobs; tmux only for interactive/persistent (debugger/server).

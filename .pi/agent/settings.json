@@ -18,11 +18,11 @@
     "defaultThinking": "medium",
     "agentOverrides": {
       "worker": {
-        "thinking": "high"
+        "thinking": "medium"
       },
       "reviewer": {
         "model": "openai-codex/gpt-6-astra",
-        "thinking": "high",
+        "thinking": "medium",
         "defaultContext": "fresh",
         "acceptanceRole": "read-only"
       },
@@ -39,7 +39,7 @@
       },
       "pr-comment-fixer": {
         "model": "openai-codex/gpt-6-astra",
-        "thinking": "high"
+        "thinking": "medium"
       }
     }
   },
