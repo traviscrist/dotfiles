@@ -195,6 +195,22 @@ Restart existing Pi sessions after cleanup so loaded commands and skills refresh
 - Local implementation: `~/.pi/agent/extensions/handoff/index.ts`, adapted from
   Pi's official example. Run `/reload` after installing or changing it.
 
+## Pi Context Caps
+
+- `pi-compaction-control` is pinned to npm version `0.4.5` for a cap-only trial.
+  `contextCap.models` in `~/.pi/agent/settings.json` caps Astra and Sol at 160,000
+  tokens; other model IDs remain unchanged.
+- Native compaction stays enabled with its default 16,384-token reserve and
+  20,000 recent tokens retained. The effective trigger is 143,616 tokens.
+- No `compactionModel` override: Pi still uses the active model for summaries.
+  No `pi-context-prune`, per-tool summarizer, or extra model request from capping.
+  Earlier native compaction can still mean more compaction requests overall.
+- Restart existing sessions or run `/reload` to load the cap; verify with
+  `/compaction-control-doctor`. A session already above the trigger may compact
+  on its next applicable context check. Finish active work before reloading.
+- Evaluate uncached input, cache hits, latency, and lost-context corrections;
+  smaller prompts alone do not prove lower cost or separate subscription quota.
+
 ## Pi Lean Setup
 
 - Removed seven shared global skills from `~/.agents/skills`: `agents-sdk`,
