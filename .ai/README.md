@@ -114,8 +114,13 @@ sessions afterward. npm installs under the active fnm Node version. The `pi` she
 function in `~/.zsh/functions.zsh` launches it through `fnm exec --using=lts-latest`,
 so repository Node pins do not hide Pi or run it on an unsupported Node version.
 
-Use native `openai-codex/gpt-6-astra`; no custom model definition is needed.
-The Astra default and subagent model assignments remain configured separately.
+The main agent stays on native `openai-codex/gpt-6-astra` with high thinking.
+Native subagents use `openai-codex/gpt-5.6-sol`: workers, reviewers, PR fixers,
+and oracle/advisor use high; scouts use low; researchers and other helpers use
+medium. Legacy `spark-worker` and `quick-reviewer` names also route to Sol high.
+These assignments live separately in `subagents` settings; no custom model
+registration is needed. External CLI runners retain their own model-selection
+contracts. This routing does not guarantee a separate Codex usage quota.
 Fast Mode defaults to OFF (normal service). `/fast on` requests priority service
 for allowlisted models in the current session only; `/fast off` disables it.
 
@@ -135,7 +140,7 @@ The extension workspace's four Pi SDK packages are aligned to 0.87.0. Its tracke
 `~/.pi/agent/npm/package.json` and lockfile record installed npm extension versions.
 Local extension regression files run separately (`bun test <file>`) because their
 module mocks interfere when combined in one process. Restart existing sessions
-to load upgraded code and the selective-delegation/medium-thinking policy in
+to load upgraded code and the selective-delegation/Sol-routing policy in
 `~/.pi/agent/AGENTS.md` and `~/.pi/agent/settings.json`.
 
 ## Pi PR Workflows

@@ -67,7 +67,7 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Delegate only for explicit user requests or a concrete benefit: substantial isolated/background implementation, independent review, or genuinely parallel work. State the benefit before launching.
 - For substantial changes, usually at most one worker and one independent reviewer; neither is mandatory. Extra agents or review rounds require a concrete unresolved issue, not a preset pipeline.
 - Do not spawn a fresh worker for a small administrative follow-up. Resume a suitable child when available; otherwise the parent handles it unless an existing protocol requires owner approval to change execution mode.
-- Routine children use medium thinking; scouts use low. High thinking is an explicit escalation for difficult debugging, serious review, or bounded oracle advice.
+- Native children use `openai-codex/gpt-5.6-sol`: workers, reviewers, PR fixers, and oracle/advisor use high thinking; scouts use low; researchers and other helpers use medium. Keep the parent on Astra; do not override children back to Astra without user approval.
 - Keep child tasks/context narrow; avoid repeated unchanged document reads. Use native completion notifications, not status polling or repeated capability discovery without a change.
 - This local delegation policy takes precedence over optional orchestration recipes in package skills; preserve required safety checks, repository gates, and publication approvals.
 
