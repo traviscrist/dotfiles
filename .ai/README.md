@@ -171,6 +171,25 @@ to load upgraded code and the selective-delegation/medium-thinking policy in
 
 Restart existing Pi sessions after cleanup so loaded commands and skills refresh.
 
+## Pi Session Handoffs
+
+- `/next` starts a different shippable work item from clean, updated `main`.
+- `/handoff [focus]` continues unfinished work in a fresh linked session, without
+  changing cwd, branches, dirty files, or existing approvals. Terminal-only;
+  wait for active work and queued messages to settle first. Background children
+  are not transferred; finish them before switching.
+- It uses the selected model once with medium thinking, Pi's compaction/context-edit
+  projection, and bounded tool-result serialization. System/tool schemas and
+  assistant thinking blocks are excluded. No automatic triggers or subagents.
+- Review/edit the generated brief; save opens the new session with an unsubmitted
+  draft. Esc cancels. Briefs over 12,000 characters are rejected, not truncated.
+  The new session must recheck Git state, background work, gates, and approvals.
+- Summarization consumes tokens even if cancelled. Successful handoffs record the
+  reported summary usage in the replacement session; a notice shows usage before
+  editor review. Cancelled handoffs do not add that usage to native session totals.
+- Local implementation: `~/.pi/agent/extensions/handoff/index.ts`, adapted from
+  Pi's official example. Run `/reload` after installing or changing it.
+
 ## Pi Lean Setup
 
 - Removed seven shared global skills from `~/.agents/skills`: `agents-sdk`,
