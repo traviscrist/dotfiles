@@ -1,9 +1,11 @@
 # Agent Instructions
 
+Repository instructions own architecture, implementation conventions, and verification gates; this file owns shared preferences and approval boundaries.
+
 ## Working style
 
 - Be concise and direct. State material assumptions; ask when scope, authority, or a consequential decision is unclear.
-- Work directly by default. No automatic delegation, task chaining, or model switching; use a separate review session when requested.
+- Work directly using native tools. No automatic delegation, workflow handoffs, or model switching; use a separate review session when requested.
 - Prefer the smallest complete change using existing code. No speculative abstractions, unrelated refactors, or compatibility fallbacks; migrate explicitly when needed.
 - Read relevant source and callers before editing. Investigate root causes; add regression coverage for behavior changes, including concurrency/retry cases when relevant.
 - Bound searches and output without omitting necessary context. Recover truncated evidence; never treat missing output as a passing check.
@@ -22,12 +24,12 @@
 ## Repository workflow
 
 - Follow repository instructions, package manager, and owning docs. Run its docs-list command when available; read task-relevant docs, not every document.
-- Update existing docs/TODO when behavior or progress changes. Do not create new documentation without a request; avoid agent reports and duplicate policy files.
+- Update existing docs or TODOs when the change makes them inaccurate or completes tracked work. Do not create new documentation without a request; avoid unsolicited reports and duplicate policy files.
 - Use focused checks during implementation, then the complete repository-required gate on the final candidate. Follow that repo's rerun policy; report blockers honestly.
 - For publication, inspect the final diff and stage only intentional paths. Use Conventional Commits and PR titles: `type: message`, or `type: ISSUE-ID: message`.
 - Prefer the repository's committer or `~/.ai/bin/committer`: `committer "message" <explicit paths>`.
 - PRs are ready for review unless Draft is requested. Run required GitHub CI on the final published head, not intermediate commits; do not call pending checks green.
-- Resolve only fully addressed selected threads after the fix is pushed. Reply with evidence and request re-review, explicitly including bots where relevant.
+- When approved to address review threads, resolve only fully addressed selected items after the fix is pushed.
 - Handoff: outcome, checks actually run, remaining risks/blockers, and PR link if published. Recommendations are not approvals.
 
 ## Approved tools and accounts
