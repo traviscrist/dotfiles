@@ -1,6 +1,7 @@
 {
   "settings": {
-    "scriptMode": false
+    "scriptMode": false,
+    "deferWithMissingMetadata": true
   },
   "mcpServers": {
     "cloudwatch": {

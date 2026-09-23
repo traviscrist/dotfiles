@@ -63,8 +63,9 @@ do not hide Pi or select an unsupported runtime.
 - Default model: `openai-codex/gpt-6-astra`, high thinking; no automatic routing.
 - Core tools and native compaction/output limits. No custom context caps,
   output-limit extension, pruning, or compaction model override.
-- No installed third-party Pi packages or default orchestration. Lens, FFF,
-  structured questions, web access, MCP adapter, and pi-subagents were removed.
+- The only installed third-party Pi package is `pi-mcp-adapter@2.37.0`.
+  No default orchestration. Lens, FFF, structured questions, web access, and
+  pi-subagents remain removed.
 - Retained local extensions: busy-tab-followup, handoff, pi-openai-fast-mode,
   and vim-statusline. Retained theme: Mariana Dark.
 - Busy **Tab** queues follow-ups; autocomplete takes precedence. Native
@@ -79,8 +80,11 @@ do not hide Pi or select an unsupported runtime.
 Use CLI tools through Bash first. A missing specialist integration is a
 prerequisite, not permission to bypass an approved access route. If explicitly
 requested, Pi can load a package for one session with `pi -e npm:<package>`;
-audit it first. Existing MCP endpoint configuration is retained but inactive
-without the adapter; credentials remain untouched.
+audit it first. The MCP adapter is restored with lazy connections and
+`deferWithMissingMetadata: true`, so missing metadata does not start servers at
+startup. Use `/mcp` for status and `/mcp reconnect cloudwatch` to connect.
+CloudWatch remains pinned to the AWS `read-only` profile; project `.mcp.json`
+overrides the global server definition. Credentials remain untouched.
 
 Restart existing Pi sessions after cleanup, once active work is safe to stop.
 Already-running sessions retain old tools and instructions until reloaded/restarted;
@@ -119,9 +123,10 @@ even if cancelled; successful handoffs record summary usage in the new session.
 
 ### Validation and Safe Sync
 
-The npm workspace retains only the four Pi SDK dependencies at 0.87.0 for local
-extension tests. Run each `*.test.ts` under the four retained extension directories
-with a separate `bun test <file>` process; their module mocks interfere together.
+The npm workspace retains the four Pi SDK dependencies at 0.87.0 for local
+extension tests, plus the MCP adapter. Run each `*.test.ts` under the four retained
+extension directories with a separate `bun test <file>` process; their module
+mocks interfere together.
 Validate native resource loading without making a model request, check formatting,
 JSON, Markdown, line counts, links, and `yadm diff --check` before publication.
 
@@ -165,12 +170,12 @@ to replay data, write datasets, promote prompts, or perform evaluations.
   authenticate through OAuth or approved API-token headers, never tracked secrets.
 - Home Assistant: retained Pi MCP configuration uses
   `http://homeassistant.local:8123/api/mcp`, bearer auth via `HA_MCP`, and only
-  exposed entities. It is inactive without an explicitly loaded adapter. HTTP is
+  exposed entities. It connects lazily through the restored adapter. HTTP is
   unencrypted; use only on a trusted LAN. Tool calls require approval.
 - Neon: TrueVault-only, work laptop only, read-only; local excluded config and OS
   credential storage. See the shared policy before any access.
-- Figma/FigJam: approved Codex Figma route only; removing Pi's MCP adapter does not
-  authorize direct remote OAuth or a desktop-MCP replacement.
+- Figma/FigJam: approved Codex Figma route only; restoring Pi's MCP adapter does
+  not authorize direct remote OAuth or a desktop-MCP replacement.
 
 ## Kitty Per-Computer Layouts
 

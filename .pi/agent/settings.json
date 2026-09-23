@@ -13,6 +13,8 @@
   "defaultProjectTrust": "always",
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
-  "packages": [],
+  "packages": [
+    "npm:pi-mcp-adapter@2.37.0"
+  ],
   "hideThinkingBlock": true
 }
