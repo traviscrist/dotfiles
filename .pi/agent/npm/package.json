@@ -12,6 +12,7 @@
     "pi-lens": "^4.2.1",
     "pi-mcp-adapter": "^2.36.0",
     "pi-openai-fast-mode": "0.5.0",
+    "pi-output-limits": "0.1.0",
     "pi-web-access": "^0.30.0"
   }
 }

@@ -143,6 +143,28 @@ module mocks interfere when combined in one process. Restart existing sessions
 to load upgraded code and the selective-delegation/Sol-routing policy in
 `~/.pi/agent/AGENTS.md` and `~/.pi/agent/settings.json`.
 
+### Pi Output-Limit Trial
+
+`pi-output-limits@0.1.0` is pinned in Pi settings and the npm workspace. Limits:
+500 lines / 16KB generally; 300 lines / 8KB for `bash`, keeping its tail. Limits
+apply per text block, not to images or the aggregate size of multi-block results.
+Existing 160k context caps and `pi-compaction-control` settings are unchanged.
+Start a fresh session or `/reload` to activate; existing context is not reduced.
+
+The extension writes non-read overflow to local temporary files (or reuses the
+shell's existing overflow path); file reads get continuation offsets instead.
+It has no automatic cleanup policy and uses ordinary file permissions. This
+Mac's temp directory is owner-only; verify that on another machine before use.
+Sanitize restricted data in memory before tool output; never rely on caps for
+redaction. Truncated source is not complete read evidence, including Lens symbol
+reads whose coverage was recorded before truncation. Recover needed lines first.
+
+Pair the caps with the scoped-read guidance in `~/.pi/agent/AGENTS.md`. Compare
+similar tasks on cost, elapsed time, compactions, rereads, and correctness before
+changing compaction thresholds or adding pruning. To end the trial, run
+`pi remove npm:pi-output-limits@0.1.0`, remove `outputLimits` from settings, reload,
+and sync the explicit config/package files with yadm.
+
 ## Pi PR Workflows
 
 - `/ship <task>`: implement to local shippable quality; no commit/push/PR unless

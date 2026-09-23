@@ -13,6 +13,17 @@
   "defaultProjectTrust": "always",
   "treeFilterMode": "default",
   "defaultThinkingLevel": "high",
+  "outputLimits": {
+    "maxLines": 500,
+    "maxBytes": 16384,
+    "tools": {
+      "bash": {
+        "maxLines": 300,
+        "maxBytes": 8192
+      }
+    },
+    "tailTools": ["bash"]
+  },
   "contextCap": {
     "models": {
       "gpt-6-astra": 160000,
@@ -64,7 +75,8 @@
     "npm:pi-mcp-adapter",
     "npm:@ff-labs/pi-fff",
     "git:git@github.com:nicobailon/pi-subagents@1ac7b5e2652e9571164847ac2905ab4aded92791",
-    "npm:pi-compaction-control@0.4.5"
+    "npm:pi-compaction-control@0.4.5",
+    "npm:pi-output-limits@0.1.0"
   ],
   "hideThinkingBlock": true
 }

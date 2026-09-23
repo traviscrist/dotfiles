@@ -51,6 +51,17 @@ Work style: telegraph; noun-phrases ok; drop grammar; min tokens.
 - Do not create new documentation files unless Travis explicitly requests them. When requested, use the existing documentation folder (e.g. `docs/`); ask before placing them elsewhere.
 - Add `read_when` hints on cross-cutting docs.
 
+## Context Efficiency
+
+- Prevent oversized output before it enters context. Scope searches by path, identifier, and result limit; stop searching once the owning file is known.
+- For unfamiliar code, prefer `symbol_search` → `module_report` (summary/compact) → `read_symbol` or bounded `read_enclosing`. Skip discovery steps when the target is already known; outlines are not source reads.
+- Read only relevant document sections unless instructions require the whole file. Reuse unchanged evidence; reread when files changed, coverage is incomplete, or a concrete question needs it. After compaction, recover the relevant section, not every earlier document.
+- Truncated output is incomplete evidence, even if a tool recorded read coverage. Recover required source lines before editing; use bounded offsets or structured queries, not repeated full-file dumps. Inspect omitted failures before declaring checks green.
+- Keep shell/test output to exit status, counts, and relevant failures. Retain full logs only where privacy policy permits; preserve the real command exit status when redirecting or piping output.
+- Output limiting may save overflow to local temp files. Never emit secrets or restricted raw content into tool results; sanitize in memory before output. Caps are not redaction or a privacy boundary.
+- During implementation, use focused checks. Run the complete required gate on the final candidate and rerun whenever repository policy requires; do not weaken safety, review, publication, or CI gates.
+- Judge efficiency by elapsed time, cost, compactions, rereads, and correctness—not tokens alone. Keep compaction/context-cap tuning separate from output-limit trials.
+
 ## PR Feedback
 - Active PR: `gh pr view --json number,title,url --jq '"PR #\\(.number): \\(.title)\\n\\(.url)"'`.
 - New PRs: open ready for review by default (omit `--draft`); show the PR link to Travis after opening. Use Draft only when Travis explicitly asks.
