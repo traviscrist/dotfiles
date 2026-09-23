@@ -1,66 +1,6 @@
 {
   "version": 3,
   "skills": {
-    "clerk": {
-      "source": "clerk/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/clerk/skills.git",
-      "skillPath": "skills/core/clerk/SKILL.md",
-      "skillFolderHash": "2e01e02d0e30daf04c87bca27690fe984aaa5c41",
-      "pluginName": "core",
-      "installedAt": "2026-06-12T02:49:42.990Z",
-      "updatedAt": "2026-06-12T02:49:42.990Z"
-    },
-    "clerk-backend-api": {
-      "source": "clerk/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/clerk/skills.git",
-      "skillPath": "skills/core/clerk-backend-api/SKILL.md",
-      "skillFolderHash": "b8b0c877fd6f0e91864c60e2d510ca9b04e34af9",
-      "pluginName": "core",
-      "installedAt": "2026-06-12T02:49:42.996Z",
-      "updatedAt": "2026-06-12T02:49:42.996Z"
-    },
-    "clerk-cli": {
-      "source": "clerk/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/clerk/skills.git",
-      "skillPath": "skills/core/clerk-cli/SKILL.md",
-      "skillFolderHash": "f24cab991b97604d45c0069ef908c86460294310",
-      "pluginName": "core",
-      "installedAt": "2026-06-12T02:49:42.997Z",
-      "updatedAt": "2026-06-12T02:49:42.997Z"
-    },
-    "clerk-setup": {
-      "source": "clerk/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/clerk/skills.git",
-      "skillPath": "skills/core/clerk-setup/SKILL.md",
-      "skillFolderHash": "c57c085f7f280832fb7c3970c1c7fbb64b990eb0",
-      "pluginName": "core",
-      "installedAt": "2026-06-12T02:49:42.998Z",
-      "updatedAt": "2026-06-12T02:49:42.998Z"
-    },
-    "clerk-testing": {
-      "source": "clerk/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/clerk/skills.git",
-      "skillPath": "skills/features/clerk-testing/SKILL.md",
-      "skillFolderHash": "4cfcca153cd4b51512d8b11d92b99b47b073ce55",
-      "pluginName": "features",
-      "installedAt": "2026-06-12T02:49:43.003Z",
-      "updatedAt": "2026-06-12T02:49:43.003Z"
-    },
-    "clerk-webhooks": {
-      "source": "clerk/skills",
-      "sourceType": "github",
-      "sourceUrl": "https://github.com/clerk/skills.git",
-      "skillPath": "skills/features/clerk-webhooks/SKILL.md",
-      "skillFolderHash": "6fca395c8f8b10bcca4433e1e6e8871caa878596",
-      "pluginName": "features",
-      "installedAt": "2026-06-12T02:49:43.004Z",
-      "updatedAt": "2026-06-12T02:49:43.004Z"
-    },
     "langfuse": {
       "source": "langfuse/skills",
       "sourceType": "github",

@@ -25,25 +25,24 @@ function createEditor(entries: unknown[]) {
 			handlers.set(name, handler);
 		},
 	} as any);
-	handlers.get("session_start")!({}, {
-		isIdle: () => true,
-		sessionManager: { getBranch: () => entries },
-		ui: {
-			setEditorComponent(value: typeof factory) {
-				factory = value;
+	handlers.get("session_start")!(
+		{},
+		{
+			isIdle: () => true,
+			sessionManager: { getBranch: () => entries },
+			ui: {
+				setEditorComponent(value: typeof factory) {
+					factory = value;
+				},
 			},
 		},
-	});
-	const editor = factory!(
-		{ requestRender() {} },
-		{ borderColor: "" },
-		{ matches: () => false },
 	);
+	const editor = factory!({ requestRender() {} }, { borderColor: "" }, { matches: () => false });
 	return editor;
 }
 
-describe("busy tab editor next chaining", () => {
-	it("rewrites exact next before submitting it", () => {
+describe("busy tab editor plain input", () => {
+	it("does not rewrite next even when an old session has a chain suggestion", () => {
 		const editor = createEditor([CHAIN_ENTRY]);
 		let submitted: string | undefined;
 		editor.onSubmit = (text: string) => {
@@ -51,7 +50,7 @@ describe("busy tab editor next chaining", () => {
 		};
 		editor.setText("next");
 		editor.handleInput("\r");
-		expect(submitted).toBe("/next --chain");
+		expect(submitted).toBe("next");
 	});
 
 	it("preserves ordinary input when no suggestion exists", () => {

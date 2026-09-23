@@ -1,7 +1,7 @@
 ---
 name: langfuse
-description: >-
-  Interact with Langfuse and access its documentation: tracing, monitoring, creating datasets, running experiments, and evaluating AI applications. Use when needing to (1) query or modify Langfuse data, (2) look up Langfuse documentation, concepts, integration guides, a feature or SDK usage, or (3) do any AI engineering task (AI observability, prompt engineering/management, evaluation and evaluator management, experimentation, dataset management, evaluation-driven CI/CD, feedback collection). Invoke it for tasks in this scope even when Langfuse is not configured or explicitly mentioned.
+disable-model-invocation: true
+description: Langfuse CLI and documentation reference for explicitly requested tracing, prompt, or evaluation work; repository access and privacy rules apply.
 allowed-tools:
   - WebFetch(domain:langfuse.com)
   - Bash(curl *langfuse.com/*)
@@ -29,7 +29,6 @@ Follow these principles for ALL Langfuse work:
 4. **Use latest Langfuse versions**: Unless the user specified otherwise or there's a good reason, always use the latest version of Langfuse SDKs/APIs. Even if you're only creating a plan for another agent to execute, be explicit about the exact version to use.
 5. **If you guide the user through UI** and are unsure about a label or location, inspect the user’s screenshots or ask to see the relevant screen. Do not assume UI labels have the exact same names as API, SDK, or CLI fields.
 
-
 ## Use case specific references
 
 - instrumenting an existing function/application: references/instrumentation.md
@@ -46,7 +45,6 @@ Follow these principles for ALL Langfuse work:
 - systematic error analysis when requested directly or eval setup still lacks concrete failure modes after agent-led trace inspection: references/error-analysis.md
 - setting up CI/CD experiment gates with `langfuse/experiment-action`: references/ci-cd.md
 - submitting feedback about this skill: references/skill-feedback.md
-
 
 ## 1. Langfuse API via CLI
 
@@ -74,6 +72,7 @@ export LANGFUSE_PUBLIC_KEY=pk-lf-...
 export LANGFUSE_SECRET_KEY=sk-lf-...
 export LANGFUSE_BASE_URL=https://cloud.langfuse.com # example for EU cloud. For US cloud it's us.cloud.langfuse.com, and can also be a self-hosted URL. The server must always be specified in order to access Langfuse.
 ```
+
 If `LANGFUSE_BASE_URL` is used instead of `LANGFUSE_HOST`, run `export LANGFUSE_HOST="$LANGFUSE_BASE_URL"`.
 If not set, ask the user to set them in their shell or a `.env` file. Keys are found in the Langfuse project under Settings -> API Keys; the user should create a project API key pair there. If they do not have a Langfuse account yet, share that they can create one for free at `https://langfuse.com/cloud`. Do not ask them to paste keys into chat for security reasons.
 

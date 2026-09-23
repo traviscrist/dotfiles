@@ -1,14 +1,19 @@
 # AI Workspace
 
-This folder is your local AI workspace. It carries shared guardrails, scripts, and skills with local pathing under `~/.ai`.
+Shared policy, scripts, and local tooling under `~/.ai`.
 
-## Codex Setup
-- Run `codex doctor` after Codex upgrades; fix `fail` items before changing agent behavior.
-- Reusable workflows live in `skills/`. Custom prompts in `prompts/` are legacy and should be converted to skills when touched.
-- This workspace intentionally symlinks `~/.ai/skills/*` into `~/.codex/skills/` so local skills are available immediately. For shared distribution, package workflows as Codex plugins.
-- `docs-list` expects a `docs/` directory in the current repo. In this workspace it may fail until `docs/` exists; record that as a skipped docs gate, not a repo failure.
+## Agent Policy
+
+`~/.ai/AGENTS.md` is the shared policy. Both `~/.pi/agent/AGENTS.md` and
+`~/.codex/AGENTS.md` link to it. Keep it short: constraints, approval boundaries,
+required verification, and pointers—not a generic implementation playbook.
+Repository instructions own their architecture, privacy contracts, and gates.
+
+`docs-list` expects a `docs/` directory. This workspace has none; record that
+as a skipped docs gate, not a failure requiring new documentation.
 
 ## Quick Setup
+
 Run this on a new machine (or after pulling updates):
 
 ```bash
@@ -19,34 +24,14 @@ agent-browser install
 curl -o /tmp/gitpod -fsSL "https://releases.gitpod.io/cli/stable/gitpod-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m | sed 's/x86_64/amd64/;s/\\(arm64\\|aarch64\\)/arm64/')" \
   && chmod +x /tmp/gitpod \
   && sudo mv /tmp/gitpod /usr/local/bin/gitpod
-
-mkdir -p ~/.codex
-if [ -e ~/.codex/AGENTS.md ] && [ ! -L ~/.codex/AGENTS.md ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
-if [ -L ~/.codex/AGENTS.md ] && [ "$(readlink ~/.codex/AGENTS.md)" != "$HOME/.ai/AGENTS.md" ]; then mv ~/.codex/AGENTS.md ~/.codex/AGENTS.md.backup.$(date +%Y%m%d-%H%M%S); fi
-rm -f ~/.codex/AGENTS.md
-ln -s ~/.ai/AGENTS.md ~/.codex/AGENTS.md
-
-mkdir -p ~/.ai/prompts
-# Legacy prompt bridge. Prefer skills for new reusable workflows.
-if [ -e ~/.codex/prompts ] && [ ! -L ~/.codex/prompts ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
-if [ -L ~/.codex/prompts ] && [ "$(readlink ~/.codex/prompts)" != "$HOME/.ai/prompts" ]; then mv ~/.codex/prompts ~/.codex/prompts.backup.$(date +%Y%m%d-%H%M%S); fi
-rm -f ~/.codex/prompts
-ln -s ~/.ai/prompts ~/.codex/prompts
-
-mkdir -p ~/.codex/skills
-for d in ~/.ai/skills/*; do
-  [ -d "$d" ] || continue
-  n="$(basename "$d")"
-  if [ -e "$HOME/.codex/skills/$n" ] && [ ! -L "$HOME/.codex/skills/$n" ]; then mv "$HOME/.codex/skills/$n" "$HOME/.codex/skills/${n}.backup.$(date +%Y%m%d-%H%M%S)"; fi
-  rm -f "$HOME/.codex/skills/$n"
-  ln -s "$d" "$HOME/.codex/skills/$n"
-done
 ```
 
-Install preference: `brew` first, `bun` fallback when brew formula is missing.
-After adding new brew formulae/casks, record them in `~/.Brewfile`.
+Yadm restores the Pi/Codex policy links. Before creating or repairing a link,
+inspect the existing path and preserve unexpected content; do not overwrite it.
 
-Path note: when adding new binary paths, append them at the end of `~/.zshrc` after the existing `PATH` examples in this setup section (same pattern/order).
+Install preference: Homebrew first, Bun when no formula exists. Record new
+Homebrew formulae/casks in `~/.Brewfile`. Shell paths/config belong in
+`~/.zsh/*.zsh`, sourced by `~/.zshrc`.
 
 Quick verification:
 
@@ -57,50 +42,12 @@ agent-browser --version
 agent-browser doctor
 command -v gitpod
 gitpod version
+readlink ~/.pi/agent/AGENTS.md
 readlink ~/.codex/AGENTS.md
-readlink ~/.codex/prompts
-find ~/.codex/skills -mindepth 1 -maxdepth 1 -type l | wc -l
 yadm status -uno
 ```
 
-## Better Stack MCP
-
-Better Stack is configured as a remote HTTP MCP server in `~/.codex/config.toml`:
-
-```toml
-[mcp_servers.betterstack]
-url = "https://mcp.betterstack.com"
-```
-
-Use OAuth when the client prompts for browser sign-in. For non-OAuth clients, configure an API-token-backed MCP header instead of reinstalling a local CLI.
-
-## Langfuse CLI And Skill
-
-The official CLI is installed globally with Bun (no Homebrew formula):
-
-```bash
-bun add --global langfuse-cli@1.2.0
-npx skills add langfuse/skills --skill "langfuse" --global --agent pi --yes
-langfuse --version
-langfuse api projects list --help
-```
-
-The installer copies the official skill and references into
-`~/.pi/agent/skills/langfuse/`; provenance lives in `~/.agents/.skill-lock.json`.
-Restart Pi to discover `/skill:langfuse`. Agents use the `langfuse` binary through
-Bash; no custom extension or MCP server is needed.
-
-Before authenticated calls, load `LANGFUSE_PUBLIC_KEY`, `LANGFUSE_SECRET_KEY`, and
-an explicit region-correct `LANGFUSE_BASE_URL` from approved local secret storage.
-Never paste keys into chat, commit them, pass them as command-line flags, or print
-credential-bearing `--curl` output. Verify access with `langfuse api projects list`;
-installation alone does not verify authentication.
-
-Repository privacy, pinned dependency, and approval rules override general upstream
-skill advice. Keep real traces/results out of Git and public logs; do not create
-or promote prompts, run evaluations, or export datasets without workflow approval.
-
-## Pi Installation
+## Pi Installation and Minimal Setup
 
 Pi uses the official npm installation, not Homebrew:
 
@@ -109,234 +56,142 @@ npm install -g --ignore-scripts @earendil-works/pi-coding-agent
 pi update
 ```
 
-Installed baseline: Pi 0.87.0. Updates are explicit, not automatic; restart Pi
-sessions afterward. npm installs under the active fnm Node version. The `pi` shell
-function in `~/.zsh/functions.zsh` launches it through `fnm exec --using=lts-latest`,
-so repository Node pins do not hide Pi or run it on an unsupported Node version.
+Baseline: Pi 0.87.0. Updates are explicit. The `pi` shell function in
+`~/.zsh/functions.zsh` uses `fnm exec --using=lts-latest`, so project Node pins
+do not hide Pi or select an unsupported runtime.
 
-The main agent stays on native `openai-codex/gpt-6-astra` with high thinking.
-Native subagents use `openai-codex/gpt-5.6-sol`: workers, reviewers, PR fixers,
-and oracle/advisor use high; scouts use low; researchers and other helpers use
-medium. Legacy `spark-worker` and `quick-reviewer` names also route to Sol high.
-These assignments live separately in `subagents` settings; no custom model
-registration is needed. External CLI runners retain their own model-selection
-contracts. This routing does not guarantee a separate Codex usage quota.
-Fast Mode defaults to OFF (normal service). `/fast on` requests priority service
-for allowlisted models in the current session only; `/fast off` disables it.
+- Default model: `openai-codex/gpt-6-astra`, high thinking; no automatic routing.
+- Core tools and native compaction/output limits. No custom context caps,
+  output-limit extension, pruning, or compaction model override.
+- No installed third-party Pi packages or default orchestration. Lens, FFF,
+  structured questions, web access, MCP adapter, and pi-subagents were removed.
+- Retained local extensions: busy-tab-followup, handoff, pi-openai-fast-mode,
+  and vim-statusline. Retained theme: Mariana Dark.
+- Busy **Tab** queues follow-ups; autocomplete takes precedence. Native
+  **Alt+Enter** still works. Plain `next` is ordinary input, not a hidden command.
+- `/fast on` requests priority service for allowlisted models in this session;
+  `/fast off` disables it. Fast defaults OFF and does not persist across sessions.
+- Native retry settings remain five retries with 8s initial exponential backoff
+  (8s, 16s, 32s, 64s, 128s); project overrides take precedence.
+- Startup maintenance hooks were removed. Existing sessions, runtime artifacts,
+  and credentials are not purged as part of extension removal.
 
-Global transient-error retries use `maxRetries: 5` and `baseDelayMs: 8000` in
-`~/.pi/agent/settings.json`: 8s, 16s, 32s, 64s, 128s (4m 8s total waiting,
-plus request time). This is bounded retry, not connection monitoring. Restart Pi
-to load the settings; project retry overrides still take precedence.
+Use CLI tools through Bash first. A missing specialist integration is a
+prerequisite, not permission to bypass an approved access route. If explicitly
+requested, Pi can load a package for one session with `pi -e npm:<package>`;
+audit it first. Existing MCP endpoint configuration is retained but inactive
+without the adapter; credentials remain untouched.
 
-`pi-subagents` 0.70.1 is pinned in `~/.pi/agent/settings.json` to upstream commit
-`1ac7b5e2652e9571164847ac2905ab4aded92791`, which includes the original PR #1948
-background-launch fix and later host-SDK compatibility repairs. Package updates
-reconcile the checkout but do not advance this pin. Return to npm only after the
-background-child smoke passes on the current host; extension-load checks alone
-are not that proof.
+Restart existing Pi sessions after cleanup, once active work is safe to stop.
+Already-running sessions retain old tools and instructions until reloaded/restarted;
+the removal does not rewrite their history or terminate other agents.
 
-The extension workspace's four Pi SDK packages are aligned to 0.87.0. Its tracked
-`~/.pi/agent/npm/package.json` and lockfile record installed npm extension versions.
-Local extension regression files run separately (`bun test <file>`) because their
-module mocks interfere when combined in one process. Restart existing sessions
-to load upgraded code and the selective-delegation/Sol-routing policy in
-`~/.pi/agent/AGENTS.md` and `~/.pi/agent/settings.json`.
+### Prompts and Skills
 
-### Pi Output-Limit Trial
+Four short templates in `~/.pi/agent/prompts/`:
 
-`pi-output-limits@0.1.0` is pinned in Pi settings and the npm workspace. Limits:
-500 lines / 16KB generally; 300 lines / 8KB for `bash`, keeping its tail. Limits
-apply per text block, not to images or the aggregate size of multi-block results.
-Existing 160k context caps and `pi-compaction-control` settings are unchanged.
-Start a fresh session or `/reload` to activate; existing context is not reduced.
+- `/debug <context>`: read-only diagnosis and a proposed fix.
+- `/ship <task>`: implement and validate; publication only if explicitly authorized.
+- `/review [PR]`: read-only PR review; no fixes or external writes.
+- `/pr [PR]`: inspect feedback, obtain selection approval, fix/validate, then obtain
+  separate publication approval before commit/push/replies/resolution/re-review.
 
-The extension writes non-read overflow to local temporary files (or reuses the
-shell's existing overflow path); file reads get continuation offsets instead.
-It has no automatic cleanup policy and uses ordinary file permissions. This
-Mac's temp directory is owner-only; verify that on another machine before use.
-Sanitize restricted data in memory before tool output; never rely on caps for
-redaction. Truncated source is not complete read evidence, including Lens symbol
-reads whose coverage was recorded before truncation. Recover needed lines first.
+No `/next`, `/yolo`, `/pr --auto`, automatic fanout, chaining, or sync agent.
+Repository gates apply without copying their implementation into these templates.
 
-Pair the caps with the scoped-read guidance in `~/.pi/agent/AGENTS.md`. Compare
-similar tasks on cost, elapsed time, compactions, rereads, and correctness before
-changing compaction thresholds or adding pruning. To end the trial, run
-`pi remove npm:pi-output-limits@0.1.0`, remove `outputLimits` from settings, reload,
-and sync the explicit config/package files with yadm.
+Global Graphify/Next/PR workflow skills and shared Clerk/Crit skill installs were
+removed. Shared removal affects all harnesses reading `~/.agents/skills`.
+The Langfuse reference remains at `~/.pi/agent/skills/langfuse`, with local
+`disable-model-invocation: true`: it is not advertised to every model request.
+Load it explicitly for relevant work or with `/skill:langfuse`; repository-local
+skills, including AuraBear's evaluation case guidance, remain intact.
 
-## Pi PR Workflows
+### Session Handoff
 
-- `/ship <task>`: implement to local shippable quality; no commit/push/PR unless
-  explicitly requested, and never merge. `/yolo <task|Linear issue>` adds scoped
-  commit/push and a ready-for-review PR (Draft only on explicit request), then final
-  CI. Linear context uses the direct API, never MCP.
-- These are prompt templates in `~/.pi/agent/prompts/`, not skills or hard-coded
-  automation. `/yolo` explicitly reads `/ship` as its shared implementation contract;
-  Pi does not recursively expand nested template names. Use `/reload` after edits.
-- Both require the simplest correct complete change, one writer, full required
-  gates/QA, and an explicit final simplicity/Markdown audit. Keep transient plans,
-  review notes, and validation reports in chat or `/tmp`. Prefer existing owning
-  docs; commit new Markdown only when requested, repository-required, or justified
-  as necessary durable content with no suitable existing home. `/yolo` rechecks the
-  staged commit and full PR scope before publication, preserving unrelated work.
-- `/pr [number|url]`: triage → approve selected comments → batch fixes → all
-  repository-required gates → approve publication → publish, reply, resolve, final CI.
-- `/pr --auto [number|url]`: explicit opt-in to at most two in-scope fix/CI rounds;
-  publication still requires approval. Never merge.
-- `/review [number|url]`: read-only requirements/correctness review, no fixes or
-  GitHub mutations. Replaces `/pr-reviewer`; `/pr` replaces `/pr-light` (no aliases).
-- Shared instructions: `~/.pi/agent/skills/pr-feedback/SKILL.md`. `/next` uses its
-  default approval flow after goal delivery; initial plan approval does not authorize
-  review-driven fixes or their publication.
-- Delegation optional, one writer. Read-only calls omit `acceptance`; native async
-  completion, no polling or separate wait calls.
-- `/followup` removed. Keep **Tab while busy** to queue follow-ups (autocomplete
-  still wins), native **Alt+Enter**, and exact plain `next` chaining from handoffs.
-- `pi-simplify` removed from configured packages; simplify the actual diff directly
-  rather than injecting a mandatory extra review workflow.
+`/handoff [focus]` prepares a continuation brief using the selected model once
+at medium thinking. Review/edit it before opening a linked fresh session with an
+unsubmitted draft. Esc cancels; briefs over 12,000 characters are rejected.
+No automatic trigger, branch change, implementation, or new authorization.
 
-Restart existing Pi sessions after cleanup so loaded commands and skills refresh.
+Wait for active work and queued messages to finish first. The new session rechecks
+Git state, remaining gates, and approval boundaries. Summarization costs tokens
+even if cancelled; successful handoffs record summary usage in the new session.
 
-## Pi Session Handoffs
+### Validation and Safe Sync
 
-- `/next` starts a different shippable work item from clean, updated `main`.
-- `/handoff [focus]` continues unfinished work in a fresh linked session, without
-  changing cwd, branches, dirty files, or existing approvals. Terminal-only;
-  wait for active work and queued messages to settle first. Background children
-  are not transferred; finish them before switching.
-- It uses the selected model once with medium thinking, Pi's compaction/context-edit
-  projection, and bounded tool-result serialization. System/tool schemas and
-  assistant thinking blocks are excluded. No automatic triggers or subagents.
-- Review/edit the generated brief; save opens the new session with an unsubmitted
-  draft. Esc cancels. Briefs over 12,000 characters are rejected, not truncated.
-  The new session must recheck Git state, background work, gates, and approvals.
-- Summarization consumes tokens even if cancelled. Successful handoffs record the
-  reported summary usage in the replacement session; a notice shows usage before
-  editor review. Cancelled handoffs do not add that usage to native session totals.
-- Local implementation: `~/.pi/agent/extensions/handoff/index.ts`, adapted from
-  Pi's official example. Run `/reload` after installing or changing it.
+The npm workspace retains only the four Pi SDK dependencies at 0.87.0 for local
+extension tests. Run each `*.test.ts` under the four retained extension directories
+with a separate `bun test <file>` process; their module mocks interfere together.
+Validate native resource loading without making a model request, check formatting,
+JSON, Markdown, line counts, links, and `yadm diff --check` before publication.
 
-## Pi Context Caps
+For intentional Pi/dotfile changes:
 
-- `pi-compaction-control` is pinned to npm version `0.4.5` for a cap-only trial.
-  `contextCap.models` in `~/.pi/agent/settings.json` caps Astra and Sol at 160,000
-  tokens; other model IDs remain unchanged.
-- Native compaction stays enabled with its default 16,384-token reserve and
-  20,000 recent tokens retained. The effective trigger is 143,616 tokens.
-- No `compactionModel` override: Pi still uses the active model for summaries.
-  No `pi-context-prune`, per-tool summarizer, or extra model request from capping.
-  Earlier native compaction can still mean more compaction requests overall.
-- Restart existing sessions or run `/reload` to load the cap; verify with
-  `/compaction-control-doctor`. A session already above the trigger may compact
-  on its next applicable context check. Finish active work before reloading.
-- Evaluate uncached input, cache hits, latency, and lost-context corrections;
-  smaller prompts alone do not prove lower cost or separate subscription quota.
+1. Inspect `yadm status -uno`, targeted untracked paths, and the intended diff.
+2. Verify ignore rules for auth, sessions, workflows/runtime artifacts, and recursive
+   `node_modules`. Never stage secrets, local env files, or private content.
+3. Stage only explicit safe paths with `yadm add <path> ...`; inspect the staged diff
+   and `yadm diff --cached --check`. Preserve unrelated changes and staging.
+4. Commit with Conventional Commits, then `yadm push`. Report failures; no force push.
 
-## Pi Lean Setup
+Keep tests and temporary synthetic checks outside product repositories. Never put
+real conversation content, secrets, or private observations in local test logs.
 
-- Removed seven shared global skills from `~/.agents/skills`: `agents-sdk`,
-  `cloudflare`, `durable-objects`, `workers-best-practices`, `wrangler`,
-  `clerk-nextjs-patterns`, and `clerk-react-patterns`. Other Clerk/core/testing/
-  backend/crit skills remain; removal also affects other hosts using this directory.
-- Figma and Paper MCP use `lazy` lifecycle with an explicit 10-minute idle timeout.
-  Lunchmoney and Figma's direct `codex`/`codex-reply` routing remain unchanged.
-- Statusline no longer displays obsolete `codex-goal` elapsed status. Core UI,
-  Lens diagnostics/read guards, busy Tab, native Alt+Enter, and plain `next` remain.
-- Fast stays OFF by default; `gpt-6-astra` and pinned subagent assignments unchanged.
-  Lens remains installed with existing scan/security/LSP settings; startup A/B
-  benchmarking is deferred, not evidence of a measured speedup.
+## Langfuse CLI
 
-## Home Assistant MCP
+Installed globally with Bun (no Homebrew formula):
 
-Pi's global `~/.pi/agent/mcp.json` configures `homeassistant` at
-`http://homeassistant.local:8123/api/mcp`, using `auth: "bearer"` and
-`bearerTokenEnv: "HA_MCP"`. Export the long-lived token before launching Pi;
-never store its value in tracked config. The local HTTP connection is unencrypted;
-use it only on a trusted LAN. Home Assistant's MCP Server integration must be
-configured, and only exposed entities are accessible.
+```bash
+bun add --global langfuse-cli@1.2.0
+langfuse --version
+langfuse api __schema
+```
 
-The server connects lazily through the MCP proxy and requires tool-call approval.
-After setup, run `/reload`, then `/mcp reconnect homeassistant` to load and verify.
+The retained skill and references are tracked locally; upstream provenance is in
+`~/.agents/.skill-lock.json`. Refreshing upstream must preserve its manual-only
+frontmatter and repository privacy/approval rules.
 
-## Pi Lens Mutation Policy
+Load only approved credentials into the CLI process and verify the region-correct
+`LANGFUSE_BASE_URL` before requests. Never print keys, credential-bearing `--curl`
+output, or restricted observations. Installation is not authentication or authority
+to replay data, write datasets, promote prompts, or perform evaluations.
 
-`~/.pi-lens/config.json` disables automatic formatting, lint autofixes, and LSP
-quickfix application; diagnostics and read guards remain enabled. Run the repository's
-format/fix commands explicitly before validation, staging, and committing. Lens can
-otherwise apply deferred fixes at `agent_end`, after a clean commit and handoff.
+## Other Harnesses and Integrations
 
-Project `.pi-lens.json` mutation settings override these global defaults; do not
-re-enable them unintentionally. Restart existing Pi sessions after changing this
-policy so their cached settings and queued mutations cannot use the old policy.
+- Codex: run `codex doctor` after upgrades. Existing `~/.ai/skills` and their
+  `~/.codex/skills` links are separate from the removed shared Clerk/Crit installs.
+  Legacy Codex prompts remain under `~/.ai/prompts`, linked from `~/.codex/prompts`.
+- Better Stack: remote MCP at `https://mcp.betterstack.com` in Codex configuration;
+  authenticate through OAuth or approved API-token headers, never tracked secrets.
+- Home Assistant: retained Pi MCP configuration uses
+  `http://homeassistant.local:8123/api/mcp`, bearer auth via `HA_MCP`, and only
+  exposed entities. It is inactive without an explicitly loaded adapter. HTTP is
+  unencrypted; use only on a trusted LAN. Tool calls require approval.
+- Neon: TrueVault-only, work laptop only, read-only; local excluded config and OS
+  credential storage. See the shared policy before any access.
+- Figma/FigJam: approved Codex Figma route only; removing Pi's MCP adapter does not
+  authorize direct remote OAuth or a desktop-MCP replacement.
 
 ## Kitty Per-Computer Layouts
 
-- **Cmd+Shift+S** saves the current Kitty instance's windows, tabs, splits, and
-  working directories to `~/.config/kitty/startup.kitty-session`.
-- `startup_session` loads that snapshot on the next full Kitty launch. Saving is
-  manual, not automatic on exit. The shortcut does not open an editor or capture
-  foreground shell commands; this is not live process/Pi conversation recovery.
-- The shortcut/config is shared via yadm, but `.config/kitty/.gitignore` excludes
-  the session file. Each computer uses the same path with its own local contents.
-- **First setup on another computer:** launch `kitty --session=none` to bypass the
-  not-yet-created snapshot, arrange the layout, then press **Cmd+Shift+S**. Later
-  normal launches use that computer's saved layout. Use the same bypass if a local
-  snapshot is deliberately removed; do not commit snapshots containing local paths
-  or launch arguments.
-- Reload shortcut changes with **Ctrl+Cmd+,**. Startup restore takes effect on the
-  next full launch; reloading does not replace currently running windows.
+- **Cmd+Shift+S** saves windows, tabs, splits, and directories to
+  `~/.config/kitty/startup.kitty-session`; the next full launch restores the layout.
+- Saving is manual, not live process/Pi conversation recovery. The shared
+  `.config/kitty/.gitignore` excludes this per-machine session file.
+- First setup: launch `kitty --session=none`, arrange the layout, then save.
+  Do not commit snapshots containing local paths or launch arguments.
+- Reload shortcuts with **Ctrl+Cmd+,**; layout restore takes effect on full launch.
 
-## Terminal Multiplexing
+## Script Helpers and Maintenance
 
-Herdr is uninstalled: no Homebrew service, agent hooks, skills, or saved runtime
-configuration. Use tmux only for interactive/persistent work under `AGENTS.md`.
-Restart existing agent sessions after removing extensions or skills so their loaded
-resources and instructions are refreshed.
-
-## Syncing With Other Repos
-- Treat `scripts/committer` and `scripts/docs-list.ts` as shared helpers. If you change them in another repo, mirror the change here (and vice versa) to avoid drift.
-- When syncing helpers into another repo, keep files portable and dependency-light.
-- Avoid repo-specific path aliases/import structures in shared helper files.
-
-## Pointer-Style AGENTS
-- Keep runtime behavior rules in `AGENTS.md`.
-- In downstream repos, prefer a pointer-style `AGENTS.md` line that references this workspace file, then add only repo-local rules below it.
-- Keep maintenance policy in this `README.md`, not in downstream `AGENTS.md` files.
-
-## Script Helpers
-
-### `scripts/committer`
-- Stages only explicit paths, validates commit message, creates commit.
-
-### `scripts/docs-list.ts`
-- Walks `docs/`, enforces front-matter (`summary`, `read_when`), and prints summaries.
-  - Build: `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`
-  - Run: `docs-list`
-
-### `agent-browser` (external CLI)
-- Preferred browser automation tool for agent workflows.
-- Use this for browser checks. Avoid Puppeteer, Playwright, browser MCPs, and ad-hoc Node browser scripts unless a repo already owns that test stack or Travis explicitly asks.
-- Install/update:
-  - `brew install agent-browser` (fallback: `npm install -g agent-browser`)
-  - `agent-browser install` (first-time Chrome for Testing bootstrap)
-  - `agent-browser upgrade` (update to latest)
-- Quick usage:
-  - `agent-browser open https://example.com`
-  - `agent-browser snapshot`
-  - `agent-browser screenshot page.png`
-  - `agent-browser close`
-
-## Tool Details
-- `trash`: delete guardrail. Use `trash <path>` instead of destructive shell deletes.
-- `betterstack`: remote MCP server for Better Stack uptime, telemetry, incidents, dashboards, and logs.
-- `render`: install with `brew install render`, then add `brew "render"` to `~/.Brewfile`; prefer `RENDER_API_KEY` auth.
-- `tmux`: reserve for persistent interactive work such as servers/debuggers.
-- `yadm`: use `yadm status -uno` by default in the home repo; use explicit paths for untracked checks.
-
-## Skills
-- Durable local skills live in `~/.ai/skills` and symlink into `~/.codex/skills`.
-- Installed third-party skills live in `~/.agents/skills`.
-- `skills/make-pr` replaces legacy `/makepr`.
-- Some are guidance-only; others require local setup (API keys, npm installs, or external CLIs).
-- If a skill references scripts under `skills/<name>/scripts`, keep those files alongside the skill.
+- `~/.ai/bin/committer`: stages only explicit paths and validates commit messages.
+- `docs-list`: lists docs/frontmatter; source is `scripts/docs-list.ts`. Build with
+  `bun build scripts/docs-list.ts --compile --outfile bin/docs-list`.
+- Mirror portable committer/docs-list fixes between this workspace and repos
+  using those helpers. Keep downstream AGENTS focused on repo-local requirements.
+- `agent-browser`: headless browser checks; run `agent-browser close` afterward.
+  Install with Homebrew and use `agent-browser install` for browser bootstrap.
+- `trash`: approved deletion guardrail. `render`: CLI with local auth, never tracked keys.
+- `tmux`: interactive/persistent servers or debuggers, not an orchestration layer.
+- Herdr remains uninstalled. No automatic artifact/session cleanup at Pi startup;
+  inspect existing manual maintenance commands before choosing any cleanup scope.

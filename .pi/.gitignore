@@ -4,3 +4,14 @@ agent/sessions/
 agent/run-history.jsonl
 agent/intercom/
 agent/npm/node_modules/
+agent/.pi-subagents/
+agent/workflows/
+agent/missions/
+agent/cache/
+agent/fff/
+agent/tmp/
+agent/git/
+agent/packages/
+agent/mcp-cache.json
+agent/models-store.json
+agent/pi-crash.log

@@ -1,11 +1,8 @@
 import { CustomEditor, type ExtensionAPI, type ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { matchesKey } from "@earendil-works/pi-tui";
-import { rewriteChainedNextInput } from "../next/index.ts";
 
 export class BusyTabEditor extends CustomEditor {
-	constructor(
-		...args: ConstructorParameters<typeof CustomEditor>
-	) {
+	constructor(...args: ConstructorParameters<typeof CustomEditor>) {
 		super(...args);
 	}
 
@@ -30,12 +27,6 @@ export class BusyTabEditor extends CustomEditor {
 
 	override handleInput(data: string): void {
 		const ctx = getContext();
-		if (matchesKey(data, "return") && ctx?.isIdle() && !this.isShowingAutocomplete()) {
-			const text = this.getExpandedText?.() ?? this.getText();
-			const rewritten = rewriteChainedNextInput(text, ctx.sessionManager.getBranch());
-			if (rewritten) this.setText(rewritten);
-		}
-
 		if (!matchesKey(data, "tab")) {
 			super.handleInput(data);
 			return;

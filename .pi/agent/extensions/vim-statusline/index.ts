@@ -18,26 +18,10 @@ const COLORS = {
 	red: "#EC5F66",
 };
 
-const ANSI_PATTERN = /\x1b\[[0-9;]*m/g;
-
 type Segment = {
 	text: string;
 	fg: string;
 	bg: string;
-};
-
-export type LensFile = {
-	name: string;
-	errors: number;
-	warnings: number;
-	blocking: number;
-	touchedAt: number;
-};
-
-export type LensState = {
-	languages: Set<string>;
-	files: Map<string, LensFile>;
-	lastDurationMs?: number;
 };
 
 export type ActivityState = "IDLE" | "THINK" | "TOOLS" | "BASH" | "COMPACT";
@@ -118,100 +102,29 @@ function compactModel(modelId: string | undefined): string {
 		.replace(/-/g, " ");
 }
 
-function stripAnsi(text: string): string {
-	return text.replace(ANSI_PATTERN, "");
-}
-
 export function makeFooterLine(width: number, left: string, right: string): string {
 	const rightWidth = visibleWidth(right);
 	const availableLeftWidth = Math.max(0, width - rightWidth - 1);
 	const leftWasTruncated = visibleWidth(left) > availableLeftWidth;
-	const fittedLeft = leftWasTruncated && availableLeftWidth > 1
-		? truncateToWidth(left, availableLeftWidth - 1, "") + `${fg(COLORS.bg0)}${bg(COLORS.bgDim)}\x1b[0m`
-		: truncateToWidth(left, availableLeftWidth, "");
+	const fittedLeft =
+		leftWasTruncated && availableLeftWidth > 1
+			? truncateToWidth(left, availableLeftWidth - 1, "") + `${fg(COLORS.bg0)}${bg(COLORS.bgDim)}\x1b[0m`
+			: truncateToWidth(left, availableLeftWidth, "");
 	const pad = " ".repeat(Math.max(0, width - visibleWidth(fittedLeft) - rightWidth));
 	return truncateToWidth(fittedLeft + bg(COLORS.bgDim) + pad + "\x1b[0m" + right, width, "");
 }
 
-function languageToken(filePath: string): string | undefined {
-	const ext = filePath.split(".").pop()?.toLowerCase();
-	if (!ext) return undefined;
-	if (["js", "jsx", "ts", "tsx", "svelte", "vue"].includes(ext)) return "jsts";
-	if (["json", "jsonc"].includes(ext)) return "json";
-	if (["css", "scss", "sass", "less"].includes(ext)) return "css";
-	if (["md", "mdx"].includes(ext)) return "md";
-	if (["py"].includes(ext)) return "py";
-	if (["rs"].includes(ext)) return "rs";
-	if (["go"].includes(ext)) return "go";
-	return ext;
-}
-
-function diagnosticCounts(diagnostics: Array<{ severity?: string; semantic?: string }>): Pick<LensFile, "errors" | "warnings" | "blocking"> {
-	let errors = 0;
-	let warnings = 0;
-	let blocking = 0;
-	for (const diagnostic of diagnostics) {
-		if (diagnostic.semantic === "blocking") blocking++;
-		if (diagnostic.severity === "error") errors++;
-		if (diagnostic.severity === "warning") warnings++;
-	}
-	return { errors, warnings, blocking };
-}
-
-function updateLensState(state: LensState, payload: { filePath?: string; diagnostics?: Array<{ severity?: string; semantic?: string }>; durationMs?: number }): void {
-	if (!payload.filePath) return;
-	const token = languageToken(payload.filePath);
-	if (token) state.languages.add(token);
-	state.files.set(payload.filePath, {
-		name: basename(payload.filePath),
-		...diagnosticCounts(payload.diagnostics ?? []),
-		touchedAt: Date.now(),
-	});
-	state.lastDurationMs = payload.durationMs;
-}
-
-export function lensSummary(state: LensState, lspStatus: string | undefined): { text: string; fg: string } {
-	let errors = 0;
-	let warnings = 0;
-	let blocking = 0;
-	for (const file of state.files.values()) {
-		errors += file.errors;
-		warnings += file.warnings;
-		blocking += file.blocking;
-	}
-
-	if (errors > 0) return { text: ` 󰅚 ${errors}E${warnings > 0 ? `   ${warnings}W` : ""} `, fg: blocking > 0 ? COLORS.red : COLORS.yellow };
-	if (warnings > 0) return { text: `  ${warnings}W `, fg: COLORS.yellow };
-	if (state.files.size > 0) {
-		const noun = state.files.size === 1 ? "file" : "files";
-		return { text: `  ${state.files.size} ${noun} checked `, fg: COLORS.green };
-	}
-	return { text: ` 󰒡 ${lspStatus ? stripAnsi(lspStatus).replace(/^LSP /, "") : "ready"} `, fg: COLORS.muted };
-}
-
-export function lensSegments(state: LensState, lspStatus: string | undefined): Segment[] {
-	const languages = [...state.languages].slice(0, 3).join(" ");
-	const summary = lensSummary(state, lspStatus);
-	const findingFiles = [...state.files.values()]
-		.filter((file) => file.errors > 0 || file.warnings > 0 || file.blocking > 0)
-		.sort((a, b) => b.touchedAt - a.touchedAt)
-		.slice(0, 2)
-		.map((file) => file.name)
-		.join(" · ");
-	const duration = findingFiles && state.lastDurationMs !== undefined
-		? `${Math.round(state.lastDurationMs)}ms · `
-		: "";
-	const detail = `${duration}${findingFiles}`;
-
-	return [
-		...(languages ? [{ text: ` ${languages} `, fg: COLORS.green, bg: COLORS.bg0 }] : []),
-		{ text: summary.text, fg: summary.fg, bg: COLORS.bg0 },
-		...(detail ? [{ text: ` ${detail} `, fg: COLORS.muted, bg: COLORS.bg0 }] : []),
-	];
-}
-
 function activitySegment(state: ActivityState, ringFrame: string): Segment {
-	const color = state === "IDLE" ? COLORS.orange : state === "THINK" ? COLORS.purple : state === "BASH" ? COLORS.blue : state === "TOOLS" ? COLORS.yellow : COLORS.red;
+	const color =
+		state === "IDLE"
+			? COLORS.orange
+			: state === "THINK"
+				? COLORS.purple
+				: state === "BASH"
+					? COLORS.blue
+					: state === "TOOLS"
+						? COLORS.yellow
+						: COLORS.red;
 	const label = state === "IDLE" ? state : `${ringFrame} ${state}`;
 	return { text: ` ${label} `, fg: COLORS.bgDim, bg: color };
 }
@@ -233,7 +146,6 @@ export default function (pi: ExtensionAPI) {
 	let ringIndex = 0;
 	let currentBranch = "no git";
 	let currentContext: ExtensionContext | undefined;
-	const lensState: LensState = { languages: new Set(), files: new Map() };
 	const renderers = new Set<() => void>();
 	const renderAll = () => {
 		for (const requestRender of renderers) requestRender();
@@ -245,11 +157,6 @@ export default function (pi: ExtensionAPI) {
 		syncTitle();
 		if (changed) renderAll();
 	};
-
-	pi.events.on("pi-lens/analysis-complete", (payload: unknown) => {
-		updateLensState(lensState, payload as Parameters<typeof updateLensState>[1]);
-		renderAll();
-	});
 
 	const syncToolActivity = () => {
 		if (activeTools.size === 0) {
@@ -311,7 +218,6 @@ export default function (pi: ExtensionAPI) {
 				render(width: number): string[] {
 					const branch = footerData.getGitBranch() || "no git";
 					const statuses = footerData.getExtensionStatuses();
-					const lspStatus = statuses.get("pi-lens-lsp");
 					const usage = ctx.getContextUsage();
 					const contextUsage = contextUsageSegment(usage?.percent ?? undefined);
 					const thinking = pi.getThinkingLevel();
@@ -321,7 +227,6 @@ export default function (pi: ExtensionAPI) {
 						activitySegment(activityState, PLANET_RING_FRAMES[ringIndex] ?? "⊙"),
 						{ text: `  ${branch} `, fg: COLORS.fg, bg: COLORS.bg2 },
 						{ text: ` ${repoLabel} `, fg: COLORS.muted, bg: COLORS.bg1 },
-						...lensSegments(lensState, lspStatus),
 					]);
 
 					const right = rightPowerline([

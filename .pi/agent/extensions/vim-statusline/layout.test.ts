@@ -4,7 +4,7 @@ import { truncateToWidth, visibleWidth } from "../../npm/node_modules/@earendil-
 mock.module("@earendil-works/pi-coding-agent", () => ({ getAgentDir: () => "/tmp/pi-agent" }));
 mock.module("@earendil-works/pi-tui", () => ({ truncateToWidth, visibleWidth }));
 
-const { activityTitle, compactBranchName, default: vimStatusline, lensSegments, lensSummary, makeFooterLine } = await import("./index.ts");
+const { activityTitle, compactBranchName, default: vimStatusline, makeFooterLine } = await import("./index.ts");
 
 const green = "\x1b[38;2;153;199;148m";
 const dimBackground = "\x1b[48;2;46;53;62m";
@@ -111,7 +111,7 @@ describe("activity title", () => {
 });
 
 describe("statusline layout", () => {
-	it("ignores stale codex-goal statuses while rendering live model, thinking, context, and Lens", async () => {
+	it("ignores retired extension statuses while rendering live model, thinking, and context", async () => {
 		const handlers = new Map<string, (event: any, ctx: any) => unknown>();
 		const statuses = new Map([["pi-lens-lsp", `${green}LSP ready${reset}`]]);
 		let footer: { render: (width: number) => string[]; dispose: () => void } | undefined;
@@ -126,11 +126,15 @@ describe("statusline layout", () => {
 				setWidget: mock(() => {}),
 				setWorkingVisible: mock(() => {}),
 				setFooter: (factory: any) => {
-					footer = factory({ requestRender: mock(() => {}) }, {}, {
-						getGitBranch: () => "main",
-						getExtensionStatuses: () => statuses,
-						onBranchChange: () => () => {},
-					});
+					footer = factory(
+						{ requestRender: mock(() => {}) },
+						{},
+						{
+							getGitBranch: () => "main",
+							getExtensionStatuses: () => statuses,
+							onBranchChange: () => () => {},
+						},
+					);
 				},
 			},
 		};
@@ -154,8 +158,9 @@ describe("statusline layout", () => {
 			percent = 62;
 			const line = footer!.render(160)[0]!;
 			const text = line.replace(/\x1b\[[0-9;]*m/g, "");
-			for (const live of ["gpt 6 astra live", "medium", "62%", "ready"]) expect(text).toContain(live);
-			for (const stale of ["Pursuing goal", "2d 3h 4m", "high", "37%", "⚡"]) expect(text).not.toContain(stale);
+			for (const live of ["gpt 6 astra live", "medium", "62%"]) expect(text).toContain(live);
+			for (const stale of ["Pursuing goal", "2d 3h 4m", "high", "37%", "⚡", "LSP", "ready", "checked"])
+				expect(text).not.toContain(stale);
 			expect(visibleWidth(line)).toBe(160);
 		} finally {
 			await handlers.get("session_shutdown")!({}, ctx);
@@ -179,42 +184,5 @@ describe("statusline layout", () => {
 		for (let width = 1; width <= 160; width++) {
 			expect(visibleWidth(makeFooterLine(width, left, right)), `overflow at width ${width}`).toBeLessThanOrEqual(width);
 		}
-	});
-
-	it("scopes a clean result to the number of files checked", () => {
-		const state = {
-			languages: new Set(["jsts"]),
-			files: new Map([
-				["/repo/a.ts", { name: "a.ts", errors: 0, warnings: 0, blocking: 0, touchedAt: 1 }],
-				["/repo/b.ts", { name: "b.ts", errors: 0, warnings: 0, blocking: 0, touchedAt: 2 }],
-			]),
-			lastDurationMs: 42,
-		};
-
-		expect(lensSummary(state, undefined).text).toContain("2 files checked");
-		const rendered = lensSegments(state, undefined).map((segment) => segment.text).join("");
-		expect(rendered).not.toContain("a.ts");
-		expect(rendered).not.toContain("b.ts");
-		expect(rendered).not.toContain("42ms");
-	});
-
-	it("shows only finding-bearing filenames when diagnostics exist", () => {
-		const state = {
-			languages: new Set(["jsts"]),
-			files: new Map([
-				["/repo/clean.ts", { name: "clean.ts", errors: 0, warnings: 0, blocking: 0, touchedAt: 3 }],
-				["/repo/warn.ts", { name: "warn.ts", errors: 0, warnings: 2, blocking: 0, touchedAt: 2 }],
-				["/repo/block.ts", { name: "block.ts", errors: 1, warnings: 0, blocking: 1, touchedAt: 1 }],
-			]),
-			lastDurationMs: 42,
-		};
-
-		const rendered = lensSegments(state, undefined).map((segment) => segment.text).join("");
-		expect(rendered).toContain("1E");
-		expect(rendered).toContain("2W");
-		expect(rendered).toContain("warn.ts");
-		expect(rendered).toContain("block.ts");
-		expect(rendered).not.toContain("clean.ts");
-		expect(rendered).toContain("42ms");
 	});
 });
