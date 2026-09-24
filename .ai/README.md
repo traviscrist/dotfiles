@@ -60,7 +60,7 @@ Baseline: Pi 0.87.0. Updates are explicit. The `pi` shell function in
 `~/.zsh/functions.zsh` uses `fnm exec --using=lts-latest`, so project Node pins
 do not hide Pi or select an unsupported runtime.
 
-- Default model: `openai-codex/gpt-6-astra`, high thinking; no automatic routing.
+- Default model: `openai-codex/gpt-5.6-sol`, high thinking; no automatic routing.
 - Core tools and native compaction/output limits. No custom context caps,
   output-limit extension, pruning, or compaction model override.
 - The only installed third-party Pi package is `pi-mcp-adapter@2.37.0`.
